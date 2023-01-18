@@ -36,6 +36,7 @@ class _RootPageState extends State<RootPage> {
       )),
       body: const HomePage(),
       bottomNavigationBar: NavigationBar(
+        
         destinations: const [
           NavigationDestination(icon: Icon(Icons.food_bank), label: "Menus"),
           NavigationDestination(icon: Icon(Icons.settings), label: "Settings"),

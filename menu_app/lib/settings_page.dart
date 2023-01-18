@@ -1,18 +1,20 @@
+import 'constants.dart' as Constants;
 import 'package:flutter/material.dart';
 
-class CowellMenu extends StatefulWidget {
-  const CowellMenu({super.key});
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
 
   @override
-  State<CowellMenu> createState() => _CowellMenuState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _CowellMenuState extends State<CowellMenu> {
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return 
+      Scaffold(
       appBar: AppBar(
-          title: const Text("Cowell Menu"),
+          title: const Text("Settings"),
           centerTitle: true,
           backgroundColor: const Color.fromARGB(255, 0, 2, 55),
           automaticallyImplyLeading: false,

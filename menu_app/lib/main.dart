@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menu_app/home_page.dart';
+import 'package:menu_app/settings_page.dart';
+import 'constants.dart' as Constants;
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.blueGrey),
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color(Constants.color),
+      ),
       home: const RootPage(),
     );
   }
@@ -25,29 +29,74 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-  int currentPage = 0;
+  int currentPageIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
-          title: const Text(
-        "UCSC Menu",
-        style: TextStyle(fontSize: 30),
-      )),
-      body: const HomePage(),
-      bottomNavigationBar: NavigationBar(
-        
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.food_bank), label: "Menus"),
-          NavigationDestination(icon: Icon(Icons.settings), label: "Settings"),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 21, 29, 59),
+        title: const Text(
+          "UCSC Menu",
+          style:
+              TextStyle(fontSize: 30, color: Color.fromARGB(255, 255, 200, 47)),
+        ),
+      ),
+      // body: const HomePage(),
+      // bottomNavigationBar: NavigationBar(destinations: const [
+      //     NavigationDestination(icon: Icon(Icons.food_bank), label: "Menus"),
+      //     NavigationDestination(icon: Icon(Icons.settings), label: "Settings"),
+      //   ],
+      //   onDestinationSelected: (int index) {
+      //     setState(() {
+      //       currentPage = index;
+      //     });
+      //   },
+      //   selectedIndex: currentPage,
+      // ),
+    
+    
+    bottomNavigationBar: NavigationBar(
+        animationDuration: const Duration(milliseconds: 1000),
+        destinations: const <Widget>[
+          NavigationDestination(
+            icon: Icon(Icons.food_bank),
+            label: 'Menus',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+          
+          
         ],
         onDestinationSelected: (int index) {
           setState(() {
-            currentPage = index;
+            currentPageIndex = index;
           });
         },
-        selectedIndex: currentPage,
+        selectedIndex: currentPageIndex,
+        //backgroundColor: Colors.blue,
+        //elevation: 10,
+        //surfaceTintColor: Colors.lime,
+        //height: 20,
+        //labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
       ),
+      body: <Widget>[
+        Container(
+          alignment: Alignment.center,
+          child: const HomePage(),
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: const SettingsPage(),
+        ),
+        
+      ][currentPageIndex],
     );
   }
 }
+
+    
+

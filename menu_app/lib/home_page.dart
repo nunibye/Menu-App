@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
                     }),
                   );
                 },
-                icon: Image.asset('images/cowell_dining_hall.jpg'),
+                icon: Image.asset('images/cowell.png'),
                 iconSize: hallSize,
               ),
               IconButton(
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
                     }),
                   );
                 },
-                icon: Image.asset('images/cowell_dining_hall.jpg'),
+                icon: Image.asset('images/porter.png'),
                 iconSize: hallSize,
               ),
               IconButton(
@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
                     }),
                   );
                 },
-                icon: Image.asset('images/cowell_dining_hall.jpg'),
+                icon: Image.asset('images/crown.png'),
                 iconSize: hallSize,
               ),
             ],
@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
                     }),
                   );
                 },
-                icon: Image.asset('images/cowell_dining_hall.jpg'),
+                icon: Image.asset('images/nine.png'),
                 iconSize: hallSize,
               ),
               IconButton(
@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget {
                     }),
                   );
                 },
-                icon: Image.asset('images/cowell_dining_hall.jpg'),
+                icon: Image.asset('images/carson.png'),
                 iconSize: hallSize,
               ),
               IconButton(
@@ -93,7 +93,7 @@ class HomePage extends StatelessWidget {
                     }),
                   );
                 },
-                icon: Image.asset('images/cowell_dining_hall.jpg'),
+                icon: Image.asset('images/all.png'),
                 iconSize: hallSize,
               ),
             ],

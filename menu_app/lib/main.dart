@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(Constants.color),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 0, 7, 52),
       ),
       home: const RootPage(),
     );
@@ -33,10 +33,9 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 21, 29, 59),
+        backgroundColor: const Color.fromARGB(255, 0, 2, 55),
         title: const Text(
           "UCSC Menu",
           style:
@@ -55,9 +54,8 @@ class _RootPageState extends State<RootPage> {
       //   },
       //   selectedIndex: currentPage,
       // ),
-    
-    
-    bottomNavigationBar: NavigationBar(
+
+      bottomNavigationBar: NavigationBar(
         animationDuration: const Duration(milliseconds: 1000),
         destinations: const <Widget>[
           NavigationDestination(
@@ -68,8 +66,6 @@ class _RootPageState extends State<RootPage> {
             icon: Icon(Icons.settings),
             label: 'Settings',
           ),
-          
-          
         ],
         onDestinationSelected: (int index) {
           setState(() {
@@ -92,11 +88,7 @@ class _RootPageState extends State<RootPage> {
           alignment: Alignment.center,
           child: const SettingsPage(),
         ),
-        
       ][currentPageIndex],
     );
   }
 }
-
-    
-

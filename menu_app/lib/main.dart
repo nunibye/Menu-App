@@ -41,7 +41,7 @@ class _RootPageState extends State<RootPage> {
           style: TextStyle(fontSize: 30, color: Color(constants.yellowGold)),
         ),
       ),
-      // body: const HomePage(),
+      body: const HomePage(),
       // bottomNavigationBar: NavigationBar(destinations: const [
       //     NavigationDestination(icon: Icon(Icons.food_bank), label: "Menus"),
       //     NavigationDestination(icon: Icon(Icons.settings), label: "Settings"),
@@ -54,40 +54,7 @@ class _RootPageState extends State<RootPage> {
       //   selectedIndex: currentPage,
       // ),
 
-      bottomNavigationBar: NavigationBar(
-        animationDuration: const Duration(milliseconds: 1000),
-        destinations: const <Widget>[
-          NavigationDestination(
-            icon: Icon(Icons.food_bank),
-            label: 'Menus',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        selectedIndex: currentPageIndex,
-        backgroundColor: const Color(constants.darkBlue),
-        //elevation: 10,
-        //surfaceTintColor: Colors.lime,
-        //height: 20,
-        //labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-      ),
-      body: <Widget>[
-        Container(
-          alignment: Alignment.center,
-          child: const HomePage(),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const SettingsPage(),
-        ),
-      ][currentPageIndex],
+      
     );
   }
 }

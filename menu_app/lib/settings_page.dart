@@ -1,4 +1,4 @@
-import 'constants.dart' as Constants;
+import 'constants.dart' as constants;
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -11,12 +11,11 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    return 
-      Scaffold(
+    return Scaffold(
       appBar: AppBar(
           title: const Text("Settings"),
           centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 0, 2, 55),
+          backgroundColor: const Color(constants.darkBlue),
           automaticallyImplyLeading: false,
           leading: IconButton(
             onPressed: () {

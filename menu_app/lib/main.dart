@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menu_app/home_page.dart';
 import 'package:menu_app/settings_page.dart';
-import 'constants.dart' as Constants;
+import 'constants.dart' as constants;
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 0, 7, 52),
+        scaffoldBackgroundColor: const Color(constants.darkBlue),
       ),
       home: const RootPage(),
     );
@@ -35,11 +35,10 @@ class _RootPageState extends State<RootPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 0, 2, 55),
+        backgroundColor: const Color(constants.darkBlue),
         title: const Text(
           "UCSC Menu",
-          style:
-              TextStyle(fontSize: 30, color: Color.fromARGB(255, 255, 200, 47)),
+          style: TextStyle(fontSize: 30, color: Color(constants.yellowGold)),
         ),
       ),
       // body: const HomePage(),
@@ -73,7 +72,7 @@ class _RootPageState extends State<RootPage> {
           });
         },
         selectedIndex: currentPageIndex,
-        //backgroundColor: Colors.blue,
+        backgroundColor: const Color(constants.darkBlue),
         //elevation: 10,
         //surfaceTintColor: Colors.lime,
         //height: 20,

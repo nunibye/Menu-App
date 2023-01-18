@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'constants.dart' as constants;
 
 class CowellMenu extends StatefulWidget {
   const CowellMenu({super.key});
@@ -14,7 +15,7 @@ class _CowellMenuState extends State<CowellMenu> {
       appBar: AppBar(
           title: const Text("Cowell Menu"),
           centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 0, 2, 55),
+          backgroundColor: const Color(constants.darkBlue),
           automaticallyImplyLeading: false,
           leading: IconButton(
             onPressed: () {

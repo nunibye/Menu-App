@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menu_app/cowell_menu.dart';
+import 'package:menu_app/merrill_menu.dart';
 import 'constants.dart' as constants;
 
 class HomePage extends StatelessWidget {
@@ -62,7 +63,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (BuildContext context) {
-                    return const CowellMenu();
+                    return const MerrillMenu();
                   }),
                 );
               },
@@ -73,7 +74,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (BuildContext context) {
-                    return const CowellMenu();
+                    return const MerrillMenu();
                   }),
                 );
               },

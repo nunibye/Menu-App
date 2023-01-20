@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:menu_app/cowell_menu.dart';
+import 'constants.dart' as constants;
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double hallSize = MediaQuery.of(context).size.width / 2 - 32;
+    double iconSizeCollege = MediaQuery.of(context).size.height/6;
     return Scaffold(
-      // child: ElevatedButton(
-      //   onPressed: () {
-      //     Navigator.of(context).push(
-      //       MaterialPageRoute(builder: (BuildContext context) {
-      //         return const CowellMenu();
-      //       }),
-      //     );
-      //   },
-      //   child: const Text("Cowell"),
-      // ),
+        // child: ElevatedButton(
+        //   onPressed: () {
+        //     Navigator.of(context).push(
+        //       MaterialPageRoute(builder: (BuildContext context) {
+        //         return const CowellMenu();
+        //       }),
+        //     );
+        //   },
+        //   child: const Text("Cowell"),
+        // ),
 
-      // FIGURE OUT HOW TO CENTER THE SCROLLABLE LIST
-      body: ListView(
+        body: Container(
+      alignment: Alignment.topCenter,
+      height: MediaQuery.of(context).size.height / 3,
+      child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
           IconButton(
@@ -32,7 +35,7 @@ class HomePage extends StatelessWidget {
               );
             },
             icon: Image.asset('images/cowell.png'),
-            iconSize: hallSize,
+            iconSize: iconSizeCollege,
           ),
           IconButton(
             onPressed: () {
@@ -43,7 +46,7 @@ class HomePage extends StatelessWidget {
               );
             },
             icon: Image.asset('images/porter.png'),
-            iconSize: hallSize,
+            iconSize: iconSizeCollege,
           ),
           IconButton(
             onPressed: () {
@@ -54,7 +57,7 @@ class HomePage extends StatelessWidget {
               );
             },
             icon: Image.asset('images/crown.png'),
-            iconSize: hallSize,
+            iconSize: iconSizeCollege,
           ),
           IconButton(
             onPressed: () {
@@ -65,7 +68,7 @@ class HomePage extends StatelessWidget {
               );
             },
             icon: Image.asset('images/nine.png'),
-            iconSize: hallSize,
+            iconSize: iconSizeCollege,
           ),
           IconButton(
             onPressed: () {
@@ -76,7 +79,7 @@ class HomePage extends StatelessWidget {
               );
             },
             icon: Image.asset('images/carson.png'),
-            iconSize: hallSize,
+            iconSize: iconSizeCollege,
           ),
           IconButton(
             onPressed: () {
@@ -87,90 +90,92 @@ class HomePage extends StatelessWidget {
               );
             },
             icon: Image.asset('images/all.png'),
-            iconSize: hallSize,
+            iconSize: iconSizeCollege,
           ),
         ],
       ),
-      // Row(
-      //   mainAxisSize: MainAxisSize.max,
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     Column(
-      //       children: [
-      //         IconButton(
-      //           onPressed: () {
-      //             Navigator.of(context).push(
-      //               MaterialPageRoute(builder: (BuildContext context) {
-      //                 return const CowellMenu();
-      //               }),
-      //             );
-      //           },
-      //           icon: Image.asset('images/cowell.png'),
-      //           iconSize: hallSize,
-      //         ),
-      //         IconButton(
-      //           onPressed: () {
-      //             Navigator.of(context).push(
-      //               MaterialPageRoute(builder: (BuildContext context) {
-      //                 return const CowellMenu();
-      //               }),
-      //             );
-      //           },
-      //           icon: Image.asset('images/porter.png'),
-      //           iconSize: hallSize,
-      //         ),
-      //         IconButton(
-      //           onPressed: () {
-      //             Navigator.of(context).push(
-      //               MaterialPageRoute(builder: (BuildContext context) {
-      //                 return const CowellMenu();
-      //               }),
-      //             );
-      //           },
-      //           icon: Image.asset('images/crown.png'),
-      //           iconSize: hallSize,
-      //         ),
-      //       ],
-      //     ),
-      //     Column(
-      //       children: [
-      //         IconButton(
-      //           onPressed: () {
-      //             Navigator.of(context).push(
-      //               MaterialPageRoute(builder: (BuildContext context) {
-      //                 return const CowellMenu();
-      //               }),
-      //             );
-      //           },
-      //           icon: Image.asset('images/nine.png'),
-      //           iconSize: hallSize,
-      //         ),
-      //         IconButton(
-      //           onPressed: () {
-      //             Navigator.of(context).push(
-      //               MaterialPageRoute(builder: (BuildContext context) {
-      //                 return const CowellMenu();
-      //               }),
-      //             );
-      //           },
-      //           icon: Image.asset('images/carson.png'),
-      //           iconSize: hallSize,
-      //         ),
-      //         IconButton(
-      //           onPressed: () {
-      //             Navigator.of(context).push(
-      //               MaterialPageRoute(builder: (BuildContext context) {
-      //                 return const CowellMenu();
-      //               }),
-      //             );
-      //           },
-      //           icon: Image.asset('images/all.png'),
-      //           iconSize: hallSize,
-      //         ),
-      //       ],
-      //     ),
-      //   ],
-      // ),
-    );
+    )
+
+        // Row(
+        //   mainAxisSize: MainAxisSize.max,
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Column(
+        //       children: [
+        //         IconButton(
+        //           onPressed: () {
+        //             Navigator.of(context).push(
+        //               MaterialPageRoute(builder: (BuildContext context) {
+        //                 return const CowellMenu();
+        //               }),
+        //             );
+        //           },
+        //           icon: Image.asset('images/cowell.png'),
+        //           iconSize: iconSizeCollege,
+        //         ),
+        //         IconButton(
+        //           onPressed: () {
+        //             Navigator.of(context).push(
+        //               MaterialPageRoute(builder: (BuildContext context) {
+        //                 return const CowellMenu();
+        //               }),
+        //             );
+        //           },
+        //           icon: Image.asset('images/porter.png'),
+        //           iconSize: iconSizeCollege,
+        //         ),
+        //         IconButton(
+        //           onPressed: () {
+        //             Navigator.of(context).push(
+        //               MaterialPageRoute(builder: (BuildContext context) {
+        //                 return const CowellMenu();
+        //               }),
+        //             );
+        //           },
+        //           icon: Image.asset('images/crown.png'),
+        //           iconSize: iconSizeCollege,
+        //         ),
+        //       ],
+        //     ),
+        //     Column(
+        //       children: [
+        //         IconButton(
+        //           onPressed: () {
+        //             Navigator.of(context).push(
+        //               MaterialPageRoute(builder: (BuildContext context) {
+        //                 return const CowellMenu();
+        //               }),
+        //             );
+        //           },
+        //           icon: Image.asset('images/nine.png'),
+        //           iconSize: iconSizeCollege,
+        //         ),
+        //         IconButton(
+        //           onPressed: () {
+        //             Navigator.of(context).push(
+        //               MaterialPageRoute(builder: (BuildContext context) {
+        //                 return const CowellMenu();
+        //               }),
+        //             );
+        //           },
+        //           icon: Image.asset('images/carson.png'),
+        //           iconSize: iconSizeCollege,
+        //         ),
+        //         IconButton(
+        //           onPressed: () {
+        //             Navigator.of(context).push(
+        //               MaterialPageRoute(builder: (BuildContext context) {
+        //                 return const CowellMenu();
+        //               }),
+        //             );
+        //           },
+        //           icon: Image.asset('images/all.png'),
+        //           iconSize: iconSizeCollege,
+        //         ),
+        //       ],
+        //     ),
+        //   ],
+        // ),
+        );
   }
 }

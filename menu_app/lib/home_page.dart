@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.height/6;
-    return Scaffold(
+    return Scaffold( 
         // child: ElevatedButton(
         //   onPressed: () {
         //     Navigator.of(context).push(
@@ -20,9 +20,13 @@ class HomePage extends StatelessWidget {
         //   child: const Text("Cowell"),
         // ),
 
-        body: Container(
+        body: Column(children:[const Text(
+          "Dining halls",
+          textAlign: TextAlign.left,
+          style: TextStyle(fontSize: 25, color: Color(constants.yellowGold)),
+        ), Container(
       alignment: Alignment.topCenter,
-      height: MediaQuery.of(context).size.height / 3,
+      height: MediaQuery.of(context).size.height / 4,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
@@ -94,7 +98,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-    )
+    )])
 
         // Row(
         //   mainAxisSize: MainAxisSize.max,

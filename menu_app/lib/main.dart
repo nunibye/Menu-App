@@ -38,7 +38,7 @@ class _RootPageState extends State<RootPage> {
         backgroundColor: const Color(constants.darkBlue),
         title: const Text(
           "UCSC Menu",
-          style: TextStyle(fontSize: 30, color: Color(constants.yellowGold)),
+          style: TextStyle(fontSize: 40, fontFamily: 'Monoton', color: Color(constants.yellowGold)),
         ),
       ),
       body: const HomePage(),

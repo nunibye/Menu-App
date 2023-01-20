@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
           style: TextStyle(fontSize: 25, color: Color(constants.yellowGold)),
         ), Container(
       alignment: Alignment.topCenter,
-      height: MediaQuery.of(context).size.height / 4,
+      height: MediaQuery.of(context).size.height / 5,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [

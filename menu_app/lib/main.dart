@@ -34,12 +34,20 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 80,
         centerTitle: true,
         backgroundColor: const Color(constants.darkBlue),
         title: const Text(
           "UCSC Menu",
-          style: TextStyle(fontSize: 40, fontFamily: 'Monoton', color: Color(constants.yellowGold)),
+          style: TextStyle(fontSize: 45, fontFamily: 'Monoton', color: Color(constants.yellowGold)),
+          
         ),
+        shape: const Border(
+    bottom: BorderSide(
+      color: Colors.orange,
+      width: 4
+    )
+  ),
       ),
       body: const HomePage(),
       // bottomNavigationBar: NavigationBar(destinations: const [

@@ -13,16 +13,29 @@ class _CowellMenuState extends State<CowellMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("Cowell Menu"),
-          centerTitle: true,
-          backgroundColor: const Color(constants.darkBlue),
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          )),
+        title: const Text(
+          "Cowell",
+          style: TextStyle(
+              fontSize: constants.menuHeadingSize,
+              fontFamily: 'Monoton',
+              color: Color(constants.yellowGold)),
+        ),
+        toolbarHeight: 80,
+        centerTitle: false,
+        backgroundColor: const Color(constants.darkBlue),
+        shape: const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.orange,
+            size:constants.backArrowSize
+          ),
+        ),
+      ),
     );
   }
 }

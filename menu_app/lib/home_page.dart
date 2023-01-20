@@ -7,8 +7,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double iconSizeCollege = MediaQuery.of(context).size.height/6;
-    return Scaffold( 
+    double iconSizeCollege = MediaQuery.of(context).size.height / 6;
+    return Scaffold(
         // child: ElevatedButton(
         //   onPressed: () {
         //     Navigator.of(context).push(
@@ -20,85 +20,92 @@ class HomePage extends StatelessWidget {
         //   child: const Text("Cowell"),
         // ),
 
-        body: Column(children:[const Text(
-          "Dining halls",
-          textAlign: TextAlign.left,
-          style: TextStyle(fontSize: 25, color: Color(constants.yellowGold)),
-        ), Container(
-      alignment: Alignment.topCenter,
-      height: MediaQuery.of(context).size.height / 5,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return const CowellMenu();
-                }),
-              );
-            },
-            icon: Image.asset('images/cowell.png'),
-            iconSize: iconSizeCollege,
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return const CowellMenu();
-                }),
-              );
-            },
-            icon: Image.asset('images/porter.png'),
-            iconSize: iconSizeCollege,
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return const CowellMenu();
-                }),
-              );
-            },
-            icon: Image.asset('images/crown.png'),
-            iconSize: iconSizeCollege,
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return const CowellMenu();
-                }),
-              );
-            },
-            icon: Image.asset('images/nine.png'),
-            iconSize: iconSizeCollege,
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return const CowellMenu();
-                }),
-              );
-            },
-            icon: Image.asset('images/carson.png'),
-            iconSize: iconSizeCollege,
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return const CowellMenu();
-                }),
-              );
-            },
-            icon: Image.asset('images/all.png'),
-            iconSize: iconSizeCollege,
-          ),
-        ],
+        body: Column(children: <Widget>[
+      Container(
+        alignment: Alignment.topLeft,
+        padding: const EdgeInsets.only(top: 20, left: 12),
+        child: const Text(
+          "DINING HALLS",
+          style: TextStyle(fontSize: 25, fontFamily: 'Lato', color: Color(constants.yellowGold)),
+        ),
       ),
-    )])
+      Container(
+        alignment: Alignment.topCenter,
+        
+        height: MediaQuery.of(context).size.height / 5,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const CowellMenu();
+                  }),
+                );
+              },
+              icon: Image.asset('images/cowell.png'),
+              iconSize: iconSizeCollege,
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const CowellMenu();
+                  }),
+                );
+              },
+              icon: Image.asset('images/porter.png'),
+              iconSize: iconSizeCollege,
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const CowellMenu();
+                  }),
+                );
+              },
+              icon: Image.asset('images/crown.png'),
+              iconSize: iconSizeCollege,
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const CowellMenu();
+                  }),
+                );
+              },
+              icon: Image.asset('images/nine.png'),
+              iconSize: iconSizeCollege,
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const CowellMenu();
+                  }),
+                );
+              },
+              icon: Image.asset('images/carson.png'),
+              iconSize: iconSizeCollege,
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const CowellMenu();
+                  }),
+                );
+              },
+              icon: Image.asset('images/all.png'),
+              iconSize: iconSizeCollege,
+            ),
+          ],
+        ),
+      )
+    ])
 
         // Row(
         //   mainAxisSize: MainAxisSize.max,

@@ -35,8 +35,25 @@ n_calc_caount = meals_list.count('Nutrition Calculator')
 for i in range(n_calc_caount):
     meals_list.remove('Nutrition Calculator')
 
+# Create nested dictionary
+meal_times = {"Breakfast": {"Breakfast": [], "Entrees": [], "Clean Plate": [], "Bakery": []},
+              "Lunch": {"Soups": [], "Entrees": [], "Grill": [], "Pizza": [], "Clean Plate": [], "Bakery": [], "Open Bars": [], "DH Baked": []},
+              "Dinner": {"Soups": [], "Entrees": [], "Grill": [], "Pizza": [], "Clean Plate": [], "Bakery": [], "Open Bars": [], "DH Baked": []},
+              "Late Night": {"Soups": [], "Entrees": [], "Grill": [], "Pizza": [], "Clean Plate": [], "Bakery": [], "Open Bars": [], "DH Baked": []}}
+hall_menus = {"Cowell": meal_times, "Merrill": meal_times} # ETC, ETC
+for i in meals_list:
+    if i in meal_times.keys():
+        meal_time = i
+        continue
+    if "--" in i:
+        meal_cat = i.strip("- ")
+        continue
+    else:
+        meal_times[meal_time][meal_cat].append(i)
 
-data_base_write.UpdateDatabase(meals_list)
+print(meal_times)
+        
+data_base_write.UpdateDatabase(meal_times)
 
 
 

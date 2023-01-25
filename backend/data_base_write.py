@@ -13,7 +13,7 @@ firebase_admin.initialize_app(cred, {
 # As an admin, the app has access to read and write all data, regradless of Security Rules
 def UpdateDatabase(hall_menus):
     #breakfast_entrees = ['apple', 'banana', 'pie']
-    ref = db.reference('/Cowell')
+    ref = db.reference('/')
     #ref.set(breakfast_entrees)
     
     

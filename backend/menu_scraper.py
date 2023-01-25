@@ -1,7 +1,9 @@
 from playwright.sync_api import sync_playwright, ViewportSize
 import time
 import re
+import unicodedata
 from bs4 import BeautifulSoup
+import data_base_write
 url = 'https://nutrition.sa.ucsc.edu/'
 with sync_playwright() as p:
     browser = p.chromium.launch()  #headless=False
@@ -17,9 +19,26 @@ with sync_playwright() as p:
 
 
 menuTable = soup.find('table',  {'bordercolor': '#CCC'})    # Finds meal table
-meal = menuTable.findAll("tr")                              # Finds each seperate meal table (Bfast, Lunch, ect)
-
+#meal = menuTable.findAll("tr")                              # Finds each seperate meal table (Bfast, Lunch, ect)
+list_of_food = []
 for meal in menuTable:                                      # For each item in the meal table, strip empty text
     text = meal.text.strip()                                # and save the menu item
     meal.string = re.sub(r"[\n][\W]+[^\w]", "\n", text)
-print(meal.text)
+    
+cleaned = unicodedata.normalize("NFKD", meal.text)
+meals_list = cleaned.split("\n")
+for i in range(len(meals_list)):
+    meals_list[i] = meals_list[i].strip()
+    #print(meals_list[i])
+print('\n')
+n_calc_caount = meals_list.count('Nutrition Calculator')
+for i in range(n_calc_caount):
+    meals_list.remove('Nutrition Calculator')
+
+
+data_base_write.UpdateDatabase(meals_list)
+
+
+
+
+

@@ -15,7 +15,7 @@ def UpdateDatabase(hall_menus):
     #breakfast_entrees = ['apple', 'banana', 'pie']
     ref = db.reference('/')
     #ref.set(breakfast_entrees)
-    
+    ref.delete()
     
     # value: A dictionary containing the child keys to update, and their new values.
     # dictTest = {"Cowell": {"Breakfast": {"Entrees": ["test234", "test2", "test235"]}}, "Merrill": {"Breakfast": {"Entrees": ["test6", "test5", "test6"]}}}

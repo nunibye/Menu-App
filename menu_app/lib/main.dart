@@ -26,7 +26,7 @@ import 'package:http/http.dart' as http;
 // }
 Future<List<Album>> fetchAlbum() async {
   final response = await http.get(Uri.parse(
-      'https://ucsc-menu-app-default-rtdb.firebaseio.com/Cowell/Lunch/Bakery.json'));
+      'https://ucsc-menu-app-default-rtdb.firebaseio.com/Cowell/Breakfast/Bakery.json'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -43,13 +43,13 @@ Future<List<Album>> fetchAlbum() async {
 }
 
 class Album {
-  final String bakery;
+  final List bakery;
 
   const Album({
     required this.bakery,
   });
 
-  factory Album.fromJson(Map<String, dynamic> json) {
+  factory Album.fromJson(Map<List, dynamic> json) {
     return Album(
       bakery: json['bakery'],
     );

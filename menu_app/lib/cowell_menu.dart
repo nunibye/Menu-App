@@ -86,7 +86,8 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
                           (Container(
                               decoration: const BoxDecoration(
                                   border: Border(
-              bottom: BorderSide(width: 2, color: Colors.white))),
+                                      bottom: BorderSide(
+                                          width: 2, color: Colors.white))),
                               padding: const EdgeInsets.all(12),
                               alignment: Alignment.topLeft,
                               child: Text(
@@ -141,13 +142,13 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
               },
             ),
           ),
-          Center(
+          const Center(
             child: Text("It's rainy here"),
           ),
-          Center(
+          const Center(
             child: Text("It's rainy here"),
           ),
-          Center(
+          const Center(
             child: Text("It's sunny here"),
           ),
         ],

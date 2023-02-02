@@ -127,9 +127,9 @@ class _RootPageState extends State<RootPage> {
           centerTitle: true,
           backgroundColor: const Color(constants.darkBlue),
           title: const Text(
-            "UCSC Menu",
+            "UC Santa Cruz",
             style: TextStyle(
-                fontSize: 45,
+                fontSize: 40,
                 fontFamily: 'Monoton',
                 color: Color(constants.yellowGold)),
           ),
@@ -140,13 +140,15 @@ class _RootPageState extends State<RootPage> {
           children: <Widget>[
             Container(
               alignment: Alignment.topLeft,
-              padding: const EdgeInsets.only(top: 20, left: 12),
+              padding: const EdgeInsets.only(top: 40, left: 12),
               child: const Text(
-                "DINING HALLS",
+                "Dining Halls",
                 style: TextStyle(
-                    fontSize: 25,
-                    fontFamily: 'Lato',
-                    color: Color(constants.yellowGold)),
+                    fontSize: 30,
+                    fontFamily: 'Montserat',
+                    fontWeight: FontWeight.bold,
+                    
+                    color: Color(constants.yellowOrange)),
               ),
             ),
             Container(
@@ -163,7 +165,7 @@ class _RootPageState extends State<RootPage> {
                         }),
                       );
                     },
-                    icon: Image.asset('images/cowell.png'),
+                    icon: Image.asset('images/cowell2.png'),
                     iconSize: iconSizeCollege,
                   ),
                   IconButton(
@@ -174,7 +176,7 @@ class _RootPageState extends State<RootPage> {
                         }),
                       );
                     },
-                    icon: Image.asset('images/porter.png'),
+                    icon: Image.asset('images/porter2.png'),
                     iconSize: iconSizeCollege,
                   ),
                   IconButton(
@@ -185,7 +187,7 @@ class _RootPageState extends State<RootPage> {
                         }),
                       );
                     },
-                    icon: Image.asset('images/crown.png'),
+                    icon: Image.asset('images/merrill2.png'),
                     iconSize: iconSizeCollege,
                   ),
                   IconButton(
@@ -196,7 +198,7 @@ class _RootPageState extends State<RootPage> {
                         }),
                       );
                     },
-                    icon: Image.asset('images/nine.png'),
+                    icon: Image.asset('images/nine2.png'),
                     iconSize: iconSizeCollege,
                   ),
                   IconButton(
@@ -207,7 +209,7 @@ class _RootPageState extends State<RootPage> {
                         }),
                       );
                     },
-                    icon: Image.asset('images/carson.png'),
+                    icon: Image.asset('images/carson2.png'),
                     iconSize: iconSizeCollege,
                   ),
                   IconButton(
@@ -218,7 +220,7 @@ class _RootPageState extends State<RootPage> {
                         }),
                       );
                     },
-                    icon: Image.asset('images/all.png'),
+                    icon: Image.asset('images/all2.png'),
                     iconSize: iconSizeCollege,
                   ),
                 ],

@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:ffi';
+
+
 
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
@@ -24,9 +24,10 @@ import 'package:http/http.dart' as http;
 // class Json {
 //   var menuData = getJsonFromFirebaseRestAPI().;
 // }
+
 Future fetchAlbum() async {
   final response = await http.get(Uri.parse(
-      'https://ucsc-menu-app-default-rtdb.firebaseio.com/Cowell/Dinner.json'));
+      'https://ucsc-menu-app-default-rtdb.firebaseio.com/Cowell/Breakfast.json'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -49,7 +50,7 @@ Future fetchAlbum() async {
         //const String tab = '  ';
         for (var i = 0; i < listTemp.length; i++) {
           listTemp[i] = listTemp[i].replaceAll(RegExp(r'[^\w\s]+'), '');
-          listTemp[i] = '  ' + listTemp[i];
+          //listTemp[i] = '*' + listTemp[i];
         }
         temp = listTemp.join('\n');
         list[i] = temp;
@@ -66,7 +67,7 @@ Future fetchAlbum() async {
     //   // }
 
     // }
-    return list.join('\n');
+    return list;
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
@@ -234,7 +235,7 @@ class _RootPageState extends State<RootPage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Text(
-                      snapshot.data.toString(),
+                      snapshot.data[1],
                       style: const TextStyle(
                           fontSize: 25, color: Color(constants.yellowGold)),
                     );

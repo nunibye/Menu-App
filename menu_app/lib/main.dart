@@ -24,35 +24,53 @@ import 'package:http/http.dart' as http;
 // class Json {
 //   var menuData = getJsonFromFirebaseRestAPI().;
 // }
-Future<List<Album>> fetchAlbum() async {
+Future fetchAlbum() async {
   final response = await http.get(Uri.parse(
-      'https://ucsc-menu-app-default-rtdb.firebaseio.com/Cowell/Breakfast/Bakery.json'));
+      'https://ucsc-menu-app-default-rtdb.firebaseio.com/Cowell/Dinner.json'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    List<dynamic> data = jsonDecode(response.body);
-    List<Album> list = [];
-    list = data.map((item) => Album.fromJson(item)).toList();
-    return list;
+    //List<dynamic> data = jsonDecode(response.body);
+    //List<Album> list = [];
+    //list = data.map((item) => Album.fromJson(item)).toList();
+
+    var list = response.body.toString().split('*');
+    list.remove('{"');
+
+    for (var i = 0; i < list.length; i++) {
+      if (i % 2 == 0) {
+        list[i] = list[i].replaceAll(RegExp(r'[^\w\s]+'), '');
+      } else {
+        String temp = list[i];
+        //List temp_list = [];
+        List listTemp = temp.split(',');
+        listTemp.remove('"');
+        //const String tab = '  ';
+        for (var i = 0; i < listTemp.length; i++) {
+          listTemp[i] = listTemp[i].replaceAll(RegExp(r'[^\w\s]+'), '');
+          listTemp[i] = '  ' + listTemp[i];
+        }
+        temp = listTemp.join('\n');
+        list[i] = temp;
+      }
+    }
+    // for (var i = 0; i < list.length - 1; i = i + 2) {
+    //   list[i].split(',').join('\n');
+
+    //   const String tab = '  ';
+    //   // for (var j = 0; j < list[i].length; j++) {
+    //   //   list[j] = list[j].replaceAll(RegExp(r'[^\w\s]+'), '');
+    //   //   list[j] = '$tab$list[j]';
+
+    //   // }
+
+    // }
+    return list.join('\n');
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to load album');
-  }
-}
-
-class Album {
-  final List bakery;
-
-  const Album({
-    required this.bakery,
-  });
-
-  factory Album.fromJson(Map<List, dynamic> json) {
-    return Album(
-      bakery: json['bakery'],
-    );
   }
 }
 
@@ -93,7 +111,7 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int currentPageIndex = 0;
-  late Future<List<Album>> futureAlbum;
+  late Future futureAlbum;
   @override
   void initState() {
     super.initState();
@@ -209,7 +227,7 @@ class _RootPageState extends State<RootPage> {
             Container(
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.only(top: 20, left: 12),
-              child: FutureBuilder<List<Album>>(
+              child: FutureBuilder(
                 future: futureAlbum,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {

@@ -1,10 +1,10 @@
 from playwright.sync_api import sync_playwright, ViewportSize
-import time
 import re
 import unicodedata
 from bs4 import BeautifulSoup
 import data_base_write
 from copy import deepcopy
+
 url = 'https://nutrition.sa.ucsc.edu/'
 halls_html = ['text=College Nine/John R. Lewis Dining Hall', 'text=Cowell/Stevenson Dining Hall', 'text=Crown/Merrill Dining Hall', 'text=Porter/Kresge Dining Hall']
 
@@ -67,8 +67,3 @@ for j in range(len(halls_name)):
             hall_menus[halls_name[j]][meal_time][meal_cat].append(i)
         
 data_base_write.UpdateDatabase(hall_menus)                      # Update database
-
-
-
-
-

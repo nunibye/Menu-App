@@ -20,4 +20,3 @@ def UpdateDatabase(hall_menus):
     ref.delete()
     
     ref.update(hall_menus)
-    

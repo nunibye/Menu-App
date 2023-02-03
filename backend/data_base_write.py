@@ -12,14 +12,12 @@ firebase_admin.initialize_app(cred, {
 
 # As an admin, the app has access to read and write all data, regradless of Security Rules
 def UpdateDatabase(hall_menus):
-    #breakfast_entrees = ['apple', 'banana', 'pie']
+    '''
+    Takes a nested dictionary of Dining Hall, Meal Time, Meal Category, and Meals.
+    Updates firebase json database.
+    '''
     ref = db.reference('/')
-    #ref.set(breakfast_entrees)
     ref.delete()
     
-    # value: A dictionary containing the child keys to update, and their new values.
-    # dictTest = {"Cowell": {"Breakfast": {"Entrees": ["test234", "test2", "test235"]}}, "Merrill": {"Breakfast": {"Entrees": ["test6", "test5", "test6"]}}}
     ref.update(hall_menus)
     
-
-# UpdateDatabase()

@@ -37,7 +37,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "9/10",
+          "Cowell",
           style: TextStyle(
               fontSize: constants.menuHeadingSize,
               fontFamily: 'Monoton',

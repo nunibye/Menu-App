@@ -90,13 +90,13 @@ class _RootPageState extends State<RootPage> {
           toolbarHeight: 80,
           centerTitle: true,
           backgroundColor: const Color(constants.darkBlue),
-          title: const Text(
+          title: const FittedBox(fit: BoxFit.fitWidth, child: Text(
             "UC Santa Cruz",
             style: TextStyle(
                 fontSize: 40,
                 fontFamily: 'Monoton',
                 color: Color(constants.yellowGold)),
-          ),
+          ),),
           shape:
               const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
         ),

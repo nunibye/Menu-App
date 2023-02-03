@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 import 'main.dart' as main_page;
 
-class CowellMenu extends StatefulWidget {
-  const CowellMenu({super.key});
+class NineMenu extends StatefulWidget {
+  const NineMenu({super.key});
 
   @override
-  State<CowellMenu> createState() => _CowellMenuState();
+  State<NineMenu> createState() => _NineMenuState();
 }
 
 /// AnimationControllers can be created with `vsync: this` because of TickerProviderStateMixin.
-class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
+class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
   late TabController _tabController;
   late Future futureBreakfast;
   late Future futureLunch;
@@ -21,10 +21,10 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
-    futureBreakfast = main_page.fetchAlbum('Cowell', 'Breakfast');
-    futureLunch = main_page.fetchAlbum('Cowell', 'Lunch');
-    futureDinner = main_page.fetchAlbum('Cowell', 'Dinner');
-    futureLateNight = main_page.fetchAlbum('Cowell', 'Late%20Night');
+    futureBreakfast = main_page.fetchAlbum('Nine', 'Breakfast');
+    futureLunch = main_page.fetchAlbum('Nine', 'Lunch');
+    futureDinner = main_page.fetchAlbum('Nine', 'Dinner');
+    futureLateNight = main_page.fetchAlbum('Nine', 'Late%20Night');
   }
 
   // @override
@@ -37,7 +37,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Cowell",
+          "9/10",
           style: TextStyle(
               fontSize: constants.menuHeadingSize,
               fontFamily: 'Monoton',

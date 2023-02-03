@@ -1,2 +1,3 @@
 # ignore secrets
 secrets/
+menu_app/android/key.properties

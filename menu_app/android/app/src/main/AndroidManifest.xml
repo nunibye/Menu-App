@@ -5,7 +5,7 @@
         android:name="android.permission.INTERNET" />
 
     <application
-        android:label="menu_app"
+        android:label="UCSC Dining"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

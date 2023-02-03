@@ -4,6 +4,7 @@ import re
 import unicodedata
 from bs4 import BeautifulSoup
 import data_base_write
+from copy import deepcopy
 url = 'https://nutrition.sa.ucsc.edu/'
 halls_html = ['text=College Nine/John R. Lewis Dining Hall', 'text=Cowell/Stevenson Dining Hall', 'text=Crown/Merrill Dining Hall', 'text=Porter/Kresge Dining Hall']
 halls_name = ['Nine', 'Cowell', 'Merrill', 'Porter']
@@ -12,15 +13,25 @@ halls_name = ['Nine', 'Cowell', 'Merrill', 'Porter']
 #             "Dinner": {"Soups": [], "Entrees": [], "Grill": [], "Pizza": [], "Clean Plate": [], "Bakery": [], "Open Bars": [], "DH Baked": [], "Plant Based Station": []},
 #             "Late Night": {"Soups": [], "Entrees": [], "Grill": [], "Pizza": [], "Clean Plate": [], "Bakery": [], "Open Bars": [], "DH Baked": [], "Plant Based Station": []}}
 
+# Meal Times
+meals = ["Breakfast", "Lunch", "Dinner", "Late Night"]
+
+# Food Categories
+food_cat = {"*Breakfast*": [], "*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": [], "*Miscellaneous*": []}
+
 # Create nested dictionary
-meal_times = {"Breakfast": {"*Breakfast*": [], "*Entrees*": [], "*Clean Plate*": [], "*Bakery*": []},
-            "Lunch": {"*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": []},
-            "Dinner": {"*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": []},
-            "Late Night": {"*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": []}}
+meal_times = {}
+for i in meals:
+    meal_times.update({i: deepcopy(food_cat)})
+
+# meal_times = {"Breakfast": {"*Breakfast*": [], "*Entrees*": [], "*Clean Plate*": [], "*Bakery*": []},
+#             "Lunch": {"*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": []},
+#             "Dinner": {"*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": []},
+#             "Late Night": {"*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": []}}
 #hall_menus = {"Cowell": meal_times, "Merrill": meal_times, "Nine": meal_times, "Porter": meal_times}
 hall_menus = {}
 for i in halls_name:
-    hall_menus.update({i: meal_times})
+    hall_menus.update({i: deepcopy(meal_times)}) 
 #print(hall_menus)
 
 
@@ -38,9 +49,9 @@ for j in range(len(halls_name)):
         browser.close()
 
     menuTable = soup.find('table',  {'bordercolor': '#CCC'})    # Finds meal table
-    # meal = menuTable.findAll("tr")                            # Finds each seperate meal table (Bfast, Lunch, ect)
+    #meal = menuTable.findAll("tr")                            # Finds each seperate meal table (Bfast, Lunch, ect)
     list_of_food = []
-    print(type(menuTable))
+    #print(type(menuTable))
     for meal in menuTable:                                      # For each item in the meal table, strip empty text
         text = meal.text.strip()                                # and save the menu item
         meal.string = re.sub(r"[\n][\W]+[^\w]", "\n", text)
@@ -52,17 +63,20 @@ for j in range(len(halls_name)):
     for i in range(len(meals_list)):
         meals_list[i] = meals_list[i].strip()
 
+    # Remove "nutrition calculator" from meals list
     n_calc_caount = meals_list.count('Nutrition Calculator')
     for i in range(n_calc_caount):
         meals_list.remove('Nutrition Calculator')
-    #print(meals_list)
+    print(halls_name[j])
+    print(meals_list)
     for i in meals_list:
-        if i in meal_times.keys():
-            meal_time = i
+        print(i)
+        if i in meal_times.keys():              # If Breakfast, Lunch, Dinner, or Late Night
+            meal_time = i                       # Set current meal time
             continue
-        elif "--" in i:
-            meal_cat = i.strip("- ")
-            meal_cat = '*' + meal_cat + '*'
+        elif "--" in i:                         # If at a meal category
+            meal_cat = i.strip("- ")            # Clean string
+            meal_cat = '*' + meal_cat + '*'     
             continue
         else:
             hall_menus[halls_name[j]][meal_time][meal_cat].append(i)

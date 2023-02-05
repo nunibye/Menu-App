@@ -28,18 +28,15 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
     futureLateNight = main_page.fetchAlbum('Cowell', 'Late%20Night');
     if (time.hour < 10) {
       _tabController.animateTo(0);
-    }
-    else if (time.hour < 16) {
+    } else if (time.hour < 16) {
       _tabController.animateTo(1);
-    }
-    else if (time.hour < 20) {
+    } else if (time.hour < 20) {
       _tabController.animateTo(2);
-    }
-    else {
+    } else {
       _tabController.animateTo(3);
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +44,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
         title: const Text(
           "Cowell",
           style: TextStyle(
+              fontWeight: FontWeight.normal,
               fontSize: constants.menuHeadingSize,
               fontFamily: 'Monoton',
               color: Color(constants.yellowGold)),

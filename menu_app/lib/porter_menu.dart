@@ -10,8 +10,7 @@ class PorterMenu extends StatefulWidget {
 }
 
 /// AnimationControllers can be created with `vsync: this` because of TickerProviderStateMixin.
-class _PorterMenuState extends State<PorterMenu>
-  with TickerProviderStateMixin {
+class _PorterMenuState extends State<PorterMenu> with TickerProviderStateMixin {
   late TabController _tabController;
   late Future futureBreakfast;
   late Future futureLunch;
@@ -34,7 +33,7 @@ class _PorterMenuState extends State<PorterMenu>
       _tabController.animateTo(2);
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +41,7 @@ class _PorterMenuState extends State<PorterMenu>
         title: const Text(
           "Porter",
           style: TextStyle(
+              fontWeight: FontWeight.normal,
               fontSize: constants.menuHeadingSize,
               fontFamily: 'Monoton',
               color: Color(constants.yellowGold)),

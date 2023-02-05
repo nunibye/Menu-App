@@ -128,7 +128,7 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
 
       return list;
 
-    // If fetching full meals
+      // If fetching full meals
     } else {
       var list = response.body.toString().split('*');
       list.remove('{"');
@@ -152,14 +152,12 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
       }
       return list;
     }
-
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to load album');
   }
 }
-
 
 //void main() => runApp(const MyApp());
 void main() {
@@ -220,9 +218,12 @@ class _RootPageState extends State<RootPage> {
       porterSummary = fetchAlbum('Porter', 'Dinner', cat: '*Open%20Bars*');
     } else if (time.hour < 23) {
       nineSummary = fetchAlbum('Nine', 'Late%20Night', cat: '*Open%20Bars*');
-      cowellSummary = fetchAlbum('Cowell', 'Late%20Night', cat: '*Open%20Bars*');
-      merrillSummary = fetchAlbum('Merrill', 'Late%20Night', cat: '*Open%20Bars*');
-      porterSummary = fetchAlbum('Porter', 'Late%20Night', cat: '*Open%20Bars*');
+      cowellSummary =
+          fetchAlbum('Cowell', 'Late%20Night', cat: '*Open%20Bars*');
+      merrillSummary =
+          fetchAlbum('Merrill', 'Late%20Night', cat: '*Open%20Bars*');
+      porterSummary =
+          fetchAlbum('Porter', 'Late%20Night', cat: '*Open%20Bars*');
       //FIXME goofy a code
     } else {
       nineSummary = fetchAlbum('Nine', 'Late%20Night', cat: '*FIXME*');
@@ -243,7 +244,6 @@ class _RootPageState extends State<RootPage> {
             return Column(
               children: [
                 //padding: const EdgeInsets.all(4),
-
                 Container(
                     decoration: const BoxDecoration(
                         border: Border(
@@ -294,12 +294,12 @@ class _RootPageState extends State<RootPage> {
                         "Hall Closed",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontFamily: constants.bodyFont,
-                          //fontWeight: FontWeight.bold,
-                          fontSize: constants.bodyFontSize,
-                          color: Color(constants.bodyColor),
-                          height: constants.bodyFontheight,
-                        ),
+                            fontFamily: constants.bodyFont,
+                            //fontWeight: FontWeight.bold,
+                            fontSize: constants.bodyFontSize,
+                            color: Color(constants.bodyColor),
+                            height: constants.bodyFontheight,
+                            fontWeight: FontWeight.bold),
                       ))
                 else
                   for (var i = 0; i < snapshot.data.length; i++)
@@ -350,6 +350,7 @@ class _RootPageState extends State<RootPage> {
             child: Text(
               "UC Santa Cruz",
               style: TextStyle(
+                  fontWeight: FontWeight.normal,
                   fontSize: 40,
                   fontFamily: 'Monoton',
                   color: Color(constants.yellowGold)),

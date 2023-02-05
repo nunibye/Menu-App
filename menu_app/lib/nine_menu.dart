@@ -28,18 +28,14 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
     futureLateNight = main_page.fetchAlbum('Nine', 'Late%20Night');
     if (time.hour < 10) {
       _tabController.animateTo(0);
-    }
-    else if (time.hour < 16) {
+    } else if (time.hour < 16) {
       _tabController.animateTo(1);
-    }
-    else if (time.hour < 20) {
+    } else if (time.hour < 20) {
       _tabController.animateTo(2);
-    }
-    else {
+    } else {
       _tabController.animateTo(3);
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +44,7 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
         title: const Text(
           "9/10",
           style: TextStyle(
+              fontWeight: FontWeight.normal,
               fontSize: constants.menuHeadingSize,
               fontFamily: 'Monoton',
               color: Color(constants.yellowGold)),

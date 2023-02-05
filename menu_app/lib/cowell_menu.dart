@@ -102,23 +102,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
               future: futureBreakfast,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  if (snapshot.data[0] == 'null') {
-                    Container(
-                        padding: const EdgeInsets.all(
-                            constants.containerPaddingbody),
-                        alignment: Alignment.center,
-                        child: const Text(
-                          "Hall Closed",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: constants.bodyFont,
-                            //fontWeight: FontWeight.bold,
-                            fontSize: constants.bodyFontSize,
-                            color: Color(constants.bodyColor),
-                            height: constants.bodyFontheight,
-                          ),
-                        ));
-                  } else {
+                  
                     return ListView(
                       //padding: const EdgeInsets.all(4),
                       children: [
@@ -161,7 +145,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
                                 )))
                       ],
                     );
-                  }
+                  
                 } else if (snapshot.hasError) {
                   return Text(
                     '${snapshot.error}',
@@ -183,6 +167,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
             child: FutureBuilder(
               future: futureLunch,
               builder: (context, snapshot) {
+                
                 if (snapshot.hasData) {
                   return ListView(
                     //padding: const EdgeInsets.all(4),

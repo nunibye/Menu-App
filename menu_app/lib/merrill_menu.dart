@@ -10,13 +10,13 @@ class MerrillMenu extends StatefulWidget {
 }
 
 /// AnimationControllers can be created with `vsync: this` because of TickerProviderStateMixin.
-class _MerrillMenuState extends State<MerrillMenu> with TickerProviderStateMixin {
+class _MerrillMenuState extends State<MerrillMenu>
+    with TickerProviderStateMixin {
   late TabController _tabController;
   late Future futureBreakfast;
   late Future futureLunch;
   late Future futureDinner;
   final time = DateTime.now();
-  
 
   @override
   void initState() {
@@ -35,7 +35,6 @@ class _MerrillMenuState extends State<MerrillMenu> with TickerProviderStateMixin
     } else {
       _tabController.animateTo(3);
     }
-    
   }
 
   // @override
@@ -86,7 +85,6 @@ class _MerrillMenuState extends State<MerrillMenu> with TickerProviderStateMixin
             Tab(
               icon: Icon(Icons.dinner_dining_outlined),
             ),
-            
           ],
         ),
       ),
@@ -99,7 +97,8 @@ class _MerrillMenuState extends State<MerrillMenu> with TickerProviderStateMixin
             child: FutureBuilder(
               future: futureBreakfast,
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
+                 if (snapshot.hasData) {
+                  
                   return ListView(
                     //padding: const EdgeInsets.all(4),
                     children: [
@@ -163,7 +162,8 @@ class _MerrillMenuState extends State<MerrillMenu> with TickerProviderStateMixin
             child: FutureBuilder(
               future: futureLunch,
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
+               
+                 if (snapshot.hasData) {
                   return ListView(
                     //padding: const EdgeInsets.all(4),
                     children: [
@@ -228,6 +228,7 @@ class _MerrillMenuState extends State<MerrillMenu> with TickerProviderStateMixin
               future: futureDinner,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                  
                   return ListView(
                     //padding: const EdgeInsets.all(4),
                     children: [
@@ -285,7 +286,6 @@ class _MerrillMenuState extends State<MerrillMenu> with TickerProviderStateMixin
               },
             ),
           ),
-          
         ],
       ),
     );

@@ -39,7 +39,73 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
       _tabController.animateTo(3);
     }
   }
+  Widget buildMeal(Future<dynamic> hallSummary) {
+    return Container(
+            alignment: Alignment.topLeft,
+            //padding: const EdgeInsets.only(top: 20, left: 12),
+            child: FutureBuilder(
+              future: hallSummary,
+              builder: (context, snapshot) {
+                 if (snapshot.hasData) {
+                  
+                  return ListView(
+                    //padding: const EdgeInsets.all(4),
+                    children: [
+                      for (var i = 0; i < snapshot.data.length; i++)
+                        if (i % 2 == 0)
+                          (Container(
+                              decoration: const BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          width: constants.borderWidth,
+                                          color: Color(constants.darkGray)))),
+                              padding: const EdgeInsets.all(
+                                  constants.containerPaddingTitle),
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                snapshot.data[i],
+                                style: const TextStyle(
+                                  fontFamily: constants.titleFont,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: constants.titleFontSize,
+                                  color: Color(constants.titleColor),
+                                  height: constants.titleFontheight,
+                                ),
+                              )))
+                        else
+                          (Container(
+                              padding: const EdgeInsets.all(
+                                  constants.containerPaddingbody),
+                              alignment: Alignment.topRight,
+                              child: Text(
+                                snapshot.data[i],
+                                textAlign: TextAlign.right,
+                                style: const TextStyle(
+                                  fontFamily: constants.bodyFont,
+                                  //fontWeight: FontWeight.bold,
+                                  fontSize: constants.bodyFontSize,
+                                  color: Color(constants.bodyColor),
+                                  height: constants.bodyFontheight,
+                                ),
+                              )))
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Text(
+                    '${snapshot.error}',
+                    style: const TextStyle(
+                      fontSize: 25,
+                      color: Color(constants.yellowGold),
+                    ),
+                  );
+                }
 
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
+          );
+  }
   // @override
   // void dispose() {
   //   super.dispose();
@@ -97,262 +163,10 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          Container(
-            alignment: Alignment.topLeft,
-            //padding: const EdgeInsets.only(top: 20, left: 12),
-            child: FutureBuilder(
-              future: futureBreakfast,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView(
-                    //padding: const EdgeInsets.all(4),
-                    children: [
-                      for (var i = 0; i < snapshot.data.length; i++)
-                        if (i % 2 == 0)
-                          (Container(
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: constants.borderWidth,
-                                          color: Color(constants.darkGray)))),
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingTitle),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                snapshot.data[i],
-                                style: const TextStyle(
-                                  fontFamily: constants.titleFont,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: constants.titleFontSize,
-                                  color: Color(constants.titleColor),
-                                  height: constants.titleFontheight,
-                                ),
-                              )))
-                        else
-                          (Container(
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingbody),
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                snapshot.data[i],
-                                textAlign: TextAlign.right,
-                                style: const TextStyle(
-                                  fontFamily: constants.bodyFont,
-                                  //fontWeight: FontWeight.bold,
-                                  fontSize: constants.bodyFontSize,
-                                  color: Color(constants.bodyColor),
-                                  height: constants.bodyFontheight,
-                                ),
-                              )))
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  return Text(
-                    '${snapshot.error}',
-                    style: const TextStyle(
-                      fontSize: 25,
-                      color: Color(constants.yellowGold),
-                    ),
-                  );
-                }
-
-                // By default, show a loading spinner.
-                return const CircularProgressIndicator();
-              },
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            //padding: const EdgeInsets.only(top: 20, left: 12),
-            child: FutureBuilder(
-              future: futureLunch,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView(
-                    //padding: const EdgeInsets.all(4),
-                    children: [
-                      for (var i = 0; i < snapshot.data.length; i++)
-                        if (i % 2 == 0)
-                          (Container(
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: constants.borderWidth,
-                                          color: Color(constants.darkGray)))),
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingTitle),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                snapshot.data[i],
-                                style: const TextStyle(
-                                  fontFamily: constants.titleFont,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: constants.titleFontSize,
-                                  color: Color(constants.titleColor),
-                                  height: constants.titleFontheight,
-                                ),
-                              )))
-                        else
-                          (Container(
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingbody),
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                snapshot.data[i],
-                                textAlign: TextAlign.right,
-                                style: const TextStyle(
-                                  fontFamily: constants.bodyFont,
-                                  //fontWeight: FontWeight.bold,
-                                  fontSize: constants.bodyFontSize,
-                                  color: Color(constants.bodyColor),
-                                  height: constants.bodyFontheight,
-                                ),
-                              )))
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  return Text(
-                    '${snapshot.error}',
-                    style: const TextStyle(
-                      fontSize: 25,
-                      color: Color(constants.yellowGold),
-                    ),
-                  );
-                }
-
-                // By default, show a loading spinner.
-                return const CircularProgressIndicator();
-              },
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            //padding: const EdgeInsets.only(top: 20, left: 12),
-            child: FutureBuilder(
-              future: futureDinner,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView(
-                    //padding: const EdgeInsets.all(4),
-                    children: [
-                      for (var i = 0; i < snapshot.data.length; i++)
-                        if (i % 2 == 0)
-                          (Container(
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: constants.borderWidth,
-                                          color: Color(constants.darkGray)))),
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingTitle),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                snapshot.data[i],
-                                style: const TextStyle(
-                                  fontFamily: constants.titleFont,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: constants.titleFontSize,
-                                  color: Color(constants.titleColor),
-                                  height: constants.titleFontheight,
-                                ),
-                              )))
-                        else
-                          (Container(
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingbody),
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                snapshot.data[i],
-                                textAlign: TextAlign.right,
-                                style: const TextStyle(
-                                  fontFamily: constants.bodyFont,
-                                  //fontWeight: FontWeight.bold,
-                                  fontSize: constants.bodyFontSize,
-                                  color: Color(constants.bodyColor),
-                                  height: constants.bodyFontheight,
-                                ),
-                              )))
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  return Text(
-                    '${snapshot.error}',
-                    style: const TextStyle(
-                      fontSize: 25,
-                      color: Color(constants.yellowGold),
-                    ),
-                  );
-                }
-
-                // By default, show a loading spinner.
-                return const CircularProgressIndicator();
-              },
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            //padding: const EdgeInsets.only(top: 20, left: 12),
-            child: FutureBuilder(
-              future: futureLateNight,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView(
-                    //padding: const EdgeInsets.all(4),
-                    children: [
-                      for (var i = 0; i < snapshot.data.length; i++)
-                        if (i % 2 == 0)
-                          (Container(
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: constants.borderWidth,
-                                          color: Color(constants.darkGray)))),
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingTitle),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                snapshot.data[i],
-                                style: const TextStyle(
-                                  fontFamily: constants.titleFont,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: constants.titleFontSize,
-                                  color: Color(constants.titleColor),
-                                  height: constants.titleFontheight,
-                                ),
-                              )))
-                        else
-                          (Container(
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingbody),
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                snapshot.data[i],
-                                textAlign: TextAlign.right,
-                                style: const TextStyle(
-                                  fontFamily: constants.bodyFont,
-                                  //fontWeight: FontWeight.bold,
-                                  fontSize: constants.bodyFontSize,
-                                  color: Color(constants.bodyColor),
-                                  height: constants.bodyFontheight,
-                                ),
-                              )))
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  return Text(
-                    '${snapshot.error}',
-                    style: const TextStyle(
-                      fontSize: 25,
-                      color: Color(constants.yellowGold),
-                    ),
-                  );
-                }
-
-                // By default, show a loading spinner.
-                return const CircularProgressIndicator();
-              },
-            ),
-          ),
+          buildMeal(futureBreakfast),
+          buildMeal(futureLunch),
+          buildMeal(futureDinner),
+          buildMeal(futureLateNight),
         ],
       ),
     );

@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
+//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 import 'package:menu_app/cowell_menu.dart';
@@ -9,6 +8,7 @@ import 'package:menu_app/merrill_menu.dart';
 import 'package:menu_app/nine_menu.dart';
 import 'package:menu_app/porter_menu.dart';
 import 'package:http/http.dart' as http;
+//import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 Future fetchAlbum(college, meal, {cat = ""}) async {
   final response = await http.get(Uri.parse(
@@ -79,12 +79,14 @@ Future fetchCat(college, meal, cat) async {
   }
 }
 
-void main() => runApp(const MyApp());
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-//   );
+//void main() => runApp(const MyApp());
+void main() {
+  //WidgetsFlutterBinding.ensureInitialized();
+  //MobileAds.instance.initialize();
+  runApp(const MyApp());
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -119,30 +121,35 @@ class _RootPageState extends State<RootPage> {
   void initState() {
     super.initState();
     final time = DateTime.now();
-    if (time.hour < 10) {
+    if (time.hour < 10 && time.hour > 4) {
       nineSummary = fetchCat('Nine', 'Breakfast', '*Breakfast*');
       cowellSummary = fetchCat('Cowell', 'Breakfast', '*Breakfast*');
-      merrillSummary = fetchCat('Merrill', 'Breakfast', '*Breakfast');
+      merrillSummary = fetchCat('Merrill', 'Breakfast', '*Breakfast*');
       porterSummary = fetchCat('Porter', 'Breakfast', '*Breakfast*');
+    } else if (time.hour < 16) {
+      nineSummary = fetchCat('Nine', 'Lunch', '*Open%20Bars*');
+      cowellSummary = fetchCat('Cowell', 'Lunch', '*Open%20Bars*');
+      merrillSummary = fetchCat('Merrill', 'Lunch', '*Open%20Bars*');
+      porterSummary = fetchCat('Porter', 'Lunch', '*Open%20Bars*');
+    } else if (time.hour < 20) {
+      nineSummary = fetchCat('Nine', 'Dinner', '*Open%20Bars*');
+      cowellSummary = fetchCat('Cowell', 'Dinner', '*Open%20Bars*');
+      merrillSummary = fetchCat('Merrill', 'Dinner', '*Open%20Bars*');
+      porterSummary = fetchCat('Porter', 'Dinner', '*Open%20Bars*');
+    } else if (time.hour < 23){
+      nineSummary = fetchCat('Nine', 'Late%20Night', '*Open%20Bars*');
+      cowellSummary = fetchCat('Cowell', 'Late%20Night', '*Open%20Bars*');
+      merrillSummary = fetchCat('Merrill', 'Late%20Night', '*Open%20Bars*');
+      porterSummary = fetchCat('Porter', 'Late%20Night', '*Open%20Bars*');
+      //FIXME goofy a code
+    }else{
+      nineSummary = fetchCat('Nine', 'Late%20Night', '*FIXME*');
+      cowellSummary = nineSummary;
+      merrillSummary = nineSummary;
+      porterSummary = nineSummary;
+      
     }
-    else if (time.hour < 16) {
-      nineSummary = fetchCat('Nine', 'Lunch', '*Entrees*');
-      cowellSummary = fetchCat('Cowell', 'Lunch', '*Entrees*');
-      merrillSummary = fetchCat('Merrill', 'Lunch', '*Entrees');
-      porterSummary = fetchCat('Porter', 'Lunch', '*Entrees*');
-    }
-    else if (time.hour < 20) {
-      nineSummary = fetchCat('Nine', 'Dinner', '*Entrees*');
-      cowellSummary = fetchCat('Cowell', 'Dinner', '*Entrees*');
-      merrillSummary = fetchCat('Merrill', 'Dinner', '*Entrees');
-      porterSummary = fetchCat('Porter', 'Dinner', '*Entrees*');
-    }
-    else {
-      nineSummary = fetchCat('Nine', 'Late%20Night', '*Entrees*');
-      cowellSummary = fetchCat('Cowell', 'Late%20Night', '*Entrees*');
-      merrillSummary = fetchCat('Merrill', 'Late%20Night', '*Entrees');
-      porterSummary = fetchCat('Porter', 'Late%20Night', '*Entrees*');
-    }
+
   }
 
   // void initState() {

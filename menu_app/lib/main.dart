@@ -174,6 +174,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // Ignores IOS set to bold text
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(boldText: false),
+        child: child!,
+      ),
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(constants.darkBlue),
       ),

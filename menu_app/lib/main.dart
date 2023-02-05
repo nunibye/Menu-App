@@ -8,6 +8,7 @@ import 'package:menu_app/merrill_menu.dart';
 import 'package:menu_app/nine_menu.dart';
 import 'package:menu_app/porter_menu.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 buildMeal(Future<dynamic> hallSummary) {
@@ -161,9 +162,13 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
 
 //void main() => runApp(const MyApp());
 void main() {
-  //WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((value) => runApp(const MyApp()));
   //MobileAds.instance.initialize();
-  runApp(const MyApp());
+  //runApp(const MyApp());
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +129,6 @@ class _RootPageState extends State<RootPage> {
   //   futureAlbum = fetchAlbum('Breakfast');
   // }
 
-
 // NEED TO FIGURE OUT HOW TO PASS IN A CLASS TO CHANGE BUTTON LINK
   Widget buildSummary(college, Future<dynamic> hallSummary) {
     return Container(
@@ -152,22 +152,22 @@ class _RootPageState extends State<RootPage> {
                         const EdgeInsets.all(constants.containerPaddingTitle),
                     alignment: Alignment.topLeft,
                     child: TextButton(
+                      style: TextButton.styleFrom(
+                          fixedSize:
+                              Size(MediaQuery.of(context).size.width, 40),
+                          alignment: Alignment.topLeft),
                       onPressed: () => {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (BuildContext context) {
                             if (college == "Nine") {
                               return const NineMenu();
-                            }
-                            else if (college == "Cowell") {
+                            } else if (college == "Cowell") {
                               return const CowellMenu();
-                            }
-                            else if (college == "Porter") {
+                            } else if (college == "Porter") {
                               return const PorterMenu();
-                            }
-                            else {
+                            } else {
                               return const MerrillMenu();
                             }
-                            
                           }),
                         )
                       },
@@ -182,8 +182,9 @@ class _RootPageState extends State<RootPage> {
                         ),
                       ),
                     )),
-                    if (snapshot.data[0] == 'null')
-                        Container(padding:
+                if (snapshot.data[0] == 'null')
+                  Container(
+                      padding:
                           const EdgeInsets.all(constants.containerPaddingbody),
                       alignment: Alignment.center,
                       child: const Text(
@@ -197,28 +198,26 @@ class _RootPageState extends State<RootPage> {
                           height: constants.bodyFontheight,
                         ),
                       ))
-                    
-                    else
-                for (var i = 0; i < snapshot.data.length; i++)
-                  (Container(
-                      padding:
-                          const EdgeInsets.all(constants.containerPaddingbody),
-                      alignment: Alignment.topRight,
-                      child: Text(
-                        snapshot.data[i],
-                        textAlign: TextAlign.right,
-                        style: const TextStyle(
-                          fontFamily: constants.bodyFont,
-                          //fontWeight: FontWeight.bold,
-                          fontSize: constants.bodyFontSize,
-                          color: Color(constants.bodyColor),
-                          height: constants.bodyFontheight,
-                        ),
-                      )))
+                else
+                  for (var i = 0; i < snapshot.data.length; i++)
+                    (Container(
+                        padding: const EdgeInsets.all(
+                            constants.containerPaddingbody),
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          snapshot.data[i],
+                          textAlign: TextAlign.right,
+                          style: const TextStyle(
+                            fontFamily: constants.bodyFont,
+                            //fontWeight: FontWeight.bold,
+                            fontSize: constants.bodyFontSize,
+                            color: Color(constants.bodyColor),
+                            height: constants.bodyFontheight,
+                          ),
+                        )))
               ],
             );
-          }
-           else if (snapshot.hasError) {
+          } else if (snapshot.hasError) {
             return Text(
               '${snapshot.error}',
               style: const TextStyle(
@@ -227,7 +226,6 @@ class _RootPageState extends State<RootPage> {
               ),
             );
           }
-        
 
           // By default, show a loading spinner.
           return const CircularProgressIndicator();
@@ -235,10 +233,6 @@ class _RootPageState extends State<RootPage> {
       ),
     );
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -348,16 +342,14 @@ class _RootPageState extends State<RootPage> {
               // future: nineSummary,
               builder: (context, snapshot) {
                 // if (snapshot.hasData) {
-                  return Column(
-                    children: [
-                      
-                      buildSummary("Porter", porterSummary),
-                      buildSummary("Nine", nineSummary),
-                      buildSummary("Cowell", cowellSummary),
-                      buildSummary("Merrill", merrillSummary),
-
-                    ],
-                  );
+                return Column(
+                  children: [
+                    buildSummary("Porter", porterSummary),
+                    buildSummary("Nine", nineSummary),
+                    buildSummary("Cowell", cowellSummary),
+                    buildSummary("Merrill", merrillSummary),
+                  ],
+                );
                 // } else if (snapshot.hasError) {
                 //   return Text(
                 //     '${snapshot.error}',
@@ -369,7 +361,6 @@ class _RootPageState extends State<RootPage> {
                 // }
 
                 // By default, show a loading spinner.
-                
               },
             ),
           ),

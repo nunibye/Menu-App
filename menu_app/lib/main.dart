@@ -8,36 +8,37 @@ import 'package:menu_app/merrill_menu.dart';
 import 'package:menu_app/nine_menu.dart';
 import 'package:menu_app/porter_menu.dart';
 import 'package:http/http.dart' as http;
+
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 buildMeal(Future<dynamic> hallSummary) {
-    return Container(
-      alignment: Alignment.topLeft,
-      //padding: const EdgeInsets.only(top: 20, left: 12),
-      child: FutureBuilder(
-        future: hallSummary,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data[0].toString() == 'null') {
-              return Container(
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                            width: constants.borderWidth,
-                            color: Color(constants.darkGray)))),
-                padding: const EdgeInsets.all(constants.containerPaddingTitle),
-                alignment: Alignment.topCenter,
-                child: const Text(
-                  'Unavailable Today',
-                  style: TextStyle(
-                    fontFamily: constants.titleFont,
-                    fontWeight: FontWeight.bold,
-                    fontSize: constants.titleFontSize,
-                    color: Color(constants.titleColor),
-                    height: constants.titleFontheight,
-                  ),
+  return Container(
+    alignment: Alignment.topLeft,
+    //padding: const EdgeInsets.only(top: 20, left: 12),
+    child: FutureBuilder(
+      future: hallSummary,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data[0].toString() == 'null') {
+            return Container(
+              decoration: const BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          width: constants.borderWidth,
+                          color: Color(constants.darkGray)))),
+              padding: const EdgeInsets.all(constants.containerPaddingTitle),
+              alignment: Alignment.topCenter,
+              child: const Text(
+                'Unavailable Today',
+                style: TextStyle(
+                  fontFamily: constants.titleFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: constants.titleFontSize,
+                  color: Color(constants.titleColor),
+                  height: constants.titleFontheight,
                 ),
-              );
-            }else{
+              ),
+            );
+          } else {
             return ListView(
               //padding: const EdgeInsets.all(4),
               children: [
@@ -80,23 +81,25 @@ buildMeal(Future<dynamic> hallSummary) {
                           ),
                         )))
               ],
-            );}
-          } else if (snapshot.hasError) {
-            return Text(
-              '${snapshot.error}',
-              style: const TextStyle(
-                fontSize: 25,
-                color: Color(constants.yellowGold),
-              ),
             );
           }
+        } else if (snapshot.hasError) {
+          return Text(
+            '${snapshot.error}',
+            style: const TextStyle(
+              fontSize: 25,
+              color: Color(constants.yellowGold),
+            ),
+          );
+        }
 
-          // By default, show a loading spinner.
-          return const CircularProgressIndicator();
-        },
-      ),
-    );
-  }
+        // By default, show a loading spinner.
+        return const CircularProgressIndicator();
+      },
+    ),
+  );
+}
+
 Future fetchAlbum(college, meal, {cat = ""}) async {
   final response = await http.get(Uri.parse(
       'https://ucsc-menu-app-default-rtdb.firebaseio.com/$college/$meal/$cat.json'));
@@ -105,13 +108,11 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
 
-    var list = response.body.toString().split('*');
-    list.remove('{"');
+    // If there is a category
+    if (cat != "") {
+      var list = response.body.toString().split(',');
 
-    for (var i = 0; i < list.length; i++) {
-      if (i % 2 == 0) {
-        list[i] = list[i].replaceAll(RegExp(r'[^\w\s]+'), '');
-      } else {
+      for (var i = 0; i < list.length; i++) {
         String temp = list[i];
         //List temp_list = [];
         List listTemp = temp.split(',');
@@ -124,47 +125,41 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
         temp = listTemp.join('\n');
         list[i] = temp;
       }
-    }
 
-    return list;
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
+      return list;
 
-Future fetchCat(college, meal, cat) async {
-  final response = await http.get(Uri.parse(
-      'https://ucsc-menu-app-default-rtdb.firebaseio.com/$college/$meal/$cat.json'));
+    // If fetching full meals
+    } else {
+      var list = response.body.toString().split('*');
+      list.remove('{"');
 
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-
-    var list = response.body.toString().split(',');
-
-    for (var i = 0; i < list.length; i++) {
-      String temp = list[i];
-      //List temp_list = [];
-      List listTemp = temp.split(',');
-      listTemp.remove('"');
-      //const String tab = '  ';
-      for (var i = 0; i < listTemp.length; i++) {
-        listTemp[i] = listTemp[i].replaceAll(RegExp(r'[^\w\s]+'), '');
-        //listTemp[i] = '*' + listTemp[i];
+      for (var i = 0; i < list.length; i++) {
+        if (i % 2 == 0) {
+          list[i] = list[i].replaceAll(RegExp(r'[^\w\s]+'), '');
+        } else {
+          String temp = list[i];
+          //List temp_list = [];
+          List listTemp = temp.split(',');
+          listTemp.remove('"');
+          //const String tab = '  ';
+          for (var i = 0; i < listTemp.length; i++) {
+            listTemp[i] = listTemp[i].replaceAll(RegExp(r'[^\w\s]+'), '');
+            //listTemp[i] = '*' + listTemp[i];
+          }
+          temp = listTemp.join('\n');
+          list[i] = temp;
+        }
       }
-      temp = listTemp.join('\n');
-      list[i] = temp;
+      return list;
     }
 
-    return list;
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to load album');
   }
 }
+
 
 //void main() => runApp(const MyApp());
 void main() {
@@ -209,41 +204,34 @@ class _RootPageState extends State<RootPage> {
     super.initState();
     final time = DateTime.now();
     if (time.hour < 10 && time.hour > 4) {
-      nineSummary = fetchCat('Nine', 'Breakfast', '*Breakfast*');
-      cowellSummary = fetchCat('Cowell', 'Breakfast', '*Breakfast*');
-      merrillSummary = fetchCat('Merrill', 'Breakfast', '*Breakfast*');
-      porterSummary = fetchCat('Porter', 'Breakfast', '*Breakfast*');
+      nineSummary = fetchAlbum('Nine', 'Breakfast', cat: '*Breakfast*');
+      cowellSummary = fetchAlbum('Cowell', 'Breakfast', cat: '*Breakfast*');
+      merrillSummary = fetchAlbum('Merrill', 'Breakfast', cat: '*Breakfast*');
+      porterSummary = fetchAlbum('Porter', 'Breakfast', cat: '*Breakfast*');
     } else if (time.hour < 16) {
-      nineSummary = fetchCat('Nine', 'Lunch', '*Open%20Bars*');
-      cowellSummary = fetchCat('Cowell', 'Lunch', '*Open%20Bars*');
-      merrillSummary = fetchCat('Merrill', 'Lunch', '*Open%20Bars*');
-      porterSummary = fetchCat('Porter', 'Lunch', '*Open%20Bars*');
+      nineSummary = fetchAlbum('Nine', 'Lunch', cat: '*Open%20Bars*');
+      cowellSummary = fetchAlbum('Cowell', 'Lunch', cat: '*Open%20Bars*');
+      merrillSummary = fetchAlbum('Merrill', 'Lunch', cat: '*Open%20Bars*');
+      porterSummary = fetchAlbum('Porter', 'Lunch', cat: '*Open%20Bars*');
     } else if (time.hour < 20) {
-      nineSummary = fetchCat('Nine', 'Dinner', '*Open%20Bars*');
-      cowellSummary = fetchCat('Cowell', 'Dinner', '*Open%20Bars*');
-      merrillSummary = fetchCat('Merrill', 'Dinner', '*Open%20Bars*');
-      porterSummary = fetchCat('Porter', 'Dinner', '*Open%20Bars*');
-    } else if (time.hour < 23){
-      nineSummary = fetchCat('Nine', 'Late%20Night', '*Open%20Bars*');
-      cowellSummary = fetchCat('Cowell', 'Late%20Night', '*Open%20Bars*');
-      merrillSummary = fetchCat('Merrill', 'Late%20Night', '*Open%20Bars*');
-      porterSummary = fetchCat('Porter', 'Late%20Night', '*Open%20Bars*');
+      nineSummary = fetchAlbum('Nine', 'Dinner', cat: '*Open%20Bars*');
+      cowellSummary = fetchAlbum('Cowell', 'Dinner', cat: '*Open%20Bars*');
+      merrillSummary = fetchAlbum('Merrill', 'Dinner', cat: '*Open%20Bars*');
+      porterSummary = fetchAlbum('Porter', 'Dinner', cat: '*Open%20Bars*');
+    } else if (time.hour < 23) {
+      nineSummary = fetchAlbum('Nine', 'Late%20Night', cat: '*Open%20Bars*');
+      cowellSummary = fetchAlbum('Cowell', 'Late%20Night', cat: '*Open%20Bars*');
+      merrillSummary = fetchAlbum('Merrill', 'Late%20Night', cat: '*Open%20Bars*');
+      porterSummary = fetchAlbum('Porter', 'Late%20Night', cat: '*Open%20Bars*');
       //FIXME goofy a code
-    }else{
-      nineSummary = fetchCat('Nine', 'Late%20Night', '*FIXME*');
+    } else {
+      nineSummary = fetchAlbum('Nine', 'Late%20Night', cat: '*FIXME*');
       cowellSummary = nineSummary;
       merrillSummary = nineSummary;
       porterSummary = nineSummary;
-      
     }
-
   }
 
-  // void initState() {
-  //   super.initState();
-  //   futureAlbum = fetchAlbum('Breakfast');
-  // }
-  
   Widget buildSummary(college, Future<dynamic> hallSummary) {
     return Container(
       alignment: Alignment.topLeft,
@@ -436,19 +424,6 @@ class _RootPageState extends State<RootPage> {
               ],
             ),
           ),
-
-          // Container(
-          //   alignment: Alignment.bottomCenter,
-          //   height: MediaQuery.of(context).size.height / 4,
-          //   child: const Text(
-          //     "More Coming Soon Here",
-          //     style: TextStyle(
-          //         fontSize: 25,
-          //         fontFamily: 'Montserat',
-          //         fontWeight: FontWeight.bold,
-          //         color: Color(constants.white)),
-          //   ),
-          // ),
           Container(
             alignment: Alignment.topLeft,
             // height: MediaQuery.of(context).size.height / 2,
@@ -479,34 +454,6 @@ class _RootPageState extends State<RootPage> {
               },
             ),
           ),
-        ])
-
-        // Container(
-        //   alignment: Alignment.topLeft,
-        //   padding: const EdgeInsets.only(top: 20, left: 12),
-        //   child: FutureBuilder(
-        //     future: futureAlbum,
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasData) {
-        //         return Text(
-        //           snapshot.data[1],
-        //           style: const TextStyle(
-        //               fontSize: 25, color: Color(constants.yellowGold)),
-        //         );
-        //       } else if (snapshot.hasError) {
-        //         return Text(
-        //           '${snapshot.error}',
-        //           style: const TextStyle(
-        //               fontSize: 25, color: Color(constants.yellowGold)),
-        //         );
-        //       }
-
-        //       // By default, show a loading spinner.
-        //       return const CircularProgressIndicator();
-        //     },
-        //   ),
-        // )
-
-        );
+        ]));
   }
 }

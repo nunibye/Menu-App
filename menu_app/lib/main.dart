@@ -171,6 +171,23 @@ class _RootPageState extends State<RootPage> {
                         ),
                       ),
                     )),
+                    if (snapshot.data[0] == 'null')
+                        Container(padding:
+                          const EdgeInsets.all(constants.containerPaddingbody),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        "Hall Closed",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: constants.bodyFont,
+                          //fontWeight: FontWeight.bold,
+                          fontSize: constants.bodyFontSize,
+                          color: Color(constants.bodyColor),
+                          height: constants.bodyFontheight,
+                        ),
+                      ))
+                    
+                    else
                 for (var i = 0; i < snapshot.data.length; i++)
                   (Container(
                       padding:
@@ -189,7 +206,8 @@ class _RootPageState extends State<RootPage> {
                       )))
               ],
             );
-          } else if (snapshot.hasError) {
+          }
+           else if (snapshot.hasError) {
             return Text(
               '${snapshot.error}',
               style: const TextStyle(
@@ -198,6 +216,7 @@ class _RootPageState extends State<RootPage> {
               ),
             );
           }
+        
 
           // By default, show a loading spinner.
           return const CircularProgressIndicator();

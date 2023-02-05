@@ -155,7 +155,18 @@ class _RootPageState extends State<RootPage> {
                       onPressed: () => {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (BuildContext context) {
-                            return const CowellMenu();
+                            if (college == "Nine") {
+                              return const NineMenu();
+                            }
+                            else if (college == "Cowell") {
+                              return const CowellMenu();
+                            }
+                            else if (college == "Porter") {
+                              return const PorterMenu();
+                            }
+                            else {
+                              return const MerrillMenu();
+                            }
                             
                           }),
                         )
@@ -339,53 +350,6 @@ class _RootPageState extends State<RootPage> {
                 // if (snapshot.hasData) {
                   return Column(
                     children: [
-                      //padding: const EdgeInsets.all(4),
-
-                      // Container(
-                      //     decoration: const BoxDecoration(
-                      //         border: Border(
-                      //             bottom: BorderSide(
-                      //                 width: constants.borderWidth,
-                      //                 color: Color(constants.darkGray)))),
-                      //     padding: const EdgeInsets.all(
-                      //         constants.containerPaddingTitle),
-                      //     alignment: Alignment.topLeft,
-                      //     child: TextButton(
-                      //       onPressed: () => {
-                      //         Navigator.of(context).push(
-                      //           MaterialPageRoute(
-                      //               builder: (BuildContext context) {
-                      //             return const PorterMenu();
-                      //           }),
-                      //         )
-                      //       },
-                      //       child: const Text(
-                      //         "Porter",
-                      //         style: TextStyle(
-                      //           fontFamily: constants.titleFont,
-                      //           fontWeight: FontWeight.bold,
-                      //           fontSize: constants.titleFontSize,
-                      //           color: Color(constants.titleColor),
-                      //           height: constants.titleFontheight,
-                      //         ),
-                      //       ),
-                      //     )),
-                      // for (var i = 0; i < snapshot.data.length; i++)
-                      //   (Container(
-                      //       padding: const EdgeInsets.all(
-                      //           constants.containerPaddingbody),
-                      //       alignment: Alignment.topRight,
-                      //       child: Text(
-                      //         snapshot.data[i],
-                      //         textAlign: TextAlign.right,
-                      //         style: const TextStyle(
-                      //           fontFamily: constants.bodyFont,
-                      //           //fontWeight: FontWeight.bold,
-                      //           fontSize: constants.bodyFontSize,
-                      //           color: Color(constants.bodyColor),
-                      //           height: constants.bodyFontheight,
-                      //         ),
-                      //       )))
                       
                       buildSummary("Porter", porterSummary),
                       buildSummary("Nine", nineSummary),

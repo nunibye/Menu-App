@@ -118,10 +118,31 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
-    nineSummary = fetchCat('Nine', 'Breakfast', '*Breakfast*');
-    cowellSummary = fetchCat('Cowell', 'Breakfast', '*Breakfast*');
-    merrillSummary = fetchCat('Merrill', 'Breakfast', '*Breakfast');
-    porterSummary = fetchCat('Porter', 'Breakfast', '*Breakfast*');
+    final time = DateTime.now();
+    if (time.hour < 10) {
+      nineSummary = fetchCat('Nine', 'Breakfast', '*Breakfast*');
+      cowellSummary = fetchCat('Cowell', 'Breakfast', '*Breakfast*');
+      merrillSummary = fetchCat('Merrill', 'Breakfast', '*Breakfast');
+      porterSummary = fetchCat('Porter', 'Breakfast', '*Breakfast*');
+    }
+    else if (time.hour < 16) {
+      nineSummary = fetchCat('Nine', 'Lunch', '*Entrees*');
+      cowellSummary = fetchCat('Cowell', 'Lunch', '*Entrees*');
+      merrillSummary = fetchCat('Merrill', 'Lunch', '*Entrees');
+      porterSummary = fetchCat('Porter', 'Lunch', '*Entrees*');
+    }
+    else if (time.hour < 20) {
+      nineSummary = fetchCat('Nine', 'Dinner', '*Entrees*');
+      cowellSummary = fetchCat('Cowell', 'Dinner', '*Entrees*');
+      merrillSummary = fetchCat('Merrill', 'Dinner', '*Entrees');
+      porterSummary = fetchCat('Porter', 'Dinner', '*Entrees*');
+    }
+    else {
+      nineSummary = fetchCat('Nine', 'Late%20Night', '*Entrees*');
+      cowellSummary = fetchCat('Cowell', 'Late%20Night', '*Entrees*');
+      merrillSummary = fetchCat('Merrill', 'Late%20Night', '*Entrees');
+      porterSummary = fetchCat('Porter', 'Late%20Night', '*Entrees*');
+    }
   }
 
   // void initState() {
@@ -129,7 +150,6 @@ class _RootPageState extends State<RootPage> {
   //   futureAlbum = fetchAlbum('Breakfast');
   // }
 
-// NEED TO FIGURE OUT HOW TO PASS IN A CLASS TO CHANGE BUTTON LINK
   Widget buildSummary(college, Future<dynamic> hallSummary) {
     return Container(
       alignment: Alignment.topLeft,
@@ -151,6 +171,7 @@ class _RootPageState extends State<RootPage> {
                     padding:
                         const EdgeInsets.all(constants.containerPaddingTitle),
                     alignment: Alignment.topLeft,
+                    height: 60,
                     child: TextButton(
                       style: TextButton.styleFrom(
                           fixedSize:
@@ -176,7 +197,7 @@ class _RootPageState extends State<RootPage> {
                         style: const TextStyle(
                           fontFamily: constants.titleFont,
                           fontWeight: FontWeight.bold,
-                          fontSize: constants.titleFontSize,
+                          fontSize: constants.titleFontSize - 5,
                           color: Color(constants.titleColor),
                           height: constants.titleFontheight,
                         ),
@@ -202,7 +223,7 @@ class _RootPageState extends State<RootPage> {
                   for (var i = 0; i < snapshot.data.length; i++)
                     (Container(
                         padding: const EdgeInsets.all(
-                            constants.containerPaddingbody),
+                            constants.containerPaddingbody - 2),
                         alignment: Alignment.topRight,
                         child: Text(
                           snapshot.data[i],
@@ -210,7 +231,7 @@ class _RootPageState extends State<RootPage> {
                           style: const TextStyle(
                             fontFamily: constants.bodyFont,
                             //fontWeight: FontWeight.bold,
-                            fontSize: constants.bodyFontSize,
+                            fontSize: constants.bodyFontSize - 2,
                             color: Color(constants.bodyColor),
                             height: constants.bodyFontheight,
                           ),

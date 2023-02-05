@@ -16,6 +16,7 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
   late Future futureLunch;
   late Future futureDinner;
   late Future futureLateNight;
+  final time = DateTime.now();
 
   @override
   void initState() {
@@ -25,6 +26,18 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
     futureLunch = main_page.fetchAlbum('Nine', 'Lunch');
     futureDinner = main_page.fetchAlbum('Nine', 'Dinner');
     futureLateNight = main_page.fetchAlbum('Nine', 'Late%20Night');
+    if (time.hour < 10) {
+      _tabController.animateTo(0);
+    }
+    else if (time.hour < 16) {
+      _tabController.animateTo(1);
+    }
+    else if (time.hour < 20) {
+      _tabController.animateTo(2);
+    }
+    else {
+      _tabController.animateTo(3);
+    }
   }
 
   // @override

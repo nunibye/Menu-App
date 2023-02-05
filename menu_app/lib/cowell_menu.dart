@@ -16,6 +16,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
   late Future futureLunch;
   late Future futureDinner;
   late Future futureLateNight;
+  final time = DateTime.now();
 
   @override
   void initState() {
@@ -25,6 +26,16 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
     futureLunch = main_page.fetchAlbum('Cowell', 'Lunch');
     futureDinner = main_page.fetchAlbum('Cowell', 'Dinner');
     futureLateNight = main_page.fetchAlbum('Cowell', 'Late%20Night');
+
+    if (time.hour < 10) {
+      _tabController.animateTo(0);
+    } else if (time.hour < 16) {
+      _tabController.animateTo(1);
+    } else if (time.hour < 20) {
+      _tabController.animateTo(2);
+    } else {
+      _tabController.animateTo(3);
+    }
   }
 
   // @override
@@ -91,48 +102,66 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
               future: futureBreakfast,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return ListView(
-                    //padding: const EdgeInsets.all(4),
-                    children: [
-                      for (var i = 0; i < snapshot.data.length; i++)
-                        if (i % 2 == 0)
-                          (Container(
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: constants.borderWidth,
-                                          color: Color(constants.darkGray)))),
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingTitle),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                snapshot.data[i],
-                                style: const TextStyle(
-                                  fontFamily: constants.titleFont,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: constants.titleFontSize,
-                                  color: Color(constants.titleColor),
-                                  height: constants.titleFontheight,
-                                ),
-                              )))
-                        else
-                          (Container(
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingbody),
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                snapshot.data[i],
-                                textAlign: TextAlign.right,
-                                style: const TextStyle(
-                                  fontFamily: constants.bodyFont,
-                                  //fontWeight: FontWeight.bold,
-                                  fontSize: constants.bodyFontSize,
-                                  color: Color(constants.bodyColor),
-                                  height: constants.bodyFontheight,
-                                ),
-                              )))
-                    ],
-                  );
+                  if (snapshot.data[0] == 'null') {
+                    Container(
+                        padding: const EdgeInsets.all(
+                            constants.containerPaddingbody),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "Hall Closed",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: constants.bodyFont,
+                            //fontWeight: FontWeight.bold,
+                            fontSize: constants.bodyFontSize,
+                            color: Color(constants.bodyColor),
+                            height: constants.bodyFontheight,
+                          ),
+                        ));
+                  } else {
+                    return ListView(
+                      //padding: const EdgeInsets.all(4),
+                      children: [
+                        for (var i = 0; i < snapshot.data.length; i++)
+                          if (i % 2 == 0)
+                            (Container(
+                                decoration: const BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            width: constants.borderWidth,
+                                            color: Color(constants.darkGray)))),
+                                padding: const EdgeInsets.all(
+                                    constants.containerPaddingTitle),
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  snapshot.data[i],
+                                  style: const TextStyle(
+                                    fontFamily: constants.titleFont,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: constants.titleFontSize,
+                                    color: Color(constants.titleColor),
+                                    height: constants.titleFontheight,
+                                  ),
+                                )))
+                          else
+                            (Container(
+                                padding: const EdgeInsets.all(
+                                    constants.containerPaddingbody),
+                                alignment: Alignment.topRight,
+                                child: Text(
+                                  snapshot.data[i],
+                                  textAlign: TextAlign.right,
+                                  style: const TextStyle(
+                                    fontFamily: constants.bodyFont,
+                                    //fontWeight: FontWeight.bold,
+                                    fontSize: constants.bodyFontSize,
+                                    color: Color(constants.bodyColor),
+                                    height: constants.bodyFontheight,
+                                  ),
+                                )))
+                      ],
+                    );
+                  }
                 } else if (snapshot.hasError) {
                   return Text(
                     '${snapshot.error}',

@@ -15,6 +15,7 @@ class _MerrillMenuState extends State<MerrillMenu> with TickerProviderStateMixin
   late Future futureBreakfast;
   late Future futureLunch;
   late Future futureDinner;
+  final time = DateTime.now();
   
 
   @override
@@ -24,6 +25,16 @@ class _MerrillMenuState extends State<MerrillMenu> with TickerProviderStateMixin
     futureBreakfast = main_page.fetchAlbum('Merrill', 'Breakfast');
     futureLunch = main_page.fetchAlbum('Merrill', 'Lunch');
     futureDinner = main_page.fetchAlbum('Merrill', 'Dinner');
+
+    if (time.hour < 10) {
+      _tabController.animateTo(0);
+    } else if (time.hour < 16) {
+      _tabController.animateTo(1);
+    } else if (time.hour < 20) {
+      _tabController.animateTo(2);
+    } else {
+      _tabController.animateTo(3);
+    }
     
   }
 

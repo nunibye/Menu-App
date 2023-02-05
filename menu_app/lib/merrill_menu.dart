@@ -35,7 +35,6 @@ class _MerrillMenuState extends State<MerrillMenu>
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +42,7 @@ class _MerrillMenuState extends State<MerrillMenu>
         title: const Text(
           "Merrill",
           style: TextStyle(
+              fontWeight: FontWeight.normal,
               fontSize: constants.menuHeadingSize,
               fontFamily: 'Monoton',
               color: Color(constants.yellowGold)),

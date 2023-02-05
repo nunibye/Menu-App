@@ -11,7 +11,7 @@ class MerrillMenu extends StatefulWidget {
 
 /// AnimationControllers can be created with `vsync: this` because of TickerProviderStateMixin.
 class _MerrillMenuState extends State<MerrillMenu>
-  with TickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late TabController _tabController;
   late Future futureBreakfast;
   late Future futureLunch;
@@ -34,73 +34,96 @@ class _MerrillMenuState extends State<MerrillMenu>
       _tabController.animateTo(2);
     }
   }
+
   Widget buildMeal(Future<dynamic> hallSummary) {
     return Container(
-            alignment: Alignment.topLeft,
-            //padding: const EdgeInsets.only(top: 20, left: 12),
-            child: FutureBuilder(
-              future: hallSummary,
-              builder: (context, snapshot) {
-                 if (snapshot.hasData) {
-                  
-                  return ListView(
-                    //padding: const EdgeInsets.all(4),
-                    children: [
-                      for (var i = 0; i < snapshot.data.length; i++)
-                        if (i % 2 == 0)
-                          (Container(
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: constants.borderWidth,
-                                          color: Color(constants.darkGray)))),
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingTitle),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                snapshot.data[i],
-                                style: const TextStyle(
-                                  fontFamily: constants.titleFont,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: constants.titleFontSize,
-                                  color: Color(constants.titleColor),
-                                  height: constants.titleFontheight,
-                                ),
-                              )))
-                        else
-                          (Container(
-                              padding: const EdgeInsets.all(
-                                  constants.containerPaddingbody),
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                snapshot.data[i],
-                                textAlign: TextAlign.right,
-                                style: const TextStyle(
-                                  fontFamily: constants.bodyFont,
-                                  //fontWeight: FontWeight.bold,
-                                  fontSize: constants.bodyFontSize,
-                                  color: Color(constants.bodyColor),
-                                  height: constants.bodyFontheight,
-                                ),
-                              )))
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  return Text(
-                    '${snapshot.error}',
-                    style: const TextStyle(
-                      fontSize: 25,
-                      color: Color(constants.yellowGold),
-                    ),
-                  );
-                }
+      alignment: Alignment.topLeft,
+      //padding: const EdgeInsets.only(top: 20, left: 12),
+      child: FutureBuilder(
+        future: hallSummary,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data[0].toString() == 'null') {
+              return Container(
+                decoration: const BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                            width: constants.borderWidth,
+                            color: Color(constants.darkGray)))),
+                padding: const EdgeInsets.all(constants.containerPaddingTitle),
+                alignment: Alignment.topLeft,
+                child: const Text(
+                  'Closed',
+                  style: TextStyle(
+                    fontFamily: constants.titleFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: constants.titleFontSize,
+                    color: Color(constants.titleColor),
+                    height: constants.titleFontheight,
+                  ),
+                ),
+              );
+            }else{
+            return ListView(
+              //padding: const EdgeInsets.all(4),
+              children: [
+                for (var i = 0; i < snapshot.data.length; i++)
+                  if (i % 2 == 0)
+                    (Container(
+                      decoration: const BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                  width: constants.borderWidth,
+                                  color: Color(constants.darkGray)))),
+                      padding:
+                          const EdgeInsets.all(constants.containerPaddingTitle),
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        snapshot.data[i],
+                        style: const TextStyle(
+                          fontFamily: constants.titleFont,
+                          fontWeight: FontWeight.bold,
+                          fontSize: constants.titleFontSize,
+                          color: Color(constants.titleColor),
+                          height: constants.titleFontheight,
+                        ),
+                      ),
+                    ))
+                  else
+                    (Container(
+                        padding: const EdgeInsets.all(
+                            constants.containerPaddingbody),
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          snapshot.data[i],
+                          textAlign: TextAlign.right,
+                          style: const TextStyle(
+                            fontFamily: constants.bodyFont,
+                            //fontWeight: FontWeight.bold,
+                            fontSize: constants.bodyFontSize,
+                            color: Color(constants.bodyColor),
+                            height: constants.bodyFontheight,
+                          ),
+                        )))
+              ],
+            );}
+          } else if (snapshot.hasError) {
+            return Text(
+              '${snapshot.error}',
+              style: const TextStyle(
+                fontSize: 25,
+                color: Color(constants.yellowGold),
+              ),
+            );
+          }
 
-                // By default, show a loading spinner.
-                return const CircularProgressIndicator();
-              },
-            ),
-          );
+          // By default, show a loading spinner.
+          return const CircularProgressIndicator();
+        },
+      ),
+    );
   }
+
   // @override
   // void dispose() {
   //   super.dispose();
@@ -163,5 +186,3 @@ class _MerrillMenuState extends State<MerrillMenu>
     );
   }
 }
-
-

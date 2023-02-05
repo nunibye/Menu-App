@@ -72,7 +72,7 @@ def menu_scrape():
     data_base_write.UpdateDatabase(hall_menus)                      # Update database
 
 # Every day at 4am or 00:00 AND 1pm or 13:00 time menu_scrape() is called.
-schedule.every().day.at("04:00").do(menu_scrape)
+schedule.every().day.at("03:00").do(menu_scrape)
 schedule.every().day.at("11:00").do(menu_scrape)
 schedule.every().day.at("15:00").do(menu_scrape)
 

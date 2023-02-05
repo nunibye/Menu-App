@@ -206,7 +206,13 @@ class _RootPageState extends State<RootPage> {
   void initState() {
     super.initState();
     final time = DateTime.now();
-    if (time.hour < 10 && time.hour > 4) {
+    //FIXME goofy a code
+    if (time.hour <= 4 || time.hour >= 23) {
+      nineSummary = fetchAlbum('Nine', 'Late%20Night', cat: '*FIXME*');
+      cowellSummary = nineSummary;
+      merrillSummary = nineSummary;
+      porterSummary = nineSummary;
+    } else if (time.hour < 10 && time.hour > 4) {
       nineSummary = fetchAlbum('Nine', 'Breakfast', cat: '*Breakfast*');
       cowellSummary = fetchAlbum('Cowell', 'Breakfast', cat: '*Breakfast*');
       merrillSummary = fetchAlbum('Merrill', 'Breakfast', cat: '*Breakfast*');
@@ -229,12 +235,6 @@ class _RootPageState extends State<RootPage> {
           fetchAlbum('Merrill', 'Late%20Night', cat: '*Open%20Bars*');
       porterSummary =
           fetchAlbum('Porter', 'Late%20Night', cat: '*Open%20Bars*');
-      //FIXME goofy a code
-    } else {
-      nineSummary = fetchAlbum('Nine', 'Late%20Night', cat: '*FIXME*');
-      cowellSummary = nineSummary;
-      merrillSummary = nineSummary;
-      porterSummary = nineSummary;
     }
   }
 

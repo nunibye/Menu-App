@@ -14,6 +14,7 @@ Menu app for all UC Santa Cruz Dining Locations created with Flutter.
 ## General Info
 
 We wanted to create an organized dining hall app for UCSC students to quickly check the menus at the different dining hall locations.
+Supported on Android and iOS.
 
 ## Technologies
 

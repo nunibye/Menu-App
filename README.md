@@ -9,7 +9,7 @@ Menu app for all UC Santa Cruz Dining Locations created with Flutter.
 ## Table of Contents
 * [General Info](#general-info)
 * [Technologies](#technologies)
-* [Future Updates](#features)
+* [Features](#features)
 
 ## General Info
 

@@ -2,14 +2,18 @@
 
 Menu app for all UC Santa Cruz Dining Locations created with Flutter.
 
-## Images
-
-<img src="./images/homescreen.PNG" alt="Homescreen" width="250"/> <img src="./images/merrill.PNG" alt="Merrill" width="250"/>
+### Authors
+* [Eliah Reeves](https://github.com/nunibye)
+* [Christian Knab](https://github.com/christianknab)
 
 ## Table of Contents
 * [General Info](#general-info)
 * [Technologies](#technologies)
 * [Features](#features)
+
+## Images
+
+<img src="./images/homescreen.PNG" alt="Homescreen" width="250"/> <img src="./images/merrill.PNG" alt="Merrill" width="250"/>
 
 ## General Info
 

@@ -82,7 +82,7 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
               icon: Icon(Icons.dinner_dining_outlined),
             ),
             Tab(
-              icon: Icon(Icons.access_time),
+              icon: Icon(Icons.bedtime_outlined),
             ),
           ],
         ),

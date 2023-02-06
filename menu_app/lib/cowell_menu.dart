@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 import 'main.dart' as main_page;
+//import 'package:menu_app/nine_menu.dart';
 
 class CowellMenu extends StatefulWidget {
   const CowellMenu({super.key});
@@ -41,14 +42,39 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Cowell",
-          style: TextStyle(
-              fontWeight: FontWeight.normal,
-              fontSize: constants.menuHeadingSize,
-              fontFamily: 'Monoton',
-              color: Color(constants.yellowGold)),
-        ),
+        title:
+          const Text(
+            "Cowell",
+            style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: constants.menuHeadingSize,
+                fontFamily: 'Monoton',
+                color: Color(constants.yellowGold)),
+          ),
+          // Container(
+          //     padding: const EdgeInsets.only(left: 50),
+          //     alignment: Alignment.centerRight,
+          //     child: TextButton(
+          //       onPressed: () {
+          //         Navigator.of(context).push(
+          //           MaterialPageRoute(builder: (BuildContext context) {
+          //             return const NineMenu();
+          //           }),
+          //         );
+          //       },
+          //       //color: Color.fromARGB(255, 193, 193, 193),
+                
+          //       child: const Text(
+          //         "Times",
+          //         style: TextStyle(
+          //             fontWeight: FontWeight.normal,
+          //             fontSize: constants.infoFontsize,
+          //             fontFamily: constants.bodyFont,
+          //             color: Color.fromARGB(255, 193, 193, 193)),
+          //       ),
+          //     ))
+        
+        
         toolbarHeight: 60,
         centerTitle: false,
         backgroundColor: const Color(constants.darkBlue),
@@ -82,7 +108,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
               icon: Icon(Icons.dinner_dining_outlined),
             ),
             Tab(
-              icon: Icon(Icons.access_time),
+              icon: Icon(Icons.bedtime_outlined),
             ),
           ],
         ),

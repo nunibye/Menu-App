@@ -21,3 +21,5 @@ const double bodyFontSize = 20;
 const double bodyFontheight = 1.5;
 const bodyColor = white;
 const bodyFont = 'Montserat';
+
+const double infoFontsize = 22;

@@ -9,7 +9,8 @@ import 'package:menu_app/nine_menu.dart';
 import 'package:menu_app/porter_menu.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
-
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'ad_helper.dart' as ad_helper;
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 buildMeal(Future<dynamic> hallSummary) {
   return Container(
@@ -175,6 +176,10 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  // Future<InitializationStatus> _initGoogleMobileAds() {
+  //   // TODO: Initialize Google Mobile Ads SDK
+  //   return MobileAds.instance.initialize();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -206,6 +211,18 @@ class _RootPageState extends State<RootPage> {
   late Future cowellSummary;
   late Future merrillSummary;
   late Future porterSummary;
+
+  BannerAd? _bannerAd;
+
+  //...
+
+  //  Add _getDestinationItemIndex()
+  // int _getDestinationItemIndex(int rawIndex) {
+  //   if (_ad != null) {
+  //     return rawIndex - 1;
+  //   }
+  //   return rawIndex;
+  // }
 
   @override
   void initState() {
@@ -241,6 +258,30 @@ class _RootPageState extends State<RootPage> {
       porterSummary =
           fetchAlbum('Porter', 'Late%20Night', cat: '*Open%20Bars*');
     }
+    _bannerAd = BannerAd(
+      adUnitId: ad_helper.getAdUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (Ad ad) {
+          print('$BannerAd loaded.');
+        },
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
+          print('$BannerAd failedToLoad: $error');
+        },
+        onAdOpened: (Ad ad) => print('$BannerAd onAdOpened.'),
+        onAdClosed: (Ad ad) => print('$BannerAd onAdClosed.'),
+      ),
+    );
+
+    _bannerAd?.load();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bannerAd?.dispose();
+    _bannerAd = null;
   }
 
   Widget buildSummary(college, Future<dynamic> hallSummary) {
@@ -351,120 +392,142 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.height / 6;
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 80,
-          centerTitle: true,
-          backgroundColor: const Color(constants.darkBlue),
-          title: const FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(
-              "UC Santa Cruz",
-              style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 40,
-                  fontFamily: 'Monoton',
-                  color: Color(constants.yellowGold)),
-            ),
+      appBar: AppBar(
+        toolbarHeight: 80,
+        centerTitle: true,
+        backgroundColor: const Color(constants.darkBlue),
+        title: const FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            "UC Santa Cruz",
+            style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 40,
+                fontFamily: 'Monoton',
+                color: Color(constants.yellowGold)),
           ),
-          shape:
-              const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
         ),
-        body: ListView(children: <Widget>[
-          Container(
-            alignment: Alignment.topLeft,
-            padding: const EdgeInsets.only(top: 40, left: 12),
-            child: const Text(
-              "Dining Halls",
-              style: TextStyle(
-                  fontSize: 30,
-                  fontFamily: 'Montserat',
-                  fontWeight: FontWeight.bold,
-                  color: Color(constants.yellowOrange)),
+        shape: const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
+      ),
+      body: Stack(
+  children: <Widget>[
+          Container( padding: const EdgeInsets.only(bottom: 50.0), child: ListView(children: <Widget>[
+            Container(
+              alignment: Alignment.topLeft,
+              padding: const EdgeInsets.only(top: 40, left: 12),
+              child: const Text(
+                "Dining Halls",
+                style: TextStyle(
+                    fontSize: 30,
+                    fontFamily: 'Montserat',
+                    fontWeight: FontWeight.bold,
+                    color: Color(constants.yellowOrange)),
+              ),
             ),
-          ),
-          Container(
-            alignment: Alignment.topCenter,
-            height: MediaQuery.of(context).size.height / 5,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return const MerrillMenu();
-                      }),
-                    );
-                  },
-                  icon: Image.asset('images/merrill2.png'),
-                  iconSize: iconSizeCollege,
-                ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return const CowellMenu();
-                      }),
-                    );
-                  },
-                  icon: Image.asset('images/cowell2.png'),
-                  iconSize: iconSizeCollege,
-                ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return const NineMenu();
-                      }),
-                    );
-                  },
-                  icon: Image.asset('images/nine2.png'),
-                  iconSize: iconSizeCollege,
-                ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return const PorterMenu();
-                      }),
-                    );
-                  },
-                  icon: Image.asset('images/porter2.png'),
-                  iconSize: iconSizeCollege,
-                ),
-              ],
+            Container(
+              alignment: Alignment.topCenter,
+              height: MediaQuery.of(context).size.height / 5,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return const MerrillMenu();
+                        }),
+                      );
+                    },
+                    icon: Image.asset('images/merrill2.png'),
+                    iconSize: iconSizeCollege,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return const CowellMenu();
+                        }),
+                      );
+                    },
+                    icon: Image.asset('images/cowell2.png'),
+                    iconSize: iconSizeCollege,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return const NineMenu();
+                        }),
+                      );
+                    },
+                    icon: Image.asset('images/nine2.png'),
+                    iconSize: iconSizeCollege,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return const PorterMenu();
+                        }),
+                      );
+                    },
+                    icon: Image.asset('images/porter2.png'),
+                    iconSize: iconSizeCollege,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            // height: MediaQuery.of(context).size.height / 2,
-            //padding: const EdgeInsets.only(top: 20, left: 12),
-            child: FutureBuilder(
-              // future: nineSummary,
-              builder: (context, snapshot) {
-                // if (snapshot.hasData) {
-                return Column(
-                  children: [
-                    buildSummary("Porter", porterSummary),
-                    buildSummary("Nine", nineSummary),
-                    buildSummary("Cowell", cowellSummary),
-                    buildSummary("Merrill", merrillSummary),
-                  ],
-                );
-                // } else if (snapshot.hasError) {
-                //   return Text(
-                //     '${snapshot.error}',
-                //     style: const TextStyle(
-                //       fontSize: 25,
-                //       color: Color(constants.yellowGold),
-                //     ),
-                //   );
-                // }
+            Container(
+              alignment: Alignment.topLeft,
+              // height: MediaQuery.of(context).size.height / 2,
+              //padding: const EdgeInsets.only(top: 20, left: 12),
+              child: FutureBuilder(
+                // future: nineSummary,
+                builder: (context, snapshot) {
+                  // if (snapshot.hasData) {
+                  return Column(
+                    children: [
+                      buildSummary("Porter", porterSummary),
+                      buildSummary("Nine", nineSummary),
+                      buildSummary("Cowell", cowellSummary),
+                      buildSummary("Merrill", merrillSummary),
+                    ],
+                  );
+                  // } else if (snapshot.hasError) {
+                  //   return Text(
+                  //     '${snapshot.error}',
+                  //     style: const TextStyle(
+                  //       fontSize: 25,
+                  //       color: Color(constants.yellowGold),
+                  //     ),
+                  //   );
+                  // }
 
-                // By default, show a loading spinner.
-              },
+                  // By default, show a loading spinner.
+                },
+              ),
             ),
+          ]),
+          ),Positioned(
+            bottom: 0.0,
+            left: 0.0,
+            right: 0.0,
+            child: SizedBox(
+            
+//             alignment: Alignment.center,
+            width: _bannerAd?.size.width.toDouble(),
+            height: _bannerAd?.size.height.toDouble(),
+            child: AdWidget(ad: _bannerAd!),
           ),
-        ]));
+        ),])
+        
+      
+    );
   }
 }
+// Container(
+//             alignment: Alignment.center,
+//             width: _bannerAd?.size.width.toDouble(),
+//             height: _bannerAd?.size.height.toDouble(),
+//             child: AdWidget(ad: _bannerAd!),
+//           ),

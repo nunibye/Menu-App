@@ -53,10 +53,13 @@ android {
         applicationId "com.orderOfTheCone.android.menu_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion flutter.minSdkVersion //flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion 21
+        targetSdkVersion flutter.targetSdkVersion//30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        // minSdkVersion flutter.minSdkVersion //flutter.minSdkVersion
+        // targetSdkVersion flutter.targetSdkVersion
+        
     }
 
     signingConfigs {

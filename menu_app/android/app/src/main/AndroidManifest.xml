@@ -8,6 +8,9 @@
         android:label="UCSC Menu"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+              android:name="com.google.android.gms.ads.APPLICATION_ID"
+              android:value="ca-app-pub-1893777311600512~3895241305"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -23,14 +26,14 @@
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"/>
-              <!-- android:name="com.google.android.gms.ads.APPLICATION_ID"
-              android:value="ca-app-pub-1893777311600512/8265461657" -->
-
+              
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+       
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

@@ -43,24 +43,20 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add your onPressed code here!
+          _timeModalBottom(context);
         },
         backgroundColor: const Color.fromARGB(255, 94, 94, 94),
         child: const Icon(Icons.access_time_outlined),
       ),
       appBar: AppBar(
-        title:
-          const Text(
-            "Cowell",
-            style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: constants.menuHeadingSize,
-                fontFamily: 'Monoton',
-                color: Color(constants.yellowGold)),
-          ),
-          
-        
-        
+        title: const Text(
+          "Cowell",
+          style: TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: constants.menuHeadingSize,
+              fontFamily: 'Monoton',
+              color: Color(constants.yellowGold)),
+        ),
         toolbarHeight: 60,
         centerTitle: false,
         backgroundColor: const Color(constants.darkBlue),
@@ -106,9 +102,26 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
           main_page.buildMeal(futureLunch),
           main_page.buildMeal(futureDinner),
           main_page.buildMeal(futureLateNight),
-          
         ],
       ),
     );
+  }
+
+  void _timeModalBottom(context) {
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+     borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50)),
+  ),
+        builder: (BuildContext bc) {
+          return const SizedBox(height: 800 ,child :Text(
+            "Cowell",
+            style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: constants.menuHeadingSize,
+                fontFamily: 'Monoton',
+                color: Color(constants.yellowGold)),
+          ));
+        });
   }
 }

@@ -2,6 +2,8 @@
 
 Menu app for all UC Santa Cruz Dining Locations created with Flutter.
 
+<img src="./images/homescreen.PNG" alt="Homescreen" width="250"/> <img src="./images/merrill.PNG" alt="Merrill" width="250"/>
+
 ## Table of Contents
 * [General Info](#general-info)
 * [Technologies](#technologies)
@@ -27,5 +29,7 @@ We wanted to create an organized dining hall app for UCSC students to quickly ch
 * Run menu scraper autonomously.
 * Add dining hall hours info tab.
 * Organize order of meal category.
+* Add settings to change order hall is displayed in.
 * Figure out more comprehensive summarizer.
+* Slug points calculator.
 * Add the ability to review and comment on individual dining hall food.

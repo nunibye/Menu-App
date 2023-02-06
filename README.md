@@ -1,4 +1,4 @@
-# UCSC Menu – UCSC Dining Hall App
+# UCSC Menu – Dining Hall App
 
 Menu app for all UC Santa Cruz Dining Locations created with Flutter.
 

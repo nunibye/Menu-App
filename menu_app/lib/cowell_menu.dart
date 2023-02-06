@@ -41,6 +41,13 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        backgroundColor: const Color.fromARGB(255, 94, 94, 94),
+        child: const Icon(Icons.access_time_outlined),
+      ),
       appBar: AppBar(
         title:
           const Text(
@@ -51,28 +58,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
                 fontFamily: 'Monoton',
                 color: Color(constants.yellowGold)),
           ),
-          // Container(
-          //     padding: const EdgeInsets.only(left: 50),
-          //     alignment: Alignment.centerRight,
-          //     child: TextButton(
-          //       onPressed: () {
-          //         Navigator.of(context).push(
-          //           MaterialPageRoute(builder: (BuildContext context) {
-          //             return const NineMenu();
-          //           }),
-          //         );
-          //       },
-          //       //color: Color.fromARGB(255, 193, 193, 193),
-                
-          //       child: const Text(
-          //         "Times",
-          //         style: TextStyle(
-          //             fontWeight: FontWeight.normal,
-          //             fontSize: constants.infoFontsize,
-          //             fontFamily: constants.bodyFont,
-          //             color: Color.fromARGB(255, 193, 193, 193)),
-          //       ),
-          //     ))
+          
         
         
         toolbarHeight: 60,
@@ -120,6 +106,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
           main_page.buildMeal(futureLunch),
           main_page.buildMeal(futureDinner),
           main_page.buildMeal(futureLateNight),
+          
         ],
       ),
     );

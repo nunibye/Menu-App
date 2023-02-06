@@ -82,8 +82,8 @@ buildMeal(Future<dynamic> hallSummary) {
                             color: Color(constants.bodyColor),
                             height: constants.bodyFontheight,
                           ),
-                        )))
-              ],
+                        ))),
+              const SizedBox(height: 80),],
             );
           }
         } else if (snapshot.hasError) {
@@ -212,7 +212,7 @@ class _RootPageState extends State<RootPage> {
   late Future cowellSummary;
   late Future merrillSummary;
   late Future porterSummary;
-
+  bool adLoaded = false;
   BannerAd? _bannerAd;
 
   //...
@@ -259,7 +259,7 @@ class _RootPageState extends State<RootPage> {
       porterSummary =
           fetchAlbum('Porter', 'Late%20Night', cat: '*Open%20Bars*');
     }
-    bool adLoaded;
+    //bool adLoaded;
     _bannerAd = BannerAd(
       adUnitId: ad_helper.getAdUnitId,
       request: const AdRequest(),
@@ -275,7 +275,6 @@ class _RootPageState extends State<RootPage> {
     );
 
     _bannerAd?.load();
-
   }
 
   @override
@@ -356,20 +355,22 @@ class _RootPageState extends State<RootPage> {
                 else
                   for (var i = 0; i < snapshot.data.length; i++)
                     (Container(
-                        padding: const EdgeInsets.all(
-                            constants.containerPaddingbody - 2),
-                        alignment: Alignment.topRight,
-                        child: Text(
-                          snapshot.data[i],
-                          textAlign: TextAlign.right,
-                          style: const TextStyle(
-                            fontFamily: constants.bodyFont,
-                            //fontWeight: FontWeight.bold,
-                            fontSize: constants.bodyFontSize - 2,
-                            color: Color(constants.bodyColor),
-                            height: constants.bodyFontheight,
-                          ),
-                        )))
+                      padding: const EdgeInsets.all(
+                          constants.containerPaddingbody - 2),
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        snapshot.data[i],
+                        textAlign: TextAlign.right,
+                        style: const TextStyle(
+                          fontFamily: constants.bodyFont,
+                          //fontWeight: FontWeight.bold,
+                          fontSize: constants.bodyFontSize - 2,
+                          color: Color(constants.bodyColor),
+                          height: constants.bodyFontheight,
+                        ),
+                      ),
+                    )),
+                
               ],
             );
           } else if (snapshot.hasError) {
@@ -512,18 +513,17 @@ class _RootPageState extends State<RootPage> {
               ),
             ]),
           ),
-          
-            Positioned(
-              bottom: 0.0,
-              left: 0.0,
-              right: 0.0,
-              child: SizedBox(
+          Positioned(
+            bottom: 0.0,
+            left: 0.0,
+            right: 0.0,
+            child: SizedBox(
 //             alignment: Alignment.center,
-                width: _bannerAd?.size.width.toDouble(),
-                height: _bannerAd?.size.height.toDouble(),
-                child: AdWidget(ad: _bannerAd!),
-              ),
+              width: _bannerAd?.size.width.toDouble(),
+              height: _bannerAd?.size.height.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
             ),
+          ),
         ]));
   }
 }

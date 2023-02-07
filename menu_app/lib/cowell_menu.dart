@@ -148,18 +148,22 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 30),
                   child: Column(
-                    children: const [Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text("Monday-Thursday",
-                            style: TextStyle(
-                              fontFamily: constants.bodyFont,
-                              fontWeight: FontWeight.bold,
-                              fontSize: constants.titleFontSize - 5,
-                              color: Colors.black,
-                              height: constants.bodyFontheight,
-                            ))),
-                      Text(
-                        "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+                    children: const [
+                      Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text("Monday-Thursday",
+                              style: TextStyle(
+                                fontFamily: constants.bodyFont,
+                                fontWeight: FontWeight.bold,
+                                fontSize: constants.titleFontSize - 5,
+                                color: Colors.black,
+                                height: constants.bodyFontheight,
+                              ))),
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                          "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(10),
@@ -172,8 +176,11 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
                               height: constants.bodyFontheight,
                             )),
                       ),
-                      Text(
-                          "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM"),
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                            "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM"),
+                      ),
                       Padding(
                         padding: EdgeInsets.all(10),
                         child: Text("Saturday",
@@ -185,9 +192,13 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
                               height: constants.bodyFontheight,
                             )),
                       ),
-                      Text(
-                        "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
-                      textAlign: TextAlign.left,),
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                          "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsets.all(10),
                         child: Text("Sunday",
@@ -199,8 +210,11 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
                               height: constants.bodyFontheight,
                             )),
                       ),
-                      Text(
-                        "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                          "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+                        ),
                       ),
                     ],
                   ),

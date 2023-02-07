@@ -125,8 +125,11 @@ class _MerrillMenuState extends State<MerrillMenu>
                                 color: Colors.black,
                                 height: constants.bodyFontheight,
                               ))),
-                      Text(
-                        "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                          "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
+                        ),
                       ),
                     ],
                   ),

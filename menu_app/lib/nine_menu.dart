@@ -131,8 +131,11 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
                                 color: Colors.black,
                                 height: constants.bodyFontheight,
                               ))),
-                      Text(
-                        "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                          "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(10),
@@ -145,8 +148,12 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
                               height: constants.bodyFontheight,
                             )),
                       ),
-                      Text(
-                          "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM"),
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                          "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+                        ),
+                      ),
                     ],
                   ),
                 ),

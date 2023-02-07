@@ -14,6 +14,9 @@ import 'ad_helper.dart' as ad_helper;
 
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 buildMeal(Future<dynamic> hallSummary) {
+  var timeFetch = DateTime.now();
+  String time = timeFetch.toString().substring(5,19);
+
   return Container(
     alignment: Alignment.topLeft,
     //padding: const EdgeInsets.only(top: 20, left: 12),
@@ -69,8 +72,7 @@ buildMeal(Future<dynamic> hallSummary) {
                     ))
                   else
                     (Container(
-                        padding: 
-                        const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.only(right: 10),
                         // const EdgeInsets.all(
                         //     constants.containerPaddingbody),
                         alignment: Alignment.topRight,
@@ -85,7 +87,11 @@ buildMeal(Future<dynamic> hallSummary) {
                             height: constants.bodyFontheight,
                           ),
                         ))),
-              const SizedBox(height: 80),],
+                const SizedBox(height: 70),
+                Padding(padding: const EdgeInsets.only(left: 15), child: Text("updated: $time",
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(color: Colors.grey)),)
+              ],
             );
           }
         } else if (snapshot.hasError) {
@@ -357,10 +363,9 @@ class _RootPageState extends State<RootPage> {
                 else
                   for (var i = 0; i < snapshot.data.length; i++)
                     (Container(
-
-                      padding: 
-                      // const EdgeInsets.all(
-                      //     constants.containerPaddingbody),
+                      padding:
+                          // const EdgeInsets.all(
+                          //     constants.containerPaddingbody),
                           const EdgeInsets.only(right: 10),
                       alignment: Alignment.topRight,
                       child: Text(
@@ -372,11 +377,9 @@ class _RootPageState extends State<RootPage> {
                           fontSize: constants.bodyFontSize,
                           color: Color(constants.bodyColor),
                           height: constants.bodyFontheight,
-                          
                         ),
                       ),
                     )),
-                
               ],
             );
           } else if (snapshot.hasError) {

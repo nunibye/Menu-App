@@ -27,6 +27,8 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
     futureLunch = main_page.fetchAlbum('Cowell', 'Lunch');
     futureDinner = main_page.fetchAlbum('Cowell', 'Dinner');
     futureLateNight = main_page.fetchAlbum('Cowell', 'Late%20Night');
+
+
     if (time.hour < 10) {
       _tabController.animateTo(0);
     } else if (time.hour < 16) {

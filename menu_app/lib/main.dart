@@ -15,7 +15,7 @@ import 'ad_helper.dart' as ad_helper;
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 buildMeal(Future<dynamic> hallSummary) {
   var timeFetch = DateTime.now();
-  String time = timeFetch.toString().substring(5,19);
+  String time = timeFetch.toString().substring(5, 19);
 
   return Container(
     alignment: Alignment.topLeft,
@@ -88,9 +88,12 @@ buildMeal(Future<dynamic> hallSummary) {
                           ),
                         ))),
                 const SizedBox(height: 70),
-                Padding(padding: const EdgeInsets.only(left: 15), child: Text("updated: $time",
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(color: Colors.grey)),)
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text("updated: $time",
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(color: Colors.grey)),
+                )
               ],
             );
           }
@@ -402,6 +405,9 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.height / 6;
+    var timeFetch = DateTime.now();
+    String time = timeFetch.toString().substring(5, 19);
+
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 80,
@@ -504,6 +510,13 @@ class _RootPageState extends State<RootPage> {
                         buildSummary("Nine", nineSummary),
                         buildSummary("Cowell", cowellSummary),
                         buildSummary("Merrill", merrillSummary),
+                        const SizedBox(height: 70),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Text("updated: $time",
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(color: Colors.grey)),
+                        )
                       ],
                     );
                     // } else if (snapshot.hasError) {

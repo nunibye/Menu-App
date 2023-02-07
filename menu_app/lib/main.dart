@@ -69,8 +69,10 @@ buildMeal(Future<dynamic> hallSummary) {
                     ))
                   else
                     (Container(
-                        padding: const EdgeInsets.all(
-                            constants.containerPaddingbody),
+                        padding: 
+                        const EdgeInsets.only(right: 10),
+                        // const EdgeInsets.all(
+                        //     constants.containerPaddingbody),
                         alignment: Alignment.topRight,
                         child: Text(
                           snapshot.data[i],
@@ -330,7 +332,7 @@ class _RootPageState extends State<RootPage> {
                         style: const TextStyle(
                           fontFamily: constants.titleFont,
                           fontWeight: FontWeight.bold,
-                          fontSize: constants.titleFontSize - 5,
+                          fontSize: constants.titleFontSize,
                           color: Color(constants.titleColor),
                           height: constants.titleFontheight,
                         ),
@@ -355,8 +357,11 @@ class _RootPageState extends State<RootPage> {
                 else
                   for (var i = 0; i < snapshot.data.length; i++)
                     (Container(
-                      padding: const EdgeInsets.all(
-                          constants.containerPaddingbody - 2),
+
+                      padding: 
+                      // const EdgeInsets.all(
+                      //     constants.containerPaddingbody),
+                          const EdgeInsets.only(right: 10),
                       alignment: Alignment.topRight,
                       child: Text(
                         snapshot.data[i],
@@ -364,9 +369,10 @@ class _RootPageState extends State<RootPage> {
                         style: const TextStyle(
                           fontFamily: constants.bodyFont,
                           //fontWeight: FontWeight.bold,
-                          fontSize: constants.bodyFontSize - 2,
+                          fontSize: constants.bodyFontSize,
                           color: Color(constants.bodyColor),
                           height: constants.bodyFontheight,
+                          
                         ),
                       ),
                     )),
@@ -424,7 +430,7 @@ class _RootPageState extends State<RootPage> {
                   style: TextStyle(
                       fontSize: 30,
                       fontFamily: 'Montserat',
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w800,
                       color: Color(constants.yellowOrange)),
                 ),
               ),

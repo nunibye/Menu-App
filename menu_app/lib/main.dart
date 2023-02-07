@@ -405,8 +405,6 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.height / 6;
-    var timeFetch = DateTime.now();
-    String time = timeFetch.toString().substring(5, 19);
 
     return Scaffold(
         appBar: AppBar(
@@ -511,12 +509,6 @@ class _RootPageState extends State<RootPage> {
                         buildSummary("Cowell", cowellSummary),
                         buildSummary("Merrill", merrillSummary),
                         const SizedBox(height: 70),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Text("updated: $time",
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(color: Colors.grey)),
-                        )
                       ],
                     );
                     // } else if (snapshot.hasError) {

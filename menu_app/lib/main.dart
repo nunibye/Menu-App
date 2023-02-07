@@ -196,6 +196,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       // Ignores IOS set to bold text
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(context).copyWith(boldText: false),

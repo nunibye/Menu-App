@@ -24,3 +24,6 @@ const bodyColor = white;
 const bodyFont = 'Montserat';
 
 const double infoFontsize = 22;
+
+//Hours Open
+const double sizedBox = 210;

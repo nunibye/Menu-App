@@ -37,6 +37,13 @@ class _PorterMenuState extends State<PorterMenu> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _timeModalBottom(context);
+        },
+        backgroundColor: const Color.fromARGB(255, 94, 94, 94),
+        child: const Icon(Icons.access_time_outlined),
+      ),
       appBar: AppBar(
         title: const Text(
           "Porter",
@@ -90,5 +97,95 @@ class _PorterMenuState extends State<PorterMenu> with TickerProviderStateMixin {
         ],
       ),
     );
+  }
+
+  void _timeModalBottom(context) {
+    showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(50), topRight: Radius.circular(50)),
+        ),
+        context: context,
+        builder: (context) => DraggableScrollableSheet(
+              expand: false,
+              builder: (context, scrollController) => SingleChildScrollView(
+                controller: scrollController,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 30),
+                  child: Column(
+                    children: const [
+                      Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text("Monday-Thursday",
+                              style: TextStyle(
+                                fontFamily: constants.bodyFont,
+                                fontWeight: FontWeight.bold,
+                                fontSize: constants.titleFontSize - 5,
+                                color: Colors.black,
+                                height: constants.bodyFontheight,
+                              ))),
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                          "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text("Friday",
+                            style: TextStyle(
+                              fontFamily: constants.bodyFont,
+                              fontWeight: FontWeight.bold,
+                              fontSize: constants.titleFontSize - 5,
+                              color: Colors.black,
+                              height: constants.bodyFontheight,
+                            )),
+                      ),
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                          "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text("Saturday",
+                            style: TextStyle(
+                              fontFamily: constants.bodyFont,
+                              fontWeight: FontWeight.bold,
+                              fontSize: constants.titleFontSize - 5,
+                              color: Colors.black,
+                              height: constants.bodyFontheight,
+                            )),
+                      ),
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                          "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text("Sunday",
+                            style: TextStyle(
+                              fontFamily: constants.bodyFont,
+                              fontWeight: FontWeight.bold,
+                              fontSize: constants.titleFontSize - 5,
+                              color: Colors.black,
+                              height: constants.bodyFontheight,
+                            )),
+                      ),
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                          "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ));
   }
 }

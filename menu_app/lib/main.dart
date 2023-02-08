@@ -14,6 +14,9 @@ import 'ad_helper.dart' as ad_helper;
 
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 buildMeal(Future<dynamic> hallSummary) {
+  var timeFetch = DateTime.now();
+  String time = timeFetch.toString().substring(5, 19);
+
   return Container(
     alignment: Alignment.topLeft,
     //padding: const EdgeInsets.only(top: 20, left: 12),
@@ -84,7 +87,13 @@ buildMeal(Future<dynamic> hallSummary) {
                             height: constants.bodyFontheight,
                           ),
                         ))),
-                const SizedBox(height: 80),
+                const SizedBox(height: 70),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text("updated: $time",
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(color: Colors.grey)),
+                )
               ],
             );
           }
@@ -187,6 +196,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       // Ignores IOS set to bold text
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(context).copyWith(boldText: false),
@@ -503,6 +513,7 @@ class _RootPageState extends State<RootPage> {
                         buildSummary("Nine", nineSummary),
                         buildSummary("Cowell", cowellSummary),
                         buildSummary("Merrill", merrillSummary),
+                        const SizedBox(height: 70),
                       ],
                     );
                     // } else if (snapshot.hasError) {

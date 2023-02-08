@@ -2,3 +2,5 @@
 secrets/
 menu_app/android/key.properties
 menu_app/android/app/myCustom-Keystore.jks
+menu_app/cert_key
+menu_app/cert_key.pub

@@ -69,8 +69,7 @@ buildMeal(Future<dynamic> hallSummary) {
                     ))
                   else
                     (Container(
-                        padding: 
-                        const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.only(right: 10),
                         // const EdgeInsets.all(
                         //     constants.containerPaddingbody),
                         alignment: Alignment.topRight,
@@ -85,7 +84,8 @@ buildMeal(Future<dynamic> hallSummary) {
                             height: constants.bodyFontheight,
                           ),
                         ))),
-              const SizedBox(height: 80),],
+                const SizedBox(height: 80),
+              ],
             );
           }
         } else if (snapshot.hasError) {
@@ -357,10 +357,9 @@ class _RootPageState extends State<RootPage> {
                 else
                   for (var i = 0; i < snapshot.data.length; i++)
                     (Container(
-
-                      padding: 
-                      // const EdgeInsets.all(
-                      //     constants.containerPaddingbody),
+                      padding:
+                          // const EdgeInsets.all(
+                          //     constants.containerPaddingbody),
                           const EdgeInsets.only(right: 10),
                       alignment: Alignment.topRight,
                       child: Text(
@@ -372,11 +371,9 @@ class _RootPageState extends State<RootPage> {
                           fontSize: constants.bodyFontSize,
                           color: Color(constants.bodyColor),
                           height: constants.bodyFontheight,
-                          
                         ),
                       ),
                     )),
-                
               ],
             );
           } else if (snapshot.hasError) {
@@ -399,26 +396,31 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.height / 6;
+    List<Widget> bottomBar = [];
+    bottomBar.add(Container(
+      height: 50.0,
+    ));
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 80,
-          centerTitle: true,
-          backgroundColor: const Color(constants.darkBlue),
-          title: const FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(
-              "UC Santa Cruz",
-              style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 40,
-                  fontFamily: 'Monoton',
-                  color: Color(constants.yellowGold)),
-            ),
+      appBar: AppBar(
+        toolbarHeight: 80,
+        centerTitle: true,
+        backgroundColor: const Color(constants.darkBlue),
+        title: const FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            "UC Santa Cruz",
+            style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 40,
+                fontFamily: 'Monoton',
+                color: Color(constants.yellowGold)),
           ),
-          shape:
-              const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
         ),
-        body: Stack(children: <Widget>[
+        shape: const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
+      ),
+      persistentFooterButtons: bottomBar,
+      body: Stack(
+        children: <Widget>[
           Container(
             padding: const EdgeInsets.only(bottom: 50.0),
             child: ListView(children: <Widget>[
@@ -530,7 +532,9 @@ class _RootPageState extends State<RootPage> {
               child: AdWidget(ad: _bannerAd!),
             ),
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }
 // Container(

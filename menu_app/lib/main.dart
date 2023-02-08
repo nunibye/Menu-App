@@ -224,7 +224,7 @@ class _RootPageState extends State<RootPage> {
   late Future cowellSummary;
   late Future merrillSummary;
   late Future porterSummary;
-  bool adLoaded = false;
+  bool adLoad = false;
   BannerAd? _bannerAd;
 
   //...
@@ -271,23 +271,30 @@ class _RootPageState extends State<RootPage> {
       porterSummary =
           fetchAlbum('Porter', 'Late%20Night', cat: '*Open%20Bars*');
     }
-    //bool adLoaded;
+
     _bannerAd = BannerAd(
       adUnitId: ad_helper.getAdUnitId,
       request: const AdRequest(),
       size: AdSize.banner,
+      
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
-          adLoaded = true;
+          adLoad = true;
+          setState((){
+        });
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          adLoaded = false;
+          adLoad = false;
+          setState((){
+        });
         },
       ),
     );
 
     _bannerAd?.load();
   }
+
+  
 
   @override
   void dispose() {
@@ -403,13 +410,23 @@ class _RootPageState extends State<RootPage> {
     );
   }
 
+  Widget bottomBar() {
+    
+      return Container(
+        //color: Colors.amber,
+        alignment: Alignment.center,
+        width: _bannerAd?.size.width.toDouble(),
+        height: _bannerAd?.size.height.toDouble(),
+        child: AdWidget(ad: _bannerAd!),
+      );
+    
+  }
+
   @override
   Widget build(BuildContext context) {
+    //bool adShown = false; enable to add a way to diable ads
     double iconSizeCollege = MediaQuery.of(context).size.height / 6;
-    List<Widget> bottomBar = [];
-    bottomBar.add(Container(
-      height: 50.0,
-    ));
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
@@ -428,119 +445,103 @@ class _RootPageState extends State<RootPage> {
         ),
         shape: const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
       ),
-      persistentFooterButtons: bottomBar,
-      body: Stack(
+      bottomNavigationBar: adLoad? bottomBar() : null, //_adShown? bottomBar: null, adds way to disable ads
+      body: ListView(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.only(bottom: 50.0),
-            child: ListView(children: <Widget>[
-              Container(
-                alignment: Alignment.topLeft,
-                padding: const EdgeInsets.only(top: 40, left: 12),
-                child: const Text(
-                  "Dining Halls",
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontFamily: 'Montserat',
-                      fontWeight: FontWeight.w800,
-                      color: Color(constants.yellowOrange)),
-                ),
-              ),
-              Container(
-                alignment: Alignment.topCenter,
-                height: MediaQuery.of(context).size.height / 5,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return const MerrillMenu();
-                          }),
-                        );
-                      },
-                      icon: Image.asset('images/merrill2.png'),
-                      iconSize: iconSizeCollege,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return const CowellMenu();
-                          }),
-                        );
-                      },
-                      icon: Image.asset('images/cowell2.png'),
-                      iconSize: iconSizeCollege,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return const NineMenu();
-                          }),
-                        );
-                      },
-                      icon: Image.asset('images/nine2.png'),
-                      iconSize: iconSizeCollege,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return const PorterMenu();
-                          }),
-                        );
-                      },
-                      icon: Image.asset('images/porter2.png'),
-                      iconSize: iconSizeCollege,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                alignment: Alignment.topLeft,
-                // height: MediaQuery.of(context).size.height / 2,
-                //padding: const EdgeInsets.only(top: 20, left: 12),
-                child: FutureBuilder(
-                  // future: nineSummary,
-                  builder: (context, snapshot) {
-                    // if (snapshot.hasData) {
-                    return Column(
-                      children: [
-                        buildSummary("Porter", porterSummary),
-                        buildSummary("Nine", nineSummary),
-                        buildSummary("Cowell", cowellSummary),
-                        buildSummary("Merrill", merrillSummary),
-                        const SizedBox(height: 70),
-                      ],
-                    );
-                    // } else if (snapshot.hasError) {
-                    //   return Text(
-                    //     '${snapshot.error}',
-                    //     style: const TextStyle(
-                    //       fontSize: 25,
-                    //       color: Color(constants.yellowGold),
-                    //     ),
-                    //   );
-                    // }
-
-                    // By default, show a loading spinner.
-                  },
-                ),
-              ),
-            ]),
+            alignment: Alignment.topLeft,
+            padding: const EdgeInsets.only(top: 40, left: 12),
+            child: const Text(
+              "Dining Halls",
+              style: TextStyle(
+                  fontSize: 30,
+                  fontFamily: 'Montserat',
+                  fontWeight: FontWeight.w800,
+                  color: Color(constants.yellowOrange)),
+            ),
           ),
-          Positioned(
-            bottom: 0.0,
-            left: 0.0,
-            right: 0.0,
-            child: SizedBox(
-//             alignment: Alignment.center,
-              width: _bannerAd?.size.width.toDouble(),
-              height: _bannerAd?.size.height.toDouble(),
-              child: AdWidget(ad: _bannerAd!),
+          Container(
+            alignment: Alignment.topCenter,
+            height: MediaQuery.of(context).size.height / 5,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return const MerrillMenu();
+                      }),
+                    );
+                  },
+                  icon: Image.asset('images/merrill2.png'),
+                  iconSize: iconSizeCollege,
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return const CowellMenu();
+                      }),
+                    );
+                  },
+                  icon: Image.asset('images/cowell2.png'),
+                  iconSize: iconSizeCollege,
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return const NineMenu();
+                      }),
+                    );
+                  },
+                  icon: Image.asset('images/nine2.png'),
+                  iconSize: iconSizeCollege,
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return const PorterMenu();
+                      }),
+                    );
+                  },
+                  icon: Image.asset('images/porter2.png'),
+                  iconSize: iconSizeCollege,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            // height: MediaQuery.of(context).size.height / 2,
+            //padding: const EdgeInsets.only(top: 20, left: 12),
+            child: FutureBuilder(
+              // future: nineSummary,
+              builder: (context, snapshot) {
+                // if (snapshot.hasData) {
+                return Column(
+                  children: [
+                    buildSummary("Porter", porterSummary),
+                    buildSummary("Nine", nineSummary),
+                    buildSummary("Cowell", cowellSummary),
+                    buildSummary("Merrill", merrillSummary),
+                    const SizedBox(height: 70),
+                  ],
+                );
+                // } else if (snapshot.hasError) {
+                //   return Text(
+                //     '${snapshot.error}',
+                //     style: const TextStyle(
+                //       fontSize: 25,
+                //       color: Color(constants.yellowGold),
+                //     ),
+                //   );
+                // }
+
+                // By default, show a loading spinner.
+              },
             ),
           ),
         ],
@@ -554,3 +555,16 @@ class _RootPageState extends State<RootPage> {
 //             height: _bannerAd?.size.height.toDouble(),
 //             child: AdWidget(ad: _bannerAd!),
 //           ),
+
+
+// Positioned(
+//             bottom: 0.0,
+//             left: 0.0,
+//             right: 0.0,
+//             child: SizedBox(
+// //             alignment: Alignment.center,
+//               width: _bannerAd?.size.width.toDouble(),
+//               height: _bannerAd?.size.height.toDouble(),
+//               child: AdWidget(ad: _bannerAd!),
+//             ),
+

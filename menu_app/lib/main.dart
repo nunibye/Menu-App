@@ -255,6 +255,7 @@ void onItemTapped(int index) {
       adUnitId: ad_helper.getAdUnitId,
       request: const AdRequest(),
       size: AdSize.banner,
+      // size: AdSize.getAnchoredAdaptiveBannerAdSize(Orientation.landscape, 100),  //FIXME: try something with adaptive size?
       
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
@@ -285,9 +286,9 @@ void onItemTapped(int index) {
 
   Widget bottomBar() {
     
-      return Container(
+      return SizedBox(
         //color: Colors.amber,
-        alignment: Alignment.center,
+        // alignment: Alignment.center,
         width: _bannerAd?.size.width.toDouble(),
         height: _bannerAd?.size.height.toDouble(),
         child: AdWidget(ad: _bannerAd!),

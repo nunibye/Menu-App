@@ -266,10 +266,12 @@ class _HomePageState extends State<HomePage> {
                 // if (snapshot.hasData) {
                 return Column(
                   children: [
-                    buildSummary("Porter", porterSummary),
-                    buildSummary("Nine", nineSummary),
-                    buildSummary("Cowell", cowellSummary),
                     buildSummary("Merrill", merrillSummary),
+                    buildSummary("Cowell", cowellSummary),
+                    buildSummary("Nine", nineSummary),
+                    buildSummary("Porter", porterSummary),
+                    
+                    
                     const SizedBox(height: 70),
                   ],
                 );

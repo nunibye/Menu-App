@@ -67,7 +67,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            main_page.scakey.currentState?.onItemTapped(0);
           },
           icon: const Icon(Icons.arrow_back_ios_new_rounded,
               color: Colors.orange, size: constants.backArrowSize),
@@ -98,6 +98,7 @@ class _CowellMenuState extends State<CowellMenu> with TickerProviderStateMixin {
           ],
         ),
       ),
+      //bottomNavigationBar: adLoad? bottomBar() : null,
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[

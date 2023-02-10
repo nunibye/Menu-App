@@ -61,7 +61,7 @@ class _MerrillMenuState extends State<MerrillMenu>
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            main_page.scakey.currentState?.onItemTapped(0);
           },
           icon: const Icon(Icons.arrow_back_ios_new_rounded,
               color: Colors.orange, size: constants.backArrowSize),

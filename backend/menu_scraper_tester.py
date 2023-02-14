@@ -13,7 +13,7 @@ def menu_scrape():
 
     halls_name = ['Nine', 'Cowell', 'Merrill', 'Porter']
     meals = ["Breakfast", "Lunch", "Dinner", "Late Night"]
-    food_cat = {"*Breakfast*": [], "*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": [], "*Miscellaneous*": []}
+    food_cat = {"*Breakfast*": [], "*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": [], "*Miscellaneous*": [], "*Brunch*": []}
 
     # Create nested dictionary
     meal_times = {}

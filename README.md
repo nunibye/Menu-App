@@ -32,8 +32,6 @@ Supported on Android and iOS.
 * Automatically displays meal time based on time of day.
 
 ### To Do:
-* Make summary page refresh.
-* Restructure so ads appear on every page.
 * Organize order of meal category.
 * Add settings to change order hall is displayed in.
 * Figure out more comprehensive summarizer.

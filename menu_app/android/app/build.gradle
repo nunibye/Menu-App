@@ -80,7 +80,21 @@ android {
 flutter {
     source '../..'
 }
+repositories {
 
+    google()
+    mavenCentral()
+    maven {
+        url 'https://android-sdk.is.com/'
+    }
+    
+
+}
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation  'com.google.ads.mediation:ironsource:7.2.7.0'
+    implementation  'com.google.ads.mediation:facebook:6.12.0.0'
+    implementation 'com.adcolony:sdk:4.8.0'
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+    
 }

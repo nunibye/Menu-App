@@ -39,3 +39,8 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
   end
 end
+
+pod 'GoogleMobileAdsMediationAdColony'
+pod 'GoogleMobileAdsMediationIronSource'
+pod 'GoogleMobileAdsMediationFacebook'
+pod 'GoogleMobileAdsMediationUnity'

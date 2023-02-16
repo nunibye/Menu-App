@@ -6,6 +6,9 @@ Menu app for all UC Santa Cruz Dining Locations created with Flutter.
 * [Eliah Reeves](https://github.com/nunibye)
 * [Christian Knab](https://github.com/christianknab)
 
+### Contact us
+To contact us for suggestions, feedback, bugs, etc., reach us at ucscmenuapp@gmail.com!
+
 ## Table of Contents
 * [General Info](#general-info)
 * [Technologies](#technologies)

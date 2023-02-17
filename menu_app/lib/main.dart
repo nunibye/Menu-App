@@ -11,6 +11,8 @@ import 'package:menu_app/porter_menu.dart';
 import 'package:menu_app/merrill_menu.dart';
 
 import 'package:menu_app/about_page.dart';
+import 'package:menu_app/settings_page.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -234,6 +236,7 @@ class _RootPageState extends State<RootPage> {
     const CowellMenu(),
     const NineMenu(),
     const PorterMenu(),
+    SettingsPage(),
     const AboutPage(),
   ];
 
@@ -295,9 +298,21 @@ class _RootPageState extends State<RootPage> {
 
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(selectedIndex),
+        child:           AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return SlideTransition(position: Tween(
+            begin: const Offset(1.0, 0.0),
+            end: const Offset(0.0, 0.0))
+        .animate(animation), child: child);
+            },
+            child: _widgetOptions.elementAt(selectedIndex),
+          ),
       ),
       bottomNavigationBar: adLoad ? bottomBar() : null,
     );
   }
 }
+
+
+//_widgetOptions.elementAt(selectedIndex),

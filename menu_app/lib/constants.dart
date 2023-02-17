@@ -34,3 +34,6 @@ const double menuFontSize = 21;
 const double menuFontheight = 1;
 const menuColor = white;
 const menuFont = 'Montserat';
+
+//settings
+const listColor = 0xff363636;

@@ -46,7 +46,8 @@ class NavDrawer extends StatelessWidget {
                     height: constants.menuFontheight,
                   ),
                 ),
-                onTap: () => {main_page.scakey.currentState?.onItemTapped(0)},
+                
+                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(0)},
               ),
               ListTile(
                 leading: const Icon(
@@ -63,7 +64,7 @@ class NavDrawer extends StatelessWidget {
                     height: constants.menuFontheight,
                   ),
                 ),
-                onTap: () => {main_page.scakey.currentState?.onItemTapped(0)},
+                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(5)},
               ),
               ListTile(
                 leading: const Icon(
@@ -71,7 +72,7 @@ class NavDrawer extends StatelessWidget {
                   color: Color(constants.menuColor),
                 ),
                 title: const Text(
-                  'About',
+                  'About Us',
                   style: TextStyle(
                     fontFamily: constants.menuFont,
                     //fontWeight: FontWeight.bold,
@@ -80,7 +81,7 @@ class NavDrawer extends StatelessWidget {
                     height: constants.menuFontheight,
                   ),
                 ),
-                onTap: () => {main_page.scakey.currentState?.onItemTapped(5)},
+                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(6)},
               ),
             ],
           ),

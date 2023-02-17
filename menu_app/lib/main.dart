@@ -175,7 +175,6 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
   }
 }
 
-
 //void main() => runApp(const MyApp());
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -183,13 +182,12 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((value) => runApp(const MyApp()));
-
 }
+
 final scakey = GlobalKey<_RootPageState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -215,21 +213,19 @@ class RootPage extends StatefulWidget {
   State<RootPage> createState() => _RootPageState();
 }
 
-
 class _RootPageState extends State<RootPage> {
-
-  
   late Future futureAlbum;
   late Future nineSummary;
   late Future cowellSummary;
   late Future merrillSummary;
   late Future porterSummary;
   bool adLoad = false;
+  bool showAd = false;                  //CHANGE TO TRUE FOR RELEASE
   BannerAd? _bannerAd;
-int selectedIndex = 0;
+  int selectedIndex = 0;
 
 //final myKey = GlobalKey<_RootPageState>();
-final List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
     const MerrillMenu(),
     const CowellMenu(),
@@ -237,44 +233,39 @@ final List<Widget> _widgetOptions = <Widget>[
     const PorterMenu(),
   ];
 
-void onItemTapped(int index) {
-  
-  setState(() {
-    selectedIndex = index;
-  });
-}
-
+  void onItemTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    
+    if (showAd == true) {
+      _bannerAd = BannerAd(
+        adUnitId: ad_helper.getAdUnitId,
+        request: const AdRequest(),
+        size: AdSize.banner,
+        // size: AdSize.getAnchoredAdaptiveBannerAdSize(Orientation.landscape, 100),  //FIXME: try something with adaptive size?
 
+        listener: BannerAdListener(
+          onAdLoaded: (Ad ad) {
+            adLoad = true;
+            setState(() {});
+          },
+          onAdFailedToLoad: (Ad ad, LoadAdError error) {
+            adLoad = false;
+            setState(() {});
+          },
+        ),
+      );
 
-    _bannerAd = BannerAd(
-      adUnitId: ad_helper.getAdUnitId,
-      request: const AdRequest(),
-      size: AdSize.banner,
-      // size: AdSize.getAnchoredAdaptiveBannerAdSize(Orientation.landscape, 100),  //FIXME: try something with adaptive size?
-      
-      listener: BannerAdListener(
-        onAdLoaded: (Ad ad) {
-          adLoad = true;
-          setState((){
-        });
-        },
-        onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          adLoad = false;
-          setState((){
-        });
-        },
-      ),
-    );
-
-    _bannerAd?.load();
+      _bannerAd?.load();
+    } else {
+      _bannerAd = null;
+    }
   }
-
-  
 
   @override
   void dispose() {
@@ -283,17 +274,14 @@ void onItemTapped(int index) {
     _bannerAd = null;
   }
 
-
   Widget bottomBar() {
-    
-      return SizedBox(
-        //color: Colors.amber,
-        // alignment: Alignment.center,
-        width: _bannerAd?.size.width.toDouble(),
-        height: _bannerAd?.size.height.toDouble(),
-        child: AdWidget(ad: _bannerAd!),
-      );
-    
+    return SizedBox(
+      //color: Colors.amber,
+      // alignment: Alignment.center,
+      width: _bannerAd?.size.width.toDouble(),
+      height: _bannerAd?.size.height.toDouble(),
+      child: AdWidget(ad: _bannerAd!),
+    );
   }
 
   @override
@@ -302,12 +290,10 @@ void onItemTapped(int index) {
     //double iconSizeCollege = MediaQuery.of(context).size.height / 6;
 
     return Scaffold(
-      
       body: Center(
         child: _widgetOptions.elementAt(selectedIndex),
       ),
-      bottomNavigationBar: adLoad? bottomBar() : null,
-      
+      bottomNavigationBar: adLoad ? bottomBar() : null,
     );
   }
 }

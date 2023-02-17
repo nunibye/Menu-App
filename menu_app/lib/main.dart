@@ -220,7 +220,7 @@ class _RootPageState extends State<RootPage> {
   late Future merrillSummary;
   late Future porterSummary;
   bool adLoad = false;
-  bool showAd = true;
+  bool showAd = false;                  //CHANGE TO TRUE FOR RELEASE
   BannerAd? _bannerAd;
   int selectedIndex = 0;
 

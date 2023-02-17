@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.height / 6;
     return Scaffold(
-      drawer: NavDrawer(),
+      drawer: const NavDrawer(),
       appBar: AppBar(
         toolbarHeight: 80,
         centerTitle: true,

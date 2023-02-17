@@ -39,6 +39,7 @@ class NavDrawer extends StatelessWidget {
                             height: constants.menuFontheight,
                           ),),
                 onTap: () => {
+                  Navigator.of(context).pop(),
                   main_page.scakey.currentState?.onItemTapped(0)
                 },
               ),
@@ -54,6 +55,7 @@ class NavDrawer extends StatelessWidget {
                             height: constants.menuFontheight,
                           ),),
                 onTap: () => {
+                  Navigator.of(context).pop(),
                   main_page.scakey.currentState?.onItemTapped(0)
                 },
               ),
@@ -69,6 +71,7 @@ class NavDrawer extends StatelessWidget {
                             height: constants.menuFontheight,
                           ),),
                 onTap: () => {
+                  Navigator.of(context).pop(),
                   main_page.scakey.currentState?.onItemTapped(5)
                 },
               ),

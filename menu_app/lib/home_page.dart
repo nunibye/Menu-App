@@ -3,10 +3,7 @@ import 'dart:async';
 //import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
-import 'package:menu_app/cowell_menu.dart';
-import 'package:menu_app/merrill_menu.dart';
-import 'package:menu_app/nine_menu.dart';
-import 'package:menu_app/porter_menu.dart';
+import 'package:menu_app/widgets.dart';
 import 'main.dart' as main_page;
 
 class HomePage extends StatefulWidget {
@@ -182,6 +179,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.height / 6;
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
         toolbarHeight: 80,
         centerTitle: true,

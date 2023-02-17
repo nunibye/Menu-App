@@ -1,7 +1,7 @@
 const darkBlue = 0xff0f0f0f; //0xff000237
 const yellowGold = 0xFFFFC82F;
 const yellowOrange = 0xFFF29813;
-const white = 0xffffffff;
+const white = 0xffdbdbdb;
 
 const double menuHeadingSize = 35;
 const double backArrowSize = 30;
@@ -27,3 +27,10 @@ const double infoFontsize = 22;
 
 //Hours Open
 const double sizedBox = 210;
+
+//Nav Drawer
+const backgroundColor = 0xff121212;
+const double menuFontSize = 21;
+const double menuFontheight = 1;
+const menuColor = white;
+const menuFont = 'Montserat';

@@ -9,6 +9,8 @@ import 'package:menu_app/nine_menu.dart';
 import 'package:menu_app/cowell_menu.dart';
 import 'package:menu_app/porter_menu.dart';
 import 'package:menu_app/merrill_menu.dart';
+
+import 'package:menu_app/about_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -74,21 +76,22 @@ buildMeal(Future<dynamic> hallSummary) {
                     ))
                   else
                     (Container(
-                        padding: const EdgeInsets.only(right: 10),
-                        // const EdgeInsets.all(
-                        //     constants.containerPaddingbody),
-                        alignment: Alignment.topRight,
-                        child: Text(
-                          snapshot.data[i],
-                          textAlign: TextAlign.right,
-                          style: const TextStyle(
-                            fontFamily: constants.bodyFont,
-                            //fontWeight: FontWeight.bold,
-                            fontSize: constants.bodyFontSize,
-                            color: Color(constants.bodyColor),
-                            height: constants.bodyFontheight,
-                          ),
-                        ))),
+                      padding: const EdgeInsets.only(right: 10),
+                      // const EdgeInsets.all(
+                      //     constants.containerPaddingbody),
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        snapshot.data[i],
+                        textAlign: TextAlign.right,
+                        style: const TextStyle(
+                          fontFamily: constants.bodyFont,
+                          //fontWeight: FontWeight.bold,
+                          fontSize: constants.bodyFontSize,
+                          color: Color(constants.bodyColor),
+                          height: constants.bodyFontheight,
+                        ),
+                      ),
+                    )),
                 const SizedBox(height: 70),
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
@@ -220,7 +223,7 @@ class _RootPageState extends State<RootPage> {
   late Future merrillSummary;
   late Future porterSummary;
   bool adLoad = false;
-  bool showAd = false;                  //CHANGE TO TRUE FOR RELEASE
+  bool showAd = false; //CHANGE TO TRUE FOR RELEASE
   BannerAd? _bannerAd;
   int selectedIndex = 0;
 
@@ -231,6 +234,7 @@ class _RootPageState extends State<RootPage> {
     const CowellMenu(),
     const NineMenu(),
     const PorterMenu(),
+    const AboutPage(),
   ];
 
   void onItemTapped(int index) {

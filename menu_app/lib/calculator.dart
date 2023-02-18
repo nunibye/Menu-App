@@ -175,7 +175,7 @@ class _CalculatorPageState extends State<Calculator> {
                   child: Column(
                     children: [
                       AmountText(
-                        'Meals Left: ${_getMealAmount()}',
+                        'Avg. Meals/Day: ${_getMealAmount()}',
                         key: Key('mealAmount'),
                       ),
                     ],

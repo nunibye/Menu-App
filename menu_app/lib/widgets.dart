@@ -51,6 +51,24 @@ class NavDrawer extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(
+                  Icons.calculate,
+                  color: Color(constants.menuColor),
+                ),
+                title: const Text(
+                  'Calculator',
+                  style: TextStyle(
+                    fontFamily: constants.menuFont,
+                    //fontWeight: FontWeight.bold,
+                    fontSize: constants.menuFontSize,
+                    color: Color(constants.menuColor),
+                    height: constants.menuFontheight,
+                  ),
+                ),
+                
+                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(5)},
+              ),
+              ListTile(
+                leading: const Icon(
                   Icons.settings,
                   color: Color(constants.menuColor),
                 ),
@@ -64,7 +82,7 @@ class NavDrawer extends StatelessWidget {
                     height: constants.menuFontheight,
                   ),
                 ),
-                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(5)},
+                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(6)},
               ),
               ListTile(
                 leading: const Icon(
@@ -81,7 +99,7 @@ class NavDrawer extends StatelessWidget {
                     height: constants.menuFontheight,
                   ),
                 ),
-                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(6)},
+                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(7)},
               ),
             ],
           ),

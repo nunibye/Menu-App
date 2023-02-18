@@ -7,8 +7,12 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> contents = ["About us", "This app is created by Eliah Reeves and Christian Knab from Merrill.\n\nPlease share this app with your friends!\n",
-    "Contact Us", "For issues, bugs, ideas, etc., email us at ucscmenuapp@gmail.com"];
+    final List<String> contents = [
+      "About us",
+      "This app is created by Eliah Reeves and Christian Knab from Merrill.\n\nPlease share this app with your friends!\n",
+      "Contact Us",
+      "For issues, bugs, ideas, etc., email us at ucscmenuapp@gmail.com"
+    ];
 
     return Scaffold(
         drawer: const NavDrawer(),
@@ -38,7 +42,7 @@ class AboutPage extends StatelessWidget {
         body: ListView(
           children: [
             for (var i = 0; i < contents.length; i++)
-            if (i % 2 == 0)
+              if (i % 2 == 0)
                 Container(
                   decoration: const BoxDecoration(
                       border: Border(
@@ -59,7 +63,7 @@ class AboutPage extends StatelessWidget {
                     ),
                   ),
                 )
-                else
+              else
                 (Container(
                   padding: const EdgeInsets.only(left: 20, top: 10),
                   // const EdgeInsets.all(

@@ -10,6 +10,7 @@ import 'package:menu_app/cowell_menu.dart';
 import 'package:menu_app/porter_menu.dart';
 import 'package:menu_app/merrill_menu.dart';
 
+import 'package:menu_app/calculator.dart';
 import 'package:menu_app/about_page.dart';
 import 'package:menu_app/settings_page.dart';
 
@@ -236,6 +237,7 @@ class _RootPageState extends State<RootPage> {
     const CowellMenu(),
     const NineMenu(),
     const PorterMenu(),
+    const Calculator(), //FIXME: will probably need to not be const when can type in values
     SettingsPage(),
     const AboutPage(),
   ];

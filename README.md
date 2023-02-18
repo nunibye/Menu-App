@@ -1,6 +1,8 @@
 # UCSC Menu – Dining Hall App
 
 Menu app for all UC Santa Cruz Dining Locations created with Flutter.
+* [App Store](https://apps.apple.com/us/app/ucsc-menu/id1670523487?itsct=apps_box_badge&itscg=30200)
+* [Google Play Store](https://play.google.com/store/apps/details?id=com.orderOfTheCone.android.menu_app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)
 
 ### Authors
 * [Eliah Reeves](https://github.com/nunibye)

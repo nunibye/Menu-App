@@ -7,7 +7,7 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> contents = ["About us", "This app is created by Eli Reeves and Christian Knab from Merrill.\n\nPlease share this app with your friends!\n",
+    final List<String> contents = ["About us", "This app is created by Eliah Reeves and Christian Knab from Merrill.\n\nPlease share this app with your friends!\n",
     "Contact Us", "For issues, bugs, ideas, etc., email us at ucscmenuapp@gmail.com"];
 
     return Scaffold(

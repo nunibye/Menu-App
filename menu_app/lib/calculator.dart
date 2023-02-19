@@ -82,7 +82,7 @@ class _CalculatorPageState extends State<Calculator> {
         shape: const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
       ),
       body: Container(
-        color: Color.fromARGB(255, 198, 197, 197), //FIXME: figure out color problem
+        color: const Color.fromARGB(255, 198, 197, 197), //FIXME: figure out color problem
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: Form(
@@ -90,25 +90,25 @@ class _CalculatorPageState extends State<Calculator> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextFormField(
-                  key: Key("totalSlugPoints"),
+                  key: const Key("totalSlugPoints"),
                   controller: _totalSlugPointsController,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   decoration: InputDecoration(
                     hintText: 'Slug points balance',
                     labelText: 'Slug points',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 25,
                       letterSpacing: 1,
                       fontWeight: FontWeight.bold,
                       color: Color(constants.bodyColor),
                     ),
-                    fillColor: Color(constants.bodyColor),
-                    border: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(20.0),
+                    fillColor: const Color(constants.bodyColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 TextFormField(
@@ -118,51 +118,51 @@ class _CalculatorPageState extends State<Calculator> {
                   decoration: InputDecoration(
                     hintText: 'Meal cost',
                     labelText: 'Meal cost',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                         fontSize: 25,
                         letterSpacing: 1,
                         fontWeight: FontWeight.bold,
                         color: Color(constants.bodyColor)),
-                    fillColor: Color(constants.bodyColor),
-                    border: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(20.0),
+                    fillColor: const Color(constants.bodyColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 TextFormField(
-                  key: Key("lastDay"),
+                  key: const Key("lastDay"),
                   controller: _lastDayController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: 'Last day',
                     labelText: 'Last day',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 25,
                       letterSpacing: 1,
                       fontWeight: FontWeight.bold,
                       color: Color(constants.bodyColor),
                     ),
-                    fillColor: Color(constants.bodyColor),
-                    border: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(20.0),
+                    fillColor: const Color(constants.bodyColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
-                  margin: EdgeInsets.all(15),
-                  padding: EdgeInsets.all(15),
+                  margin: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: Color(constants.bodyColor),
-                    borderRadius: BorderRadius.all(
+                    color: const Color(constants.bodyColor),
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(15),
                     ),
-                    border: Border.all(color: Color(constants.bodyColor)),
+                    border: Border.all(color: const Color(constants.bodyColor)),
                     // boxShadow: [
                     //   BoxShadow(
                     //     color: Colors.black12,
@@ -176,7 +176,7 @@ class _CalculatorPageState extends State<Calculator> {
                     children: [
                       AmountText(
                         'Avg. Meals/Day: ${_getMealAmount()}',
-                        key: Key('mealAmount'),
+                        key: const Key('mealAmount'),
                       ),
                     ],
                   ),
@@ -201,9 +201,9 @@ class AmountText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Text(text.toUpperCase(),
-          style: TextStyle(
+          style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.blueAccent,
               fontSize: 20)),

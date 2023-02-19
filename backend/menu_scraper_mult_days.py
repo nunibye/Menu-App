@@ -3,11 +3,8 @@ import re
 import unicodedata
 from bs4 import BeautifulSoup
 from copy import deepcopy
-#import schedule
-import time
 from datetime import datetime
 import data_base_write
-
 
 def menu_scrape():
     url = 'https://nutrition.sa.ucsc.edu/'
@@ -16,9 +13,6 @@ def menu_scrape():
     halls_name = ['Nine', 'Cowell', 'Merrill', 'Porter']
     meals = ["Breakfast", "Lunch", "Dinner", "Late Night"]
     food_cat = {"Breakfast": [], "Soups": [], "Entrees": [], "Grill": [], "Pizza": [], "Clean Plate": [], "Bakery": [], "Open Bars": [], "DH Baked": [], "Plant Based Station": [], "Miscellaneous": [], "Brunch": []}
-
-    # today = f"{datetime.now().month}%2f{datetime.now().day}%2f{datetime.now().year}"
-    # print(today)
 
     # Create nested dictionary
     meal_times = {}
@@ -33,33 +27,28 @@ def menu_scrape():
     for i in dates:
         hall_menus.update({i: deepcopy(meal_dates)})
 
-        
     # Go through every dining hall college and update hall_menus dictionary
     for j in range(len(halls_name)):
-        index = 0
-        for date in dates:
+        index = 0                                                       # reset index
+        for date in dates:                                              # loop through dates wanted
             with sync_playwright() as p:
                 browser = p.chromium.launch()  #headless=False
                 page = browser.new_page()
                 page.set_viewport_size(ViewportSize(width = 1080*2, height=1920*2))
                 page.goto(url)
-                page.locator(halls_html[j]).click()
-
-                # date_option = page.get_by_role("combobox").select_option(index=1)
-                date_option = page.get_by_role("combobox")
+                page.locator(halls_html[j]).click()                     # select hall
+                date_option = page.get_by_role("combobox")              # find date options
                 
+                # find initial index of date options
                 if index == 0:
-                    options = date_option.locator("option")
-                    options = options.all_inner_texts()
+                    options = date_option.locator("option").all_inner_texts()
                     for item in options:
                         if str(datetime.now().day) in item:
-                            index = options.index(item)
+                            index = options.index(item)                 # find index of current day's date
                             break
-                            # print(index)
-                date_option.select_option(index=index)
+                date_option.select_option(index=index)                  # select day
+                page.get_by_role("button", name="Go!").click()          # go to page
                 index += 1
-                
-                page.get_by_role("button", name="Go!").click()
 
                 html = page.content()
                 soup = BeautifulSoup(html, 'html.parser')
@@ -96,18 +85,6 @@ def menu_scrape():
                     hall_menus[date][halls_name[j]][meal_time][meal_cat].append(i)
 
     return hall_menus
-hall_menus = menu_scrape()
 
-data_base_write.UpdateDatabase(hall_menus)
-# hall_menus = menu_scrape()
-# for day, names in hall_menus.items():
-#     print(day)
-#     for name, meals in names.items():
-#         print(f"\t{name}")
-#         for meal, cats in meals.items():
-#             print(f"\t\t{meal}")
-#             for cat, items in cats.items():
-#                 print(f"\t\t\t{cat}", end="\n\t\t\t\t")
-#                 if len(items) > 0:
-#                     for item in items:
-#                         print(item, end=", ")
+# main
+hall_menus = menu_scrape()

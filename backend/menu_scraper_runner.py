@@ -4,7 +4,6 @@ import unicodedata
 from bs4 import BeautifulSoup
 import data_base_write
 from copy import deepcopy
-#import schedule
 import time
 
 def menu_scrape():

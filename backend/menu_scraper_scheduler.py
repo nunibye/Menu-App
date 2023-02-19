@@ -1,3 +1,6 @@
+# OLD:
+# menu_scraper_scheduler.py is VERSION 1 that used scheduler to run at certain times of day
+
 from playwright.sync_api import sync_playwright, ViewportSize
 import re
 import unicodedata

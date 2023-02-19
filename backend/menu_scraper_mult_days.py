@@ -32,7 +32,7 @@ def menu_scrape():
         index = 0                                                       # reset index
         for date in dates:                                              # loop through dates wanted
             with sync_playwright() as p:
-                browser = p.chromium.launch()  #headless=False
+                browser = p.chromium.launch()
                 page = browser.new_page()
                 page.set_viewport_size(ViewportSize(width = 1080*2, height=1920*2))
                 page.goto(url)

@@ -14,7 +14,8 @@ class _CalculatorPageState extends State<Calculator> {
   // var lastDay = "3 / 24 / 23"; FIXME: should eventuall take a string
   static const lastDay = 10; // FIXME: Right now only how many days left
 
-  final _totalSlugPointsController = TextEditingController(text: totalSlugPoints.toString());
+  final _totalSlugPointsController =
+      TextEditingController(text: totalSlugPoints.toString());
   final _mealCostController = TextEditingController(text: mealCost.toString());
   final _lastDayController = TextEditingController(text: lastDay.toString());
 
@@ -82,7 +83,7 @@ class _CalculatorPageState extends State<Calculator> {
         shape: const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
       ),
       body: Container(
-        color: const Color.fromARGB(255, 198, 197, 197), //FIXME: figure out color problem
+        color: const Color(constants.darkBlue),
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: Form(
@@ -92,10 +93,14 @@ class _CalculatorPageState extends State<Calculator> {
                 TextFormField(
                   key: const Key("totalSlugPoints"),
                   controller: _totalSlugPointsController,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  style: const TextStyle(color: Color(constants.bodyColor)),
                   decoration: InputDecoration(
                     hintText: 'Slug points balance',
                     labelText: 'Slug points',
+                    hintStyle:
+                        const TextStyle(color: Color(constants.bodyColor)),
                     labelStyle: const TextStyle(
                       fontSize: 25,
                       letterSpacing: 1,
@@ -105,19 +110,27 @@ class _CalculatorPageState extends State<Calculator> {
                     fillColor: const Color(constants.bodyColor),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
+                      borderSide:
+                          const BorderSide(color: Color(constants.bodyColor)),
                     ),
+                    focusedBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color(constants.bodyColor))),
                   ),
                 ),
                 const SizedBox(
                   height: 25,
                 ),
                 TextFormField(
-                  key: Key("mealCost"),
+                  key: const Key("mealCost"),
                   controller: _mealCostController,
                   keyboardType: TextInputType.number,
+                  style: const TextStyle(color: Color(constants.bodyColor)),
                   decoration: InputDecoration(
                     hintText: 'Meal cost',
                     labelText: 'Meal cost',
+                    hintStyle:
+                        const TextStyle(color: Color(constants.bodyColor)),
                     labelStyle: const TextStyle(
                         fontSize: 25,
                         letterSpacing: 1,
@@ -126,7 +139,12 @@ class _CalculatorPageState extends State<Calculator> {
                     fillColor: const Color(constants.bodyColor),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
+                      borderSide:
+                          const BorderSide(color: Color(constants.bodyColor)),
                     ),
+                    focusedBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color(constants.bodyColor))),
                   ),
                 ),
                 const SizedBox(
@@ -136,9 +154,12 @@ class _CalculatorPageState extends State<Calculator> {
                   key: const Key("lastDay"),
                   controller: _lastDayController,
                   keyboardType: TextInputType.number,
+                  style: const TextStyle(color: Color(constants.bodyColor)),
                   decoration: InputDecoration(
                     hintText: 'Last day',
                     labelText: 'Last day',
+                    hintStyle:
+                        const TextStyle(color: Color(constants.bodyColor)),
                     labelStyle: const TextStyle(
                       fontSize: 25,
                       letterSpacing: 1,
@@ -148,7 +169,12 @@ class _CalculatorPageState extends State<Calculator> {
                     fillColor: const Color(constants.bodyColor),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
+                      borderSide:
+                          const BorderSide(color: Color(constants.bodyColor)), //FIXME: border color not changing to white
                     ),
+                    focusedBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color(constants.bodyColor))),
                   ),
                 ),
                 const SizedBox(
@@ -162,7 +188,7 @@ class _CalculatorPageState extends State<Calculator> {
                     borderRadius: const BorderRadius.all(
                       Radius.circular(15),
                     ),
-                    border: Border.all(color: const Color(constants.bodyColor)),
+                    border: Border.all(color: Color.fromARGB(255, 98, 98, 98)),
                     // boxShadow: [
                     //   BoxShadow(
                     //     color: Colors.black12,

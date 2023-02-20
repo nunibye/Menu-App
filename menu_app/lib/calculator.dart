@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/constants.dart';
 import 'constants.dart' as constants;
 import 'package:menu_app/widgets.dart';
 
@@ -10,17 +11,18 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorPageState extends State<Calculator> {
   static const totalSlugPoints = 1000.0;
-  static const mealCost = 8.28;
-  // var lastDay = "3 / 24 / 23"; FIXME: should eventuall take a string
+  static const mealDay = 3;
+  // var lastDay = "3 / 24 / 23"; FIXME: should be a date
   static const lastDay = 10; // FIXME: Right now only how many days left
+  static const mealCost = 8.28;
 
   final _totalSlugPointsController =
       TextEditingController(text: totalSlugPoints.toString());
-  final _mealCostController = TextEditingController(text: mealCost.toString());
+  final _mealDayController = TextEditingController(text: mealDay.toString());
   final _lastDayController = TextEditingController(text: lastDay.toString());
 
   double _totalSlugPoints = totalSlugPoints;
-  double _mealCost = mealCost;
+  int _mealDay = mealDay;
   int _lastDay = lastDay;
   // String _lastDay = lastDay; FIXME
 
@@ -28,7 +30,7 @@ class _CalculatorPageState extends State<Calculator> {
   void initState() {
     super.initState();
     _totalSlugPointsController.addListener(_onTotalSlugPointsChanged);
-    _mealCostController.addListener(_onMealCostChanged);
+    _mealDayController.addListener(_onMealDayChanged);
     _lastDayController.addListener(_onLastDayChanged);
   }
 
@@ -39,9 +41,9 @@ class _CalculatorPageState extends State<Calculator> {
     });
   }
 
-  _onMealCostChanged() {
+  _onMealDayChanged() {
     setState(() {
-      _mealCost = double.tryParse(_mealCostController.text) ?? 0;
+      _mealDay = int.tryParse(_mealDayController.text) ?? 0;
     });
   }
 
@@ -56,15 +58,19 @@ class _CalculatorPageState extends State<Calculator> {
     // To make sure we are not leaking anything, dispose any used TextEditingController
     // when this widget is cleared from memory.
     _lastDayController.dispose();
-    _mealCostController.dispose();
+    _mealDayController.dispose();
     _totalSlugPointsController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    _getMealAmount() =>
-        num.parse((_totalSlugPoints / _mealCost / _lastDay).toStringAsFixed(2));
+    getMealAmount() => num.parse(
+        ((_totalSlugPoints - (_mealDay * mealCost * _lastDay)) / mealCost)
+            .toStringAsFixed(2));
+    getPointsAmount() =>
+        num.parse(((_totalSlugPoints - (_mealDay * mealCost * _lastDay)))
+            .toStringAsFixed(2));
 
     return Scaffold(
       drawer: const NavDrawer(),
@@ -97,7 +103,7 @@ class _CalculatorPageState extends State<Calculator> {
                       const TextInputType.numberWithOptions(decimal: true),
                   style: const TextStyle(color: Color(constants.bodyColor)),
                   decoration: InputDecoration(
-                    hintText: 'Slug points balance',
+                    hintText: 'Balance',
                     labelText: 'Slug points',
                     hintStyle:
                         const TextStyle(color: Color(constants.bodyColor)),
@@ -107,28 +113,28 @@ class _CalculatorPageState extends State<Calculator> {
                       fontWeight: FontWeight.bold,
                       color: Color(constants.bodyColor),
                     ),
-                    fillColor: const Color(constants.bodyColor),
+                    fillColor: const Color.fromARGB(255, 32, 32, 32),
+                    filled: true,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
-                      borderSide:
-                          const BorderSide(color: Color(constants.bodyColor)),
                     ),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(constants.bodyColor))),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 68, 68, 68))),
                   ),
                 ),
                 const SizedBox(
                   height: 25,
                 ),
                 TextFormField(
-                  key: const Key("mealCost"),
-                  controller: _mealCostController,
+                  key: const Key("mealsDay"),
+                  controller: _mealDayController,
                   keyboardType: TextInputType.number,
                   style: const TextStyle(color: Color(constants.bodyColor)),
                   decoration: InputDecoration(
-                    hintText: 'Meal cost',
-                    labelText: 'Meal cost',
+                    hintText: 'Meals',
+                    labelText: 'Meals per day',
                     hintStyle:
                         const TextStyle(color: Color(constants.bodyColor)),
                     labelStyle: const TextStyle(
@@ -136,15 +142,15 @@ class _CalculatorPageState extends State<Calculator> {
                         letterSpacing: 1,
                         fontWeight: FontWeight.bold,
                         color: Color(constants.bodyColor)),
-                    fillColor: const Color(constants.bodyColor),
+                    fillColor: const Color.fromARGB(255, 32, 32, 32),
+                    filled: true,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
-                      borderSide:
-                          const BorderSide(color: Color(constants.bodyColor)),
                     ),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(constants.bodyColor))),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 68, 68, 68))),
                   ),
                 ),
                 const SizedBox(
@@ -156,7 +162,7 @@ class _CalculatorPageState extends State<Calculator> {
                   keyboardType: TextInputType.number,
                   style: const TextStyle(color: Color(constants.bodyColor)),
                   decoration: InputDecoration(
-                    hintText: 'Last day',
+                    hintText: 'Date',
                     labelText: 'Last day',
                     hintStyle:
                         const TextStyle(color: Color(constants.bodyColor)),
@@ -166,15 +172,15 @@ class _CalculatorPageState extends State<Calculator> {
                       fontWeight: FontWeight.bold,
                       color: Color(constants.bodyColor),
                     ),
-                    fillColor: const Color(constants.bodyColor),
+                    fillColor: const Color.fromARGB(255, 32, 32, 32),
+                    filled: true,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
-                      borderSide:
-                          const BorderSide(color: Color(constants.bodyColor)), //FIXME: border color not changing to white
                     ),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(constants.bodyColor))),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 68, 68, 68))),
                   ),
                 ),
                 const SizedBox(
@@ -183,26 +189,12 @@ class _CalculatorPageState extends State<Calculator> {
                 Container(
                   margin: const EdgeInsets.all(15),
                   padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: const Color(constants.bodyColor),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    border: Border.all(color: Color.fromARGB(255, 98, 98, 98)),
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.black12,
-                    //     offset: Offset(2, 2),
-                    //     spreadRadius: 2,
-                    //     blurRadius: 1,
-                    //   ),
-                    // ],
-                  ),
                   child: Column(
                     children: [
-                      AmountText(
-                        'Avg. Meals/Day: ${_getMealAmount()}',
+                      Text(
+                        'Remaining Meals: ${getMealAmount()}\nSlug Points: ${getPointsAmount()}',
                         key: const Key('mealAmount'),
+                        style: const TextStyle(color: Color(constants.bodyColor), fontWeight: FontWeight.bold, fontSize: 22),
                       ),
                     ],
                   ),
@@ -231,7 +223,7 @@ class AmountText extends StatelessWidget {
       child: Text(text.toUpperCase(),
           style: const TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.blueAccent,
+              color: Color(constants.bodyColor),
               fontSize: 20)),
     );
   }

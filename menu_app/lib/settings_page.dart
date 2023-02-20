@@ -80,7 +80,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       bottom: BorderSide(
                           width: constants.borderWidth,
                           color: Color(constants.darkGray)))),
-              padding: const EdgeInsets.all(constants.containerPaddingTitle),
+              padding: const EdgeInsets.only(
+                  bottom: constants.containerPaddingTitle,
+                  left: constants.containerPaddingTitle + 3,
+                  right: constants.containerPaddingTitle),
               alignment: Alignment.bottomLeft,
               height: 50,
               child: const Text(
@@ -88,7 +91,26 @@ class _SettingsPageState extends State<SettingsPage> {
                 style: TextStyle(
                   fontFamily: constants.titleFont,
                   fontWeight: FontWeight.bold,
-                  fontSize: constants.titleFontSize,
+                  fontSize: 26,
+                  color: Color(constants.titleColor),
+                  height: constants.titleFontheight,
+                ),
+              ),
+            ),
+            Container(
+             
+              padding: const EdgeInsets.only(
+                top: 5,
+                  left: constants.containerPaddingTitle + 3,
+                  right: constants.containerPaddingTitle),
+              alignment: Alignment.centerLeft,
+              height: 35,
+              child: const Text(
+                "Press and drag to reorder home screen.",
+                style: TextStyle(
+                  fontFamily: constants.titleFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
                   color: Color(constants.titleColor),
                   height: constants.titleFontheight,
                 ),

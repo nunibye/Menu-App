@@ -13,7 +13,7 @@ class AboutPage extends StatelessWidget {
       "Contact Us",
       "For issues, bugs, ideas, etc., email us at ucscmenuapp@gmail.com"
     ];
-final imageSize = MediaQuery.of(context).size.width - 200;
+    final imageSize = MediaQuery.of(context).size.width - 200;
     return Scaffold(
         drawer: const NavDrawer(),
         appBar: AppBar(
@@ -40,7 +40,13 @@ final imageSize = MediaQuery.of(context).size.width - 200;
           // ),
         ),
         body: ListView(
-          children: [ const SizedBox(height: 30),SizedBox(width: imageSize, height: imageSize, child: const Image( fit:BoxFit.scaleDown,
+          children: [
+            const SizedBox(height: 30),
+            SizedBox(
+                width: imageSize,
+                height: imageSize,
+                child: const Image(
+                  fit: BoxFit.scaleDown,
                   image: AssetImage('images/cone.png'),
                 )),
             for (var i = 0; i < contents.length; i++)
@@ -67,7 +73,7 @@ final imageSize = MediaQuery.of(context).size.width - 200;
                 )
               else
                 (Container(
-                  padding: const EdgeInsets.only(left: 20, top: 10),
+                  padding: const EdgeInsets.only(left: 20, top: 10, right: 10),
                   // const EdgeInsets.all(
                   //     constants.containerPaddingbody),
                   alignment: Alignment.topLeft,

@@ -226,7 +226,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double iconSizeCollege = MediaQuery.of(context).size.height / 6;
+    double iconSizeCollege = MediaQuery.of(context).size.width / 2.7;
 
     return Scaffold(
       drawer: const NavDrawer(),
@@ -263,18 +263,45 @@ class _HomePageState extends State<HomePage> {
           ),
           Container(
             alignment: Alignment.topCenter,
-            height: MediaQuery.of(context).size.height / 5,
+            height: MediaQuery.of(context).size.width / 2.3,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
                 for (var i = 0; i < colleges.length; i++)
-                  IconButton(
-                    onPressed: () {
-                      main_page.scakey.currentState?.onItemTapped(getIndex(colleges[i].trim()));
-                    },
-                    icon: Image.asset('images/'+ (colleges[i].trim()) + '.png'),
-                    iconSize: iconSizeCollege,
-                  ),
+                  if (i == 0)
+                    Container(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: IconButton(
+                          onPressed: () {
+                            main_page.scakey.currentState
+                                ?.onItemTapped(getIndex(colleges[i].trim()));
+                          },
+                          icon: Image.asset(
+                              'images/' + (colleges[i].trim()) + '.png'),
+                          iconSize: iconSizeCollege,
+                        ))
+                  else if (i == colleges.length - 1)
+                    Container(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: IconButton(
+                          onPressed: () {
+                            main_page.scakey.currentState
+                                ?.onItemTapped(getIndex(colleges[i].trim()));
+                          },
+                          icon: Image.asset(
+                              'images/' + (colleges[i].trim()) + '.png'),
+                          iconSize: iconSizeCollege,
+                        ))
+                  else
+                    (IconButton(
+                      onPressed: () {
+                        main_page.scakey.currentState
+                            ?.onItemTapped(getIndex(colleges[i].trim()));
+                      },
+                      icon: Image.asset(
+                          'images/' + (colleges[i].trim()) + '.png'),
+                      iconSize: iconSizeCollege,
+                    ))
                 // IconButton(
                 //   onPressed: () {
                 //     main_page.scakey.currentState?.onItemTapped(2);

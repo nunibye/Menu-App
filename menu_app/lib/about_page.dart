@@ -73,9 +73,7 @@ class AboutPage extends StatelessWidget {
                 )
               else
                 (Container(
-                  padding: const EdgeInsets.only(left: 20, top: 10, right: 10),
-                  // const EdgeInsets.all(
-                  //     constants.containerPaddingbody),
+                  padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
                   alignment: Alignment.topLeft,
                   child: Text(
                     contents[i],

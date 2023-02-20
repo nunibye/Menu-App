@@ -18,7 +18,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'ad_helper.dart' as ad_helper;
-//import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 buildMeal(Future<dynamic> hallSummary) {
@@ -240,6 +240,21 @@ class _RootPageState extends State<RootPage> {
   BannerAd? _bannerAd;
   int selectedIndex = 0;
 
+  void getAdBool() async {
+    final prefs = await SharedPreferences.getInstance();
+    bool? show = prefs.getBool('showAd');
+
+    if (show == null) {
+      setState(() {
+        showAd = true;
+      });
+    } else if (!show) {
+      setState(() {
+        showAd = false;
+      });
+    }
+  }
+
 //final myKey = GlobalKey<_RootPageState>();
   final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
@@ -248,7 +263,7 @@ class _RootPageState extends State<RootPage> {
     const NineMenu(),
     const PorterMenu(),
     const Calculator(), //FIXME: will probably need to not be const when can type in values
-    SettingsPage(),
+    const SettingsPage(),
     const AboutPage(),
   ];
 
@@ -261,6 +276,7 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
+    getAdBool();
     if (showAd == true) {
       _bannerAd = BannerAd(
         adUnitId: ad_helper.getAdUnitId,

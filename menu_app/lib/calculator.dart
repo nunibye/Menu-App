@@ -1,7 +1,11 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_launcher_icons/constants.dart';
+import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'constants.dart' as constants;
 import 'package:menu_app/widgets.dart';
+import 'package:intl/intl.dart';
 
 class Calculator extends StatefulWidget {
   const Calculator({super.key});
@@ -33,7 +37,7 @@ class _CalculatorPageState extends State<Calculator> {
     _totalSlugPointsController.addListener(_onTotalSlugPointsChanged);
     _mealDayController.addListener(_onMealDayChanged);
     _lastDayController.addListener(_onLastDayChanged);
-    dateController.text = "";
+    dateController.text = "2023-02-20";
   }
 
   _onTotalSlugPointsChanged() {
@@ -99,6 +103,49 @@ class _CalculatorPageState extends State<Calculator> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextFormField(
+                    controller:
+                        dateController, //editing controller of this TextField
+                    decoration: InputDecoration(
+                      // icon: Icon(Icons.calendar_today), //icon of text field
+                      labelText: "Last Day", //label text of field
+                      labelStyle: const TextStyle(
+                          fontSize: 25,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.bold,
+                          color: Color(constants.bodyColor)),
+                      fillColor: const Color.fromARGB(255, 32, 32, 32),
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 68, 68, 68))),
+                    ),
+                    readOnly: true, // when true user cannot edit text
+                    style: const TextStyle(color: Color(constants.bodyColor)),
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2100),
+                      );
+
+                      if (pickedDate != null) {
+                        String formattedDate = DateFormat('yyyy-MM-dd').format(
+                            pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                        setState(() {
+                          dateController.text =
+                              formattedDate; //set foratted date to TextField value.
+                        });
+                      }
+                    }),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
                   key: const Key("totalSlugPoints"),
                   controller: _totalSlugPointsController,
                   keyboardType:
@@ -158,50 +205,36 @@ class _CalculatorPageState extends State<Calculator> {
                 const SizedBox(
                   height: 25,
                 ),
-                TextFormField(
-                  key: const Key("lastDay"),
-                  controller: _lastDayController,
-                  keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Color(constants.bodyColor)),
-                  decoration: InputDecoration(
-                    hintText: 'Date',
-                    labelText: 'Last day',
-                    hintStyle:
-                        const TextStyle(color: Color(constants.bodyColor)),
-                    labelStyle: const TextStyle(
-                      fontSize: 25,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.bold,
-                      color: Color(constants.bodyColor),
-                    ),
-                    fillColor: const Color.fromARGB(255, 32, 32, 32),
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 68, 68, 68))),
-                  ),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                TextFormField(
-                    controller:
-                        dateController, //editing controller of this TextField
-                    decoration: const InputDecoration(
-                        icon: Icon(Icons.calendar_today), //icon of text field
-                        labelText: "Enter Date" //label text of field
-                        ),
-                    readOnly: true, // when true user cannot edit text
-                    onTap: () async {
-                      //when click we have to show the datepicker
-                    }),
-                const SizedBox(
-                  height: 20,
-                ),
+                // TextFormField(
+                //   key: const Key("lastDay"),
+                //   controller: _lastDayController,
+                //   keyboardType: TextInputType.number,
+                //   style: const TextStyle(color: Color(constants.bodyColor)),
+                //   decoration: InputDecoration(
+                //     hintText: 'Date',
+                //     labelText: 'Last day',
+                //     hintStyle:
+                //         const TextStyle(color: Color(constants.bodyColor)),
+                //     labelStyle: const TextStyle(
+                //       fontSize: 25,
+                //       letterSpacing: 1,
+                //       fontWeight: FontWeight.bold,
+                //       color: Color(constants.bodyColor),
+                //     ),
+                //     fillColor: const Color.fromARGB(255, 32, 32, 32),
+                //     filled: true,
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(20.0),
+                //     ),
+                //     focusedBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(20.0),
+                //         borderSide: const BorderSide(
+                //             color: Color.fromARGB(255, 68, 68, 68))),
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 25,
+                // ),
                 Container(
                   margin: const EdgeInsets.all(15),
                   padding: const EdgeInsets.all(15),

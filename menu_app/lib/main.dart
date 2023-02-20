@@ -18,6 +18,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'ad_helper.dart' as ad_helper;
+//import 'package:shared_preferences/shared_preferences.dart';
 
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 buildMeal(Future<dynamic> hallSummary) {
@@ -181,9 +182,18 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
   }
 }
 
+// void initiateSharedPrefs() async {
+//   final prefs = await SharedPreferences.getInstance();
+//   String text = prefs.getString('collegesString') ?? '';
+//   if (text == '') {
+//     prefs.setString('collegesString', 'Merrill, Cowell, Nine, Porter');
+//   }
+// }
+
 //void main() => runApp(const MyApp());
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  // initiateSharedPrefs();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -300,16 +310,18 @@ class _RootPageState extends State<RootPage> {
 
     return Scaffold(
       body: Center(
-        child:           AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return SlideTransition(position: Tween(
-            begin: const Offset(1.0, 0.0),
-            end: const Offset(0.0, 0.0))
-        .animate(animation), child: child);
-            },
-            child: _widgetOptions.elementAt(selectedIndex),
-          ),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return SlideTransition(
+                position: Tween(
+                        begin: const Offset(1.0, 0.0),
+                        end: const Offset(0.0, 0.0))
+                    .animate(animation),
+                child: child);
+          },
+          child: _widgetOptions.elementAt(selectedIndex),
+        ),
       ),
       bottomNavigationBar: adLoad ? bottomBar() : null,
     );

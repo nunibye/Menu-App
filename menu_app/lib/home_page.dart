@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 import 'package:menu_app/widgets.dart';
 import 'main.dart' as main_page;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,11 +20,53 @@ class _HomePageState extends State<HomePage> {
   late Future cowellSummary;
   late Future merrillSummary;
   late Future porterSummary;
+  List<String> colleges = [];
+  void getCollegeOrder() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? text = prefs.getString('collegesString');
+
+    if (text == null) {
+      List<String> textList = ['Merril', 'Cowell', 'Nine', 'Porter'];
+      setState(() {
+        colleges = textList;
+      });
+    } else {
+      List<String> textList = text.split(',');
+      setState(() {
+        colleges = textList;
+      });
+    }
+  }
+
+  getSummary(college) {
+    if (college == 'Merrill') {
+      return merrillSummary;
+    } else if (college == 'Cowell') {
+      return cowellSummary;
+    } else if (college == 'Nine') {
+      return nineSummary;
+    } else {
+      return porterSummary;
+    }
+  }
+
+  getIndex(college) {
+    if (college == "Nine") {
+      return 3;
+    } else if (college == "Cowell") {
+      return 2;
+    } else if (college == "Porter") {
+      return 4;
+    } else {
+      return 1;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     final time = DateTime.now();
+    getCollegeOrder();
     //FIXME goofy a code
     if (time.hour <= 4 || time.hour >= 23) {
       nineSummary =
@@ -97,17 +140,23 @@ class _HomePageState extends State<HomePage> {
                               Size(MediaQuery.of(context).size.width, 40),
                           alignment: Alignment.topLeft),
                       onPressed: () => {
-                        
-                            if (college == "Nine") {
-                              index = 3,
-                            } else if (college == "Cowell") {
-                              index = 2,
-                            } else if (college == "Porter") {
-                              index = 4,
-                            } else {
-                              index = 1,
-                            },
-                          main_page.scakey.currentState?.onItemTapped(index),
+                        if (college == "Nine")
+                          {
+                            index = 3,
+                          }
+                        else if (college == "Cowell")
+                          {
+                            index = 2,
+                          }
+                        else if (college == "Porter")
+                          {
+                            index = 4,
+                          }
+                        else
+                          {
+                            index = 1,
+                          },
+                        main_page.scakey.currentState?.onItemTapped(index),
                       },
                       child: Text(
                         "$college",
@@ -178,6 +227,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.height / 6;
+
     return Scaffold(
       drawer: const NavDrawer(),
       appBar: AppBar(
@@ -217,40 +267,35 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                IconButton(
-                  onPressed: () {
-                    
-                    main_page.scakey.currentState?.onItemTapped(1);
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(builder: (BuildContext context) {
-                    //     return const MerrillMenu();
-                    //   }),
-                    // );
-                  },
-                  icon: Image.asset('images/merrill2.png'),
-                  iconSize: iconSizeCollege,
-                ),
-                IconButton(
-                  onPressed: () {
-                    main_page.scakey.currentState?.onItemTapped(2);
-                  },
-                  icon: Image.asset('images/cowell2.png'),
-                  iconSize: iconSizeCollege,
-                ),
-                IconButton(
-                  onPressed: () {
-                    main_page.scakey.currentState?.onItemTapped(3);
-                  },
-                  icon: Image.asset('images/nine2.png'),
-                  iconSize: iconSizeCollege,
-                ),
-                IconButton(
-                  onPressed: () {
-                    main_page.scakey.currentState?.onItemTapped(4);
-                  },
-                  icon: Image.asset('images/porter2.png'),
-                  iconSize: iconSizeCollege,
-                ),
+                for (var i = 0; i < colleges.length; i++)
+                  IconButton(
+                    onPressed: () {
+                      main_page.scakey.currentState?.onItemTapped(getIndex(colleges[i].trim()));
+                    },
+                    icon: Image.asset('images/'+ (colleges[i].trim()) + '.png'),
+                    iconSize: iconSizeCollege,
+                  ),
+                // IconButton(
+                //   onPressed: () {
+                //     main_page.scakey.currentState?.onItemTapped(2);
+                //   },
+                //   icon: Image.asset('images/cowell2.png'),
+                //   iconSize: iconSizeCollege,
+                // ),
+                // IconButton(
+                //   onPressed: () {
+                //     main_page.scakey.currentState?.onItemTapped(3);
+                //   },
+                //   icon: Image.asset('images/nine2.png'),
+                //   iconSize: iconSizeCollege,
+                // ),
+                // IconButton(
+                //   onPressed: () {
+                //     main_page.scakey.currentState?.onItemTapped(4);
+                //   },
+                //   icon: Image.asset('images/porter2.png'),
+                //   iconSize: iconSizeCollege,
+                // ),
               ],
             ),
           ),
@@ -264,12 +309,8 @@ class _HomePageState extends State<HomePage> {
                 // if (snapshot.hasData) {
                 return Column(
                   children: [
-                    buildSummary("Merrill", merrillSummary),
-                    buildSummary("Cowell", cowellSummary),
-                    buildSummary("Nine", nineSummary),
-                    buildSummary("Porter", porterSummary),
-                    
-                    
+                    for (var i = 0; i < colleges.length; i++)
+                      buildSummary(colleges[i].trim(), getSummary(colleges[i])),
                     const SizedBox(height: 70),
                   ],
                 );

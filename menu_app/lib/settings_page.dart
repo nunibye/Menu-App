@@ -4,29 +4,53 @@ import 'package:menu_app/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
-  SettingsPage({super.key});
-  final List<String> colleges = ["Merrill", "Cowell", "Nine", "Porter"];
+  const SettingsPage({super.key});
+  //final String collegesString = "Merrill, Cowell, Nine, Porter";
+
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
-addStringToSF(collegeNum, collegeName) async {
+changeCollegeOrder(collegeName) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(collegeNum, collegeName);
+  prefs.setString('collegesString', collegeName);
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  List<String> colleges = [];
+  void getCollegeOrder() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? text = prefs.getString('collegesString');
+
+    if (text == null) {
+      List<String> textList = ['Merril', 'Cowell', 'Nine', 'Porter'];
+      setState(() {
+        colleges = textList;
+      });
+    } else {
+      List<String> textList = text.split(',');
+      setState(() {
+        colleges = textList;
+      });
+    }
+  }
+
   void reorderData(int oldindex, int newindex) {
     setState(() {
       if (newindex > oldindex) {
         newindex -= 1;
       }
-      final items = widget.colleges.removeAt(oldindex);
-      widget.colleges.insert(newindex, items);
-      for (var i = 0; i < widget.colleges.length; i++) {
-        addStringToSF('college$i', widget.colleges[i]);
-      }
+      final items = colleges.removeAt(oldindex);
+      colleges.insert(newindex, items);
+
+      changeCollegeOrder(colleges.join(','));
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCollegeOrder();
   }
 
   @override
@@ -83,7 +107,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 physics: const NeverScrollableScrollPhysics(),
                 onReorder: reorderData,
                 children: <Widget>[
-                  for (final college in widget.colleges)
+                  for (final college in colleges)
                     Card(
                       color: const Color(constants.listColor),
                       key: ValueKey(college),

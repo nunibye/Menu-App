@@ -20,6 +20,7 @@ class _CalculatorPageState extends State<Calculator> {
       TextEditingController(text: totalSlugPoints.toString());
   final _mealDayController = TextEditingController(text: mealDay.toString());
   final _lastDayController = TextEditingController(text: lastDay.toString());
+  TextEditingController dateController = TextEditingController();
 
   double _totalSlugPoints = totalSlugPoints;
   int _mealDay = mealDay;
@@ -32,6 +33,7 @@ class _CalculatorPageState extends State<Calculator> {
     _totalSlugPointsController.addListener(_onTotalSlugPointsChanged);
     _mealDayController.addListener(_onMealDayChanged);
     _lastDayController.addListener(_onLastDayChanged);
+    dateController.text = "";
   }
 
   _onTotalSlugPointsChanged() {
@@ -184,6 +186,20 @@ class _CalculatorPageState extends State<Calculator> {
                   ),
                 ),
                 const SizedBox(
+                  height: 25,
+                ),
+                TextFormField(
+                    controller:
+                        dateController, //editing controller of this TextField
+                    decoration: const InputDecoration(
+                        icon: Icon(Icons.calendar_today), //icon of text field
+                        labelText: "Enter Date" //label text of field
+                        ),
+                    readOnly: true, // when true user cannot edit text
+                    onTap: () async {
+                      //when click we have to show the datepicker
+                    }),
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -194,7 +210,10 @@ class _CalculatorPageState extends State<Calculator> {
                       Text(
                         'Remaining Meals: ${getMealAmount()}\nSlug Points: ${getPointsAmount()}',
                         key: const Key('mealAmount'),
-                        style: const TextStyle(color: Color(constants.bodyColor), fontWeight: FontWeight.bold, fontSize: 22),
+                        style: const TextStyle(
+                            color: Color(constants.bodyColor),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22),
                       ),
                     ],
                   ),

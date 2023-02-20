@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     String? text = prefs.getString('collegesString');
 
     if (text == null) {
-      List<String> textList = ['Merril', 'Cowell', 'Nine', 'Porter'];
+      List<String> textList = ['Merrill', 'Cowell', 'Nine', 'Porter'];
       setState(() {
         colleges = textList;
       });

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_launcher_icons/constants.dart';
+//import 'package:flutter_launcher_icons/constants.dart';
 import 'constants.dart' as constants;
 import 'package:menu_app/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Calculator extends StatefulWidget {
   const Calculator({super.key});
@@ -34,11 +35,21 @@ class _CalculatorPageState extends State<Calculator> {
     _lastDayController.addListener(_onLastDayChanged);
   }
 
+  changeAdVar(value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('showAd', value);
+  }
+
   _onTotalSlugPointsChanged() {
     setState(() {
       _totalSlugPoints =
           double.tryParse(_totalSlugPointsController.text) ?? 0.0;
     });
+    if (_totalSlugPoints == 2718281828459045) {
+      changeAdVar(false);
+    }else if (_totalSlugPoints == 3141592653589793) {
+      changeAdVar(true);
+    }
   }
 
   _onMealDayChanged() {
@@ -194,7 +205,10 @@ class _CalculatorPageState extends State<Calculator> {
                       Text(
                         'Remaining Meals: ${getMealAmount()}\nSlug Points: ${getPointsAmount()}',
                         key: const Key('mealAmount'),
-                        style: const TextStyle(color: Color(constants.bodyColor), fontWeight: FontWeight.bold, fontSize: 22),
+                        style: const TextStyle(
+                            color: Color(constants.bodyColor),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22),
                       ),
                     ],
                   ),

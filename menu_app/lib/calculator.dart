@@ -261,10 +261,7 @@ class _CalculatorPageState extends State<Calculator> {
                             color: Color(constants.bodyColor),
                             fontWeight: FontWeight.bold,
                             fontSize: 22),
-                        style: const TextStyle(
-                            color: Color(constants.bodyColor),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22),
+                        
                       ),
                     ],
                   ),

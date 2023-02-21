@@ -16,9 +16,9 @@ import 'package:menu_app/settings_page.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+//import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'ad_helper.dart' as ad_helper;
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 buildMeal(Future<dynamic> hallSummary) {
@@ -237,23 +237,23 @@ class _RootPageState extends State<RootPage> {
   late Future porterSummary;
   bool adLoad = true;
   bool showAd = true; //FIXME: CHANGE TO TRUE FOR RELEASE
-  BannerAd? _bannerAd;
+  //BannerAd? _bannerAd;
 
   int selectedIndex = 0;
-  void getAdBool() async {
-    final prefs = await SharedPreferences.getInstance();
-    bool? show = prefs.getBool('showAd');
+  // void getAdBool() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   bool? show = prefs.getBool('showAd');
 
-    if (show == null) {
-      setState(() {
-        showAd = true;
-      });
-    } else if (show) {
-      setState(() {
-        showAd = false;
-      });
-    }
-  }
+  //   if (show == null) {
+  //     setState(() {
+  //       showAd = true;
+  //     });
+  //   } else if (show) {
+  //     setState(() {
+  //       showAd = false;
+  //     });
+  //   }
+  // }
 
 
 //final myKey = GlobalKey<_RootPageState>();
@@ -277,48 +277,48 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
-    getAdBool();
-    if (showAd == true) {
-      _bannerAd = BannerAd(
-        adUnitId: ad_helper.getAdUnitId,
-        request: const AdRequest(),
-        size: AdSize.banner,
-        // size: AdSize.getAnchoredAdaptiveBannerAdSize(Orientation.landscape, 100),  //FIXME: try something with adaptive size?
+    //getAdBool();
+    // if (showAd == true) {
+    //   _bannerAd = BannerAd(
+    //     adUnitId: ad_helper.getAdUnitId,
+    //     request: const AdRequest(),
+    //     size: AdSize.banner,
+    //     // size: AdSize.getAnchoredAdaptiveBannerAdSize(Orientation.landscape, 100),  //FIXME: try something with adaptive size?
 
-        listener: BannerAdListener(
-          onAdLoaded: (Ad ad) {
-            adLoad = true;
-            setState(() {});
-          },
-          onAdFailedToLoad: (Ad ad, LoadAdError error) {
-            adLoad = false;
-            setState(() {});
-          },
-        ),
-      );
+    //     listener: BannerAdListener(
+    //       onAdLoaded: (Ad ad) {
+    //         adLoad = true;
+    //         setState(() {});
+    //       },
+    //       onAdFailedToLoad: (Ad ad, LoadAdError error) {
+    //         adLoad = false;
+    //         setState(() {});
+    //       },
+    //     ),
+    //   );
 
-      _bannerAd?.load();
-    } else {
-      _bannerAd = null;
-    }
+    //   _bannerAd?.load();
+    // } else {
+    //   _bannerAd = null;
+    // }
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    _bannerAd?.dispose();
-    _bannerAd = null;
-  }
+  // void dispose() {
+  //   super.dispose();
+  //   _bannerAd?.dispose();
+  //   _bannerAd = null;
+  // }
 
-  Widget bottomBar() {
-    return SizedBox(
-      //color: Colors.amber,
-      // alignment: Alignment.center,
-      width: _bannerAd?.size.width.toDouble(),
-      height: _bannerAd?.size.height.toDouble(),
-      child: AdWidget(ad: _bannerAd!),
-    );
-  }
+  // Widget bottomBar() {
+  //   return SizedBox(
+  //     //color: Colors.amber,
+  //     // alignment: Alignment.center,
+  //     width: _bannerAd?.size.width.toDouble(),
+  //     height: _bannerAd?.size.height.toDouble(),
+  //     child: AdWidget(ad: _bannerAd!),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -340,7 +340,7 @@ class _RootPageState extends State<RootPage> {
           child: _widgetOptions.elementAt(selectedIndex),
         ),
       ),
-      bottomNavigationBar: adLoad ? bottomBar() : null,
+      bottomNavigationBar: null,//adLoad ? bottomBar() : null,
     );
   }
 }

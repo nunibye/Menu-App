@@ -50,11 +50,11 @@ class _CalculatorPageState extends State<Calculator> {
       _totalSlugPoints =
           double.tryParse(_totalSlugPointsController.text) ?? 0.0;
     });
-    if (_totalSlugPoints == 2718281828459045) {
-      changeAdVar(false);
-    }else if (_totalSlugPoints == 3141592653589793) {
-      changeAdVar(true);
-    }
+    // if (_totalSlugPoints == 2718281828459045) {
+    //   changeAdVar(false);
+    // }else if (_totalSlugPoints == 3141592653589793) {
+    //   changeAdVar(true);
+    // }
   }
 
   _onMealDayChanged() {

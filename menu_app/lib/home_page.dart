@@ -270,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                 for (var i = 0; i < colleges.length; i++)
                   if (i == 0)
                     Container(
-                        padding: const EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 7),
                         child: IconButton(
                           onPressed: () {
                             main_page.scakey.currentState
@@ -282,7 +282,7 @@ class _HomePageState extends State<HomePage> {
                         ))
                   else if (i == colleges.length - 1)
                     Container(
-                        padding: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.only(right: 7),
                         child: IconButton(
                           onPressed: () {
                             main_page.scakey.currentState

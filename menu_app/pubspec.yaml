@@ -32,6 +32,7 @@ dependencies:
   http: ^0.13.5
   google_mobile_ads: ^2.3.0
   shared_preferences: ^2.0.17
+  intl: ^0.18.0
   #firebase_core: ^2.4.1
   
   flutter:

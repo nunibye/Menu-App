@@ -235,11 +235,11 @@ class _RootPageState extends State<RootPage> {
   late Future cowellSummary;
   late Future merrillSummary;
   late Future porterSummary;
-  bool adLoad = false;
-  bool showAd = false; //FIXME: CHANGE TO TRUE FOR RELEASE
+  bool adLoad = true;
+  bool showAd = true; //FIXME: CHANGE TO TRUE FOR RELEASE
   BannerAd? _bannerAd;
-  int selectedIndex = 0;
 
+  int selectedIndex = 0;
   void getAdBool() async {
     final prefs = await SharedPreferences.getInstance();
     bool? show = prefs.getBool('showAd');
@@ -248,12 +248,13 @@ class _RootPageState extends State<RootPage> {
       setState(() {
         showAd = true;
       });
-    } else if (!show) {
+    } else if (show) {
       setState(() {
         showAd = false;
       });
     }
   }
+
 
 //final myKey = GlobalKey<_RootPageState>();
   final List<Widget> _widgetOptions = <Widget>[

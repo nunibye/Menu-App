@@ -16,6 +16,7 @@ import 'package:menu_app/settings_page.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
+import 'package:ironsource_mediation/ironsource_mediation.dart';
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'ad_helper.dart' as ad_helper;
 //import 'package:shared_preferences/shared_preferences.dart';
@@ -193,7 +194,18 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
 //void main() => runApp(const MyApp());
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // initiateSharedPrefs();
+  IronSource.setFlutterVersion("3.7.1");
+  IronSource.init(appKey: ad_helper.getAdUnitId);
+  IronSource.validateIntegration();
+
+    final size = IronSourceBannerSize.BANNER;
+    size.isAdaptive = true; // Adaptive Banner
+    IronSource.loadBanner(
+      size: size,
+      position: IronSourceBannerPosition.Bottom,
+      verticalOffset: 0,
+      placementName: 'DefaultBanner',
+    );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -222,6 +234,13 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class YourDartClass with IronSourceInitializationListener {
+  @override
+  void onInitializationComplete() {
+    print('initialized');
+  }
+}
+
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
 
@@ -229,7 +248,7 @@ class RootPage extends StatefulWidget {
   State<RootPage> createState() => _RootPageState();
 }
 
-class _RootPageState extends State<RootPage> {
+class _RootPageState extends State<RootPage> with IronSourceBannerListener{
   late Future futureAlbum;
   late Future nineSummary;
   late Future cowellSummary;
@@ -240,6 +259,28 @@ class _RootPageState extends State<RootPage> {
   //BannerAd? _bannerAd;
 
   int selectedIndex = 0;
+
+
+  // Invoked once the banner has successfully loaded.
+  @override
+  void onBannerAdLoaded(){}
+  // Invoked when the banner loading process has failed.
+  // - You can learn about the reason by examining [error]
+  @override
+  void onBannerAdLoadFailed(IronSourceError error){}
+  // Invoked when a user clicks on the banner ad.
+  @override
+  void onBannerAdClicked(){}
+  // Notifies the presentation of a full screen content following a user-click.
+  @override
+  void onBannerAdScreenPresented(){}
+  // Invoked when the presented screen has been dismissed.
+  @override
+  void onBannerAdScreenDismissed(){}
+  // Invoked when a user is leaving the app.
+  @override
+  void onBannerAdLeftApplication(){}
+  
   // void getAdBool() async {
   //   final prefs = await SharedPreferences.getInstance();
   //   bool? show = prefs.getBool('showAd');
@@ -254,7 +295,6 @@ class _RootPageState extends State<RootPage> {
   //     });
   //   }
   // }
-
 
 //final myKey = GlobalKey<_RootPageState>();
   final List<Widget> _widgetOptions = <Widget>[
@@ -340,7 +380,7 @@ class _RootPageState extends State<RootPage> {
           child: _widgetOptions.elementAt(selectedIndex),
         ),
       ),
-      bottomNavigationBar: null,//adLoad ? bottomBar() : null,
+      bottomNavigationBar: null, //adLoad ? bottomBar() : null,
     );
   }
 }

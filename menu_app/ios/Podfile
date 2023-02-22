@@ -40,7 +40,13 @@ post_install do |installer|
   end
 end
 
-pod 'IronSourceSDK'
+#pod 'IronSourceSDK'
+pod 'IronSourceSDK','7.2.7.0'
+pod 'IronSourceAdColonyAdapter','4.3.15.4'
+pod 'IronSourceAdMobAdapter','4.3.40.0'
+pod 'IronSourceFacebookAdapter','4.3.38.4'
+pod 'IronSourceUnityAdsAdapter','4.3.25.2'
+
 # pod 'GoogleMobileAdsMediationAdColony'
 # pod 'GoogleMobileAdsMediationIronSource'
 # pod 'GoogleMobileAdsMediationFacebook'

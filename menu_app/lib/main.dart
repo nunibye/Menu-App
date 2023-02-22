@@ -203,19 +203,24 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
 // }
 
 //void main() => runApp(const MyApp());
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  IronSource.setFlutterVersion("3.7.1");
 
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]).then((value) => runApp(const MyApp()));
+void loadBanner() async {
+  IronSource.setFlutterVersion("3.7.1");
   await IronSource.init(appKey: ad_helper.getAdUnitId);
   IronSource.validateIntegration();
   IronSource.loadBanner(
       size: IronSourceBannerSize.BANNER,
       position: IronSourceBannerPosition.Bottom);
+}
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((value) => runApp(const MyApp()));
+  loadBanner();
 }
 
 final scakey = GlobalKey<_RootPageState>();
@@ -379,7 +384,7 @@ class _RootPageState extends State<RootPage> with IronSourceBannerListener {
           child: _widgetOptions.elementAt(selectedIndex),
         ),
       ),
-      bottomNavigationBar: null, //adLoad ? bottomBar() : null,
+      
     );
   }
 }

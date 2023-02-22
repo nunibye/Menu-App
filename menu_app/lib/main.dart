@@ -183,6 +183,17 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
   }
 }
 
+// void loadAd(){
+//   final size = IronSourceBannerSize.BANNER;
+//   size.isAdaptive = true; // Adaptive Banner
+//   IronSource.loadBanner(
+//     size: size,
+//     position: IronSourceBannerPosition.Bottom,
+//     verticalOffset: 0,
+//     placementName: 'DefaultBanner',
+//   );
+
+// }
 // void initiateSharedPrefs() async {
 //   final prefs = await SharedPreferences.getInstance();
 //   String text = prefs.getString('collegesString') ?? '';
@@ -192,24 +203,19 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
 // }
 
 //void main() => runApp(const MyApp());
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   IronSource.setFlutterVersion("3.7.1");
-  IronSource.init(appKey: ad_helper.getAdUnitId);
-  IronSource.validateIntegration();
 
-    final size = IronSourceBannerSize.BANNER;
-    size.isAdaptive = true; // Adaptive Banner
-    IronSource.loadBanner(
-      size: size,
-      position: IronSourceBannerPosition.Bottom,
-      verticalOffset: 0,
-      placementName: 'DefaultBanner',
-    );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((value) => runApp(const MyApp()));
+  await IronSource.init(appKey: ad_helper.getAdUnitId);
+  IronSource.validateIntegration();
+  IronSource.loadBanner(
+      size: IronSourceBannerSize.BANNER,
+      position: IronSourceBannerPosition.Bottom);
 }
 
 final scakey = GlobalKey<_RootPageState>();
@@ -234,21 +240,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class YourDartClass with IronSourceInitializationListener {
-  @override
-  void onInitializationComplete() {
-    print('initialized');
-  }
-}
-
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
-
+  @override
   @override
   State<RootPage> createState() => _RootPageState();
 }
 
-class _RootPageState extends State<RootPage> with IronSourceBannerListener{
+class _RootPageState extends State<RootPage> with IronSourceBannerListener {
   late Future futureAlbum;
   late Future nineSummary;
   late Future cowellSummary;
@@ -260,27 +259,26 @@ class _RootPageState extends State<RootPage> with IronSourceBannerListener{
 
   int selectedIndex = 0;
 
-
   // Invoked once the banner has successfully loaded.
   @override
-  void onBannerAdLoaded(){}
+  void onBannerAdLoaded() {}
   // Invoked when the banner loading process has failed.
   // - You can learn about the reason by examining [error]
   @override
-  void onBannerAdLoadFailed(IronSourceError error){}
+  void onBannerAdLoadFailed(IronSourceError error) {}
   // Invoked when a user clicks on the banner ad.
   @override
-  void onBannerAdClicked(){}
+  void onBannerAdClicked() {}
   // Notifies the presentation of a full screen content following a user-click.
   @override
-  void onBannerAdScreenPresented(){}
+  void onBannerAdScreenPresented() {}
   // Invoked when the presented screen has been dismissed.
   @override
-  void onBannerAdScreenDismissed(){}
+  void onBannerAdScreenDismissed() {}
   // Invoked when a user is leaving the app.
   @override
-  void onBannerAdLeftApplication(){}
-  
+  void onBannerAdLeftApplication() {}
+
   // void getAdBool() async {
   //   final prefs = await SharedPreferences.getInstance();
   //   bool? show = prefs.getBool('showAd');
@@ -317,6 +315,7 @@ class _RootPageState extends State<RootPage> with IronSourceBannerListener{
   @override
   void initState() {
     super.initState();
+    //.addListener(_onTotalSlugPointsChanged);
     //getAdBool();
     // if (showAd == true) {
     //   _bannerAd = BannerAd(

@@ -209,8 +209,9 @@ void loadBanner() async {
   await IronSource.init(appKey: ad_helper.getAdUnitId);
   IronSource.validateIntegration();
   IronSource.loadBanner(
-      size: IronSourceBannerSize.BANNER,
-      position: IronSourceBannerPosition.Bottom);
+    size: IronSourceBannerSize.BANNER,
+    position: IronSourceBannerPosition.Bottom,
+  );
 }
 
 void main() {
@@ -384,7 +385,6 @@ class _RootPageState extends State<RootPage> with IronSourceBannerListener {
           child: _widgetOptions.elementAt(selectedIndex),
         ),
       ),
-      
     );
   }
 }

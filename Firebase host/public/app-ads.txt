@@ -1,3 +1,3 @@
 #app-ads.txt
-
+applovin.com, b6f7b477de34d4159e3544ac5021ee34, DIRECT
 google.com, pub-1893777311600512, DIRECT, f08c47fec0942fa0

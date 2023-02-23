@@ -337,15 +337,27 @@ class _RootPageState extends State<RootPage> {
   //   _bannerAd = null;
   // }
 
-  // Widget bottomBar() {
-  //   return SizedBox(
-  //     //color: Colors.amber,
-  //     // alignment: Alignment.center,
-  //     width: _bannerAd?.size.width.toDouble(),
-  //     height: _bannerAd?.size.height.toDouble(),
-  //     child: AdWidget(ad: _bannerAd!),
-  //   );
-  // }
+  Widget bottomBar() {
+    return SizedBox(
+      //color: Colors.amber,
+      // alignment: Alignment.center,
+      
+      height: 50,
+      child: MaxAdView(
+          adUnitId: ad_helper.getAdUnitId,
+          adFormat: AdFormat.banner,
+          listener: AdViewAdListener(
+              onAdLoadedCallback: (ad) {
+                print('onAdLoadedCallback');
+              },
+              onAdLoadFailedCallback: (adUnitId, error) {
+                print('onAdLoadFailedCallback');
+              },
+              onAdClickedCallback: (ad) {},
+              onAdExpandedCallback: (ad) {},
+              onAdCollapsedCallback: (ad) {})),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -367,19 +379,7 @@ class _RootPageState extends State<RootPage> {
           child: _widgetOptions.elementAt(selectedIndex),
         ),
       ),
-      bottomNavigationBar: MaxAdView(
-          adUnitId: 'e1fa1a7321d6419f',
-          adFormat: AdFormat.banner,
-          listener: AdViewAdListener(
-              onAdLoadedCallback: (ad) {
-                print('onAdLoadedCallback');
-              },
-              onAdLoadFailedCallback: (adUnitId, error) {
-                print('onAdLoadFailedCallback');
-              },
-              onAdClickedCallback: (ad) {},
-              onAdExpandedCallback: (ad) {},
-              onAdCollapsedCallback: (ad) {})),
+      bottomNavigationBar: bottomBar(),
     );
   }
 }

@@ -31,6 +31,11 @@ target 'Runner' do
   # use_frameworks! # MIGHT NEED TO UNCOMMENT?
   use_modular_headers!
   #pods here i think
+  pod 'AppLovinSDK'
+  pod 'AppLovinMediationAdColonyAdapter'
+  pod 'AppLovinMediationGoogleAdapter'
+  pod 'AppLovinMediationIronSourceAdapter'
+  pod 'AppLovinMediationUnityAdsAdapter'
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
@@ -51,3 +56,19 @@ end
 # pod 'GoogleMobileAdsMediationIronSource'
 # pod 'GoogleMobileAdsMediationFacebook'
 # pod 'GoogleMobileAdsMediationUnity'
+#from applovin
+# Sources
+# source 'https://cdn.cocoapods.org/'
+
+# # Settings
+# use_frameworks!
+# inhibit_all_warnings!
+# # Pods
+# target 'YOUR_PROJECT_NAME' do
+#     pod 'AppLovinSDK'
+#     pod 'AppLovinMediationAdColonyAdapter'
+#     pod 'AppLovinMediationGoogleAdapter'
+#     pod 'AppLovinMediationIronSourceAdapter'
+#     pod 'AppLovinMediationFacebookAdapter'
+#     pod 'AppLovinMediationUnityAdsAdapter'
+# end

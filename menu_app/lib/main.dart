@@ -218,10 +218,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Map? sdkConfiguration = await AppLovinMAX.initialize(
       'GFr_0T7XJkpH_DCfXDvsS60h31yU80TT5Luv56H6OglFi3tzt7SCQgZVD6nSJlvFCxyVoqCaS5drzhDtV1MKL0');
+  //AppLovinMAX.showMediationDebugger();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((value) => runApp(const MyApp()));
+
 }
 
 final scakey = GlobalKey<_RootPageState>();
@@ -293,6 +295,7 @@ class _RootPageState extends State<RootPage> {
     const SettingsPage(),
     const AboutPage(),
   ];
+  
 
   void onItemTapped(int index) {
     setState(() {
@@ -303,34 +306,9 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
-    //.addListener(_onTotalSlugPointsChanged);
-    //getAdBool();
-    // if (showAd == true) {
-    //   _bannerAd = BannerAd(
-    //     adUnitId: ad_helper.getAdUnitId,
-    //     request: const AdRequest(),
-    //     size: AdSize.banner,
-    //     // size: AdSize.getAnchoredAdaptiveBannerAdSize(Orientation.landscape, 100),  //FIXME: try something with adaptive size?
-
-    //     listener: BannerAdListener(
-    //       onAdLoaded: (Ad ad) {
-    //         adLoad = true;
-    //         setState(() {});
-    //       },
-    //       onAdFailedToLoad: (Ad ad, LoadAdError error) {
-    //         adLoad = false;
-    //         setState(() {});
-    //       },
-    //     ),
-    //   );
-
-    //   _bannerAd?.load();
-    // } else {
-    //   _bannerAd = null;
-    // }
   }
 
-  @override
+  //@override
   // void dispose() {
   //   super.dispose();
   //   _bannerAd?.dispose();
@@ -341,17 +319,21 @@ class _RootPageState extends State<RootPage> {
     return SizedBox(
       //color: Colors.amber,
       // alignment: Alignment.center,
-      
+
       height: 50,
       child: MaxAdView(
           adUnitId: ad_helper.getAdUnitId,
           adFormat: AdFormat.banner,
           listener: AdViewAdListener(
               onAdLoadedCallback: (ad) {
-                print('onAdLoadedCallback');
+                setState(() {
+                  adLoad = true;
+                });
               },
               onAdLoadFailedCallback: (adUnitId, error) {
-                print('onAdLoadFailedCallback');
+                setState(() {
+                  adLoad = false;
+                });
               },
               onAdClickedCallback: (ad) {},
               onAdExpandedCallback: (ad) {},
@@ -379,10 +361,7 @@ class _RootPageState extends State<RootPage> {
           child: _widgetOptions.elementAt(selectedIndex),
         ),
       ),
-      bottomNavigationBar: bottomBar(),
+      bottomNavigationBar: adLoad ? bottomBar() : null,
     );
   }
 }
-
-
-//_widgetOptions.elementAt(selectedIndex),

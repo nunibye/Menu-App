@@ -1,42 +1,39 @@
 PODS:
-  - app_tracking_transparency (0.0.1):
+  - applovin_max (2.4.2):
+    - AppLovinSDK (= 11.7.1)
     - Flutter
+  - AppLovinSDK (11.7.1)
   - Flutter (1.0.0)
-  - ironsource_mediation (1.1.0):
-    - Flutter
-    - IronSourceSDK (= 7.2.1.2)
   - IronSourceSDK (7.2.1.2)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
 
 DEPENDENCIES:
-  - app_tracking_transparency (from `.symlinks/plugins/app_tracking_transparency/ios`)
+  - applovin_max (from `.symlinks/plugins/applovin_max/ios`)
   - Flutter (from `Flutter`)
-  - ironsource_mediation (from `.symlinks/plugins/ironsource_mediation/ios`)
   - IronSourceSDK
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
 
 SPEC REPOS:
   trunk:
+    - AppLovinSDK
     - IronSourceSDK
 
 EXTERNAL SOURCES:
-  app_tracking_transparency:
-    :path: ".symlinks/plugins/app_tracking_transparency/ios"
+  applovin_max:
+    :path: ".symlinks/plugins/applovin_max/ios"
   Flutter:
     :path: Flutter
-  ironsource_mediation:
-    :path: ".symlinks/plugins/ironsource_mediation/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/ios"
 
 SPEC CHECKSUMS:
-  app_tracking_transparency: 5b1745ef9ade815f7455cb6a0848349589afb7c5
+  applovin_max: 5c71f48d278754ec780b5aa4138eba37e7dd97d7
+  AppLovinSDK: 8b2496b62b942d409da6241f967ac837415d05ad
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  ironsource_mediation: 116bccaa28434e565966c65beb91b4c9d2a32d83
   IronSourceSDK: 58febda45afa4b16f91dacb1b3541737ae3fedb3
-  shared_preferences_foundation: 297b3ebca31b34ec92be11acd7fb0ba932c822ca
+  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
 
 PODFILE CHECKSUM: 25e15784a791dd508d636432cb418e4b89bba2fd
 

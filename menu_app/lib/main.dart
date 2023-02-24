@@ -291,7 +291,7 @@ class _RootPageState extends State<RootPage> {
     const CowellMenu(),
     const NineMenu(),
     const PorterMenu(),
-    const Calculator(), //FIXME: will probably need to not be const when can type in values
+    const Calculator(),
     const SettingsPage(),
     const AboutPage(),
   ];

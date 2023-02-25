@@ -19,15 +19,18 @@ class _CalculatorPageState extends State<Calculator> {
   // var lastDay = "3 / 24 / 23"; FIXME: should be a date
   // static const lastDay = 10; // FIXME: Right now only how many days left
   static const mealCost = 8.28;
+  static const dates = ['03-24', '06-15', '09-01', '12-08'];
 
   final _totalSlugPointsController =
       TextEditingController(text: totalSlugPoints.toString());
   final _mealDayController = TextEditingController(text: mealDay.toString());
-  // final _lastDayController = TextEditingController(text: lastDay.toString());
+  final _mealCostController =
+      TextEditingController(text: mealCost.toString());
   TextEditingController dateController = TextEditingController();
 
   double _totalSlugPoints = totalSlugPoints;
   double _mealDay = mealDay;
+  double _mealCost = mealCost;
   // int _lastDay = lastDay;
   // String _lastDay = lastDay; FIXME
 
@@ -36,8 +39,25 @@ class _CalculatorPageState extends State<Calculator> {
     super.initState();
     _totalSlugPointsController.addListener(_onTotalSlugPointsChanged);
     _mealDayController.addListener(_onMealDayChanged);
+    _mealCostController.addListener(_onMealCostChanged);
     // _lastDayController.addListener(_onLastDayChanged);
-    dateController.text = "2023-02-21";
+    final DateTime winter = DateTime(DateTime.now().year, 3, 24);
+    final DateTime spring = DateTime(DateTime.now().year, 6, 15);
+    final DateTime summer = DateTime(DateTime.now().year, 9, 1);
+    final DateTime fall = DateTime(DateTime.now().year, 12, 9);
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    if (winter.isAfter(now)) {
+      dateController.text = formatter.format(winter);
+    } else if (spring.isAfter(now)) {
+      dateController.text = formatter.format(spring);
+    } else if (spring.isAfter(now)) {
+      dateController.text = formatter.format(summer);
+    } else if (spring.isAfter(now)) {
+      dateController.text = formatter.format(fall);
+    } else {
+      dateController.text = formatter.format(now);
+    }
   }
 
   changeAdVar(value) async {
@@ -63,6 +83,12 @@ class _CalculatorPageState extends State<Calculator> {
     });
   }
 
+  _onMealCostChanged() {
+    setState(() {
+      _mealCost = double.tryParse(_mealCostController.text) ?? 0;
+    });
+  }
+
   // _onLastDayChanged() {
   //   setState(() {
   //     _lastDay = int.tryParse(_lastDayController.text) ?? 0;
@@ -76,20 +102,22 @@ class _CalculatorPageState extends State<Calculator> {
     // _lastDayController.dispose();
     _mealDayController.dispose();
     _totalSlugPointsController.dispose();
+    _mealCostController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     getDays() => num.parse(
-        (DateTime.parse(dateController.text).difference(DateTime.now()).inDays + 1)
+        (DateTime.parse(dateController.text).difference(DateTime.now()).inDays +
+                1)
             .toString());
 
     getMealAmount() => num.parse(
-        ((_totalSlugPoints - (_mealDay * mealCost * getDays())) / mealCost)
+        ((_totalSlugPoints - (_mealDay * _mealCost * getDays())) / mealCost)
             .toStringAsFixed(2));
     getPointsAmount() =>
-        num.parse(((_totalSlugPoints - (_mealDay * mealCost * getDays())))
+        num.parse(((_totalSlugPoints - (_mealDay * _mealCost * getDays())))
             .toStringAsFixed(2));
 
     return Scaffold(
@@ -188,6 +216,37 @@ class _CalculatorPageState extends State<Calculator> {
                   ),
                 ),
                 const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  key: const Key("totalMealCost"),
+                  controller: _mealCostController,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  style: const TextStyle(color: Color(constants.bodyColor)),
+                  decoration: InputDecoration(
+                    hintText: 'Cost',
+                    labelText: 'Meal Cost',
+                    hintStyle:
+                        const TextStyle(color: Color(constants.bodyColor)),
+                    labelStyle: const TextStyle(
+                      fontSize: 25,
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.bold,
+                      color: Color(constants.bodyColor),
+                    ),
+                    fillColor: const Color.fromARGB(255, 32, 32, 32),
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 68, 68, 68))),
+                  ),
+                ),
+                const SizedBox(
                   height: 25,
                 ),
                 TextFormField(
@@ -261,7 +320,6 @@ class _CalculatorPageState extends State<Calculator> {
                             color: Color(constants.bodyColor),
                             fontWeight: FontWeight.bold,
                             fontSize: 22),
-                        
                       ),
                     ],
                   ),

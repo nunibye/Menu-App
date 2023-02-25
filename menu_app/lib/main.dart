@@ -182,9 +182,6 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
     throw Exception('Failed to load album');
   }
 }
-// AppLovinMax.updateConsent(Consent.builder()
-//   ..hasAgeConsent = true
-//   ..build());
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

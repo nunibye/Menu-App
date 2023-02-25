@@ -182,13 +182,19 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
     throw Exception('Failed to load album');
   }
 }
-
+// AppLovinMax.updateConsent(Consent.builder()
+//   ..hasAgeConsent = true
+//   ..build());
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  AppLovinMAX.setHasUserConsent(false);
+  AppLovinMAX.setIsAgeRestrictedUser(false);
+  AppLovinMAX.setDoNotSell(true);
   Map? sdkConfiguration = await AppLovinMAX.initialize(
       'GFr_0T7XJkpH_DCfXDvsS60h31yU80TT5Luv56H6OglFi3tzt7SCQgZVD6nSJlvFCxyVoqCaS5drzhDtV1MKL0');
-  //AppLovinMAX.showMediationDebugger();
+
+  AppLovinMAX.showMediationDebugger();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -257,12 +263,9 @@ class _RootPageState extends State<RootPage> {
     super.initState();
   }
 
-
   double rh = 1;
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       body: Center(
         child: AnimatedSwitcher(

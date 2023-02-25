@@ -218,7 +218,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Map? sdkConfiguration = await AppLovinMAX.initialize(
       'GFr_0T7XJkpH_DCfXDvsS60h31yU80TT5Luv56H6OglFi3tzt7SCQgZVD6nSJlvFCxyVoqCaS5drzhDtV1MKL0');
-  //AppLovinMAX.showMediationDebugger();
+  // AppLovinMAX.showMediationDebugger();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -316,11 +316,11 @@ class _RootPageState extends State<RootPage> {
   // }
 
   Widget bottomBar() {
-    return SizedBox(
+    return Container(
       //color: Colors.amber,
-      // alignment: Alignment.center,
+      alignment: Alignment.topCenter,
 
-      height: 50,
+      height: 70,
       child: MaxAdView(
           adUnitId: ad_helper.getAdUnitId,
           adFormat: AdFormat.banner,

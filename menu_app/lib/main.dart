@@ -183,36 +183,6 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
   }
 }
 
-// void loadAd(){
-//   final size = IronSourceBannerSize.BANNER;
-//   size.isAdaptive = true; // Adaptive Banner
-//   IronSource.loadBanner(
-//     size: size,
-//     position: IronSourceBannerPosition.Bottom,
-//     verticalOffset: 0,
-//     placementName: 'DefaultBanner',
-//   );
-
-// }
-// void initiateSharedPrefs() async {
-//   final prefs = await SharedPreferences.getInstance();
-//   String text = prefs.getString('collegesString') ?? '';
-//   if (text == '') {
-//     prefs.setString('collegesString', 'Merrill, Cowell, Nine, Porter');
-//   }
-// }
-
-//void main() => runApp(const MyApp());
-
-// void loadBanner() async {
-//   IronSource.setFlutterVersion("3.7.1");
-//   await IronSource.init(appKey: ad_helper.getAdUnitId);
-//   IronSource.validateIntegration();
-//   IronSource.loadBanner(
-//     size: IronSourceBannerSize.BANNER,
-//     position: IronSourceBannerPosition.Bottom,
-//   ).asStream();
-// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -260,30 +230,11 @@ class _RootPageState extends State<RootPage> {
   late Future cowellSummary;
   late Future merrillSummary;
   late Future porterSummary;
-  bool adLoad = true;
+  bool adLoad = false;
   bool showAd = true; //FIXME: CHANGE TO TRUE FOR RELEASE
   //BannerAd? _bannerAd;
 
   int selectedIndex = 0;
-
-  // Invoked when the banner loading process has failed.
-
-  // void getAdBool() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   bool? show = prefs.getBool('showAd');
-
-  //   if (show == null) {
-  //     setState(() {
-  //       showAd = true;
-  //     });
-  //   } else if (show) {
-  //     setState(() {
-  //       showAd = false;
-  //     });
-  //   }
-  // }
-
-//final myKey = GlobalKey<_RootPageState>();
   final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
     const MerrillMenu(),
@@ -306,49 +257,11 @@ class _RootPageState extends State<RootPage> {
     super.initState();
   }
 
-  //@override
-  // void dispose() {
-  //   super.dispose();
-  //   _bannerAd?.dispose();
-  //   _bannerAd = null;
-  // }
 
-  Widget bottomBar() {
-    double h = 50;
-    if (ad_helper.getDevice == 'android') {
-      h = 50;
-    } else if (ad_helper.getDevice == 'ios') {
-      h = 70;
-    }
-    return Container(
-      //color: Colors.amber,
-      alignment: Alignment.topCenter,
-
-      height: h,
-      child: MaxAdView(
-          adUnitId: ad_helper.getAdUnitId,
-          adFormat: AdFormat.banner,
-          listener: AdViewAdListener(
-              onAdLoadedCallback: (ad) {
-                setState(() {
-                  adLoad = true;
-                });
-              },
-              onAdLoadFailedCallback: (adUnitId, error) {
-                setState(() {
-                  adLoad = false;
-                });
-              },
-              onAdClickedCallback: (ad) {},
-              onAdExpandedCallback: (ad) {},
-              onAdCollapsedCallback: (ad) {})),
-    );
-  }
-
+  double rh = 1;
   @override
   Widget build(BuildContext context) {
-    //bool adShown = false; enable to add a way to diable ads
-    //double iconSizeCollege = MediaQuery.of(context).size.height / 6;
+    
 
     return Scaffold(
       body: Center(
@@ -365,7 +278,35 @@ class _RootPageState extends State<RootPage> {
           child: _widgetOptions.elementAt(selectedIndex),
         ),
       ),
-      bottomNavigationBar: adLoad ? bottomBar() : null,
+      bottomNavigationBar: Container(
+        //color: Colors.amber,
+        alignment: Alignment.topCenter,
+
+        height: rh,
+        child: MaxAdView(
+            adUnitId: ad_helper.getAdUnitId,
+            adFormat: AdFormat.banner,
+            listener: AdViewAdListener(
+                onAdLoadedCallback: (ad) {
+                  if (ad_helper.getDevice == 'android') {
+                    setState(() {
+                      rh = 50;
+                    });
+                  } else if (ad_helper.getDevice == 'ios') {
+                    setState(() {
+                      rh = 70;
+                    });
+                  }
+                },
+                onAdLoadFailedCallback: (adUnitId, error) {
+                  setState(() {
+                    rh = 0;
+                  });
+                },
+                onAdClickedCallback: (ad) {},
+                onAdExpandedCallback: (ad) {},
+                onAdCollapsedCallback: (ad) {})),
+      ),
     );
   }
 }

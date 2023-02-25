@@ -34,7 +34,6 @@ target 'Runner' do
   pod 'AppLovinSDK'
   pod 'AppLovinMediationGoogleAdapter'
   pod 'AppLovinMediationUnityAdsAdapter'
-  pod 'AppLovinMediationVerizonAdsAdapter'
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 

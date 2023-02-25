@@ -94,12 +94,12 @@ flutter {
 repositories {
     google()
     mavenCentral()
-    maven { url "https://artifactory.yahooinc.com/artifactory/maven" }
+
 }
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation("com.applovin:applovin-sdk:+")
     implementation("com.applovin.mediation:google-adapter:+")
     implementation("com.applovin.mediation:unityads-adapter:+")
-    implementation ("com.applovin.mediation:verizonads-adapter:+")
+
 }

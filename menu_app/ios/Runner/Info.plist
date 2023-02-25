@@ -58,10 +58,10 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
   <!-- applovin integration -->
-  <dict>
+  <!-- <dict> -->
     <key>SKAdNetworkIdentifier</key>
     <string>275upjj5gd.skadnetwork</string>
-</dict>
+<!-- </dict>
 <dict>
     <key>SKAdNetworkIdentifier</key>
     <string>294l99pt4k.skadnetwork</string>
@@ -541,7 +541,7 @@
 <dict>
     <key>SKAdNetworkIdentifier</key>
     <string>w9q455wk68.skadnetwork</string>
-</dict>
+</dict> -->
 
 
 </dict>

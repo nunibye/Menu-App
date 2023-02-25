@@ -72,7 +72,7 @@ class _CalculatorPageState extends State<Calculator> {
     if (_totalSlugPoints == 27182818.0) {
       changeAdVar(false);
     } else if (_totalSlugPoints == 31415926.0) {
-      changeAdVar(false);
+      changeAdVar(true);
     }
   }
 

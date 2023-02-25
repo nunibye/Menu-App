@@ -1,21 +1,20 @@
 PODS:
-  - AdColony (4.9.0)
   - applovin_max (2.4.2):
     - AppLovinSDK (= 11.7.1)
     - Flutter
-  - AppLovinMediationAdColonyAdapter (4.9.0.0.3):
-    - AdColony (= 4.9.0)
-    - AppLovinSDK
   - AppLovinMediationGoogleAdapter (9.14.0.2):
     - AppLovinSDK
     - Google-Mobile-Ads-SDK (= 9.14.0)
-  - AppLovinMediationIronSourceAdapter (7.2.7.0.1):
-    - AppLovinSDK
-    - IronSourceSDK (= 7.2.7.0)
   - AppLovinMediationUnityAdsAdapter (4.5.0.2):
     - AppLovinSDK
     - UnityAds (= 4.5.0)
+  - AppLovinMediationVerizonAdsAdapter (2.2.0.8):
+    - AppLovinSDK
+    - Yahoo-Mobile-SDK (= 1.4.0)
   - AppLovinSDK (11.7.1)
+  - Flurry-iOS-SDK/CrashReporter (12.2.0)
+  - Flurry-iOS-SDK/FlurrySDK (12.2.0):
+    - Flurry-iOS-SDK/CrashReporter
   - Flutter (1.0.0)
   - Google-Mobile-Ads-SDK (9.14.0):
     - GoogleAppMeasurement (< 11.0, >= 7.0)
@@ -58,7 +57,6 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.11.0)"
   - GoogleUtilities/Reachability (7.11.0):
     - GoogleUtilities/Logger
-  - IronSourceSDK (7.2.7.0)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -69,33 +67,33 @@ PODS:
     - Flutter
     - FlutterMacOS
   - UnityAds (4.5.0)
+  - Yahoo-Mobile-SDK (1.4.0):
+    - Flurry-iOS-SDK/FlurrySDK (~> 12.2.0)
 
 DEPENDENCIES:
   - applovin_max (from `.symlinks/plugins/applovin_max/ios`)
-  - AppLovinMediationAdColonyAdapter
   - AppLovinMediationGoogleAdapter
-  - AppLovinMediationIronSourceAdapter
   - AppLovinMediationUnityAdsAdapter
+  - AppLovinMediationVerizonAdsAdapter
   - AppLovinSDK
   - Flutter (from `Flutter`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
 
 SPEC REPOS:
   trunk:
-    - AdColony
-    - AppLovinMediationAdColonyAdapter
     - AppLovinMediationGoogleAdapter
-    - AppLovinMediationIronSourceAdapter
     - AppLovinMediationUnityAdsAdapter
+    - AppLovinMediationVerizonAdsAdapter
     - AppLovinSDK
+    - Flurry-iOS-SDK
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
     - GoogleUtilities
-    - IronSourceSDK
     - nanopb
     - PromisesObjC
     - UnityAds
+    - Yahoo-Mobile-SDK
 
 EXTERNAL SOURCES:
   applovin_max:
@@ -106,24 +104,23 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/ios"
 
 SPEC CHECKSUMS:
-  AdColony: 4f3738dc633d7aaa8ec60729df973076cc8e97ed
   applovin_max: 5c71f48d278754ec780b5aa4138eba37e7dd97d7
-  AppLovinMediationAdColonyAdapter: e2758fc93652c61dbd048c8879905df5d64d7d89
   AppLovinMediationGoogleAdapter: 15ea6f5c6414c0ddc221f237406f0477689bd4a8
-  AppLovinMediationIronSourceAdapter: 29681cb5fc9ba22b6d6c6d09bab179383fbd18b0
   AppLovinMediationUnityAdsAdapter: 6222395b73114fbb2082ed397fba22d6c4c7b86a
+  AppLovinMediationVerizonAdsAdapter: d8cff440c8b50e189bde845d520b41053bcd8ff1
   AppLovinSDK: 8b2496b62b942d409da6241f967ac837415d05ad
+  Flurry-iOS-SDK: acac6eb6761fc39f7accbf1f8c4859ef297c7ee9
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   Google-Mobile-Ads-SDK: 4fe6304b771f8467d29978cb790ec1e56e646946
   GoogleAppMeasurement: 40c70a7d89013f0eca72006c4b9732163ea4cdae
   GoogleUserMessagingPlatform: 5f8b30daf181805317b6b985bb51c1ff3beca054
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
-  IronSourceSDK: 03ab6e62ac10589e5bea97cf0a379989f6965f36
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   UnityAds: fab621d1066e414af9ce884f1252cdd53894263e
+  Yahoo-Mobile-SDK: fd0e41c5884cf55697e1586fcb6ad55e8c8cc192
 
-PODFILE CHECKSUM: 4d0cdbef4eb5e68156e8a6c0c1e7f5638f1ca4f6
+PODFILE CHECKSUM: 23af9d884143468cd6188e4a38d50fc868558858
 
 COCOAPODS: 1.11.3

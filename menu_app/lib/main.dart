@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 //import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,9 @@ import 'package:menu_app/settings_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:applovin_max/applovin_max.dart';
-//import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'ad_helper.dart' as ad_helper;
-//import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 buildMeal(Future<dynamic> hallSummary) {
@@ -183,15 +184,33 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
   }
 }
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+getAdBool() async {
+  final prefs = await SharedPreferences.getInstance();
+  bool? adBool = prefs.getBool('showAd');
+
+  if (adBool == null || adBool == true) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void adLoader() async {
   AppLovinMAX.setHasUserConsent(false);
   AppLovinMAX.setIsAgeRestrictedUser(false);
   AppLovinMAX.setDoNotSell(true);
   Map? sdkConfiguration = await AppLovinMAX.initialize(
       'GFr_0T7XJkpH_DCfXDvsS60h31yU80TT5Luv56H6OglFi3tzt7SCQgZVD6nSJlvFCxyVoqCaS5drzhDtV1MKL0');
+}
 
-  AppLovinMAX.showMediationDebugger();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if(await getAdBool()){
+    adLoader();
+  }
+  
+
+  //AppLovinMAX.showMediationDebugger();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

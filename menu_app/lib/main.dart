@@ -189,9 +189,7 @@ getAdBool() async {
   bool? adBool = prefs.getBool('showAd');
 
   if (adBool == null || adBool == true) {
-    return true;
-  } else {
-    return false;
+    adLoader();
   }
 }
 
@@ -205,10 +203,7 @@ void adLoader() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if(await getAdBool()){
-    adLoader();
-  }
-  
+  await getAdBool();
 
   //AppLovinMAX.showMediationDebugger();
   SystemChrome.setPreferredOrientations([

@@ -80,15 +80,21 @@ android {
 flutter {
     source '../..'
 }
-repositories {
+// repositories {
 
-    google()
-    mavenCentral()
-    maven {
-        url 'https://android-sdk.is.com/'
-    }
+//     google()
+//     mavenCentral()
+//     maven {
+//         url 'https://android-sdk.is.com/'
+//    
+//     }
     
 
+// }
+repositories {
+    google()
+    mavenCentral()
+    maven { url "https://artifactory.yahooinc.com/artifactory/maven" }
 }
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

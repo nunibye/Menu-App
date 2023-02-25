@@ -218,12 +218,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Map? sdkConfiguration = await AppLovinMAX.initialize(
       'GFr_0T7XJkpH_DCfXDvsS60h31yU80TT5Luv56H6OglFi3tzt7SCQgZVD6nSJlvFCxyVoqCaS5drzhDtV1MKL0');
-  // AppLovinMAX.showMediationDebugger();
+  //AppLovinMAX.showMediationDebugger();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((value) => runApp(const MyApp()));
-
 }
 
 final scakey = GlobalKey<_RootPageState>();
@@ -295,7 +294,6 @@ class _RootPageState extends State<RootPage> {
     const SettingsPage(),
     const AboutPage(),
   ];
-  
 
   void onItemTapped(int index) {
     setState(() {
@@ -316,11 +314,17 @@ class _RootPageState extends State<RootPage> {
   // }
 
   Widget bottomBar() {
+    double h = 50;
+    if (ad_helper.getDevice == 'android') {
+      h = 50;
+    } else if (ad_helper.getDevice == 'ios') {
+      h = 70;
+    }
     return Container(
       //color: Colors.amber,
       alignment: Alignment.topCenter,
 
-      height: 70,
+      height: h,
       child: MaxAdView(
           adUnitId: ad_helper.getAdUnitId,
           adFormat: AdFormat.banner,

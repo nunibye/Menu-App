@@ -8,3 +8,11 @@ String get getAdUnitId{
     }
     throw UnsupportedError("Unsupported platform");
   }
+  String get getDevice{
+  if (Platform.isAndroid) {
+      return 'android';
+    } else if (Platform.isIOS) {
+      return 'ios';
+    }
+    throw UnsupportedError("Unsupported platform");
+  }

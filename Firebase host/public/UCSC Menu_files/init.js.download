@@ -1,0 +1,9 @@
+if (typeof firebase === 'undefined') throw new Error('hosting/init-error: Firebase SDK not detected. You must include it before /__/firebase/init.js');
+firebase.initializeApp({
+  "apiKey": "AIzaSyDfp00E8P_KiR70lAgeu7VYJ_5Lnvcs3Ig",
+  "authDomain": "ucsc-menu-app.firebaseapp.com",
+  "databaseURL": "https://ucsc-menu-app-default-rtdb.firebaseio.com",
+  "messagingSenderId": "674482500876",
+  "projectId": "ucsc-menu-app",
+  "storageBucket": "ucsc-menu-app.appspot.com"
+});

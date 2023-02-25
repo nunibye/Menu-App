@@ -24,8 +24,7 @@ class _CalculatorPageState extends State<Calculator> {
   final _totalSlugPointsController =
       TextEditingController(text: totalSlugPoints.toString());
   final _mealDayController = TextEditingController(text: mealDay.toString());
-  final _mealCostController =
-      TextEditingController(text: mealCost.toString());
+  final _mealCostController = TextEditingController(text: mealCost.toString());
   TextEditingController dateController = TextEditingController();
 
   double _totalSlugPoints = totalSlugPoints;
@@ -70,11 +69,11 @@ class _CalculatorPageState extends State<Calculator> {
       _totalSlugPoints =
           double.tryParse(_totalSlugPointsController.text) ?? 0.0;
     });
-    // if (_totalSlugPoints == 2718281828459045) {
-    //   changeAdVar(false);
-    // }else if (_totalSlugPoints == 3141592653589793) {
-    //   changeAdVar(true);
-    // }
+    if (_totalSlugPoints == 27182818.0) {
+      changeAdVar(false);
+    } else if (_totalSlugPoints == 31415926.0) {
+      changeAdVar(true);
+    }
   }
 
   _onMealDayChanged() {

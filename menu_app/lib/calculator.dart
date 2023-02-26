@@ -103,8 +103,17 @@ class _CalculatorPageState extends State<Calculator> {
     getPointsAmount() =>
         num.parse(((_totalSlugPoints - (_mealDay * _mealCost * getDays())))
             .toStringAsFixed(2));
+    getMealDayAmount() => num.parse(
+        (((_totalSlugPoints / _mealCost) / getDays())).toStringAsFixed(2));
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _timeModalBottom(context);
+        },
+        backgroundColor: const Color.fromARGB(255, 94, 94, 94),
+        child: const Icon(Icons.info_outlined),
+      ),
       drawer: const NavDrawer(),
       appBar: AppBar(
         title: const Text(
@@ -268,7 +277,7 @@ class _CalculatorPageState extends State<Calculator> {
                   child: Column(
                     children: [
                       Text(
-                        'Days Left: ${getDays()}\nRemaining Meals: ${getMealAmount()}\nSlug Points: ${getPointsAmount()}',
+                        'Days Left: ${getDays()}\nExtra Meals: ${getMealAmount()}\nExtra Slug Points: ${getPointsAmount()}\nYou can eat ${getMealDayAmount()} per day.',
                         key: const Key('mealAmount'),
                         style: const TextStyle(
                             color: Color(constants.bodyColor),
@@ -284,5 +293,43 @@ class _CalculatorPageState extends State<Calculator> {
         ),
       ),
     );
+  }
+  void _timeModalBottom(context) {
+    showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(50), topRight: Radius.circular(50)),
+        ),
+        context: context,
+        builder: (context) => DraggableScrollableSheet(
+              expand: false,
+              builder: (context, scrollController) => SingleChildScrollView(
+                controller: scrollController,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 30),
+                  child: Column(
+                    children: const [
+                      Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text("How to Use",
+                              style: TextStyle(
+                                fontFamily: constants.bodyFont,
+                                fontWeight: FontWeight.bold,
+                                fontSize: constants.titleFontSize - 5,
+                                color: Colors.black,
+                                height: constants.bodyFontheight,
+                              ))),
+                      SizedBox(
+                        width: constants.sizedBox,
+                        child: Text(
+                          "Enter the last day of the quarter you plan to eat, How many slug points you have, and how many meals you eat per day. Entering a meal price is not required as the default value is 8.28.\n\nDays left tells you how many days until the date you enter.\n\nExtra Meals tells how many meals leftover you will have at your current rate.\n\nExra Slugpoints tells how many slugpoints you will have left over.\n\nThe Final line tells how many meals you could be eating per day.",
+                        ),
+                      ),
+                     
+                    ],
+                  ),
+                ),
+              ),
+            ));
   }
 }

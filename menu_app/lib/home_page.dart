@@ -277,7 +277,7 @@ class _HomePageState extends State<HomePage> {
                                 ?.onItemTapped(getIndex(colleges[i].trim()));
                           },
                           icon: Image.asset(
-                              'images/' + (colleges[i].trim()) + '.png'),
+                              'images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,
                         ))
                   else if (i == colleges.length - 1)
@@ -289,7 +289,7 @@ class _HomePageState extends State<HomePage> {
                                 ?.onItemTapped(getIndex(colleges[i].trim()));
                           },
                           icon: Image.asset(
-                              'images/' + (colleges[i].trim()) + '.png'),
+                              'images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,
                         ))
                   else
@@ -299,7 +299,7 @@ class _HomePageState extends State<HomePage> {
                             ?.onItemTapped(getIndex(colleges[i].trim()));
                       },
                       icon: Image.asset(
-                          'images/' + (colleges[i].trim()) + '.png'),
+                          'images/${colleges[i].trim()}.png'),
                       iconSize: iconSizeCollege,
                     ))
                 // IconButton(

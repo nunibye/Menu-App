@@ -12,7 +12,6 @@ class AboutPage extends StatelessWidget {
       "About us",
       "This app is created by Eliah Reeves and Christian Knab from Merrill.\n\nPlease share this app with your friends!\n",
       "Contact Us",
-      
     ];
     final imageSize = MediaQuery.of(context).size.width - 200;
     return Scaffold(
@@ -87,24 +86,29 @@ class AboutPage extends StatelessWidget {
                       height: constants.bodyFontheight,
                     ),
                   ),
-                )),Container(padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
-                child: InkWell(
-                
-              child:const Text(
-                    'For issues, bugs, ideas, etc., email us at ucscmenuapp@gmail.com',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontFamily: constants.bodyFont,
-                      //fontWeight: FontWeight.bold,
-                      fontSize: constants.bodyFontSize,
-                      color: Color(constants.bodyColor),
-                      height: constants.bodyFontheight,
-                    ),
+                )),
+            Container(
+              padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
+              child: InkWell(
+                child: const Text(
+                  'For issues, bugs, ideas, etc., email us at ucscmenuapp@gmail.com',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: constants.bodyFont,
+                    //fontWeight: FontWeight.bold,
+                    fontSize: constants.bodyFontSize,
+                    color: Color(constants.bodyColor),
+                    height: constants.bodyFontheight,
                   ),
-              onTap: () => launchUrl(Uri(
-      scheme: 'mailto',
-      path: 'ucscmenuapp@gmail.com',)
-          ),),)
+                ),
+                onTap: () => launchUrl(
+                  Uri(
+                    scheme: 'mailto',
+                    path: 'ucscmenuapp@gmail.com',
+                  ),
+                ),
+              ),
+            )
           ],
         ));
   }

@@ -131,12 +131,15 @@ class _CalculatorPageState extends State<Calculator> {
       ),
       body: Container(
         color: const Color(constants.darkBlue),
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left:16.0, right:16.0),
         child: Center(
           child: Form(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                const SizedBox(
+                  height: 60,
+                ),
                 TextFormField(
                     controller:
                         dateController, //editing controller of this TextField
@@ -322,7 +325,7 @@ class _CalculatorPageState extends State<Calculator> {
                       SizedBox(
                         width: constants.sizedBox,
                         child: Text(
-                          "Enter the last day of the quarter you plan to eat, How many slug points you have, and how many meals you eat per day. Entering a meal price is not required as the default value is 8.28.\n\nDays left tells you how many days until the date you enter.\n\nExtra Meals tells how many meals leftover you will have at your current rate.\n\nExra Slugpoints tells how many slugpoints you will have left over.\n\nThe Final line tells how many meals you could be eating per day.",
+                          "Enter the last day of the quarter you plan to eat, How many slug points you have, and how many meals you eat per day. Entering a meal price is not required as the default value is 8.28.\n\nDays left tells you how many days until the date you enter.\n\nExtra Meals tells how many meals leftover you will have at your current rate.\n\nExtra Slug Points tells how many slugpoints you will have left over.\n\nThe Final line tells how many meals you could be eating per day.",
                         ),
                       ),
                      

@@ -5,6 +5,9 @@ PODS:
   - AppLovinMediationGoogleAdapter (9.14.0.2):
     - AppLovinSDK
     - Google-Mobile-Ads-SDK (= 9.14.0)
+  - AppLovinMediationInMobiAdapter (10.1.2.7):
+    - AppLovinSDK
+    - InMobiSDK/Core (= 10.1.2)
   - AppLovinMediationUnityAdsAdapter (4.5.0.2):
     - AppLovinSDK
     - UnityAds (= 4.5.0)
@@ -51,6 +54,7 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.11.0)"
   - GoogleUtilities/Reachability (7.11.0):
     - GoogleUtilities/Logger
+  - InMobiSDK/Core (10.1.2)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -65,6 +69,7 @@ PODS:
 DEPENDENCIES:
   - applovin_max (from `.symlinks/plugins/applovin_max/ios`)
   - AppLovinMediationGoogleAdapter
+  - AppLovinMediationInMobiAdapter
   - AppLovinMediationUnityAdsAdapter
   - AppLovinSDK
   - Flutter (from `Flutter`)
@@ -73,12 +78,14 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppLovinMediationGoogleAdapter
+    - AppLovinMediationInMobiAdapter
     - AppLovinMediationUnityAdsAdapter
     - AppLovinSDK
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
     - GoogleUtilities
+    - InMobiSDK
     - nanopb
     - PromisesObjC
     - UnityAds
@@ -94,6 +101,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   applovin_max: 5c71f48d278754ec780b5aa4138eba37e7dd97d7
   AppLovinMediationGoogleAdapter: 15ea6f5c6414c0ddc221f237406f0477689bd4a8
+  AppLovinMediationInMobiAdapter: 4591afafeaef854cf9a647ad36d1d9f5e79337c5
   AppLovinMediationUnityAdsAdapter: 6222395b73114fbb2082ed397fba22d6c4c7b86a
   AppLovinSDK: 8b2496b62b942d409da6241f967ac837415d05ad
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
@@ -101,11 +109,12 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 40c70a7d89013f0eca72006c4b9732163ea4cdae
   GoogleUserMessagingPlatform: 5f8b30daf181805317b6b985bb51c1ff3beca054
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
+  InMobiSDK: 53fef744477945477a863b4eed8612578a20a266
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   UnityAds: fab621d1066e414af9ce884f1252cdd53894263e
 
-PODFILE CHECKSUM: 65e04d509bb3b95df78186d86acbf2890c99e786
+PODFILE CHECKSUM: e02fb2c9cdd5a67d4591249c7bdd61a5550bb6a9
 
 COCOAPODS: 1.11.3

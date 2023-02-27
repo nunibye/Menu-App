@@ -109,7 +109,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 "Press and drag to reorder home screen.",
                 style: TextStyle(
                   fontFamily: constants.titleFont,
-                  fontWeight: FontWeight.bold,
                   fontSize: 18,
                   color: Color(constants.titleColor),
                   height: constants.titleFontheight,

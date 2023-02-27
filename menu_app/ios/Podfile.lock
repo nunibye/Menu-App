@@ -65,6 +65,8 @@ PODS:
     - Flutter
     - FlutterMacOS
   - UnityAds (4.5.0)
+  - url_launcher_ios (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - applovin_max (from `.symlinks/plugins/applovin_max/ios`)
@@ -73,7 +75,8 @@ DEPENDENCIES:
   - AppLovinMediationUnityAdsAdapter
   - AppLovinSDK
   - Flutter (from `Flutter`)
-  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -96,7 +99,9 @@ EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   shared_preferences_foundation:
-    :path: ".symlinks/plugins/shared_preferences_foundation/ios"
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
   applovin_max: 5c71f48d278754ec780b5aa4138eba37e7dd97d7
@@ -114,6 +119,7 @@ SPEC CHECKSUMS:
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   UnityAds: fab621d1066e414af9ce884f1252cdd53894263e
+  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 
 PODFILE CHECKSUM: e02fb2c9cdd5a67d4591249c7bdd61a5550bb6a9
 

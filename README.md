@@ -40,7 +40,6 @@ Supported on Android and iOS.
 
 ### To Do:
 * Organize order of meal category.
-* Add settings to change order hall is displayed in.
+* See future dates.
 * Figure out more comprehensive summarizer.
-* Slug points calculator.
 * Add the ability to review and comment on individual dining hall food.

@@ -1,3 +1,5 @@
+# This script has the ability to add "Today", "Tomorrow", and "Day after tomorrow", as parents to all the colleges
+
 from playwright.sync_api import sync_playwright, ViewportSize
 import re
 import unicodedata

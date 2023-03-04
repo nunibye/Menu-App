@@ -1,3 +1,5 @@
+# This script is the RUNNER for writing to the Firebase database.
+
 from playwright.sync_api import sync_playwright, ViewportSize
 import re
 import unicodedata

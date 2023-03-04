@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 //import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
@@ -24,9 +23,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 buildMeal(Future<dynamic> hallSummary) {
-  var timeFetch = DateTime.now();
-  String time = timeFetch.toString().substring(5, 19);
-
   return Container(
     alignment: Alignment.topLeft,
     //padding: const EdgeInsets.only(top: 20, left: 12),
@@ -98,13 +94,7 @@ buildMeal(Future<dynamic> hallSummary) {
                         ),
                       ),
                     )),
-                const SizedBox(height: 70),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Text("updated: $time",
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(color: Colors.grey)),
-                )
+                const SizedBox(height: 80),
               ],
             );
           }

@@ -227,6 +227,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.width / 2.7;
+    var timeFetch = DateTime.now();
+    String time = timeFetch.toString().substring(5, 19);
 
     return Scaffold(
       drawer: const NavDrawer(),
@@ -276,8 +278,7 @@ class _HomePageState extends State<HomePage> {
                             main_page.scakey.currentState
                                 ?.onItemTapped(getIndex(colleges[i].trim()));
                           },
-                          icon: Image.asset(
-                              'images/${colleges[i].trim()}.png'),
+                          icon: Image.asset('images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,
                         ))
                   else if (i == colleges.length - 1)
@@ -288,8 +289,7 @@ class _HomePageState extends State<HomePage> {
                             main_page.scakey.currentState
                                 ?.onItemTapped(getIndex(colleges[i].trim()));
                           },
-                          icon: Image.asset(
-                              'images/${colleges[i].trim()}.png'),
+                          icon: Image.asset('images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,
                         ))
                   else
@@ -298,8 +298,7 @@ class _HomePageState extends State<HomePage> {
                         main_page.scakey.currentState
                             ?.onItemTapped(getIndex(colleges[i].trim()));
                       },
-                      icon: Image.asset(
-                          'images/${colleges[i].trim()}.png'),
+                      icon: Image.asset('images/${colleges[i].trim()}.png'),
                       iconSize: iconSizeCollege,
                     ))
                 // IconButton(
@@ -338,6 +337,12 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     for (var i = 0; i < colleges.length; i++)
                       buildSummary(colleges[i].trim(), getSummary(colleges[i])),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Text("updated: $time",
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(color: Colors.grey)),
+                    ),
                     const SizedBox(height: 70),
                   ],
                 );

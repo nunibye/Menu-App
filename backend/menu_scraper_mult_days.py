@@ -84,7 +84,12 @@ def menu_scrape():
                     meal_cat = meal_cat
                     continue
                 else:                                                   # Append meals to dictionary
-                    hall_menus[date][halls_name[j]][meal_time][meal_cat].append(i)
+                    # add to the dictionary if the meal category is not in the list
+                    try:
+                        hall_menus[date][halls_name[j]][meal_time][meal_cat].append(i)
+                    except:
+                        hall_menus[date][halls_name[j]][meal_time].update({meal_cat: []})
+                        hall_menus[date][halls_name[j]][meal_time][meal_cat].append(i)
 
     return hall_menus
 

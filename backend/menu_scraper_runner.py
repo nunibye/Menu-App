@@ -6,7 +6,6 @@ import unicodedata
 from bs4 import BeautifulSoup
 import data_base_write
 from copy import deepcopy
-import time
 
 def menu_scrape():
     url = 'https://nutrition.sa.ucsc.edu/'
@@ -14,7 +13,7 @@ def menu_scrape():
 
     halls_name = ['Nine', 'Cowell', 'Merrill', 'Porter']
     meals = ["Breakfast", "Lunch", "Dinner", "Late Night"]
-    food_cat = {"*Breakfast*": [], "*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": [], "*Miscellaneous*": [], "*Brunch*": []}
+    food_cat = {"*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": [], "*Miscellaneous*": [], "*Brunch*": []}
 
     # Create nested dictionary
     meal_times = {}
@@ -68,7 +67,12 @@ def menu_scrape():
                 meal_cat = '*' + meal_cat + '*'     
                 continue
             else:                                                   # Append meals to dictionary
-                hall_menus[halls_name[j]][meal_time][meal_cat].append(i)
+                # add to the dictionary if the meal category is not in the list
+                try:
+                    hall_menus[halls_name[j]][meal_time][meal_cat].append(i)
+                except:
+                    hall_menus[halls_name[j]][meal_time].update({meal_cat: []})
+                    hall_menus[halls_name[j]][meal_time][meal_cat].append(i)
             
     data_base_write.UpdateDatabase(hall_menus)                      # Update database
 

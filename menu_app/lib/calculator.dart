@@ -167,7 +167,7 @@ class _CalculatorPageState extends State<Calculator> {
                     onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
                         context: context,
-                        initialDate: DateTime.now(),
+                        initialDate: DateTime.parse(dateController.text),
                         firstDate: DateTime.now(),
                         lastDate: DateTime(2100),
                       );

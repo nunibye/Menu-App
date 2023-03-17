@@ -1,3 +1,5 @@
+// Page to load the Side Navagation Bar.
+
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 import 'main.dart' as main_page;
@@ -5,19 +7,24 @@ import 'main.dart' as main_page;
 class NavDrawer extends StatelessWidget {
   const NavDrawer({super.key});
   @override
+
+  // Build navagation page.
   Widget build(BuildContext context) {
+    // Get 2/3 of the screen size.
     double screenWidth = MediaQuery.of(context).size.width * 0.75;
     return SizedBox(
         width: screenWidth,
         child: Drawer(
-          backgroundColor: const Color(
-              constants.backgroundColor), //Color.fromARGB(255, 18, 18, 18),
+          backgroundColor: const Color(constants.backgroundColor),
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
+              // Padding.
               const SizedBox(
                 height: 30,
               ),
+
+              // Display Slug Menu image.
               Container(
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
@@ -31,6 +38,8 @@ class NavDrawer extends StatelessWidget {
                   width: screenWidth - 50,
                 ),
               ),
+
+              // Link to Homepage.
               ListTile(
                 leading: const Icon(
                   Icons.house,
@@ -40,15 +49,18 @@ class NavDrawer extends StatelessWidget {
                   'Home',
                   style: TextStyle(
                     fontFamily: constants.menuFont,
-                    //fontWeight: FontWeight.bold,
                     fontSize: constants.menuFontSize,
                     color: Color(constants.menuColor),
                     height: constants.menuFontheight,
                   ),
                 ),
-                
-                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(0)},
+                onTap: () => {
+                  Navigator.pop(context),
+                  main_page.scakey.currentState?.onItemTapped(0)
+                },
               ),
+
+              // Link to Calculator.
               ListTile(
                 leading: const Icon(
                   Icons.calculate,
@@ -58,15 +70,18 @@ class NavDrawer extends StatelessWidget {
                   'Calculator',
                   style: TextStyle(
                     fontFamily: constants.menuFont,
-                    //fontWeight: FontWeight.bold,
                     fontSize: constants.menuFontSize,
                     color: Color(constants.menuColor),
                     height: constants.menuFontheight,
                   ),
                 ),
-                
-                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(5)},
+                onTap: () => {
+                  Navigator.pop(context),
+                  main_page.scakey.currentState?.onItemTapped(5)
+                },
               ),
+
+              // Link to Settings Page
               ListTile(
                 leading: const Icon(
                   Icons.settings,
@@ -76,14 +91,18 @@ class NavDrawer extends StatelessWidget {
                   'Settings',
                   style: TextStyle(
                     fontFamily: constants.menuFont,
-                    //fontWeight: FontWeight.bold,
                     fontSize: constants.menuFontSize,
                     color: Color(constants.menuColor),
                     height: constants.menuFontheight,
                   ),
                 ),
-                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(6)},
+                onTap: () => {
+                  Navigator.pop(context),
+                  main_page.scakey.currentState?.onItemTapped(6)
+                },
               ),
+
+              // Link to About Us page.
               ListTile(
                 leading: const Icon(
                   Icons.info_outline,
@@ -93,13 +112,15 @@ class NavDrawer extends StatelessWidget {
                   'About Us',
                   style: TextStyle(
                     fontFamily: constants.menuFont,
-                    //fontWeight: FontWeight.bold,
                     fontSize: constants.menuFontSize,
                     color: Color(constants.menuColor),
                     height: constants.menuFontheight,
                   ),
                 ),
-                onTap: () => {Navigator.pop(context), main_page.scakey.currentState?.onItemTapped(7)},
+                onTap: () => {
+                  Navigator.pop(context),
+                  main_page.scakey.currentState?.onItemTapped(7)
+                },
               ),
             ],
           ),

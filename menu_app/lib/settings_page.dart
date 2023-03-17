@@ -1,3 +1,6 @@
+// Displays the Settings Page to alow the user to change order each Hall is
+// displayed in on the Home Page.
+
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 import 'package:menu_app/widgets.dart';
@@ -5,12 +8,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
-  //final String collegesString = "Merrill, Cowell, Nine, Porter";
-
+  
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
+// Function changes the order of collges based on [collegeName], stored in
+// SharedPreferences [prefs], set as string ['collegesString'].
 changeCollegeOrder(collegeName) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString('collegesString', collegeName);
@@ -18,10 +22,14 @@ changeCollegeOrder(collegeName) async {
 
 class _SettingsPageState extends State<SettingsPage> {
   List<String> colleges = [];
+
+  // Function retrieves the order of colleges from SharedPreferences [prefs] and
+  // sets the state of the [colleges] list.
   void getCollegeOrder() async {
     final prefs = await SharedPreferences.getInstance();
     String? text = prefs.getString('collegesString');
 
+    // If there is no [text] saved, displays default order.
     if (text == null) {
       List<String> textList = ['Merrill', 'Cowell', 'Nine', 'Porter'];
       setState(() {
@@ -35,6 +43,7 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
+  // Function reorders  [colleges] based on [oldindex] and [newindex].
   void reorderData(int oldindex, int newindex) {
     setState(() {
       if (newindex > oldindex) {
@@ -47,15 +56,19 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
+  // Function called in home_page when widget is initialized.
   @override
   void initState() {
     super.initState();
     getCollegeOrder();
   }
 
+  // Builds widget tree.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+        // Displays app heading.
         drawer: const NavDrawer(),
         appBar: AppBar(
           title: const Text(
@@ -74,6 +87,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         body: Column(
           children: [
+            // Displays title/
             Container(
               decoration: const BoxDecoration(
                   border: Border(
@@ -97,10 +111,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
+
+            // Displays instructional text.
             Container(
-             
               padding: const EdgeInsets.only(
-                top: 5,
+                  top: 5,
                   left: constants.containerPaddingTitle + 3,
                   right: constants.containerPaddingTitle),
               alignment: Alignment.centerLeft,
@@ -115,6 +130,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
+
+            // Displays the reordered data in a list.
             Container(
               decoration: const BoxDecoration(
                   border: Border(

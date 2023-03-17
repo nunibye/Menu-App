@@ -1,3 +1,5 @@
+// Displays Merrill college's menu.
+
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 import 'main.dart' as main_page;
@@ -21,11 +23,14 @@ class _MerrillMenuState extends State<MerrillMenu>
   @override
   void initState() {
     super.initState();
+
+    // Call [fetchAlbum] to return list of meals during each food category.
     _tabController = TabController(length: 3, vsync: this);
     futureBreakfast = main_page.fetchAlbum('Merrill', 'Breakfast');
     futureLunch = main_page.fetchAlbum('Merrill', 'Lunch');
     futureDinner = main_page.fetchAlbum('Merrill', 'Dinner');
 
+    // Change default displayed tab [_tabController] based on time of day.
     if (time.hour < 10) {
       _tabController.animateTo(0);
     } else if (time.hour < 16) {
@@ -35,9 +40,11 @@ class _MerrillMenuState extends State<MerrillMenu>
     }
   }
 
+  // Build categorized page.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Hours info tab.
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _timeModalBottom(context);
@@ -45,6 +52,8 @@ class _MerrillMenuState extends State<MerrillMenu>
         backgroundColor: const Color.fromARGB(255, 94, 94, 94),
         child: const Icon(Icons.access_time_outlined),
       ),
+
+      // App heading.
       appBar: AppBar(
         title: const Text(
           "Merrill",
@@ -66,6 +75,8 @@ class _MerrillMenuState extends State<MerrillMenu>
           icon: const Icon(Icons.arrow_back_ios_new_rounded,
               color: Colors.orange, size: constants.backArrowSize),
         ),
+
+        // Categorized menu time [TabBar].
         bottom: TabBar(
           unselectedLabelColor: Colors.white,
           indicatorColor: Colors.orange,
@@ -89,6 +100,8 @@ class _MerrillMenuState extends State<MerrillMenu>
           ],
         ),
       ),
+
+      // Children to the [_tabController].
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
@@ -100,6 +113,8 @@ class _MerrillMenuState extends State<MerrillMenu>
     );
   }
 
+  // Displays Hall default weekly hours.
+  // FIXME: Should pull from database which pulls from website.
   void _timeModalBottom(context) {
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
@@ -111,10 +126,10 @@ class _MerrillMenuState extends State<MerrillMenu>
               expand: false,
               builder: (context, scrollController) => SingleChildScrollView(
                 controller: scrollController,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 30),
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 30),
                   child: Column(
-                    children: const [
+                    children: [
                       Padding(
                           padding: EdgeInsets.all(10),
                           child: Text("Monday-Friday",

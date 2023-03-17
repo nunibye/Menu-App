@@ -1,3 +1,5 @@
+// Displays Nine college's menu.
+
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 import 'main.dart' as main_page;
@@ -21,11 +23,15 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
+    // Call [fetchAlbum] to return list of meals during each food category.
     _tabController = TabController(length: 4, vsync: this);
     futureBreakfast = main_page.fetchAlbum('Nine', 'Breakfast');
     futureLunch = main_page.fetchAlbum('Nine', 'Lunch');
     futureDinner = main_page.fetchAlbum('Nine', 'Dinner');
     futureLateNight = main_page.fetchAlbum('Nine', 'Late%20Night');
+
+    // Change default displayed tab [_tabController] based on time of day.
     if (time.hour < 10) {
       _tabController.animateTo(0);
     } else if (time.hour < 16) {
@@ -37,9 +43,11 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
     }
   }
 
+  // Build categorized page.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Hours info tab.
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _timeModalBottom(context);
@@ -47,6 +55,8 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
         backgroundColor: const Color.fromARGB(255, 94, 94, 94),
         child: const Icon(Icons.access_time_outlined),
       ),
+
+      // App heading.
       appBar: AppBar(
         title: const Text(
           "9/10",
@@ -68,6 +78,8 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
           icon: const Icon(Icons.arrow_back_ios_new_rounded,
               color: Colors.orange, size: constants.backArrowSize),
         ),
+
+        // Categorized menu time [TabBar].
         bottom: TabBar(
           unselectedLabelColor: Colors.white,
           indicatorColor: Colors.orange,
@@ -94,6 +106,8 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
           ],
         ),
       ),
+
+      // Children to the [_tabController].
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
@@ -106,6 +120,8 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
     );
   }
 
+  // Displays Hall default weekly hours.
+  // FIXME: Should pull from database which pulls from website.
   void _timeModalBottom(context) {
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
@@ -117,10 +133,10 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
               expand: false,
               builder: (context, scrollController) => SingleChildScrollView(
                 controller: scrollController,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 30),
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 30),
                   child: Column(
-                    children: const [
+                    children: [
                       Padding(
                           padding: EdgeInsets.all(10),
                           child: Text("Monday-Friday",

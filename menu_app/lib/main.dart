@@ -1,6 +1,7 @@
+// MAIN program.
+
 import 'dart:async';
 
-//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 
@@ -20,16 +21,18 @@ import 'package:applovin_max/applovin_max.dart';
 
 import 'ad_helper.dart' as ad_helper;
 import 'package:shared_preferences/shared_preferences.dart';
-
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+// Function builds the dining hall's meal full summmary page.
 buildMeal(Future<dynamic> hallSummary) {
   return Container(
     alignment: Alignment.topLeft,
-    //padding: const EdgeInsets.only(top: 20, left: 12),
     child: FutureBuilder(
       future: hallSummary,
       builder: (context, snapshot) {
+        // Display the [hallSummary] data.
         if (snapshot.hasData) {
+          // Display ['Unavailable Today'] if there is no data in [hallSummary].
           if (snapshot.data[0].toString() == 'null') {
             return Container(
               decoration: const BoxDecoration(
@@ -50,11 +53,15 @@ buildMeal(Future<dynamic> hallSummary) {
                 ),
               ),
             );
+
+            // Display the food category and food items.
           } else {
             return ListView(
-              //padding: const EdgeInsets.all(4),
               children: [
+                // Loop though all food items.
                 for (var i = 0; i < snapshot.data.length; i++)
+
+                  // Display the food categories.
                   if (i % 2 == 0)
                     (Container(
                       decoration: const BoxDecoration(
@@ -76,11 +83,11 @@ buildMeal(Future<dynamic> hallSummary) {
                         ),
                       ),
                     ))
+
+                  // Display the food items.
                   else
                     (Container(
                       padding: const EdgeInsets.only(right: 10),
-                      // const EdgeInsets.all(
-                      //     constants.containerPaddingbody),
                       alignment: Alignment.topRight,
                       child: Text(
                         snapshot.data[i],
@@ -98,6 +105,8 @@ buildMeal(Future<dynamic> hallSummary) {
               ],
             );
           }
+
+          // If there is an error, display error.
         } else if (snapshot.hasError) {
           return Text(
             '${snapshot.error}',
@@ -119,48 +128,48 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
   final response = await http.get(Uri.parse(
       'https://ucsc-menu-app-default-rtdb.firebaseio.com/$college/$meal/$cat.json'));
 
+  // If the server did return a 200 OK response,
+  // then parse the JSON.
   if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-
-    // If there is a category
+    // If there is a category, there are only food items.
+    // Therefore, split up just food items.
     if (cat != "") {
       var list = response.body.toString().split(',');
 
+      // Loop through every item in the food list.
       for (var i = 0; i < list.length; i++) {
+        // Clean up string.
         String temp = list[i];
-        //List temp_list = [];
         List listTemp = temp.split(',');
         listTemp.remove('"');
-        //const String tab = '  ';
         for (var i = 0; i < listTemp.length; i++) {
           listTemp[i] = listTemp[i].replaceAll(RegExp(r'[^\w\s]+'), '');
-          //listTemp[i] = '*' + listTemp[i];
         }
+        // Rejoin into list [list].
         temp = listTemp.join('\n');
         list[i] = temp;
       }
-
       return list;
 
-      // If fetching full meals
+      // If fetching full meals with categories.
     } else {
+      // Split between categories denoted with ['*']
       var list = response.body.toString().split('*');
       list.remove('{"');
 
       for (var i = 0; i < list.length; i++) {
+        // Clean [category] string.
         if (i % 2 == 0) {
           list[i] = list[i].replaceAll(RegExp(r'[^\w\s]+'), '');
+          // Clean food items.
         } else {
           String temp = list[i];
-          //List temp_list = [];
           List listTemp = temp.split(',');
           listTemp.remove('"');
-          //const String tab = '  ';
           for (var i = 0; i < listTemp.length; i++) {
             listTemp[i] = listTemp[i].replaceAll(RegExp(r'[^\w\s]+'), '');
-            //listTemp[i] = '*' + listTemp[i];
           }
+          // Rejoin into list [list].
           temp = listTemp.join('\n');
           list[i] = temp;
         }
@@ -174,6 +183,7 @@ Future fetchAlbum(college, meal, {cat = ""}) async {
   }
 }
 
+// Get the adBool and call [adLoader].
 getAdBool() async {
   final prefs = await SharedPreferences.getInstance();
   bool? adBool = prefs.getBool('showAd');
@@ -183,6 +193,7 @@ getAdBool() async {
   }
 }
 
+// Function to load ad.
 void adLoader() async {
   AppLovinMAX.setHasUserConsent(false);
   AppLovinMAX.setIsAgeRestrictedUser(false);
@@ -191,6 +202,7 @@ void adLoader() async {
       'GFr_0T7XJkpH_DCfXDvsS60h31yU80TT5Luv56H6OglFi3tzt7SCQgZVD6nSJlvFCxyVoqCaS5drzhDtV1MKL0');
 }
 
+// MAIN function sets preferences.
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await getAdBool();
@@ -237,9 +249,10 @@ class _RootPageState extends State<RootPage> {
   late Future merrillSummary;
   late Future porterSummary;
   bool adLoad = false;
-  bool showAd = true; //FIXME: CHANGE TO TRUE FOR RELEASE
+  bool showAd = true; //FIXME: CHANGE TO TRUE FOR RELEASE.
   //BannerAd? _bannerAd;
 
+  // Indicies of the app pages.
   int selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
@@ -252,6 +265,7 @@ class _RootPageState extends State<RootPage> {
     const AboutPage(),
   ];
 
+  // Changes page based on icon selected [index].
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -281,6 +295,8 @@ class _RootPageState extends State<RootPage> {
           child: _widgetOptions.elementAt(selectedIndex),
         ),
       ),
+
+      // AD bar.
       bottomNavigationBar: Container(
         //color: Colors.amber,
         alignment: Alignment.topCenter,

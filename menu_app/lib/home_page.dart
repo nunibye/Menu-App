@@ -1,6 +1,6 @@
-import 'dart:async';
+// Loads the Home Page to display College tiles and Summary below.
 
-//import 'package:flutter/foundation.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 import 'package:menu_app/widgets.dart';
@@ -21,6 +21,8 @@ class _HomePageState extends State<HomePage> {
   late Future merrillSummary;
   late Future porterSummary;
   List<String> colleges = [];
+
+  // Function to load [colleges] list with SharedPreferences [prefs] hall disolay order.
   void getCollegeOrder() async {
     final prefs = await SharedPreferences.getInstance();
     String? text = prefs.getString('collegesString');
@@ -38,6 +40,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  // Function to return the [hallSummary] for each college
   getSummary(college) {
     if (college == 'Merrill') {
       return merrillSummary;
@@ -50,6 +53,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  // Function to return the [index] of [college] to display correct page onTap.
   getIndex(college) {
     if (college == "Nine") {
       return 3;
@@ -66,8 +70,12 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     final time = DateTime.now();
-    getCollegeOrder();
-    //FIXME goofy a code
+    getCollegeOrder(); // Get SharedPreferences [prefs] for correct display order.
+
+    // Set each [collegeSummary] with a summary of food based on the time of day.
+    //
+    // FIXME: there has got to be a better way to do this in less lines. Perhaps
+    // FIXME: a list with nested for loop.
     if (time.hour <= 4 || time.hour >= 23) {
       nineSummary =
           main_page.fetchAlbum('Nine', 'Late%20Night', cat: '*FIXME*');
@@ -112,18 +120,17 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  // Builds the [college]'s summary based on [hallSummary] list of items.
   Widget buildSummary(college, Future<dynamic> hallSummary) {
     int index = 0;
     return Container(
       alignment: Alignment.topLeft,
-      //padding: const EdgeInsets.only(top: 20, left: 12),
       child: FutureBuilder(
         future: hallSummary,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Column(
               children: [
-                //padding: const EdgeInsets.all(4),
                 Container(
                     decoration: const BoxDecoration(
                         border: Border(
@@ -139,6 +146,8 @@ class _HomePageState extends State<HomePage> {
                           fixedSize:
                               Size(MediaQuery.of(context).size.width, 40),
                           alignment: Alignment.topLeft),
+
+                      // Give each [college] a button to lead to full summary page.
                       onPressed: () => {
                         if (college == "Nine")
                           {
@@ -158,6 +167,8 @@ class _HomePageState extends State<HomePage> {
                           },
                         main_page.scakey.currentState?.onItemTapped(index),
                       },
+
+                      // College name as a button title.
                       child: Text(
                         "$college",
                         style: const TextStyle(
@@ -169,6 +180,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     )),
+
+                // If no data is passed in, default to ["Hall Closed"] text.
                 if (snapshot.data[0] == 'null')
                   Container(
                       padding:
@@ -185,20 +198,18 @@ class _HomePageState extends State<HomePage> {
                             height: constants.bodyFontheight,
                             fontWeight: FontWeight.bold),
                       ))
+
+                // Display all the food as a list.
                 else
                   for (var i = 0; i < snapshot.data.length; i++)
                     (Container(
-                      padding:
-                          // const EdgeInsets.all(
-                          //     constants.containerPaddingbody),
-                          const EdgeInsets.only(right: 10),
+                      padding: const EdgeInsets.only(right: 10),
                       alignment: Alignment.topRight,
                       child: Text(
                         snapshot.data[i],
                         textAlign: TextAlign.right,
                         style: const TextStyle(
                           fontFamily: constants.bodyFont,
-                          //fontWeight: FontWeight.bold,
                           fontSize: constants.bodyFontSize,
                           color: Color(constants.bodyColor),
                           height: constants.bodyFontheight,
@@ -207,6 +218,8 @@ class _HomePageState extends State<HomePage> {
                     )),
               ],
             );
+
+            // Display error message if there is an error.
           } else if (snapshot.hasError) {
             return Text(
               '${snapshot.error}',
@@ -231,6 +244,7 @@ class _HomePageState extends State<HomePage> {
     String time = timeFetch.toString().substring(5, 19);
 
     return Scaffold(
+      // Display app bar header.
       drawer: const NavDrawer(),
       appBar: AppBar(
         toolbarHeight: 80,
@@ -251,6 +265,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView(
         children: <Widget>[
+          // Display header text.
           Container(
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.only(top: 40, left: 12),
@@ -263,16 +278,23 @@ class _HomePageState extends State<HomePage> {
                   color: Color(constants.yellowOrange)),
             ),
           ),
+
+          // Display all hall icons.
           Container(
             alignment: Alignment.topCenter,
             height: MediaQuery.of(context).size.width / 2.3,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
+                // Loop through every college in [colleges].
                 for (var i = 0; i < colleges.length; i++)
+
+                  // Special formatting for first Icon.
                   if (i == 0)
                     Container(
                         padding: const EdgeInsets.only(left: 7),
+
+                        // Icon button leads to specified [colleges] page.
                         child: IconButton(
                           onPressed: () {
                             main_page.scakey.currentState
@@ -281,6 +303,8 @@ class _HomePageState extends State<HomePage> {
                           icon: Image.asset('images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,
                         ))
+
+                  // Special formatting for last Icon.
                   else if (i == colleges.length - 1)
                     Container(
                         padding: const EdgeInsets.only(right: 7),
@@ -292,6 +316,8 @@ class _HomePageState extends State<HomePage> {
                           icon: Image.asset('images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,
                         ))
+
+                  // Icon formatting.
                   else
                     (IconButton(
                       onPressed: () {
@@ -301,42 +327,21 @@ class _HomePageState extends State<HomePage> {
                       icon: Image.asset('images/${colleges[i].trim()}.png'),
                       iconSize: iconSizeCollege,
                     ))
-                // IconButton(
-                //   onPressed: () {
-                //     main_page.scakey.currentState?.onItemTapped(2);
-                //   },
-                //   icon: Image.asset('images/cowell2.png'),
-                //   iconSize: iconSizeCollege,
-                // ),
-                // IconButton(
-                //   onPressed: () {
-                //     main_page.scakey.currentState?.onItemTapped(3);
-                //   },
-                //   icon: Image.asset('images/nine2.png'),
-                //   iconSize: iconSizeCollege,
-                // ),
-                // IconButton(
-                //   onPressed: () {
-                //     main_page.scakey.currentState?.onItemTapped(4);
-                //   },
-                //   icon: Image.asset('images/porter2.png'),
-                //   iconSize: iconSizeCollege,
-                // ),
               ],
             ),
           ),
+
+          // Displays summary for every college in [colleges].
           Container(
             alignment: Alignment.topLeft,
-            // height: MediaQuery.of(context).size.height / 2,
-            //padding: const EdgeInsets.only(top: 20, left: 12),
             child: FutureBuilder(
-              // future: nineSummary,
               builder: (context, snapshot) {
-                // if (snapshot.hasData) {
                 return Column(
                   children: [
                     for (var i = 0; i < colleges.length; i++)
                       buildSummary(colleges[i].trim(), getSummary(colleges[i])),
+
+                    // Provide when menu was last updated.
                     Padding(
                       padding: const EdgeInsets.only(top: 15),
                       child: Text("updated: $time",
@@ -346,17 +351,6 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 70),
                   ],
                 );
-                // } else if (snapshot.hasError) {
-                //   return Text(
-                //     '${snapshot.error}',
-                //     style: const TextStyle(
-                //       fontSize: 25,
-                //       color: Color(constants.yellowGold),
-                //     ),
-                //   );
-                // }
-
-                // By default, show a loading spinner.
               },
             ),
           ),

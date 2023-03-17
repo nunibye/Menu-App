@@ -1,3 +1,5 @@
+// Displays the about page.
+
 import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 import 'package:menu_app/widgets.dart';
@@ -8,13 +10,16 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // The text describing the app.
     final List<String> contents = [
       "About us",
       "This app is created by Eliah Reeves and Christian Knab from Merrill.\n\nPlease share this app with your friends!\n",
       "Contact Us",
     ];
     final imageSize = MediaQuery.of(context).size.width - 200;
+
     return Scaffold(
+        // Display page heading.
         drawer: const NavDrawer(),
         appBar: AppBar(
           title: const Text(
@@ -30,15 +35,9 @@ class AboutPage extends StatelessWidget {
           backgroundColor: const Color(constants.darkBlue),
           shape:
               const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
-
-          // leading: IconButton(
-          //   onPressed: () {
-          //     main_page.scakey.currentState?.onItemTapped(0);
-          //   },
-          //   icon: const Icon(Icons.arrow_back_ios_new_rounded,
-          //       color: Colors.orange, size: constants.backArrowSize),
-          // ),
         ),
+
+        // Display company image.
         body: ListView(
           children: [
             const SizedBox(height: 30),
@@ -49,7 +48,11 @@ class AboutPage extends StatelessWidget {
                   fit: BoxFit.scaleDown,
                   image: AssetImage('images/cone.png'),
                 )),
+
+            // Loop through [contents] list.
             for (var i = 0; i < contents.length; i++)
+
+              // Even indicies must be headings
               if (i % 2 == 0)
                 Container(
                   decoration: const BoxDecoration(
@@ -71,6 +74,8 @@ class AboutPage extends StatelessWidget {
                     ),
                   ),
                 )
+
+              // Odd indicies must be body text
               else
                 (Container(
                   padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
@@ -80,13 +85,14 @@ class AboutPage extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       fontFamily: constants.bodyFont,
-                      //fontWeight: FontWeight.bold,
                       fontSize: constants.bodyFontSize,
                       color: Color(constants.bodyColor),
                       height: constants.bodyFontheight,
                     ),
                   ),
                 )),
+
+            // Contact us body.
             Container(
               padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
               child: InkWell(
@@ -95,12 +101,13 @@ class AboutPage extends StatelessWidget {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontFamily: constants.bodyFont,
-                    //fontWeight: FontWeight.bold,
                     fontSize: constants.bodyFontSize,
                     color: Color(constants.bodyColor),
                     height: constants.bodyFontheight,
                   ),
                 ),
+
+                // Links text to mail app.
                 onTap: () => launchUrl(
                   Uri(
                     scheme: 'mailto',

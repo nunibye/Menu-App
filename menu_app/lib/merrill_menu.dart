@@ -19,6 +19,8 @@ class _MerrillMenuState extends State<MerrillMenu>
   late Future futureLunch;
   late Future futureDinner;
   final time = DateTime.now();
+  final List<String> _dropdownValues = ["Today", "Tomorrow", "Day After"];
+  String? _currentlySelected;
 
   @override
   void initState() {
@@ -75,6 +77,54 @@ class _MerrillMenuState extends State<MerrillMenu>
           icon: const Icon(Icons.arrow_back_ios_new_rounded,
               color: Colors.orange, size: constants.backArrowSize),
         ),
+
+        actions: [
+          DropdownButtonHideUnderline(
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                value: _currentlySelected,
+                onChanged: (newValue) {
+                  setState(() {
+                    _currentlySelected = newValue as String;
+                  });
+                },
+                items: _dropdownValues.map((date) {
+                  return DropdownMenuItem(
+                    value: date,
+                    child: Text(
+                      date,
+                      style: const TextStyle(color: Color(constants.bodyColor)),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          )
+        ],
+
+        // actions: [
+        //   DropdownButtonHideUnderline(
+        //       child: DropdownButton(
+        //     hint: const Icon(Icons.calendar_month),
+        //     items:
+        //         <String>['Today', 'Tomorrow', 'Day After'].map((String value) {
+        //       return DropdownMenuItem<String>(
+        //         value: value,
+        //         child: Text(value),
+        //       );
+        //     }).toList(),
+        //     onChanged: (_) {},
+        //   ))
+
+        //   IconButton(
+        //     onPressed: () {
+        //       main_page.scakey.currentState?.onItemTapped(0);
+        //     },
+        //     icon: const Icon(Icons.calendar_month,
+        //         color: Colors.orange, size: constants.backArrowSize),
+        //         padding: EdgeInsets.only(right: 20),
+        //   ),
+        // ],
 
         // Categorized menu time [TabBar].
         bottom: TabBar(

@@ -39,7 +39,9 @@ def menu_scrape():
             browser.close()
 
         menuTable = soup.find('table',  {'bordercolor': '#CCC'})    # Finds meal table
-        list_of_food = []
+
+        if menuTable == None:                                       # Error check if hall is closed
+                        continue
 
         for meal in menuTable:                                      # For each item in the meal table, strip empty text
             text = meal.text.strip()                                # and save the menu item
@@ -59,7 +61,7 @@ def menu_scrape():
 
         # Updates hall_menu dictionary
         for i in meals_list:
-            if i in meal_times.keys():                              # If Breakfast, Lunch, Dinner, or Late Night
+            if i in meal_times.keys():                              # If 'Breakfast', 'Lunch', 'Dinner', or 'Late Night'
                 meal_time = i                                       # Set current meal time
                 continue
             elif "--" in i:                                         # If at a meal category

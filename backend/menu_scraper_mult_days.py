@@ -98,4 +98,3 @@ def menu_scrape():
 
 # main
 hall_menus = menu_scrape()
-print(hall_menus)

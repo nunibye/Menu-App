@@ -5,7 +5,7 @@ import re
 import unicodedata
 from bs4 import BeautifulSoup
 from copy import deepcopy
-from datetime import datetime
+import datetime
 import data_base_write
 
 def menu_scrape():
@@ -45,9 +45,11 @@ def menu_scrape():
                 if index == 0:
                     options = date_option.locator("option").all_inner_texts()
                     for item in options:
-                        if str(datetime.now().day) in item:
+                        # temp = str(datetime.date.today().strftime('%e'))
+                        if str(datetime.date.today().strftime('%e')) in item:
                             index = options.index(item)                 # find index of current day's date
                             break
+
                 date_option.select_option(index=index)                  # select day
                 page.get_by_role("button", name="Go!").click()          # go to page
                 index += 1

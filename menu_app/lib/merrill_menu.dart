@@ -193,7 +193,7 @@ class _MerrillMenuState extends State<MerrillMenu>
                       SizedBox(
                         width: constants.sizedBox,
                         child: Text(
-                          "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
+                          "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\n\n*Does not reflect special hours.",
                         ),
                       ),
                     ],

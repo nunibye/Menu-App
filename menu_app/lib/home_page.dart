@@ -344,8 +344,8 @@ class _HomePageState extends State<HomePage> {
                     // Provide when menu was last updated.
                     Padding(
                       padding: const EdgeInsets.only(top: 15),
-                      child: Text("updated: $time",
-                          textAlign: TextAlign.left,
+                      child: Text("Last updated: $time\nData provided by nutrition.sa.ucsc.edu",
+                          textAlign: TextAlign.center,
                           style: const TextStyle(color: Colors.grey)),
                     ),
                     const SizedBox(height: 70),

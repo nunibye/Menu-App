@@ -167,7 +167,7 @@ class _NineMenuState extends State<NineMenu> with TickerProviderStateMixin {
                       SizedBox(
                         width: constants.sizedBox,
                         child: Text(
-                          "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+                          "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM\n\n*Does not reflect special hours.",
                         ),
                       ),
                     ],

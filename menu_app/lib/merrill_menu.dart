@@ -87,7 +87,23 @@ class _MerrillMenuState extends State<MerrillMenu>
                 // alignment: AlignmentDirectional.bottomCenter,
                 onChanged: (newValue) {
                   setState(() {
+                    // Reset the page
                     _currentlySelected = newValue as String;
+
+                    // FIXME: This actuall doesn't work. Need to find some way to get to refresh
+                    futureBreakfast = main_page.fetchAlbum('Merrill', 'g');
+                    futureLunch = main_page.fetchAlbum('Merrill', 'g');
+                    futureDinner = main_page.fetchAlbum('Merrill', 'g');
+
+                    // FIXME: test to see if this is being called.
+                    // Change default displayed tab [_tabController] based on time of day.
+                    if (time.hour < 10) {
+                      _tabController.animateTo(0);
+                    } else if (time.hour < 16) {
+                      _tabController.animateTo(1);
+                    } else {
+                      _tabController.animateTo(2);
+                    }
                   });
                 },
                 selectedItemBuilder: (BuildContext context) {
@@ -119,30 +135,6 @@ class _MerrillMenuState extends State<MerrillMenu>
             ),
           )
         ],
-
-        // actions: [
-        //   DropdownButtonHideUnderline(
-        //       child: DropdownButton(
-        //     hint: const Icon(Icons.calendar_month),
-        //     items:
-        //         <String>['Today', 'Tomorrow', 'Day After'].map((String value) {
-        //       return DropdownMenuItem<String>(
-        //         value: value,
-        //         child: Text(value),
-        //       );
-        //     }).toList(),
-        //     onChanged: (_) {},
-        //   ))
-
-        //   IconButton(
-        //     onPressed: () {
-        //       main_page.scakey.currentState?.onItemTapped(0);
-        //     },
-        //     icon: const Icon(Icons.calendar_month,
-        //         color: Colors.orange, size: constants.backArrowSize),
-        //         padding: EdgeInsets.only(right: 20),
-        //   ),
-        // ],
 
         // Categorized menu time [TabBar].
         bottom: TabBar(

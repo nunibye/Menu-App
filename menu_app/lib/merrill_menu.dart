@@ -20,7 +20,8 @@ class _MerrillMenuState extends State<MerrillMenu>
   late Future futureDinner;
   final time = DateTime.now();
   final List<String> _dropdownValues = ["Today", "Tomorrow", "Day After"];
-  String? _currentlySelected;
+  // String? _currentlySelected;
+  String _currentlySelected = "Today";
 
   @override
   void initState() {
@@ -83,17 +84,34 @@ class _MerrillMenuState extends State<MerrillMenu>
             child: DropdownButtonHideUnderline(
               child: DropdownButton(
                 value: _currentlySelected,
+                // alignment: AlignmentDirectional.bottomCenter,
                 onChanged: (newValue) {
                   setState(() {
                     _currentlySelected = newValue as String;
                   });
+                },
+                selectedItemBuilder: (BuildContext context) {
+                  return _dropdownValues.map<Widget>((String item) {
+                    // This is the widget that will be shown when you select an item.
+                    // Here custom text style, alignment and layout size can be applied
+                    // to selected item string.
+                    return Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                            color: Color(constants.bodyColor),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  }).toList();
                 },
                 items: _dropdownValues.map((date) {
                   return DropdownMenuItem(
                     value: date,
                     child: Text(
                       date,
-                      style: const TextStyle(color: Color(constants.bodyColor)),
+                      style: const TextStyle(color: Color(constants.darkGray)),
                     ),
                   );
                 }).toList(),

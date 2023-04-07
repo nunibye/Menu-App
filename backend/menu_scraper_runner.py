@@ -28,7 +28,14 @@ def menu_scrape():
     for j in range(len(halls_name)):
 
         with sync_playwright() as p:
-            browser = p.chromium.launch()  #headless=False
+            # If the browser does not launch, try again
+            for attempt in range(5):
+                try:
+                    browser = p.chromium.launch()  #headless=False
+                except:
+                    continue
+                else:
+                     break
             page = browser.new_page()
             page.set_viewport_size(ViewportSize(width = 1080*2, height=1920*2))
             page.goto(url)

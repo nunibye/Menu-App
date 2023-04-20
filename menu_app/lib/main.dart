@@ -243,7 +243,7 @@ class RootPage extends StatefulWidget {
   State<RootPage> createState() => _RootPageState();
 }
 
-class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
+class _RootPageState extends State<RootPage> {
   late Future futureAlbum;
   late Future nineSummary;
   late Future cowellSummary;

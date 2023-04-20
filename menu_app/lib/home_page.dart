@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+class _HomePageState extends State<HomePage> {
   late Future futureAlbum;
   late Future nineSummary;
   late Future cowellSummary;

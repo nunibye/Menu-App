@@ -18,6 +18,7 @@ import 'package:menu_app/settings_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:applovin_max/applovin_max.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 import 'ad_helper.dart' as ad_helper;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -275,6 +276,17 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    if (selectedIndex != 0) {
+      scakey.currentState?.onItemTapped(0);
+      return true;
+    } else {
+      return false;
+    }
+    
   }
 
   double rh = 1;

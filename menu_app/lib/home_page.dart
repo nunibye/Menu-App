@@ -297,8 +297,15 @@ class _HomePageState extends State<HomePage> {
                         // Icon button leads to specified [colleges] page.
                         child: IconButton(
                           onPressed: () {
-                            main_page.scakey.currentState
-                                ?.onItemTapped(getIndex(colleges[i].trim()));
+                            // Navigator.pushReplacement(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (BuildContext context) =>
+                            //             super.widget));
+
+                            
+                            // main_page.scakey.currentState
+                            //     ?.onItemTapped(getIndex(colleges[i].trim()));
                           },
                           icon: Image.asset('images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,
@@ -344,7 +351,8 @@ class _HomePageState extends State<HomePage> {
                     // Provide when menu was last updated.
                     Padding(
                       padding: const EdgeInsets.only(top: 15),
-                      child: Text("Last updated: $time\nData provided by nutrition.sa.ucsc.edu",
+                      child: Text(
+                          "Last updated: $time\nData provided by nutrition.sa.ucsc.edu",
                           textAlign: TextAlign.center,
                           style: const TextStyle(color: Colors.grey)),
                     ),

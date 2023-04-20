@@ -243,7 +243,7 @@ class RootPage extends StatefulWidget {
   State<RootPage> createState() => _RootPageState();
 }
 
-class _RootPageState extends State<RootPage> {
+class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
   late Future futureAlbum;
   late Future nineSummary;
   late Future cowellSummary;
@@ -275,6 +275,7 @@ class _RootPageState extends State<RootPage> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
     BackButtonInterceptor.add(myInterceptor);
   }

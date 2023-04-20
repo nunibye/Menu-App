@@ -19,9 +19,11 @@ class _MerrillMenuState extends State<MerrillMenu>
   late Future futureLunch;
   late Future futureDinner;
   final time = DateTime.now();
-  final List<String> _dropdownValues = ["Today", "Tomorrow", "Day After"];
+  // TODO: For the choose later date update:
+  // final List<String> _dropdownValues = ["Today", "Tomorrow", "Day After"];
+  // String _currentlySelected = "Today";
   // String? _currentlySelected;
-  String _currentlySelected = "Today";
+ 
 
   @override
   void initState() {
@@ -79,6 +81,7 @@ class _MerrillMenuState extends State<MerrillMenu>
               color: Colors.orange, size: constants.backArrowSize),
         ),
 
+        // TODO: For the choose later date update:
         // actions: [
         //   DropdownButtonHideUnderline(
         //     child: DropdownButtonHideUnderline(
@@ -90,7 +93,7 @@ class _MerrillMenuState extends State<MerrillMenu>
         //             // Reset the page
         //             _currentlySelected = newValue as String;
 
-        //             // FIXME: This actuall doesn't work. Need to find some way to get to refresh
+        //             // FIXME: This actually doesn't work. Need to find some way to get to refresh
         //             futureBreakfast = main_page.fetchAlbum('Merrill', 'g');
         //             futureLunch = main_page.fetchAlbum('Merrill', 'g');
         //             futureDinner = main_page.fetchAlbum('Merrill', 'g');
@@ -186,10 +189,10 @@ class _MerrillMenuState extends State<MerrillMenu>
               expand: false,
               builder: (context, scrollController) => SingleChildScrollView(
                 controller: scrollController,
-                child:  Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 30),
+                child:  const Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 30),
                   child: Column(
-                    children:const [
+                    children: [
                        Padding(
                           padding: EdgeInsets.all(10),
                           child: Text("Monday-Friday",

@@ -275,7 +275,6 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
     super.initState();
     BackButtonInterceptor.add(myInterceptor);
   }
@@ -287,7 +286,6 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
     } else {
       return false;
     }
-    
   }
 
   double rh = 1;

@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late Future futureAlbum;
   late Future nineSummary;
   late Future cowellSummary;
@@ -66,12 +66,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
+  setSummaries() {
     final time = DateTime.now();
-    getCollegeOrder(); // Get SharedPreferences [prefs] for correct display order.
-
     // Set each [collegeSummary] with a summary of food based on the time of day.
     //
     // FIXME: there has got to be a better way to do this in less lines. Perhaps
@@ -118,6 +114,13 @@ class _HomePageState extends State<HomePage> {
       porterSummary =
           main_page.fetchAlbum('Porter', 'Late%20Night', cat: '*Open%20Bars*');
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCollegeOrder(); // Get SharedPreferences [prefs] for correct display order.
+    setSummaries();
   }
 
   // Builds the [college]'s summary based on [hallSummary] list of items.
@@ -297,15 +300,8 @@ class _HomePageState extends State<HomePage> {
                         // Icon button leads to specified [colleges] page.
                         child: IconButton(
                           onPressed: () {
-                            // Navigator.pushReplacement(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (BuildContext context) =>
-                            //             super.widget));
-
-                            
-                            // main_page.scakey.currentState
-                            //     ?.onItemTapped(getIndex(colleges[i].trim()));
+                            main_page.scakey.currentState
+                                ?.onItemTapped(getIndex(colleges[i].trim()));
                           },
                           icon: Image.asset('images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,

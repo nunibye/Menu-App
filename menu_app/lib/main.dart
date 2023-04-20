@@ -295,7 +295,7 @@ class _RootPageState extends State<RootPage> {
     return Scaffold(
       body: Center(
         child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 150),
           transitionBuilder: (Widget child, Animation<double> animation) {
             return SlideTransition(
                 position: Tween(

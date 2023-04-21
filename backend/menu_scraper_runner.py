@@ -38,8 +38,21 @@ def menu_scrape():
                      break
             page = browser.new_page()
             page.set_viewport_size(ViewportSize(width = 1080*2, height=1920*2))
-            page.goto(url)
-            page.locator(halls_html[j]).click()
+            for attempt in range(5):
+                try:
+                    page.goto(url)
+                except:
+                    continue
+                else:
+                     break
+            for attempt in range(5):
+                try:
+                    page.locator(halls_html[j]).click()
+                except:
+                    continue
+                else:
+                     break
+            
             
             html = page.content()
             soup = BeautifulSoup(html, 'html.parser')

@@ -32,31 +32,17 @@ def menu_scrape():
             for attempt in range(5):
                 try:
                     browser = p.chromium.launch()  #headless=False
-                except:
-                    continue
-                else:
-                     break
-            page = browser.new_page()
-            page.set_viewport_size(ViewportSize(width = 1080*2, height=1920*2))
-            for attempt in range(5):
-                try:
+                    page = browser.new_page()
+                    page.set_viewport_size(ViewportSize(width = 1080*2, height=1920*2))
                     page.goto(url)
-                except:
-                    continue
-                else:
-                     break
-            for attempt in range(5):
-                try:
                     page.locator(halls_html[j]).click()
+                    html = page.content()
+                    soup = BeautifulSoup(html, 'html.parser')
+                    browser.close()
                 except:
                     continue
                 else:
                      break
-            
-            
-            html = page.content()
-            soup = BeautifulSoup(html, 'html.parser')
-            browser.close()
 
         menuTable = soup.find('table',  {'bordercolor': '#CCC'})    # Finds meal table
 

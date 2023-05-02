@@ -11,6 +11,9 @@ Menu app for all UC Santa Cruz Dining Locations created with Flutter.
 ### Contact us
 To contact us for suggestions, feedback, bugs, etc., reach us at ucscmenuapp@gmail.com!
 
+### Support us
+* [Buy us a Coffee!](https://www.buymeacoffee.com/christiantknab)
+
 ## Table of Contents
 * [General Info](#general-info)
 * [Technologies](#technologies)

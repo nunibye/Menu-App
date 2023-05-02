@@ -20,10 +20,9 @@ class _MerrillMenuState extends State<MerrillMenu>
   late Future futureDinner;
   final time = DateTime.now();
   // TODO: For the choose later date update:
-  // final List<String> _dropdownValues = ["Today", "Tomorrow", "Day After"];
-  // String _currentlySelected = "Today";
+  final List<String> _dropdownValues = ["Today", "Tomorrow", "Day After"];
+  String _currentlySelected = "Today";
   // String? _currentlySelected;
- 
 
   @override
   void initState() {
@@ -82,62 +81,82 @@ class _MerrillMenuState extends State<MerrillMenu>
         ),
 
         // TODO: For the choose later date update:
-        // actions: [
-        //   DropdownButtonHideUnderline(
-        //     child: DropdownButtonHideUnderline(
-        //       child: DropdownButton(
-        //         value: _currentlySelected,
-        //         // alignment: AlignmentDirectional.bottomCenter,
-        //         onChanged: (newValue) {
-        //           setState(() {
-        //             // Reset the page
-        //             _currentlySelected = newValue as String;
+        actions: [
+          DropdownButtonHideUnderline(
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                value: _currentlySelected,
+                // alignment: AlignmentDirectional.bottomCenter,
+                onChanged: (newValue) {
+                  setState(() {
+                    // Reset the page
+                    _currentlySelected = newValue as String;
 
-        //             // FIXME: This actually doesn't work. Need to find some way to get to refresh
-        //             futureBreakfast = main_page.fetchAlbum('Merrill', 'g');
-        //             futureLunch = main_page.fetchAlbum('Merrill', 'g');
-        //             futureDinner = main_page.fetchAlbum('Merrill', 'g');
-
-        //             // FIXME: test to see if this is being called.
-        //             // Change default displayed tab [_tabController] based on time of day.
-        //             if (time.hour < 10) {
-        //               _tabController.animateTo(0);
-        //             } else if (time.hour < 16) {
-        //               _tabController.animateTo(1);
-        //             } else {
-        //               _tabController.animateTo(2);
-        //             }
-        //           });
-        //         },
-        //         selectedItemBuilder: (BuildContext context) {
-        //           return _dropdownValues.map<Widget>((String item) {
-        //             // This is the widget that will be shown when you select an item.
-        //             // Here custom text style, alignment and layout size can be applied
-        //             // to selected item string.
-        //             return Container(
-        //               alignment: Alignment.center,
-        //               child: Text(
-        //                 item,
-        //                 style: const TextStyle(
-        //                     color: Color(constants.bodyColor),
-        //                     fontWeight: FontWeight.bold),
-        //               ),
-        //             );
-        //           }).toList();
-        //         },
-        //         items: _dropdownValues.map((date) {
-        //           return DropdownMenuItem(
-        //             value: date,
-        //             child: Text(
-        //               date,
-        //               style: const TextStyle(color: Color(constants.darkGray)),
-        //             ),
-        //           );
-        //         }).toList(),
-        //       ),
-        //     ),
-        //   )
-        // ],
+                    // FIXME: This actually doesn't work. Need to find some way to get to refresh
+                    if (_currentlySelected == "Tomorrow") {
+                      print(_currentlySelected);
+                      futureBreakfast =
+                          main_page.fetchAlbum('Merrill', 'Breakfast');
+                      futureLunch =
+                          main_page.fetchAlbum('Merrill', 'Breakfast');
+                      futureDinner =
+                          main_page.fetchAlbum('Merrill', 'Breakfast');
+                    } else if (_currentlySelected == "Day After") {
+                      print(_currentlySelected);
+                      futureBreakfast =
+                          main_page.fetchAlbum('Merrill', 'Lunch');
+                      futureLunch = main_page.fetchAlbum('Merrill', 'Lunch');
+                      futureDinner = main_page.fetchAlbum('Merrill', 'Lunch');
+                    } else {
+                      print(_currentlySelected);
+                      futureBreakfast =
+                          main_page.fetchAlbum('Merrill', 'Dinner');
+                      futureLunch = main_page.fetchAlbum('Merrill', 'Dinner');
+                      futureDinner = main_page.fetchAlbum('Merrill', 'Dinner');
+                    }
+                    main_page.buildMeal(futureBreakfast);
+                      main_page.buildMeal(futureLunch);
+                      main_page.buildMeal(futureDinner);
+                    // FIXME: test to see if this is being called.
+                    // Change default displayed tab [_tabController] based on time of day.
+                    if (time.hour < 10) {
+                      _tabController.animateTo(0);
+                    } else if (time.hour < 16) {
+                      _tabController.animateTo(1);
+                    } else {
+                      _tabController.animateTo(2);
+                    }
+                  });
+                },
+                selectedItemBuilder: (BuildContext context) {
+                  return _dropdownValues.map<Widget>((String item) {
+                    // This is the widget that will be shown when you select an item.
+                    // Here custom text style, alignment and layout size can be applied
+                    // to selected item string.
+                    return Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                            color: Color(constants.bodyColor),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  }).toList();
+                },
+                items: _dropdownValues.map((date) {
+                  return DropdownMenuItem(
+                    value: date,
+                    child: Text(
+                      date,
+                      style: const TextStyle(color: Color(constants.darkGray)),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          )
+        ],
 
         // Categorized menu time [TabBar].
         bottom: TabBar(
@@ -189,11 +208,11 @@ class _MerrillMenuState extends State<MerrillMenu>
               expand: false,
               builder: (context, scrollController) => SingleChildScrollView(
                 controller: scrollController,
-                child:  const Padding(
+                child: const Padding(
                   padding: EdgeInsets.only(top: 10, bottom: 30),
                   child: Column(
                     children: [
-                       Padding(
+                      Padding(
                           padding: EdgeInsets.all(10),
                           child: Text("Monday-Friday",
                               style: TextStyle(

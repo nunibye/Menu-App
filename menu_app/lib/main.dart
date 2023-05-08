@@ -10,6 +10,7 @@ import 'package:menu_app/nine_menu.dart';
 import 'package:menu_app/cowell_menu.dart';
 import 'package:menu_app/porter_menu.dart';
 import 'package:menu_app/merrill_menu.dart';
+import 'package:menu_app/oakes_menu.dart';
 
 import 'package:menu_app/calculator.dart';
 import 'package:menu_app/about_page.dart';
@@ -261,6 +262,7 @@ class _RootPageState extends State<RootPage> {
     const CowellMenu(),
     const NineMenu(),
     const PorterMenu(),
+    const OakesMenu(),
     const Calculator(),
     const SettingsPage(),
     const AboutPage(),

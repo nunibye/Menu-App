@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late Future cowellSummary;
   late Future merrillSummary;
   late Future porterSummary;
+  late Future oakesSummary;
   List<String> colleges = [];
 
   // Function to load [colleges] list with SharedPreferences [prefs] hall disolay order.
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     String? text = prefs.getString('collegesString');
 
     if (text == null) {
-      List<String> textList = ['Merrill', 'Cowell', 'Nine', 'Porter'];
+      List<String> textList = ['Merrill', 'Cowell', 'Nine', 'Porter', 'Oakes'];
       setState(() {
         colleges = textList;
       });
@@ -48,6 +49,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       return cowellSummary;
     } else if (college == 'Nine') {
       return nineSummary;
+    } else if (college == 'Oakes') {
+      return oakesSummary;
     } else {
       return porterSummary;
     }
@@ -61,6 +64,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       return 2;
     } else if (college == "Porter") {
       return 4;
+    } else if (college == "Oakes") {
+      return 5;
     } else {
       return 1;
     }
@@ -78,6 +83,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       cowellSummary = nineSummary;
       merrillSummary = nineSummary;
       porterSummary = nineSummary;
+      oakesSummary = nineSummary;
     } else if (time.hour < 10 && time.hour > 4) {
       nineSummary =
           main_page.fetchAlbum('Nine', 'Breakfast', cat: '*Breakfast*');
@@ -87,6 +93,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           main_page.fetchAlbum('Merrill', 'Breakfast', cat: '*Breakfast*');
       porterSummary =
           main_page.fetchAlbum('Porter', 'Breakfast', cat: '*Breakfast*');
+      oakesSummary =
+          main_page.fetchAlbum('Oakes', 'Breakfast', cat: '*Breakfast*');
     } else if (time.hour < 16) {
       nineSummary = main_page.fetchAlbum('Nine', 'Lunch', cat: '*Open%20Bars*');
       cowellSummary =
@@ -95,6 +103,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           main_page.fetchAlbum('Merrill', 'Lunch', cat: '*Open%20Bars*');
       porterSummary =
           main_page.fetchAlbum('Porter', 'Lunch', cat: '*Open%20Bars*');
+      oakesSummary =
+          main_page.fetchAlbum('Oakes', 'Lunch', cat: '*Open%20Bars*');
     } else if (time.hour < 20) {
       nineSummary =
           main_page.fetchAlbum('Nine', 'Dinner', cat: '*Open%20Bars*');
@@ -104,6 +114,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           main_page.fetchAlbum('Merrill', 'Dinner', cat: '*Open%20Bars*');
       porterSummary =
           main_page.fetchAlbum('Porter', 'Dinner', cat: '*Open%20Bars*');
+      oakesSummary =
+          main_page.fetchAlbum('Oakes', 'Dinner', cat: '*Open%20Bars*');
     } else if (time.hour < 23) {
       nineSummary =
           main_page.fetchAlbum('Nine', 'Late%20Night', cat: '*Open%20Bars*');
@@ -113,6 +125,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           main_page.fetchAlbum('Merrill', 'Late%20Night', cat: '*Open%20Bars*');
       porterSummary =
           main_page.fetchAlbum('Porter', 'Late%20Night', cat: '*Open%20Bars*');
+      oakesSummary =
+          main_page.fetchAlbum('Oakes', 'Late%20Night', cat: '*Open%20Bars*');
     }
   }
 
@@ -138,15 +152,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     // } else if (state == AppLifecycleState.paused) {
     //    // app is on the background.
     // } else if (state == AppLifecycleState.detached) {
-    //    // flutter engine is running but detached from views 
+    //    // flutter engine is running but detached from views
     // } else if (state == AppLifecycleState.resumed) {
-    //    // app is visible and running. 
+    //    // app is visible and running.
     //    // run your App class again
     if (state == AppLifecycleState.resumed) {
-       Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => super.widget));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) => super.widget));
     }
   }
 
@@ -191,6 +203,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           {
                             index = 4,
                           }
+                        else if (college == "Oakes")
+                          {
+                            index = 5,
+                          }
                         else
                           {
                             index = 1,
@@ -233,11 +249,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 else
                   for (var i = 0; i < snapshot.data.length; i++)
                     (Container(
-                      padding: const EdgeInsets.only(right: 10),
-                      alignment: Alignment.topRight,
+                      padding: const EdgeInsets.only(left: 20),
+                      alignment: Alignment.topLeft,
                       child: Text(
                         snapshot.data[i],
-                        textAlign: TextAlign.right,
+                        textAlign: TextAlign.left,
                         style: const TextStyle(
                           fontFamily: constants.bodyFont,
                           fontSize: constants.bodyFontSize,

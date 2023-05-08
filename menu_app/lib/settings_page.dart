@@ -31,7 +31,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     // If there is no [text] saved, displays default order.
     if (text == null) {
-      List<String> textList = ['Merrill', 'Cowell', 'Nine', 'Porter'];
+      List<String> textList = ['Merrill', 'Cowell', 'Nine', 'Porter', 'Oakes'];
       setState(() {
         colleges = textList;
       });
@@ -140,7 +140,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           color: Color(constants.darkGray)))),
               padding: const EdgeInsets.all(constants.containerPaddingTitle),
               alignment: Alignment.bottomLeft,
-              height: 280,
+              height: 350,
               child: ReorderableListView(
                 physics: const NeverScrollableScrollPhysics(),
                 onReorder: reorderData,

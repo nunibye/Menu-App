@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'constants.dart' as constants;
 import 'package:menu_app/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -12,9 +13,10 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // The text describing the app.
     final List<String> contents = [
-      "About us",
+      "About Us",
       "This app is created by Eliah Reeves and Christian Knab from Merrill.\n\nPlease share this app with your friends!\n",
-      "Contact Us",
+      "Support Us",
+      "Please help keep this app on the App Store by donating!\n"
     ];
     final imageSize = MediaQuery.of(context).size.width - 200;
 
@@ -91,7 +93,28 @@ class AboutPage extends StatelessWidget {
                     ),
                   ),
                 )),
-
+            SafeArea(
+              child: Html(
+                data:
+                    '<div><a href="https://www.buymeacoffee.com/christiantknab" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 217px !important;" ></a></div>',
+                // Styling with CSS (not real CSS)
+                style: {
+                  'div': Style(
+                      textAlign: TextAlign.center,
+                      padding: const EdgeInsets.only(bottom: 20))
+                },
+                onLinkTap: (url, _, __, ___) async {
+                  Uri uri = Uri.parse(url!);
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(
+                      uri,
+                    );
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
+              ),
+            ),
             // Contact us body.
             Container(
               padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
@@ -115,8 +138,20 @@ class AboutPage extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: 50,
+            ),
           ],
         ));
+  }
+}
+
+launchURL(Uri url) async {
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    //TODO handle this
+    throw 'Could not launch $url';
   }
 }

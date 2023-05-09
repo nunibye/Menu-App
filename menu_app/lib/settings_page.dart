@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
-  
+
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
@@ -31,6 +31,12 @@ class _SettingsPageState extends State<SettingsPage> {
 
     // If there is no [text] saved, displays default order.
     if (text == null) {
+      List<String> textList = ['Merrill', 'Cowell', 'Nine', 'Porter', 'Oakes'];
+      setState(() {
+        colleges = textList;
+      });
+    }
+    else if (text.split(',').length == 4) {
       List<String> textList = ['Merrill', 'Cowell', 'Nine', 'Porter', 'Oakes'];
       setState(() {
         colleges = textList;

@@ -20,6 +20,9 @@ class _OakesMenuState extends State<OakesMenu> with TickerProviderStateMixin {
   late Future futureLateNight;
   final time = DateTime.now();
 
+  final List<String> _dropdownValues = ["Today", "Tomorrow", "Day After"];
+  String _currentlySelected = "Today";
+
   @override
   void initState() {
     super.initState();
@@ -79,6 +82,85 @@ class _OakesMenuState extends State<OakesMenu> with TickerProviderStateMixin {
               color: Colors.orange, size: constants.backArrowSize),
         ),
 
+        // Choose later date
+        actions: [
+          DropdownButtonHideUnderline(
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                value: _currentlySelected,
+                // alignment: AlignmentDirectional.bottomCenter,
+                onChanged: (newValue) {
+                  setState(() {
+                    // Reset the page
+                    _currentlySelected = newValue as String;
+
+                    if (_currentlySelected == "Tomorrow") {
+                      // print(_currentlySelected);
+                      futureBreakfast = main_page
+                          .fetchAlbum('Oakes', 'Breakfast', day: "Tomorrow");
+                      futureLunch = main_page.fetchAlbum('Oakes', 'Lunch',
+                          day: "Tomorrow");
+                      futureDinner = main_page.fetchAlbum('Oakes', 'Dinner',
+                          day: "Tomorrow");
+                      futureLateNight = main_page
+                          .fetchAlbum('Oakes', 'Late%20Night', day: "Tomorrow");
+                    } else if (_currentlySelected == "Day After") {
+                      // print(_currentlySelected);
+                      futureBreakfast = main_page.fetchAlbum(
+                          'Oakes', 'Breakfast',
+                          day: "Day%20after%20tommorw");
+                      futureLunch = main_page.fetchAlbum('Oakes', 'Lunch',
+                          day: "Day%20after%20tommorw");
+                      futureDinner = main_page.fetchAlbum('Oakes', 'Dinner',
+                          day: "Day%20after%20tommorw");
+                      futureLateNight = main_page.fetchAlbum(
+                          'Oakes', 'Late%20Night',
+                          day: "Day%20after%20tommorw");
+                    } else {
+                      // print(_currentlySelected);
+                      futureBreakfast =
+                          main_page.fetchAlbum('Oakes', 'Breakfast');
+                      futureLunch = main_page.fetchAlbum('Oakes', 'Lunch');
+                      futureDinner = main_page.fetchAlbum('Oakes', 'Dinner');
+                      futureLateNight =
+                          main_page.fetchAlbum('Oakes', 'Late%20Night');
+                    }
+                    main_page.buildMeal(futureBreakfast);
+                    main_page.buildMeal(futureLunch);
+                    main_page.buildMeal(futureDinner);
+                    main_page.buildMeal(futureLateNight);
+                  });
+                },
+                selectedItemBuilder: (BuildContext context) {
+                  return _dropdownValues.map<Widget>((String item) {
+                    // This is the widget that will be shown when you select an item.
+                    // Here custom text style, alignment and layout size can be applied
+                    // to selected item string.
+                    return Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                            color: Color(constants.bodyColor),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  }).toList();
+                },
+                items: _dropdownValues.map((date) {
+                  return DropdownMenuItem(
+                    value: date,
+                    child: Text(
+                      date,
+                      style: const TextStyle(color: Color(constants.darkGray)),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          )
+        ],
+
         // Categorized menu time [TabBar].
         bottom: TabBar(
           unselectedLabelColor: Colors.white,
@@ -133,10 +215,10 @@ class _OakesMenuState extends State<OakesMenu> with TickerProviderStateMixin {
               expand: false,
               builder: (context, scrollController) => SingleChildScrollView(
                 controller: scrollController,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 30),
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 30),
                   child: Column(
-                    children: const [
+                    children: [
                       Padding(
                           padding: EdgeInsets.all(10),
                           child: Text("Monday-Thursday",

@@ -71,8 +71,11 @@ buildMeal(Future<dynamic> hallSummary) {
                               bottom: BorderSide(
                                   width: constants.borderWidth,
                                   color: Color(constants.darkGray)))),
-                      padding:
-                          const EdgeInsets.all(constants.containerPaddingTitle),
+                      padding: const EdgeInsets.only(
+                          left: constants.containerPaddingTitle,
+                          right: constants.containerPaddingTitle,
+                          top: constants.containerPaddingTitle+7,
+                          bottom: constants.containerPaddingTitle),
                       alignment: Alignment.topLeft,
                       child: Text(
                         snapshot.data[i],
@@ -89,11 +92,11 @@ buildMeal(Future<dynamic> hallSummary) {
                   // Display the food items.
                   else
                     (Container(
-                      padding: const EdgeInsets.only(right: 10),
-                      alignment: Alignment.topRight,
+                      padding: const EdgeInsets.only(left: 20),
+                      alignment: Alignment.topLeft,
                       child: Text(
                         snapshot.data[i],
-                        textAlign: TextAlign.right,
+                        textAlign: TextAlign.left,
                         style: const TextStyle(
                           fontFamily: constants.bodyFont,
                           //fontWeight: FontWeight.bold,
@@ -126,9 +129,9 @@ buildMeal(Future<dynamic> hallSummary) {
   );
 }
 
-Future fetchAlbum(college, meal, {cat = ""}) async {
+Future fetchAlbum(college, meal, {cat = "", day = ""}) async {
   final response = await http.get(Uri.parse(
-      'https://ucsc-menu-app-default-rtdb.firebaseio.com/$college/$meal/$cat.json'));
+      'https://ucsc-menu-app-default-rtdb.firebaseio.com/$day/$college/$meal/$cat.json'));
 
   // If the server did return a 200 OK response,
   // then parse the JSON.

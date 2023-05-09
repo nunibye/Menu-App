@@ -144,23 +144,24 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // print('state = $state');
-    // if (state == AppLifecycleState.inactive) {
-    //    // app transitioning to other state.
-    // } else if (state == AppLifecycleState.paused) {
-    //    // app is on the background.
-    // } else if (state == AppLifecycleState.detached) {
-    //    // flutter engine is running but detached from views
-    // } else if (state == AppLifecycleState.resumed) {
-    //    // app is visible and running.
-    //    // run your App class again
-    if (state == AppLifecycleState.resumed) {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => super.widget));
-    }
-  }
+//TODO: ELI PLS FIX THIS :)
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   // print('state = $state');
+  //   // if (state == AppLifecycleState.inactive) {
+  //   //    // app transitioning to other state.
+  //   // } else if (state == AppLifecycleState.paused) {
+  //   //    // app is on the background.
+  //   // } else if (state == AppLifecycleState.detached) {
+  //   //    // flutter engine is running but detached from views
+  //   // } else if (state == AppLifecycleState.resumed) {
+  //   //    // app is visible and running.
+  //   //    // run your App class again
+  //   if (state == AppLifecycleState.resumed) {
+  //     Navigator.pushReplacement(context,
+  //         MaterialPageRoute(builder: (BuildContext context) => super.widget));
+  //   }
+  // }
 
   // Builds the [college]'s summary based on [hallSummary] list of items.
   Widget buildSummary(college, Future<dynamic> hallSummary) {
@@ -249,7 +250,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 else
                   for (var i = 0; i < snapshot.data.length; i++)
                     (Container(
-                      padding: const EdgeInsets.only(left: 20),
+                      padding: const EdgeInsets.only(left: 27),
                       alignment: Alignment.topLeft,
                       child: Text(
                         snapshot.data[i],

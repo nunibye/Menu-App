@@ -19,10 +19,9 @@ class _MerrillMenuState extends State<MerrillMenu>
   late Future futureLunch;
   late Future futureDinner;
   final time = DateTime.now();
-  // TODO: For the choose later date update:
+
   final List<String> _dropdownValues = ["Today", "Tomorrow", "Day After"];
   String _currentlySelected = "Today";
-  // String? _currentlySelected;
 
   @override
   void initState() {
@@ -80,7 +79,7 @@ class _MerrillMenuState extends State<MerrillMenu>
               color: Colors.orange, size: constants.backArrowSize),
         ),
 
-        // TODO: For the choose later date update:
+        // Choose later date
         actions: [
           DropdownButtonHideUnderline(
             child: DropdownButtonHideUnderline(
@@ -92,40 +91,33 @@ class _MerrillMenuState extends State<MerrillMenu>
                     // Reset the page
                     _currentlySelected = newValue as String;
 
-                    // FIXME: This actually doesn't work. Need to find some way to get to refresh
                     if (_currentlySelected == "Tomorrow") {
-                      print(_currentlySelected);
-                      futureBreakfast =
-                          main_page.fetchAlbum('Merrill', 'Breakfast');
-                      futureLunch =
-                          main_page.fetchAlbum('Merrill', 'Breakfast');
-                      futureDinner =
-                          main_page.fetchAlbum('Merrill', 'Breakfast');
+                      // print(_currentlySelected);
+                      futureBreakfast = main_page
+                          .fetchAlbum('Merrill', 'Breakfast', day: "Tomorrow");
+                      futureLunch = main_page.fetchAlbum('Merrill', 'Lunch',
+                          day: "Tomorrow");
+                      futureDinner = main_page.fetchAlbum('Merrill', 'Dinner',
+                          day: "Tomorrow");
                     } else if (_currentlySelected == "Day After") {
-                      print(_currentlySelected);
-                      futureBreakfast =
-                          main_page.fetchAlbum('Merrill', 'Lunch');
-                      futureLunch = main_page.fetchAlbum('Merrill', 'Lunch');
-                      futureDinner = main_page.fetchAlbum('Merrill', 'Lunch');
+                      // print(_currentlySelected);
+                      futureBreakfast = main_page.fetchAlbum(
+                          'Merrill', 'Breakfast',
+                          day: "Day%20after%20tommorw");
+                      futureLunch = main_page.fetchAlbum('Merrill', 'Lunch',
+                          day: "Day%20after%20tommorw");
+                      futureDinner = main_page.fetchAlbum('Merrill', 'Dinner',
+                          day: "Day%20after%20tommorw");
                     } else {
-                      print(_currentlySelected);
+                      // print(_currentlySelected);
                       futureBreakfast =
-                          main_page.fetchAlbum('Merrill', 'Dinner');
-                      futureLunch = main_page.fetchAlbum('Merrill', 'Dinner');
+                          main_page.fetchAlbum('Merrill', 'Breakfast');
+                      futureLunch = main_page.fetchAlbum('Merrill', 'Lunch');
                       futureDinner = main_page.fetchAlbum('Merrill', 'Dinner');
                     }
                     main_page.buildMeal(futureBreakfast);
-                      main_page.buildMeal(futureLunch);
-                      main_page.buildMeal(futureDinner);
-                    // FIXME: test to see if this is being called.
-                    // Change default displayed tab [_tabController] based on time of day.
-                    if (time.hour < 10) {
-                      _tabController.animateTo(0);
-                    } else if (time.hour < 16) {
-                      _tabController.animateTo(1);
-                    } else {
-                      _tabController.animateTo(2);
-                    }
+                    main_page.buildMeal(futureLunch);
+                    main_page.buildMeal(futureDinner);
                   });
                 },
                 selectedItemBuilder: (BuildContext context) {

@@ -19,4 +19,8 @@ def UpdateDatabase(hall_menus):
     ref = db.reference('/')
     ref.delete()
     
-    ref.update(hall_menus)
+    for attempt in range(5):
+        try:
+            ref.update(hall_menus)
+        except:
+            continue

@@ -287,13 +287,12 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
     BackButtonInterceptor.add(myInterceptor);
   }
 
-  //TODO: ELI PLS FIX THIS :)
+  // //TODO: ELI PLS FIX THIS :)
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      
       scakey.currentState?.onItemTapped(1);
-      await Future.delayed(Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 160));
       scakey.currentState?.onItemTapped(0);
     }
   }
@@ -319,7 +318,7 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
     return Scaffold(
       body: Center(
         child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 150),
+          duration: const Duration(milliseconds: 220),
           transitionBuilder: (Widget child, Animation<double> animation) {
             return SlideTransition(
                 position: Tween(

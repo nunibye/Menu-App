@@ -39,7 +39,10 @@ def menu_scrape():
                         browser = p.chromium.launch()
                         page = browser.new_page()
                         page.set_viewport_size(ViewportSize(width = 1080*2, height=1920*2))
-                        page.goto(url)
+                        # page.goto(url)
+                        response_code = page.goto(url)
+                        if response_code.status != 200:
+                            continue
                         page.locator(halls_html[j]).click()                     # select hall
                         date_option = page.get_by_role("combobox")              # find date options
                         
@@ -131,7 +134,10 @@ def menu_scrape_today():
                     browser = p.chromium.launch()  #headless=False
                     page = browser.new_page()
                     page.set_viewport_size(ViewportSize(width = 1080*2, height=1920*2))
-                    page.goto(url)
+                    # page.goto(url)
+                    response_code = page.goto(url)
+                    if response_code.status != 200:
+                        continue
                     page.locator(halls_html[j]).click()
                     html = page.content()
                     soup = BeautifulSoup(html, 'html.parser')

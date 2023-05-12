@@ -56,7 +56,7 @@ class NavDrawer extends StatelessWidget {
                 ),
                 onTap: () => {
                   Navigator.pop(context),
-                  main_page.scakey.currentState?.onItemTapped(0)
+                  main_page.scakey.currentState?.onItemTapped(0, constants.aniLength)
                 },
               ),
 
@@ -77,7 +77,7 @@ class NavDrawer extends StatelessWidget {
                 ),
                 onTap: () => {
                   Navigator.pop(context),
-                  main_page.scakey.currentState?.onItemTapped(6)
+                  main_page.scakey.currentState?.onItemTapped(6, constants.aniLength)
                 },
               ),
 
@@ -98,7 +98,7 @@ class NavDrawer extends StatelessWidget {
                 ),
                 onTap: () => {
                   Navigator.pop(context),
-                  main_page.scakey.currentState?.onItemTapped(7)
+                  main_page.scakey.currentState?.onItemTapped(7, constants.aniLength)
                 },
               ),
 
@@ -119,7 +119,7 @@ class NavDrawer extends StatelessWidget {
                 ),
                 onTap: () => {
                   Navigator.pop(context),
-                  main_page.scakey.currentState?.onItemTapped(8)
+                  main_page.scakey.currentState?.onItemTapped(8, constants.aniLength)
                 },
               ),
             ],

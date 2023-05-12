@@ -76,7 +76,7 @@ class _PorterMenuState extends State<PorterMenu> with TickerProviderStateMixin {
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
-            main_page.scakey.currentState?.onItemTapped(0);
+            main_page.scakey.currentState?.onItemTapped(0, constants.aniLength);
           },
           icon: const Icon(Icons.arrow_back_ios_new_rounded,
               color: Colors.orange, size: constants.backArrowSize),

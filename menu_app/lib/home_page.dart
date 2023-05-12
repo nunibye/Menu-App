@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage>{
                           {
                             index = 1,
                           },
-                        main_page.scakey.currentState?.onItemTapped(index),
+                        main_page.scakey.currentState?.onItemTapped(index, constants.aniLength),
                       },
 
                       // College name as a button title.
@@ -334,7 +334,7 @@ class _HomePageState extends State<HomePage>{
                         child: IconButton(
                           onPressed: () {
                             main_page.scakey.currentState
-                                ?.onItemTapped(getIndex(colleges[i].trim()));
+                                ?.onItemTapped(getIndex(colleges[i].trim()), constants.aniLength);
                           },
                           icon: Image.asset('images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,
@@ -347,7 +347,7 @@ class _HomePageState extends State<HomePage>{
                         child: IconButton(
                           onPressed: () {
                             main_page.scakey.currentState
-                                ?.onItemTapped(getIndex(colleges[i].trim()));
+                                ?.onItemTapped(getIndex(colleges[i].trim()), constants.aniLength);
                           },
                           icon: Image.asset('images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,
@@ -358,7 +358,7 @@ class _HomePageState extends State<HomePage>{
                     (IconButton(
                       onPressed: () {
                         main_page.scakey.currentState
-                            ?.onItemTapped(getIndex(colleges[i].trim()));
+                            ?.onItemTapped(getIndex(colleges[i].trim()), constants.aniLength);
                       },
                       icon: Image.asset('images/${colleges[i].trim()}.png'),
                       iconSize: iconSizeCollege,

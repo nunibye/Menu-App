@@ -260,6 +260,7 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
 
   // Indicies of the app pages.
   int selectedIndex = 0;
+  int animationms = 150;
   final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
     const MerrillMenu(),
@@ -273,12 +274,20 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
   ];
 
   // Changes page based on icon selected [index].
-  onItemTapped(int index) {
+  onItemTapped(int index, int ani) {
     setState(() {
       selectedIndex = index;
+      animationms = ani;
     });
     //return 1;
   }
+
+  // onRefresh(int index, int ani) {
+  //   setState(() {
+  //     selectedIndex = index;
+      
+  //   });
+  // }
 
   @override
   void initState() {
@@ -291,15 +300,15 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      scakey.currentState?.onItemTapped(1);
-      await Future.delayed(const Duration(milliseconds: 160));
-      scakey.currentState?.onItemTapped(0);
+      scakey.currentState?.onItemTapped(1, 0);
+      await Future.delayed(const Duration(milliseconds: 100));
+      scakey.currentState?.onItemTapped(0, 0);
     }
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
     if (selectedIndex != 0) {
-      scakey.currentState?.onItemTapped(0);
+      scakey.currentState?.onItemTapped(0, constants.aniLength);
       return true;
     } else {
       return false;
@@ -318,7 +327,7 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
     return Scaffold(
       body: Center(
         child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 220),
+          duration: Duration(milliseconds: animationms),
           transitionBuilder: (Widget child, Animation<double> animation) {
             return SlideTransition(
                 position: Tween(

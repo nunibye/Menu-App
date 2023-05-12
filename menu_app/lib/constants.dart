@@ -40,3 +40,6 @@ const menuFont = 'Montserat';
 
 // Settings
 const listColor = 0xff363636;
+
+//animation
+const aniLength = 150;

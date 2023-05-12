@@ -200,10 +200,10 @@ class _MerrillMenuState extends State<MerrillMenu>
               expand: false,
               builder: (context, scrollController) => SingleChildScrollView(
                 controller: scrollController,
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 30),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 30),
                   child: Column(
-                    children: [
+                    children: const [
                       Padding(
                           padding: EdgeInsets.all(10),
                           child: Text("Monday-Friday",

@@ -23,6 +23,7 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 import 'ad_helper.dart' as ad_helper;
 import 'package:shared_preferences/shared_preferences.dart';
+
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 // Function builds the dining hall's meal full summmary page.
@@ -74,7 +75,7 @@ buildMeal(Future<dynamic> hallSummary) {
                       padding: const EdgeInsets.only(
                           left: constants.containerPaddingTitle,
                           right: constants.containerPaddingTitle,
-                          top: constants.containerPaddingTitle+7,
+                          top: constants.containerPaddingTitle + 7,
                           bottom: constants.containerPaddingTitle),
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -247,7 +248,7 @@ class RootPage extends StatefulWidget {
   State<RootPage> createState() => _RootPageState();
 }
 
-class _RootPageState extends State<RootPage> {
+class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
   late Future futureAlbum;
   late Future nineSummary;
   late Future cowellSummary;
@@ -272,16 +273,29 @@ class _RootPageState extends State<RootPage> {
   ];
 
   // Changes page based on icon selected [index].
-  void onItemTapped(int index) {
+  onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
+    //return 1;
   }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     BackButtonInterceptor.add(myInterceptor);
+  }
+
+  //TODO: ELI PLS FIX THIS :)
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      
+      scakey.currentState?.onItemTapped(1);
+      await Future.delayed(Duration(milliseconds: 100));
+      scakey.currentState?.onItemTapped(0);
+    }
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
@@ -291,6 +305,12 @@ class _RootPageState extends State<RootPage> {
     } else {
       return false;
     }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   double rh = 1;

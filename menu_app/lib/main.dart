@@ -282,13 +282,6 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
     //return 1;
   }
 
-  // onRefresh(int index, int ani) {
-  //   setState(() {
-  //     selectedIndex = index;
-      
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -296,12 +289,11 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
     BackButtonInterceptor.add(myInterceptor);
   }
 
-  // //TODO: ELI PLS FIX THIS :)
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       scakey.currentState?.onItemTapped(1, 0);
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 10));
       scakey.currentState?.onItemTapped(0, 0);
     }
   }

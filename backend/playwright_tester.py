@@ -1,4 +1,4 @@
-# This script has the ability to add "Today", "Tomorrow", and "Day after tomorrow", as parents to all the colleges
+# my descent into madness as i try to understand why the full html isnt loading
 
 from playwright.sync_api import sync_playwright, ViewportSize
 import re
@@ -6,7 +6,6 @@ import unicodedata
 from bs4 import BeautifulSoup
 from copy import deepcopy
 import datetime
-import data_base_write
 import pytz
 
 def menu_scrape():
@@ -45,7 +44,6 @@ def menu_scrape():
                         if response_code.status != 200:
                             continue
                         page.locator(halls_html[j]).click()                     # select hall
-                        page.wait_for_load_state("networkidle")
                         date_option = page.get_by_role("combobox")              # find date options
                         
                         # find initial index of date options
@@ -53,24 +51,31 @@ def menu_scrape():
                             options = date_option.locator("option").all_inner_texts()
                             for item in options:
                                 # temp = str(datetime.date.today().strftime('%e'))
-                                # if str(datetime.date.today().strftime('%e')) in item:
                                 if str(datetime.datetime.now(pytz.timezone('US/Pacific')).date().strftime('%e')) in item:
                                     index = options.index(item)                 # find index of current day's date
                                     break
-
+                        print("\nindex!", index)
                         date_option.select_option(index=index)                  # select day
                         page.get_by_role("button", name="Go!").click()          # go to page
                         page.wait_for_load_state("networkidle")
                         index += 1
 
                         html = page.content()
+                        if date == "Day after tommorw" and j == 1:
+                            print(html)
                         soup = BeautifulSoup(html, 'html.parser')
                         browser.close()
-                    except:
+                            
+                    # except:
+                    #     continue
+                    except Exception as ex:
+                        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+                        message = template.format(type(ex).__name__, ex.args)
+                        print(message)
                         continue
                     else:
                         break
-
+                    
             menuTable = soup.find('table',  {'bordercolor': '#CCC'})    # Finds meal table
 
             if menuTable == None:                                       # Error check if hall is closed
@@ -96,6 +101,7 @@ def menu_scrape():
             for i in meals_list:
                 if i in meal_times.keys():                              # If 'Breakfast', 'Lunch', 'Dinner', or 'Late Night'
                     meal_time = i                                       # Set current meal time
+                    print("\n\n", halls_name[j], "day: ", date, "meal time: ", meal_time)
                     continue
                 elif "--" in i:                                         # If at a meal category
                     meal_cat = i.strip("- ")                            # Clean string
@@ -103,12 +109,12 @@ def menu_scrape():
                     continue
                 else:                                                   # Append meals to dictionary
                     # add to the dictionary if the meal category is not in the list
+                    print(i, end=" ")
                     try:
                         hall_menus[date][halls_name[j]][meal_time][meal_cat].append(i)
                     except:
                         hall_menus[date][halls_name[j]][meal_time].update({meal_cat: []})
                         hall_menus[date][halls_name[j]][meal_time][meal_cat].append(i)
-
     return hall_menus
 
 def menu_scrape_today():
@@ -143,23 +149,28 @@ def menu_scrape_today():
                     if response_code.status != 200:
                         continue
                     page.locator(halls_html[j]).click()
-                    page.wait_for_load_state("networkidle")
                     html = page.content()
                     soup = BeautifulSoup(html, 'html.parser')
                     browser.close()
-                except:
-                    continue
-                else:
-                     break
 
-        menuTable = soup.find('table',  {'bordercolor': '#CCC'})    # Finds meal table
+                    menuTable = soup.find('table',  {'bordercolor': '#CCC'})    # Finds meal table
 
-        if menuTable == None:                                       # Error check if hall is closed
+                    if menuTable == None:                                       # Error check if hall is closed
                         continue
 
-        for meal in menuTable:                                      # For each item in the meal table, strip empty text
-            text = meal.text.strip()                                # and save the menu item
-            meal.string = re.sub(r"[\n][\W]+[^\w]", "\n", text)
+                    for meal in menuTable:                                      # For each item in the meal table, strip empty text
+                        text = meal.text.strip()                                # and save the menu item
+                        meal.string = re.sub(r"[\n][\W]+[^\w]", "\n", text)
+                        
+                # except:
+                #     continue
+                except Exception as ex:
+                    template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+                    message = template.format(type(ex).__name__, ex.args)
+                    print(message)
+                    continue
+                else:
+                    break
             
         # Format List
         cleaned = unicodedata.normalize("NFKD", meal.text)          # Cleans html
@@ -177,6 +188,7 @@ def menu_scrape_today():
         for i in meals_list:
             if i in meal_times.keys():                              # If 'Breakfast', 'Lunch', 'Dinner', or 'Late Night'
                 meal_time = i                                       # Set current meal time
+                print("\n\n", halls_name[j], "meal time: ", meal_time)
                 continue
             elif "--" in i:                                         # If at a meal category
                 meal_cat = i.strip("- ")                            # Clean string
@@ -184,6 +196,7 @@ def menu_scrape_today():
                 continue
             else:                                                   # Append meals to dictionary
                 # add to the dictionary if the meal category is not in the list
+                print(i, end=" ")
                 try:
                     hall_menus[halls_name[j]][meal_time][meal_cat].append(i)
                 except:
@@ -191,9 +204,7 @@ def menu_scrape_today():
                     hall_menus[halls_name[j]][meal_time][meal_cat].append(i)
     return hall_menus
 
-
 # main
 hall_menus = menu_scrape()
 hall_menus_today = menu_scrape_today()
 hall_menus.update(hall_menus_today)
-data_base_write.UpdateDatabase(hall_menus)

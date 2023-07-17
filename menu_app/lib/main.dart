@@ -3,14 +3,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:menu_app/widgets.dart';
 import 'constants.dart' as constants;
 
 import 'package:menu_app/home_page.dart';
-import 'package:menu_app/nine_menu.dart';
-import 'package:menu_app/cowell_menu.dart';
-import 'package:menu_app/porter_menu.dart';
-import 'package:menu_app/merrill_menu.dart';
-import 'package:menu_app/oakes_menu.dart';
+
 
 import 'package:menu_app/calculator.dart';
 import 'package:menu_app/about_page.dart';
@@ -263,11 +260,11 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
   int animationms = 150;
   final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    const MerrillMenu(),
-    const CowellMenu(),
-    const NineMenu(),
-    const PorterMenu(),
-    const OakesMenu(),
+    const MenuPage(name: "Merrill", hasLateNight: false),
+    const MenuPage(name: "Cowell", hasLateNight: true),
+    const MenuPage(name: "Nine", hasLateNight: true),
+    const MenuPage(name: "Porter", hasLateNight: true),
+    const MenuPage(name: "Oakes", hasLateNight: true),
     const Calculator(),
     const SettingsPage(),
     const AboutPage(),

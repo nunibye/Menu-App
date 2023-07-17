@@ -7,7 +7,6 @@ import 'package:menu_app/widgets.dart';
 import 'main.dart' as main_page;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -15,7 +14,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>{
+class _HomePageState extends State<HomePage> {
   late Future futureAlbum;
   late Future nineSummary;
   late Future cowellSummary;
@@ -77,12 +76,10 @@ class _HomePageState extends State<HomePage>{
     }
   }
 
-    setSummaries() {
+// TODO: must find way to check if fetchAlbum has returned null
+  setSummaries() {
     final time = DateTime.now();
     // Set each [collegeSummary] with a summary of food based on the time of day.
-    //
-    // FIXME: there has got to be a better way to do this in less lines. Perhaps
-    // FIXME: a list with nested for loop.
     if (time.hour <= 4 || time.hour >= 23) {
       nineSummary =
           main_page.fetchAlbum('Nine', 'Late%20Night', cat: '*FIXME*');
@@ -138,7 +135,6 @@ class _HomePageState extends State<HomePage>{
 
   @override
   void initState() {
-    
     super.initState();
     getCollegeOrder(); // Get SharedPreferences [prefs] for correct display order.
     setSummaries();
@@ -146,11 +142,8 @@ class _HomePageState extends State<HomePage>{
 
   @override
   void dispose() {
-    
     super.dispose();
   }
-
-
 
   // Builds the [college]'s summary based on [hallSummary] list of items.
   Widget buildSummary(college, Future<dynamic> hallSummary) {
@@ -201,7 +194,8 @@ class _HomePageState extends State<HomePage>{
                           {
                             index = 1,
                           },
-                        main_page.scakey.currentState?.onItemTapped(index, constants.aniLength),
+                        main_page.scakey.currentState
+                            ?.onItemTapped(index, constants.aniLength),
                       },
 
                       // College name as a button title.
@@ -333,8 +327,9 @@ class _HomePageState extends State<HomePage>{
                         // Icon button leads to specified [colleges] page.
                         child: IconButton(
                           onPressed: () {
-                            main_page.scakey.currentState
-                                ?.onItemTapped(getIndex(colleges[i].trim()), constants.aniLength);
+                            main_page.scakey.currentState?.onItemTapped(
+                                getIndex(colleges[i].trim()),
+                                constants.aniLength);
                           },
                           icon: Image.asset('images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,
@@ -346,8 +341,9 @@ class _HomePageState extends State<HomePage>{
                         padding: const EdgeInsets.only(right: 7),
                         child: IconButton(
                           onPressed: () {
-                            main_page.scakey.currentState
-                                ?.onItemTapped(getIndex(colleges[i].trim()), constants.aniLength);
+                            main_page.scakey.currentState?.onItemTapped(
+                                getIndex(colleges[i].trim()),
+                                constants.aniLength);
                           },
                           icon: Image.asset('images/${colleges[i].trim()}.png'),
                           iconSize: iconSizeCollege,
@@ -357,8 +353,8 @@ class _HomePageState extends State<HomePage>{
                   else
                     (IconButton(
                       onPressed: () {
-                        main_page.scakey.currentState
-                            ?.onItemTapped(getIndex(colleges[i].trim()), constants.aniLength);
+                        main_page.scakey.currentState?.onItemTapped(
+                            getIndex(colleges[i].trim()), constants.aniLength);
                       },
                       icon: Image.asset('images/${colleges[i].trim()}.png'),
                       iconSize: iconSizeCollege,

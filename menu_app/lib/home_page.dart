@@ -149,56 +149,61 @@ class _HomePageState extends State<HomePage> {
   Widget buildSummary(college, Future<dynamic> hallSummary) {
     int index = 0;
     return Container(
+      padding: const EdgeInsets.only(left: constants.containerPaddingTitle, right: constants.containerPaddingTitle, top:10),
       alignment: Alignment.topLeft,
       child: FutureBuilder(
-        future: hallSummary,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Column(
-              children: [
-                Container(
-                    decoration: const BoxDecoration(
+          future: hallSummary,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return TextButton(
+                // Give each [college] a button to lead to full summary page.
+                onPressed: () => {
+                  if (college == "Nine")
+                    {
+                      index = 3,
+                    }
+                  else if (college == "Cowell")
+                    {
+                      index = 2,
+                    }
+                  else if (college == "Porter")
+                    {
+                      index = 4,
+                    }
+                  else if (college == "Oakes")
+                    {
+                      index = 5,
+                    }
+                  else
+                    {
+                      index = 1,
+                    },
+                  main_page.scakey.currentState
+                      ?.onItemTapped(index, constants.aniLength),
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 22, 22, 22)), // TODO: TAKE AWAY BACKGROUND COLOR IF YOU DONT LIKE
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          20.0),
+                    ),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
                         border: Border(
-                            bottom: BorderSide(
-                                width: constants.borderWidth,
-                                color: Color(constants.darkGray)))),
-                    padding:
-                        const EdgeInsets.all(constants.containerPaddingTitle),
-                    alignment: Alignment.topLeft,
-                    height: 60,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                          fixedSize:
-                              Size(MediaQuery.of(context).size.width, 40),
-                          alignment: Alignment.topLeft),
-
-                      // Give each [college] a button to lead to full summary page.
-                      onPressed: () => {
-                        if (college == "Nine")
-                          {
-                            index = 3,
-                          }
-                        else if (college == "Cowell")
-                          {
-                            index = 2,
-                          }
-                        else if (college == "Porter")
-                          {
-                            index = 4,
-                          }
-                        else if (college == "Oakes")
-                          {
-                            index = 5,
-                          }
-                        else
-                          {
-                            index = 1,
-                          },
-                        main_page.scakey.currentState
-                            ?.onItemTapped(index, constants.aniLength),
-                      },
-
-                      // College name as a button title.
+                          bottom: BorderSide(
+                            width: constants.borderWidth,
+                            color: Color(constants.darkGray),
+                          ),
+                        ),
+                      ),
+                      padding:
+                          const EdgeInsets.only(top: constants.containerPaddingTitle, bottom: constants.containerPaddingTitle),
+                      alignment: Alignment.topLeft,
                       child: Text(
                         "$college",
                         style: const TextStyle(
@@ -209,61 +214,60 @@ class _HomePageState extends State<HomePage> {
                           height: constants.titleFontheight,
                         ),
                       ),
-                    )),
+                    ),
 
-                // If no data is passed in, default to ["Hall Closed"] text.
-                if (snapshot.data[0] == 'null')
-                  Container(
-                      padding:
-                          const EdgeInsets.all(constants.containerPaddingbody),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        "Hall Closed",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: constants.bodyFont,
-                            //fontWeight: FontWeight.bold,
-                            fontSize: constants.bodyFontSize,
-                            color: Color(constants.bodyColor),
-                            height: constants.bodyFontheight,
-                            fontWeight: FontWeight.bold),
-                      ))
+                    // If no data is passed in, default to ["Hall Closed"] text.
+                    if (snapshot.data[0] == 'null')
+                      Container(
+                          padding: const EdgeInsets.only(top:
+                              constants.containerPaddingbody),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            "Hall Closed",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: constants.bodyFont,
+                                //fontWeight: FontWeight.bold,
+                                fontSize: constants.bodyFontSize,
+                                color: Color(constants.bodyColor),
+                                height: constants.bodyFontheight,
+                                fontWeight: FontWeight.bold),
+                          ))
 
-                // Display all the food as a list.
-                else
-                  for (var i = 0; i < snapshot.data.length; i++)
-                    (Container(
-                      padding: const EdgeInsets.only(left: 27),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        snapshot.data[i],
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          fontFamily: constants.bodyFont,
-                          fontSize: constants.bodyFontSize,
-                          color: Color(constants.bodyColor),
-                          height: constants.bodyFontheight,
-                        ),
-                      ),
-                    )),
-              ],
-            );
+                    // Display all the food as a list.
+                    else
+                      for (var i = 0; i < snapshot.data.length; i++)
+                        (Container(
+                          padding: const EdgeInsets.only(left: 15),
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            snapshot.data[i],
+                            textAlign: TextAlign.left,
+                            style: const TextStyle(
+                              fontFamily: constants.bodyFont,
+                              fontSize: constants.bodyFontSize,
+                              color: Color(constants.bodyColor),
+                              height: constants.bodyFontheight,
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
+              );
+              // Display error message if there is an error.
+            } else if (snapshot.hasError) {
+              return Text(
+                '${snapshot.error}',
+                style: const TextStyle(
+                  fontSize: 25,
+                  color: Color(constants.yellowGold),
+                ),
+              );
+            }
 
-            // Display error message if there is an error.
-          } else if (snapshot.hasError) {
-            return Text(
-              '${snapshot.error}',
-              style: const TextStyle(
-                fontSize: 25,
-                color: Color(constants.yellowGold),
-              ),
-            );
-          }
-
-          // By default, show a loading spinner.
-          return const CircularProgressIndicator();
-        },
-      ),
+            // By default, show a loading spinner.
+            return const CircularProgressIndicator();
+          }),
     );
   }
 
@@ -280,6 +284,7 @@ class _HomePageState extends State<HomePage> {
         toolbarHeight: 80,
         centerTitle: true,
         backgroundColor: const Color(constants.darkBlue),
+        surfaceTintColor: const Color.fromARGB(255, 60, 60, 60),
         title: const FittedBox(
           fit: BoxFit.fitWidth,
           child: Text(
@@ -308,7 +313,6 @@ class _HomePageState extends State<HomePage> {
                   color: Color(constants.yellowOrange)),
             ),
           ),
-
           // Display all hall icons.
           Container(
             alignment: Alignment.topCenter,
@@ -385,6 +389,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 );
               },
+              future: null,
             ),
           ),
         ],

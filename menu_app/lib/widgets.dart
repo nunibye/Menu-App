@@ -189,8 +189,13 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
         onPressed: () {
           _timeModalBottom(context);
         },
+        shape: const CircleBorder(),
+        enableFeedback: true,
         backgroundColor: const Color.fromARGB(255, 94, 94, 94),
-        child: const Icon(Icons.access_time_outlined),
+        child: const Icon(
+          Icons.access_time_outlined,
+          color: Colors.white,
+        ),
       ),
 
       // App heading.
@@ -221,6 +226,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
           DropdownButtonHideUnderline(
             child: DropdownButtonHideUnderline(
               child: DropdownButton(
+                dropdownColor: Colors.white,
                 value: _currentlySelected,
                 // alignment: AlignmentDirectional.bottomCenter,
                 onChanged: (newValue) {
@@ -300,7 +306,6 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
 
         // Categorized menu time [TabBar].
         bottom: TabBar(
-          unselectedLabelColor: Colors.white,
           indicatorColor: Colors.orange,
           indicatorSize: TabBarIndicatorSize.tab,
           indicator: const BoxDecoration(
@@ -348,6 +353,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(50), topRight: Radius.circular(50)),
         ),
+        backgroundColor: Colors.white,
         context: context,
         builder: (context) => DraggableScrollableSheet(
               expand: false,
@@ -363,7 +369,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                         const _CowellModal()
                       else if (widget.name == 'Porter')
                         const _PorterModal()
-                      else 
+                      else
                         const _MerrillModal()
                     ],
                   )),
@@ -379,8 +385,9 @@ class _OakesModal extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 30),
       child: Column(
-        children: const [
-          Padding(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          const Padding(
               padding: EdgeInsets.all(10),
               child: Text("Monday-Thursday",
                   style: TextStyle(
@@ -390,13 +397,16 @@ class _OakesModal extends StatelessWidget {
                     color: Colors.black,
                     height: constants.bodyFontheight,
                   ))),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Text("Friday",
                 style: TextStyle(
@@ -407,13 +417,16 @@ class _OakesModal extends StatelessWidget {
                   height: constants.bodyFontheight,
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Text("Saturday",
                 style: TextStyle(
@@ -424,14 +437,17 @@ class _OakesModal extends StatelessWidget {
                   height: constants.bodyFontheight,
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
               textAlign: TextAlign.left,
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Text("Sunday",
                 style: TextStyle(
@@ -442,11 +458,17 @@ class _OakesModal extends StatelessWidget {
                   height: constants.bodyFontheight,
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM\n\n*Does not reflect special hours.",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
           ),
         ],
       ),
@@ -462,8 +484,8 @@ class _CowellModal extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 30),
       child: Column(
-        children: const [
-          Padding(
+        children: [
+          const Padding(
               padding: EdgeInsets.all(10),
               child: Text("Monday-Thursday",
                   style: TextStyle(
@@ -473,13 +495,16 @@ class _CowellModal extends StatelessWidget {
                     color: Colors.black,
                     height: constants.bodyFontheight,
                   ))),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Text("Friday",
                 style: TextStyle(
@@ -490,12 +515,16 @@ class _CowellModal extends StatelessWidget {
                   height: constants.bodyFontheight,
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
-                "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM"),
+              "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Text("Saturday",
                 style: TextStyle(
@@ -506,14 +535,17 @@ class _CowellModal extends StatelessWidget {
                   height: constants.bodyFontheight,
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
+              style: TextStyle(
+                color: Colors.black,
+              ),
               textAlign: TextAlign.left,
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Text("Sunday",
                 style: TextStyle(
@@ -524,11 +556,17 @@ class _CowellModal extends StatelessWidget {
                   height: constants.bodyFontheight,
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM\n\n*Does not reflect special hours.",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
           ),
         ],
       ),
@@ -544,8 +582,8 @@ class _MerrillModal extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 30),
       child: Column(
-        children: const [
-          Padding(
+        children: [
+          const Padding(
               padding: EdgeInsets.all(10),
               child: Text("Monday-Friday",
                   style: TextStyle(
@@ -555,11 +593,17 @@ class _MerrillModal extends StatelessWidget {
                     color: Colors.black,
                     height: constants.bodyFontheight,
                   ))),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\n\n*Does not reflect special hours.",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
           ),
         ],
       ),
@@ -575,8 +619,8 @@ class _PorterModal extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 30),
       child: Column(
-        children: const [
-          Padding(
+        children: [
+          const Padding(
               padding: EdgeInsets.all(10),
               child: Text("Monday-Thursday",
                   style: TextStyle(
@@ -586,13 +630,16 @@ class _PorterModal extends StatelessWidget {
                     color: Colors.black,
                     height: constants.bodyFontheight,
                   ))),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Text("Friday",
                 style: TextStyle(
@@ -603,13 +650,16 @@ class _PorterModal extends StatelessWidget {
                   height: constants.bodyFontheight,
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Text("Saturday",
                 style: TextStyle(
@@ -620,14 +670,17 @@ class _PorterModal extends StatelessWidget {
                   height: constants.bodyFontheight,
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM",
               textAlign: TextAlign.left,
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Text("Sunday",
                 style: TextStyle(
@@ -638,11 +691,17 @@ class _PorterModal extends StatelessWidget {
                   height: constants.bodyFontheight,
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM\n\n*Does not reflect special hours.",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
           ),
         ],
       ),
@@ -658,8 +717,8 @@ class _NineModal extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 30),
       child: Column(
-        children: const [
-          Padding(
+        children: [
+          const Padding(
               padding: EdgeInsets.all(10),
               child: Text("Monday-Friday",
                   style: TextStyle(
@@ -669,13 +728,16 @@ class _NineModal extends StatelessWidget {
                     color: Colors.black,
                     height: constants.bodyFontheight,
                   ))),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-11AM\nContinuous Dining: 11-11:30AM\nLunch: 11:30AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Text("Saturday-Sunday",
                 style: TextStyle(
@@ -686,11 +748,17 @@ class _NineModal extends StatelessWidget {
                   height: constants.bodyFontheight,
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             width: constants.sizedBox,
             child: Text(
               "Breakfast: 7-10AM\nBrunch: 10AM-2PM\nContinuous Dining: 2-5PM\nDinner: 5-8PM\nLate Night: 8-11PM\n\n*Does not reflect special hours.",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
           ),
         ],
       ),

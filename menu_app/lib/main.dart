@@ -8,7 +8,6 @@ import 'constants.dart' as constants;
 
 import 'package:menu_app/home_page.dart';
 
-
 import 'package:menu_app/calculator.dart';
 import 'package:menu_app/about_page.dart';
 import 'package:menu_app/settings_page.dart';
@@ -232,7 +231,11 @@ class MyApp extends StatelessWidget {
         child: child!,
       ),
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(constants.darkBlue),
+        useMaterial3: true,
+        colorScheme: constants.darkThemeColors(context),
+        buttonTheme: const ButtonThemeData(
+          colorScheme: ColorScheme.dark(),
+        ),
       ),
       home: RootPage(key: scakey),
     );

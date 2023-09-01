@@ -52,14 +52,14 @@ class _CalculatorPageState extends State<Calculator> {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
     // Set default end date based on current date.
-    if (winter.isAfter(now)) {
-      dateController.text = formatter.format(winter);
+    if (summer.isAfter(now)) {
+      dateController.text = formatter.format(summer);
+    } else if (fall.isAfter(now)) {
+      dateController.text = formatter.format(fall);
     } else if (spring.isAfter(now)) {
       dateController.text = formatter.format(spring);
-    } else if (spring.isAfter(now)) {
-      dateController.text = formatter.format(summer);
-    } else if (spring.isAfter(now)) {
-      dateController.text = formatter.format(fall);
+    } else if (winter.isAfter(now)) {
+      dateController.text = formatter.format(winter);
     } else {
       dateController.text = formatter.format(now);
     }
@@ -130,8 +130,13 @@ class _CalculatorPageState extends State<Calculator> {
         onPressed: () {
           _timeModalBottom(context);
         },
+        shape: const CircleBorder(),
+        enableFeedback: true,
         backgroundColor: const Color.fromARGB(255, 94, 94, 94),
-        child: const Icon(Icons.info_outlined),
+        child: const Icon(
+          Icons.info_outline,
+          color: Colors.white,
+        ),
       ),
 
       // Display page heading.
@@ -169,22 +174,8 @@ class _CalculatorPageState extends State<Calculator> {
                 TextFormField(
                     controller:
                         dateController, //editing controller of this TextField
-                    decoration: InputDecoration(
+                    decoration: constants.customInputDecoration.copyWith(
                       labelText: "Last Day", //label text of field
-                      labelStyle: const TextStyle(
-                          fontSize: 25,
-                          letterSpacing: 1,
-                          fontWeight: FontWeight.bold,
-                          color: Color(constants.bodyColor)),
-                      fillColor: const Color.fromARGB(255, 32, 32, 32),
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 68, 68, 68))),
                     ),
 
                     // User cannot edit text. Rather, a calendar popup appears.
@@ -221,27 +212,12 @@ class _CalculatorPageState extends State<Calculator> {
                   controller: _totalSlugPointsController,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  style: const TextStyle(color: Color(constants.bodyColor)),
-                  decoration: InputDecoration(
+                  style: const TextStyle(
+                    color: Color(constants.bodyColor),
+                  ),
+                  decoration: constants.customInputDecoration.copyWith(
                     hintText: 'Balance',
                     labelText: 'Slug points',
-                    hintStyle:
-                        const TextStyle(color: Color(constants.bodyColor)),
-                    labelStyle: const TextStyle(
-                      fontSize: 25,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.bold,
-                      color: Color(constants.bodyColor),
-                    ),
-                    fillColor: const Color.fromARGB(255, 32, 32, 32),
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 68, 68, 68))),
                   ),
                 ),
 
@@ -257,26 +233,9 @@ class _CalculatorPageState extends State<Calculator> {
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   style: const TextStyle(color: Color(constants.bodyColor)),
-                  decoration: InputDecoration(
+                  decoration: constants.customInputDecoration.copyWith(
                     hintText: 'Cost',
                     labelText: 'Meal Cost',
-                    hintStyle:
-                        const TextStyle(color: Color(constants.bodyColor)),
-                    labelStyle: const TextStyle(
-                      fontSize: 25,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.bold,
-                      color: Color(constants.bodyColor),
-                    ),
-                    fillColor: const Color.fromARGB(255, 32, 32, 32),
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 68, 68, 68))),
                   ),
                 ),
 
@@ -291,25 +250,9 @@ class _CalculatorPageState extends State<Calculator> {
                   controller: _mealDayController,
                   keyboardType: TextInputType.number,
                   style: const TextStyle(color: Color(constants.bodyColor)),
-                  decoration: InputDecoration(
+                  decoration: constants.customInputDecoration.copyWith(
                     hintText: 'Meals',
                     labelText: 'Meals per day',
-                    hintStyle:
-                        const TextStyle(color: Color(constants.bodyColor)),
-                    labelStyle: const TextStyle(
-                        fontSize: 25,
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.bold,
-                        color: Color(constants.bodyColor)),
-                    fillColor: const Color.fromARGB(255, 32, 32, 32),
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 68, 68, 68))),
                   ),
                 ),
 
@@ -346,9 +289,12 @@ class _CalculatorPageState extends State<Calculator> {
   // Function [_timeModalBottom] opens [FloatingActionButton] calculator description.
   void _timeModalBottom(context) {
     showModalBottomSheet(
+        backgroundColor: Colors.white,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(50), topRight: Radius.circular(50)),
+            topLeft: Radius.circular(50),
+            topRight: Radius.circular(50),
+          ),
         ),
         context: context,
         builder: (context) => DraggableScrollableSheet(
@@ -358,8 +304,8 @@ class _CalculatorPageState extends State<Calculator> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 30),
                   child: Column(
-                    children: const [
-                      Padding(
+                    children: [
+                      const Padding(
                           padding: EdgeInsets.all(10),
                           child: Text("How to Use",
                               style: TextStyle(
@@ -369,18 +315,23 @@ class _CalculatorPageState extends State<Calculator> {
                                 color: Colors.black,
                                 height: constants.bodyFontheight,
                               ))),
-                      SizedBox(
+                      const SizedBox(
                         width: constants.sizedBox,
                         child: Text(
-                            "Enter the last day of the quarter you plan to eat, "
-                            "How many slug points you have, and how many meals you "
-                            "eat per day. Entering a meal price is not required as "
-                            "the default value is 8.28.\n\nDays left tells you how "
-                            "many days until the date you enter.\n\nExtra Meals tells "
-                            "how many meals leftover you will have at your current "
-                            "rate.\n\nExtra Slug Points tells how many slugpoints you "
-                            "will have left over.\n\nThe Final line tells how many "
-                            "meals you could be eating per day."),
+                          "Enter the last day of the quarter you plan to eat, "
+                          "How many slug points you have, and how many meals you "
+                          "eat per day. Entering a meal price is not required as "
+                          "the default value is 8.28.\n\nDays left tells you how "
+                          "many days until the date you enter.\n\nExtra Meals tells "
+                          "how many meals leftover you will have at your current "
+                          "rate.\n\nExtra Slug Points tells how many slugpoints you "
+                          "will have left over.\n\nThe Final line tells how many "
+                          "meals you could be eating per day.",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
                       ),
                     ],
                   ),

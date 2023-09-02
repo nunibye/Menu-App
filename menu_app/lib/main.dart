@@ -255,7 +255,7 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
   late Future merrillSummary;
   late Future porterSummary;
   bool adLoad = false;
-  bool showAd = true; //FIXME: CHANGE TO TRUE FOR RELEASE.
+  bool showAd = false; //FIXME: CHANGE TO TRUE FOR RELEASE.
   //BannerAd? _bannerAd;
 
   // Indicies of the app pages.

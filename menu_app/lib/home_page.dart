@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildSummary(college, Future<dynamic> hallSummary) {
     int index = 0;
     return Container(
-      padding: const EdgeInsets.only(left: constants.containerPaddingTitle, right: constants.containerPaddingTitle, top:10),
+      padding: const EdgeInsets.only(left: 14, right: 14, top:10),
       alignment: Alignment.topLeft,
       child: FutureBuilder(
           future: hallSummary,
@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                       ?.onItemTapped(index, constants.aniLength),
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 22, 22, 22)), // TODO: TAKE AWAY BACKGROUND COLOR IF YOU DONT LIKE
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 25, 25, 25)), // TODO: TAKE AWAY BACKGROUND COLOR IF YOU DONT LIKE
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
@@ -202,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       padding:
-                          const EdgeInsets.only(top: constants.containerPaddingTitle, bottom: constants.containerPaddingTitle),
+                          const EdgeInsets.only(top: 8, bottom: constants.containerPaddingTitle),
                       alignment: Alignment.topLeft,
                       child: Text(
                         "$college",

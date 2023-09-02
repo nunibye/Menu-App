@@ -22,7 +22,7 @@ const titleColor = white;
 const titleFont = 'Montserat';
 
 // Menu Pages Body
-const double containerPaddingbody = 2;
+const double containerPaddingbody = 5;
 const double bodyFontSize = 18;
 const double bodyFontheight = 1.5;
 const bodyColor = white;
@@ -49,7 +49,7 @@ const aniLength = 150;
 ColorScheme darkThemeColors(context) {
   return const ColorScheme(
     brightness: Brightness.dark,
-    primary: Color(0xFFFFFFFF),
+    primary: Color(bodyColor),
     onPrimary: Color.fromARGB(255, 139, 139, 139),
     secondary: Color.fromARGB(255, 14, 54, 235),
     onSecondary: Color(0xFFEAEAEA),
@@ -59,7 +59,7 @@ ColorScheme darkThemeColors(context) {
     background: Color(0xFF101010),
     onBackground: Color(0xFF202020),
     surface: Color.fromARGB(255, 0, 0, 0),
-    onSurface: Color(0xFFFFFFFF),
+    onSurface: Color(bodyColor),
   );
 }
 
@@ -75,14 +75,14 @@ InputDecoration customInputDecoration = InputDecoration(
   enabledBorder: OutlineInputBorder(
     borderRadius: BorderRadius.circular(20.0),
     borderSide: const BorderSide(
-      color: Color(0xFF808080),
+      color: Color.fromARGB(255, 52, 52, 52),
     ),
   ),
   // Set the border color when focused
   focusedBorder: OutlineInputBorder(
     borderRadius: BorderRadius.circular(20.0),
     borderSide: const BorderSide(
-      color: Colors.white,
+      color: Color.fromARGB(255, 255, 255, 255),
     ),
   ),
 );

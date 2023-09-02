@@ -20,7 +20,7 @@ class _CalculatorPageState extends State<Calculator> {
   // Create default variables.
   static const totalSlugPoints = 1000.0;
   static const mealDay = 3.0;
-  static const mealCost = 8.28;
+  static const mealCost = 12.23;
 
   // Create text controllers so user may edit.
   final _totalSlugPointsController =
@@ -42,6 +42,8 @@ class _CalculatorPageState extends State<Calculator> {
     _totalSlugPointsController.addListener(_onTotalSlugPointsChanged);
     _mealDayController.addListener(_onMealDayChanged);
     _mealCostController.addListener(_onMealCostChanged);
+
+    loadValuesFromSharedPreferences();
 
     // Estimation date for the last day of finals for each quarter.
     final DateTime winter = DateTime(DateTime.now().year, 3, 24);
@@ -65,6 +67,22 @@ class _CalculatorPageState extends State<Calculator> {
     }
   }
 
+  // Function to load values from shared preferences.
+  Future<void> loadValuesFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      _totalSlugPoints = prefs.getDouble('totalSlugPoints') ?? totalSlugPoints;
+      _mealDay = prefs.getDouble('mealDay') ?? mealDay;
+      _mealCost = prefs.getDouble('mealCost') ?? mealCost;
+    });
+
+    // Update the controller text fields with the loaded values.
+    _totalSlugPointsController.text = _totalSlugPoints.toString();
+    _mealDayController.text = _mealDay.toString();
+    _mealCostController.text = _mealCost.toString();
+  }
+
   // Display ad.
   changeAdVar(value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -72,11 +90,16 @@ class _CalculatorPageState extends State<Calculator> {
   }
 
   // Create the controller functions for the variables.
-  _onTotalSlugPointsChanged() {
+  _onTotalSlugPointsChanged() async {
     setState(() {
       _totalSlugPoints =
           double.tryParse(_totalSlugPointsController.text) ?? 0.0;
     });
+
+    // Save the updated value in shared preferences.
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setDouble('totalSlugPoints', _totalSlugPoints);
+
     if (_totalSlugPoints == 27182818.0) {
       changeAdVar(false);
     } else if (_totalSlugPoints == 31415926.0) {
@@ -84,16 +107,24 @@ class _CalculatorPageState extends State<Calculator> {
     }
   }
 
-  _onMealDayChanged() {
+  _onMealDayChanged() async {
     setState(() {
       _mealDay = double.tryParse(_mealDayController.text) ?? 0;
     });
+
+    // Save the updated value in shared preferences.
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setDouble('mealDay', _mealDay);
   }
 
-  _onMealCostChanged() {
+  _onMealCostChanged() async {
     setState(() {
       _mealCost = double.tryParse(_mealCostController.text) ?? 0;
     });
+
+    // Save the updated value in shared preferences.
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setDouble('mealCost', _mealCost);
   }
 
   @override
@@ -104,6 +135,40 @@ class _CalculatorPageState extends State<Calculator> {
     _totalSlugPointsController.dispose();
     _mealCostController.dispose();
     super.dispose();
+  }
+
+  // Function to create a text widget with an oval background.
+  Widget summaryWidget(String label, String result) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius:
+                BorderRadius.circular(12), // Adjust the multiplier as needed.
+            color: Color.fromARGB(
+                255, 30, 30, 30), // Change the background color as needed.
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 10, right: 10),
+            child: Text(
+              result,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+              overflow: TextOverflow.visible,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   // Build the calculator page.
@@ -255,26 +320,37 @@ class _CalculatorPageState extends State<Calculator> {
                     labelText: 'Meals per day',
                   ),
                 ),
-
-                // Padding between [TextFormField]s.
-                const SizedBox(
-                  height: 25,
-                ),
-
                 // Summary description based on user input.
                 Container(
                   margin: const EdgeInsets.all(15),
                   padding: const EdgeInsets.all(15),
                   child: Column(
                     children: [
-                      Text(
-                        'Days Left: ${getDays()}\nExtra Meals: ${getMealAmount()}\nExtra Slug Points: ${getPointsAmount()}\nYou can eat ${getMealDayAmount()} per day.',
-                        key: const Key('mealAmount'),
-                        style: const TextStyle(
-                            color: Color(constants.bodyColor),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22),
+                      summaryWidget('Days Left:', '${getDays()}'),
+                      const SizedBox(
+                        height: 8,
                       ),
+                      summaryWidget('Extra Meals:', '${getMealAmount()}'),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      summaryWidget('Extra Points:', '${getPointsAmount()}'),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              'You can eat ${getMealDayAmount()} per day',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 22),
+                              overflow: TextOverflow.visible,
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -321,7 +397,7 @@ class _CalculatorPageState extends State<Calculator> {
                           "Enter the last day of the quarter you plan to eat, "
                           "How many slug points you have, and how many meals you "
                           "eat per day. Entering a meal price is not required as "
-                          "the default value is 8.28.\n\nDays left tells you how "
+                          "the default value is 12.23.\n\nDays left tells you how "
                           "many days until the date you enter.\n\nExtra Meals tells "
                           "how many meals leftover you will have at your current "
                           "rate.\n\nExtra Slug Points tells how many slugpoints you "

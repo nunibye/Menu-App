@@ -86,3 +86,11 @@ InputDecoration customInputDecoration = InputDecoration(
     ),
   ),
 );
+
+TextStyle ContainerTextStyle = TextStyle(
+  fontFamily: titleFont,
+  fontWeight: FontWeight.bold,
+  fontSize: titleFontSize,
+  color: Color(titleColor),
+  height: titleFontheight,
+);

@@ -25,6 +25,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Function builds the dining hall's meal full summmary page.
 buildMeal(Future<dynamic> hallSummary) {
   return Container(
+    padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
     alignment: Alignment.topLeft,
     child: FutureBuilder(
       future: hallSummary,
@@ -39,70 +40,69 @@ buildMeal(Future<dynamic> hallSummary) {
                       bottom: BorderSide(
                           width: constants.borderWidth,
                           color: Color(constants.darkGray)))),
-              padding: const EdgeInsets.all(constants.containerPaddingTitle),
+              padding: const EdgeInsets.only(top: 20),
               alignment: Alignment.topCenter,
-              child: const Text(
-                'Unavailable Today',
-                style: TextStyle(
-                  fontFamily: constants.titleFont,
-                  fontWeight: FontWeight.bold,
-                  fontSize: constants.titleFontSize,
-                  color: Color(constants.titleColor),
-                  height: constants.titleFontheight,
-                ),
+              child: Text(
+                'Hall Closed',
+                style: constants.ContainerTextStyle
               ),
             );
 
             // Display the food category and food items.
           } else {
             return ListView(
+              padding: const EdgeInsets.only(
+                  top: 8, bottom: constants.containerPaddingTitle),
               children: [
                 // Loop though all food items.
-                for (var i = 0; i < snapshot.data.length; i++)
-
-                  // Display the food categories.
-                  if (i % 2 == 0)
-                    (Container(
-                      decoration: const BoxDecoration(
-                          border: Border(
+                for (var i = 0; i < snapshot.data.length - 1; i += 2)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.only(
+                        left: 14, right: 14, top: 5, bottom: 5),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 30, 30, 30),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Column(
+                      children: [
+                        // Display the food categories.
+                        Container(
+                          decoration: const BoxDecoration(
+                            border: Border(
                               bottom: BorderSide(
-                                  width: constants.borderWidth,
-                                  color: Color(constants.darkGray)))),
-                      padding: const EdgeInsets.only(
-                          left: constants.containerPaddingTitle,
-                          right: constants.containerPaddingTitle,
-                          top: constants.containerPaddingTitle + 7,
-                          bottom: constants.containerPaddingTitle),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        snapshot.data[i],
-                        style: const TextStyle(
-                          fontFamily: constants.titleFont,
-                          fontWeight: FontWeight.bold,
-                          fontSize: constants.titleFontSize,
-                          color: Color(constants.titleColor),
-                          height: constants.titleFontheight,
+                                width: constants.borderWidth,
+                                color: Color(constants.darkGray),
+                              ),
+                            ),
+                          ),
+                          padding: const EdgeInsets.only(
+                              top: 8, bottom: constants.containerPaddingTitle),
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            snapshot.data[i],
+                            style: constants.ContainerTextStyle.copyWith(
+                              fontSize: constants.titleFontSize - 2,
+                            ),
+                          ),
                         ),
-                      ),
-                    ))
 
-                  // Display the food items.
-                  else
-                    (Container(
-                      padding: const EdgeInsets.only(left: 20),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        snapshot.data[i],
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          fontFamily: constants.bodyFont,
-                          //fontWeight: FontWeight.bold,
-                          fontSize: constants.bodyFontSize,
-                          color: Color(constants.bodyColor),
-                          height: constants.bodyFontheight,
-                        ),
-                      ),
-                    )),
+                        // Display the food items.
+                        Container(
+                          padding: const EdgeInsets.only(left: 15),
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            snapshot.data[i + 1],
+                            style: constants.ContainerTextStyle.copyWith(
+                              fontSize: constants.bodyFontSize - 2,
+                              height: constants.bodyFontheight,
+                              fontWeight: FontWeight.normal
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 const SizedBox(height: 80),
               ],
             );
@@ -255,7 +255,7 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
   late Future merrillSummary;
   late Future porterSummary;
   bool adLoad = false;
-  bool showAd = false; //FIXME: CHANGE TO TRUE FOR RELEASE.
+  bool showAd = true; //FIXME: CHANGE TO TRUE FOR RELEASE.
   //BannerAd? _bannerAd;
 
   // Indicies of the app pages.

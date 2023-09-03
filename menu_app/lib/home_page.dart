@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                       ?.onItemTapped(index, constants.aniLength),
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 25, 25, 25)), // TODO: TAKE AWAY BACKGROUND COLOR IF YOU DONT LIKE
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 30, 30, 30)), // TODO: TAKE AWAY BACKGROUND COLOR IF YOU DONT LIKE
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
@@ -206,13 +206,7 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.topLeft,
                       child: Text(
                         "$college",
-                        style: const TextStyle(
-                          fontFamily: constants.titleFont,
-                          fontWeight: FontWeight.bold,
-                          fontSize: constants.titleFontSize,
-                          color: Color(constants.titleColor),
-                          height: constants.titleFontheight,
-                        ),
+                        style: constants.ContainerTextStyle
                       ),
                     ),
 
@@ -222,16 +216,14 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.only(top:
                               constants.containerPaddingbody),
                           alignment: Alignment.center,
-                          child: const Text(
+                          child: Text(
                             "Hall Closed",
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: constants.ContainerTextStyle.copyWith(
                                 fontFamily: constants.bodyFont,
-                                //fontWeight: FontWeight.bold,
                                 fontSize: constants.bodyFontSize,
-                                color: Color(constants.bodyColor),
                                 height: constants.bodyFontheight,
-                                fontWeight: FontWeight.bold),
+                                ),
                           ))
 
                     // Display all the food as a list.
@@ -243,10 +235,10 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             snapshot.data[i],
                             textAlign: TextAlign.left,
-                            style: const TextStyle(
+                            style: constants.ContainerTextStyle.copyWith(
+                              fontWeight: FontWeight.normal,
                               fontFamily: constants.bodyFont,
                               fontSize: constants.bodyFontSize,
-                              color: Color(constants.bodyColor),
                               height: constants.bodyFontheight,
                             ),
                           ),

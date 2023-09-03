@@ -223,82 +223,89 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
 
         // Choose later date
         actions: [
-          DropdownButtonHideUnderline(
+          Container(
+            padding: EdgeInsets.only(right: 10),
             child: DropdownButtonHideUnderline(
-              child: DropdownButton(
-                dropdownColor: Colors.white,
-                value: _currentlySelected,
-                // alignment: AlignmentDirectional.bottomCenter,
-                onChanged: (newValue) {
-                  setState(() {
-                    // Reset the page
-                    _currentlySelected = newValue as String;
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  padding: EdgeInsets.only(right: 10),
+                  enableFeedback: true,
+                  borderRadius: BorderRadius.circular(20),
+                  dropdownColor: Colors.white,
+                  value: _currentlySelected,
+                  alignment: Alignment.center,
+                  onChanged: (newValue) {
+                    setState(() {
+                      // Reset the page
+                      _currentlySelected = newValue as String;
 
-                    if (_currentlySelected == "Tomorrow") {
-                      // print(_currentlySelected);
-                      futureBreakfast = main_page.fetchAlbum(
-                          widget.name, 'Breakfast',
-                          day: "Tomorrow");
-                      futureLunch = main_page.fetchAlbum(widget.name, 'Lunch',
-                          day: "Tomorrow");
-                      futureDinner = main_page.fetchAlbum(widget.name, 'Dinner',
-                          day: "Tomorrow");
-                      futureLateNight = main_page.fetchAlbum(
-                          widget.name, 'Late%20Night',
-                          day: "Tomorrow");
-                    } else if (_currentlySelected == "Day After") {
-                      // print(_currentlySelected);
-                      futureBreakfast = main_page.fetchAlbum(
-                          widget.name, 'Breakfast',
-                          day: "Day%20after%20tommorw");
-                      futureLunch = main_page.fetchAlbum(widget.name, 'Lunch',
-                          day: "Day%20after%20tommorw");
-                      futureDinner = main_page.fetchAlbum(widget.name, 'Dinner',
-                          day: "Day%20after%20tommorw");
-                      futureLateNight = main_page.fetchAlbum(
-                          widget.name, 'Late%20Night',
-                          day: "Day%20after%20tommorw");
-                    } else {
-                      // print(_currentlySelected);
-                      futureBreakfast =
-                          main_page.fetchAlbum(widget.name, 'Breakfast');
-                      futureLunch = main_page.fetchAlbum(widget.name, 'Lunch');
-                      futureDinner =
-                          main_page.fetchAlbum(widget.name, 'Dinner');
-                      futureLateNight =
-                          main_page.fetchAlbum(widget.name, 'Late%20Night');
-                    }
-                    main_page.buildMeal(futureBreakfast);
-                    main_page.buildMeal(futureLunch);
-                    main_page.buildMeal(futureDinner);
-                    main_page.buildMeal(futureLateNight);
-                  });
-                },
-                selectedItemBuilder: (BuildContext context) {
-                  return _dropdownValues.map<Widget>((String item) {
-                    // This is the widget that will be shown when you select an item.
-                    // Here custom text style, alignment and layout size can be applied
-                    // to selected item string.
-                    return Container(
-                      alignment: Alignment.center,
+                      if (_currentlySelected == "Tomorrow") {
+                        futureBreakfast = main_page.fetchAlbum(
+                            widget.name, 'Breakfast',
+                            day: "Tomorrow");
+                        futureLunch = main_page.fetchAlbum(widget.name, 'Lunch',
+                            day: "Tomorrow");
+                        futureDinner = main_page
+                            .fetchAlbum(widget.name, 'Dinner', day: "Tomorrow");
+                        futureLateNight = main_page.fetchAlbum(
+                            widget.name, 'Late%20Night',
+                            day: "Tomorrow");
+                      } else if (_currentlySelected == "Day After") {
+                        futureBreakfast = main_page.fetchAlbum(
+                            widget.name, 'Breakfast',
+                            day: "Day%20after%20tommorw");
+                        futureLunch = main_page.fetchAlbum(widget.name, 'Lunch',
+                            day: "Day%20after%20tommorw");
+                        futureDinner = main_page.fetchAlbum(
+                            widget.name, 'Dinner',
+                            day: "Day%20after%20tommorw");
+                        futureLateNight = main_page.fetchAlbum(
+                            widget.name, 'Late%20Night',
+                            day: "Day%20after%20tommorw");
+                      } else {
+                        futureBreakfast =
+                            main_page.fetchAlbum(widget.name, 'Breakfast');
+                        futureLunch =
+                            main_page.fetchAlbum(widget.name, 'Lunch');
+                        futureDinner =
+                            main_page.fetchAlbum(widget.name, 'Dinner');
+                        futureLateNight =
+                            main_page.fetchAlbum(widget.name, 'Late%20Night');
+                      }
+                      main_page.buildMeal(futureBreakfast);
+                      main_page.buildMeal(futureLunch);
+                      main_page.buildMeal(futureDinner);
+                      main_page.buildMeal(futureLateNight);
+                    });
+                  },
+                  selectedItemBuilder: (BuildContext context) {
+                    return _dropdownValues.map<Widget>((String item) {
+                      // This is the widget that will be shown when you select an item.
+                      // Here custom text style, alignment and layout size can be applied
+                      // to selected item string.
+                      return Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          item,
+                          style: const TextStyle(
+                              color: Color(constants.bodyColor),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      );
+                    }).toList();
+                  },
+                  items: _dropdownValues.map((date) {
+                    return DropdownMenuItem(
+                      alignment: Alignment.centerLeft,
+                      value: date,
                       child: Text(
-                        item,
-                        style: const TextStyle(
-                            color: Color(constants.bodyColor),
-                            fontWeight: FontWeight.bold),
+                        date,
+                        style:
+                            const TextStyle(color: Color(constants.darkGray)),
                       ),
                     );
-                  }).toList();
-                },
-                items: _dropdownValues.map((date) {
-                  return DropdownMenuItem(
-                    value: date,
-                    child: Text(
-                      date,
-                      style: const TextStyle(color: Color(constants.darkGray)),
-                    ),
-                  );
-                }).toList(),
+                  }).toList(),
+                ),
               ),
             ),
           )

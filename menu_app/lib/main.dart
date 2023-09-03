@@ -35,17 +35,10 @@ buildMeal(Future<dynamic> hallSummary) {
           // Display ['Unavailable Today'] if there is no data in [hallSummary].
           if (snapshot.data[0].toString() == 'null') {
             return Container(
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                          width: constants.borderWidth,
-                          color: Color(constants.darkGray)))),
+              decoration: const BoxDecoration(),
               padding: const EdgeInsets.only(top: 20),
               alignment: Alignment.topCenter,
-              child: Text(
-                'Hall Closed',
-                style: constants.ContainerTextStyle
-              ),
+              child: Text('Hall Closed', style: constants.ContainerTextStyle),
             );
 
             // Display the food category and food items.
@@ -94,10 +87,9 @@ buildMeal(Future<dynamic> hallSummary) {
                           child: Text(
                             snapshot.data[i + 1],
                             style: constants.ContainerTextStyle.copyWith(
-                              fontSize: constants.bodyFontSize - 2,
-                              height: constants.bodyFontheight,
-                              fontWeight: FontWeight.normal
-                            ),
+                                fontSize: constants.bodyFontSize - 2,
+                                height: constants.bodyFontheight,
+                                fontWeight: FontWeight.normal),
                           ),
                         )
                       ],

@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildSummary(college, Future<dynamic> hallSummary) {
     int index = 0;
     return Container(
-      padding: const EdgeInsets.only(left: 14, right: 14, top:10),
+      padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
       alignment: Alignment.topLeft,
       child: FutureBuilder(
           future: hallSummary,
@@ -182,11 +182,12 @@ class _HomePageState extends State<HomePage> {
                       ?.onItemTapped(index, constants.aniLength),
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 30, 30, 30)), // TODO: TAKE AWAY BACKGROUND COLOR IF YOU DONT LIKE
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color
+                      .fromARGB(255, 30, 30,
+                      30)), // TODO: TAKE AWAY BACKGROUND COLOR IF YOU DONT LIKE
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          20.0),
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                 ),
@@ -201,29 +202,27 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                      padding:
-                          const EdgeInsets.only(top: 8, bottom: constants.containerPaddingTitle),
+                      padding: const EdgeInsets.only(
+                          top: 8, bottom: constants.containerPaddingTitle),
                       alignment: Alignment.topLeft,
-                      child: Text(
-                        "$college",
-                        style: constants.ContainerTextStyle
-                      ),
+                      child:
+                          Text("$college", style: constants.ContainerTextStyle),
                     ),
 
                     // If no data is passed in, default to ["Hall Closed"] text.
                     if (snapshot.data[0] == 'null')
                       Container(
-                          padding: const EdgeInsets.only(top:
-                              constants.containerPaddingbody),
+                          padding: const EdgeInsets.only(
+                              top: constants.containerPaddingbody),
                           alignment: Alignment.center,
                           child: Text(
                             "Hall Closed",
                             textAlign: TextAlign.center,
                             style: constants.ContainerTextStyle.copyWith(
-                                fontFamily: constants.bodyFont,
-                                fontSize: constants.bodyFontSize,
-                                height: constants.bodyFontheight,
-                                ),
+                              fontFamily: constants.bodyFont,
+                              fontSize: constants.bodyFontSize,
+                              height: constants.bodyFontheight,
+                            ),
                           ))
 
                     // Display all the food as a list.

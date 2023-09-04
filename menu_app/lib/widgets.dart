@@ -231,7 +231,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                   padding: EdgeInsets.only(right: 10),
                   enableFeedback: true,
                   borderRadius: BorderRadius.circular(20),
-                  dropdownColor: Colors.white,
+                  dropdownColor: Color.fromARGB(255, 37, 37, 37),
                   value: _currentlySelected,
                   alignment: Alignment.center,
                   onChanged: (newValue) {
@@ -296,12 +296,13 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                   },
                   items: _dropdownValues.map((date) {
                     return DropdownMenuItem(
+                      
                       alignment: Alignment.centerLeft,
                       value: date,
                       child: Text(
                         date,
                         style:
-                            const TextStyle(color: Color(constants.darkGray)),
+                            const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
                       ),
                     );
                   }).toList(),

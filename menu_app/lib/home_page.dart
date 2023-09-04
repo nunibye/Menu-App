@@ -257,7 +257,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             // By default, show a loading spinner.
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }),
     );
   }

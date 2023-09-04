@@ -112,7 +112,7 @@ buildMeal(Future<dynamic> hallSummary) {
         }
 
         // By default, show a loading spinner.
-        return const CircularProgressIndicator();
+        return const Center(child: CircularProgressIndicator());
       },
     ),
   );

@@ -23,10 +23,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-// Function builds the dining hall's meal full summmary page.
-buildMeal(Future<dynamic> hallSummary) {
+Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
   return Container(
     padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
     alignment: Alignment.topLeft,
@@ -35,8 +37,8 @@ buildMeal(Future<dynamic> hallSummary) {
       builder: (context, snapshot) {
         // Display the [hallSummary] data.
         if (snapshot.hasData) {
-          // Display ['Unavailable Today'] if there is no data in [hallSummary].
-          if (snapshot.data[0].toString() == 'null') {
+          // Display ['Hall Closed'] if there is no data in [hallSummary].
+          if (snapshot.data![0].foodItems.isEmpty) {
             return Container(
               decoration: const BoxDecoration(),
               padding: const EdgeInsets.only(top: 20),
@@ -44,62 +46,65 @@ buildMeal(Future<dynamic> hallSummary) {
               child: Text('Hall Closed', style: constants.ContainerTextStyle),
             );
 
-            // Display the food category and food items.
+            // Display the food categories and food items.
           } else {
-            return ListView(
+            return ListView.builder(
               padding: const EdgeInsets.only(
                   top: 8, bottom: constants.containerPaddingTitle),
-              children: [
-                // Loop though all food items.
-                for (var i = 0; i < snapshot.data.length - 1; i += 2)
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    padding: const EdgeInsets.only(
-                        left: 14, right: 14, top: 5, bottom: 5),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 30, 30, 30),
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Column(
-                      children: [
-                        // Display the food categories.
-                        Container(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                width: constants.borderWidth,
-                                color: Color(constants.darkGray),
-                              ),
-                            ),
-                          ),
-                          padding: const EdgeInsets.only(
-                              top: 8, bottom: constants.containerPaddingTitle),
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            snapshot.data[i],
-                            style: constants.ContainerTextStyle.copyWith(
-                              fontSize: constants.titleFontSize - 2,
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final category = snapshot.data![index];
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.only(
+                      left: 14, right: 14, top: 5, bottom: 5),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 30, 30, 30),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    children: [
+                      // Display the food category.
+                      Container(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              width: constants.borderWidth,
+                              color: Color(constants.darkGray),
                             ),
                           ),
                         ),
-
-                        // Display the food items.
-                        Container(
-                          padding: const EdgeInsets.only(left: 15),
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            snapshot.data[i + 1],
-                            style: constants.ContainerTextStyle.copyWith(
-                                fontSize: constants.bodyFontSize - 2,
-                                height: constants.bodyFontheight,
-                                fontWeight: FontWeight.normal),
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: constants.containerPaddingTitle),
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          category.category,
+                          style: constants.ContainerTextStyle.copyWith(
+                            fontSize: constants.titleFontSize - 2,
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      ),
+
+                      // Display the food items.
+                      Column(
+                        children: category.foodItems.map((foodItem) {
+                          return Container(
+                            padding: const EdgeInsets.only(left: 15),
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              foodItem,
+                              style: constants.ContainerTextStyle.copyWith(
+                                  fontSize: constants.bodyFontSize - 2,
+                                  height: constants.bodyFontheight,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          );
+                        }).toList(),
+                      )
+                    ],
                   ),
-                const SizedBox(height: 80),
-              ],
+                );
+              },
             );
           }
 
@@ -121,62 +126,47 @@ buildMeal(Future<dynamic> hallSummary) {
   );
 }
 
-Future fetchAlbum(college, meal, {cat = "", day = ""}) async {
-  final response = await http.get(Uri.parse(
-      'https://ucsc-menu-app-default-rtdb.firebaseio.com/$day/$college/$meal/$cat.json'));
+class FoodCategory {
+  String category;
+  List<String> foodItems;
 
-  // If the server did return a 200 OK response,
-  // then parse the JSON.
-  if (response.statusCode == 200) {
-    // If there is a category, there are only food items.
-    // Therefore, split up just food items.
-    if (cat != "") {
-      var list = response.body.toString().split(',');
+  FoodCategory(this.category, this.foodItems);
+}
 
-      // Loop through every item in the food list.
-      for (var i = 0; i < list.length; i++) {
-        // Clean up string.
-        String temp = list[i];
-        List listTemp = temp.split(',');
-        listTemp.remove('"');
-        for (var i = 0; i < listTemp.length; i++) {
-          listTemp[i] = listTemp[i].replaceAll(RegExp(r'[^\w\s]+'), '');
-        }
-        // Rejoin into list [list].
-        temp = listTemp.join('\n');
-        list[i] = temp;
+Future<List<FoodCategory>> fetchAlbum(String college, String meal,
+    {String cat = "", String day = "Today"}) async {
+  final DatabaseReference ref = FirebaseDatabase.instance.ref();
+  final path = '$day/$college/$meal/$cat';
+  final snapshot = await ref.child(path).get();
+  if (snapshot.exists) {
+    if (cat.isEmpty) {
+      // Fetch all items if cat is empty
+      final data = snapshot.value as Map<dynamic, dynamic>;
+      if (data.isEmpty) {
+        // Handle the case when data is empty
+        return [FoodCategory("No Food Items", [])];
       }
-      return list;
 
-      // If fetching full meals with categories.
+      // Extract and structure the data
+      List<FoodCategory> foodList = [];
+      data.forEach((key, value) {
+        if (value is List) {
+          List<String> foodItems = value.map((item) => item.toString()).toList();
+          foodList.add(FoodCategory(key, foodItems));
+        }
+      });
+
+      return foodList;
     } else {
-      // Split between categories denoted with ['*']
-      var list = response.body.toString().split('*');
-      list.remove('{"');
-
-      for (var i = 0; i < list.length; i++) {
-        // Clean [category] string.
-        if (i % 2 == 0) {
-          list[i] = list[i].replaceAll(RegExp(r'[^\w\s]+'), '');
-          // Clean food items.
-        } else {
-          String temp = list[i];
-          List listTemp = temp.split(',');
-          listTemp.remove('"');
-          for (var i = 0; i < listTemp.length; i++) {
-            listTemp[i] = listTemp[i].replaceAll(RegExp(r'[^\w\s]+'), '');
-          }
-          // Rejoin into list [list].
-          temp = listTemp.join('\n');
-          list[i] = temp;
-        }
-      }
-      return list;
+      // Fetch specific category items
+      final data = snapshot.value as List<dynamic>;
+      // Extract and structure the data for the specific category
+      List<String> foodItems = data.map((item) => item.toString()).toList();
+      return [FoodCategory(cat, foodItems)];
     }
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
+    // Handle case when data is not found
+    return [FoodCategory("Hall Closed", [])];
   }
 }
 

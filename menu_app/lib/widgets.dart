@@ -177,10 +177,10 @@ class MenuPage extends StatefulWidget {
 /// AnimationControllers can be created with `vsync: this` because of TickerProviderStateMixin.
 class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
   late TabController _tabController;
-  late Future futureBreakfast;
-  late Future futureLunch;
-  late Future futureDinner;
-  late Future futureLateNight;
+  late Future<List<main_page.FoodCategory>> futureBreakfast;
+  late Future<List<main_page.FoodCategory>> futureLunch;
+  late Future<List<main_page.FoodCategory>> futureDinner;
+  late Future<List<main_page.FoodCategory>> futureLateNight;
 
   final time = DateTime.now();
 
@@ -198,7 +198,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
     futureLunch = main_page.fetchAlbum(widget.name, 'Lunch');
     futureDinner = main_page.fetchAlbum(widget.name, 'Dinner');
     if (widget.hasLateNight) {
-      futureLateNight = main_page.fetchAlbum(widget.name, 'Late%20Night');
+      futureLateNight = main_page.fetchAlbum(widget.name, 'Late Night');
     }
 
     // Change default displayed tab [_tabController] based on time of day.
@@ -281,20 +281,20 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                         futureDinner = main_page
                             .fetchAlbum(widget.name, 'Dinner', day: "Tomorrow");
                         futureLateNight = main_page.fetchAlbum(
-                            widget.name, 'Late%20Night',
+                            widget.name, 'Late Night',
                             day: "Tomorrow");
                       } else if (_currentlySelected == "Day After") {
                         futureBreakfast = main_page.fetchAlbum(
                             widget.name, 'Breakfast',
-                            day: "Day%20after%20tomorrow");
+                            day: "Day after tomorrow");
                         futureLunch = main_page.fetchAlbum(widget.name, 'Lunch',
-                            day: "Day%20after%20tomorrow");
+                            day: "Day after tomorrow");
                         futureDinner = main_page.fetchAlbum(
                             widget.name, 'Dinner',
-                            day: "Day%20after%20tomorrow");
+                            day: "Day after tomorrow");
                         futureLateNight = main_page.fetchAlbum(
-                            widget.name, 'Late%20Night',
-                            day: "Day%20after%20tomorrow");
+                            widget.name, 'Late Night',
+                            day: "Day after tomorrow");
                       } else {
                         futureBreakfast =
                             main_page.fetchAlbum(widget.name, 'Breakfast');
@@ -303,7 +303,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                         futureDinner =
                             main_page.fetchAlbum(widget.name, 'Dinner');
                         futureLateNight =
-                            main_page.fetchAlbum(widget.name, 'Late%20Night');
+                            main_page.fetchAlbum(widget.name, 'Late Night');
                       }
                       main_page.buildMeal(futureBreakfast);
                       main_page.buildMeal(futureLunch);
@@ -399,13 +399,13 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
         builder: (context, scrollController) {
           return FutureBuilder(
             future: fetchDataFromDatabase(
-                name), // Replace with your data fetching function
+                name),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: CircularProgressIndicator(),
-                ); // Display a loading indicator while data is fetched
+                );
               } else if (snapshot.hasError) {
                 Container(
                   alignment: Alignment.center,

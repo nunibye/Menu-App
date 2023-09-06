@@ -46,21 +46,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  // Function to return the [hallSummary] for each college
-  getSummary(college) {
-    if (college == 'Merrill') {
-      return merrillSummary;
-    } else if (college == 'Cowell') {
-      return cowellSummary;
-    } else if (college == 'Nine') {
-      return nineSummary;
-    } else if (college == 'Oakes') {
-      return oakesSummary;
-    } else {
-      return porterSummary;
-    }
-  }
-
   // Function to return the [index] of [college] to display correct page onTap.
   getIndex(college) {
     if (college == "Nine") {
@@ -76,68 +61,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-// TODO: must find way to check if fetchAlbum has returned null
-  setSummaries() {
-    final time = DateTime.now();
-    // Set each [collegeSummary] with a summary of food based on the time of day.
-    if (time.hour <= 4 || time.hour >= 23) {
-      nineSummary =
-          main_page.fetchAlbum('Nine', 'Late%20Night', cat: '*FIXME*');
-      cowellSummary = nineSummary;
-      merrillSummary = nineSummary;
-      porterSummary = nineSummary;
-      oakesSummary = nineSummary;
-    } else if (time.hour < 10 && time.hour > 4) {
-      nineSummary =
-          main_page.fetchAlbum('Nine', 'Breakfast', cat: '*Breakfast*');
-      cowellSummary =
-          main_page.fetchAlbum('Cowell', 'Breakfast', cat: '*Breakfast*');
-      merrillSummary =
-          main_page.fetchAlbum('Merrill', 'Breakfast', cat: '*Breakfast*');
-      porterSummary =
-          main_page.fetchAlbum('Porter', 'Breakfast', cat: '*Breakfast*');
-      oakesSummary =
-          main_page.fetchAlbum('Oakes', 'Breakfast', cat: '*Breakfast*');
-    } else if (time.hour < 16) {
-      nineSummary = main_page.fetchAlbum('Nine', 'Lunch', cat: '*Open%20Bars*');
-      cowellSummary =
-          main_page.fetchAlbum('Cowell', 'Lunch', cat: '*Open%20Bars*');
-      merrillSummary =
-          main_page.fetchAlbum('Merrill', 'Lunch', cat: '*Open%20Bars*');
-      porterSummary =
-          main_page.fetchAlbum('Porter', 'Lunch', cat: '*Open%20Bars*');
-      oakesSummary =
-          main_page.fetchAlbum('Oakes', 'Lunch', cat: '*Open%20Bars*');
-    } else if (time.hour < 20) {
-      nineSummary =
-          main_page.fetchAlbum('Nine', 'Dinner', cat: '*Open%20Bars*');
-      cowellSummary =
-          main_page.fetchAlbum('Cowell', 'Dinner', cat: '*Open%20Bars*');
-      merrillSummary =
-          main_page.fetchAlbum('Merrill', 'Dinner', cat: '*Open%20Bars*');
-      porterSummary =
-          main_page.fetchAlbum('Porter', 'Dinner', cat: '*Open%20Bars*');
-      oakesSummary =
-          main_page.fetchAlbum('Oakes', 'Dinner', cat: '*Open%20Bars*');
-    } else if (time.hour < 23) {
-      nineSummary =
-          main_page.fetchAlbum('Nine', 'Late%20Night', cat: '*Open%20Bars*');
-      cowellSummary =
-          main_page.fetchAlbum('Cowell', 'Late%20Night', cat: '*Open%20Bars*');
-      merrillSummary =
-          main_page.fetchAlbum('Merrill', 'Late%20Night', cat: '*Open%20Bars*');
-      porterSummary =
-          main_page.fetchAlbum('Porter', 'Late%20Night', cat: '*Open%20Bars*');
-      oakesSummary =
-          main_page.fetchAlbum('Oakes', 'Late%20Night', cat: '*Open%20Bars*');
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     getCollegeOrder(); // Get SharedPreferences [prefs] for correct display order.
-    setSummaries();
+    // setSummaries();
   }
 
   @override
@@ -145,120 +73,107 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  // Builds the [college]'s summary based on [hallSummary] list of items.
-  Widget buildSummary(college, Future<dynamic> hallSummary) {
+  Widget buildSummary(
+      String college, Future<List<main_page.FoodCategory>> hallSummary) {
     int index = 0;
     return Container(
       padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
       alignment: Alignment.topLeft,
-      child: FutureBuilder(
-          future: hallSummary,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return TextButton(
-                // Give each [college] a button to lead to full summary page.
-                onPressed: () => {
-                  if (college == "Nine")
-                    {
-                      index = 3,
-                    }
-                  else if (college == "Cowell")
-                    {
-                      index = 2,
-                    }
-                  else if (college == "Porter")
-                    {
-                      index = 4,
-                    }
-                  else if (college == "Oakes")
-                    {
-                      index = 5,
-                    }
-                  else
-                    {
-                      index = 1,
-                    },
-                  main_page.scakey.currentState
-                      ?.onItemTapped(index, constants.aniLength),
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color
-                      .fromARGB(255, 30, 30,
-                      30)), // TODO: TAKE AWAY BACKGROUND COLOR IF YOU DONT LIKE
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
+      child: FutureBuilder<List<main_page.FoodCategory>>(
+        future: hallSummary,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final foodCategories = snapshot.data;
+
+            return TextButton(
+              // Give each [college] a button to lead to the full summary page.
+              onPressed: () {
+                index = getIndex(college.trim());
+                main_page.scakey.currentState
+                    ?.onItemTapped(index, constants.aniLength);
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromARGB(255, 30, 30, 30)),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            width: constants.borderWidth,
-                            color: Color(constants.darkGray),
-                          ),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          width: constants.borderWidth,
+                          color: Color(constants.darkGray),
                         ),
                       ),
-                      padding: const EdgeInsets.only(
-                          top: 8, bottom: constants.containerPaddingTitle),
-                      alignment: Alignment.topLeft,
-                      child:
-                          Text("$college", style: constants.ContainerTextStyle),
                     ),
+                    padding: const EdgeInsets.only(
+                        top: 8, bottom: constants.containerPaddingTitle),
+                    alignment: Alignment.topLeft,
+                    child:
+                        Text("$college", style: constants.ContainerTextStyle),
+                  ),
 
-                    // If no data is passed in, default to ["Hall Closed"] text.
-                    if (snapshot.data[0] == 'null')
-                      Container(
-                          padding: const EdgeInsets.only(
-                              top: constants.containerPaddingbody),
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Hall Closed",
-                            textAlign: TextAlign.center,
-                            style: constants.ContainerTextStyle.copyWith(
-                              fontFamily: constants.bodyFont,
-                              fontSize: constants.bodyFontSize,
-                              height: constants.bodyFontheight,
+                  // Display all the food categories and items.
+                    for (var foodCategory in foodCategories!)
+                    if (foodCategory.foodItems.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          for (var foodItem in foodCategory.foodItems)
+                            Container(
+                              padding: const EdgeInsets.only(left: 15),
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                foodItem,
+                                textAlign: TextAlign.left,
+                                style: constants.ContainerTextStyle.copyWith(
+                                  fontWeight: FontWeight.normal,
+                                  fontFamily: constants.bodyFont,
+                                  fontSize: constants.bodyFontSize,
+                                  height: constants.bodyFontheight,
+                                ),
+                              ),
                             ),
-                          ))
-
-                    // Display all the food as a list.
-                    else
-                      for (var i = 0; i < snapshot.data.length; i++)
-                        (Container(
-                          padding: const EdgeInsets.only(left: 15),
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            snapshot.data[i],
-                            textAlign: TextAlign.left,
-                            style: constants.ContainerTextStyle.copyWith(
-                              fontWeight: FontWeight.normal,
-                              fontFamily: constants.bodyFont,
-                              fontSize: constants.bodyFontSize,
-                              height: constants.bodyFontheight,
-                            ),
-                          ),
-                        )),
-                  ],
-                ),
-              );
-              // Display error message if there is an error.
-            } else if (snapshot.hasError) {
-              return Text(
-                '${snapshot.error}',
-                style: const TextStyle(
-                  fontSize: 25,
-                  color: Color(constants.yellowGold),
-                ),
-              );
-            }
-
+                        ],
+                      )
+                  else
+                   Container(
+                      padding: const EdgeInsets.only(
+                          top: constants.containerPaddingbody),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Hall Closed",
+                        textAlign: TextAlign.center,
+                        style: constants.ContainerTextStyle.copyWith(
+                          fontFamily: constants.bodyFont,
+                          fontSize: constants.bodyFontSize,
+                          height: constants.bodyFontheight,
+                        ),
+                      ),
+                    )
+                ],
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text(
+              '${snapshot.error}',
+              style: const TextStyle(
+                fontSize: 25,
+                color: Color(constants.yellowGold),
+              ),
+            );
+          } else {
             // By default, show a loading spinner.
             return const Center(child: CircularProgressIndicator());
-          }),
+          }
+        },
+      ),
     );
   }
 
@@ -313,47 +228,45 @@ class _HomePageState extends State<HomePage> {
               children: [
                 // Loop through every college in [colleges].
                 for (var i = 0; i < colleges.length; i++)
-
                   // Special formatting for first Icon.
                   if (i == 0)
                     Container(
-                        padding: const EdgeInsets.only(left: 7),
-
-                        // Icon button leads to specified [colleges] page.
-                        child: IconButton(
-                          onPressed: () {
-                            main_page.scakey.currentState?.onItemTapped(
-                                getIndex(colleges[i].trim()),
-                                constants.aniLength);
-                          },
-                          icon: Image.asset('images/${colleges[i].trim()}.png'),
-                          iconSize: iconSizeCollege,
-                        ))
-
+                      padding: const EdgeInsets.only(left: 7),
+                      // Icon button leads to specified [colleges] page.
+                      child: IconButton(
+                        onPressed: () {
+                          main_page.scakey.currentState?.onItemTapped(
+                              getIndex(colleges[i].trim()),
+                              constants.aniLength);
+                        },
+                        icon: Image.asset('images/${colleges[i].trim()}.png'),
+                        iconSize: iconSizeCollege,
+                      ),
+                    )
                   // Special formatting for last Icon.
                   else if (i == colleges.length - 1)
                     Container(
-                        padding: const EdgeInsets.only(right: 7),
-                        child: IconButton(
-                          onPressed: () {
-                            main_page.scakey.currentState?.onItemTapped(
-                                getIndex(colleges[i].trim()),
-                                constants.aniLength);
-                          },
-                          icon: Image.asset('images/${colleges[i].trim()}.png'),
-                          iconSize: iconSizeCollege,
-                        ))
-
+                      padding: const EdgeInsets.only(right: 7),
+                      child: IconButton(
+                        onPressed: () {
+                          main_page.scakey.currentState?.onItemTapped(
+                              getIndex(colleges[i].trim()),
+                              constants.aniLength);
+                        },
+                        icon: Image.asset('images/${colleges[i].trim()}.png'),
+                        iconSize: iconSizeCollege,
+                      ),
+                    )
                   // Icon formatting.
                   else
-                    (IconButton(
+                    IconButton(
                       onPressed: () {
                         main_page.scakey.currentState?.onItemTapped(
                             getIndex(colleges[i].trim()), constants.aniLength);
                       },
                       icon: Image.asset('images/${colleges[i].trim()}.png'),
                       iconSize: iconSizeCollege,
-                    ))
+                    ),
               ],
             ),
           ),
@@ -361,26 +274,24 @@ class _HomePageState extends State<HomePage> {
           // Displays summary for every college in [colleges].
           Container(
             alignment: Alignment.topLeft,
-            child: FutureBuilder(
-              builder: (context, snapshot) {
-                return Column(
-                  children: [
-                    for (var i = 0; i < colleges.length; i++)
-                      buildSummary(colleges[i].trim(), getSummary(colleges[i])),
-
-                    // Provide when menu was last updated.
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Text(
-                          "Last updated: $time\nData provided by nutrition.sa.ucsc.edu",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.grey)),
-                    ),
-                    const SizedBox(height: 70),
-                  ],
-                );
-              },
-              future: null,
+            child: Column(
+              children: [
+                for (var i = 0; i < colleges.length; i++)
+                  buildSummary(
+                      colleges[i].trim(),
+                      main_page.fetchAlbum(colleges[i].trim(), "Lunch",
+                          cat: "*Open Bars*")),
+                // Provide when the menu was last updated.
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Text(
+                    "Last updated: $time\nData provided by nutrition.sa.ucsc.edu",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                ),
+                const SizedBox(height: 70),
+              ],
             ),
           ),
         ],

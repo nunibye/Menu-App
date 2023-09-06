@@ -1,6 +1,6 @@
 PODS:
-  - applovin_max (2.4.2):
-    - AppLovinSDK (= 11.7.1)
+  - applovin_max (2.6.0):
+    - AppLovinSDK (= 11.10.1)
     - Flutter
   - AppLovinMediationGoogleAdapter (9.14.0.2):
     - AppLovinSDK
@@ -11,7 +11,7 @@ PODS:
   - AppLovinMediationUnityAdsAdapter (4.5.0.2):
     - AppLovinSDK
     - UnityAds (= 4.5.0)
-  - AppLovinSDK (11.7.1)
+  - AppLovinSDK (11.10.1)
   - Firebase/CoreOnly (10.12.0):
     - FirebaseCore (= 10.12.0)
   - Firebase/Database (10.12.0):
@@ -137,11 +137,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  applovin_max: 5c71f48d278754ec780b5aa4138eba37e7dd97d7
+  applovin_max: 46d94961ddd2ea03801a008e9de30ba09d9e53ee
   AppLovinMediationGoogleAdapter: 15ea6f5c6414c0ddc221f237406f0477689bd4a8
   AppLovinMediationInMobiAdapter: 4591afafeaef854cf9a647ad36d1d9f5e79337c5
   AppLovinMediationUnityAdsAdapter: 6222395b73114fbb2082ed397fba22d6c4c7b86a
-  AppLovinSDK: 8b2496b62b942d409da6241f967ac837415d05ad
+  AppLovinSDK: a76e8ec3d34fb172c7a32c15efe6805e070c918a
   Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
   firebase_core: 4a3246a02f828a01c74a2c26427037786d90f17f
   firebase_database: ae8b70d7f5867c5f65a08353d81521896d850771
@@ -157,7 +157,7 @@ SPEC CHECKSUMS:
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
+  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   UnityAds: fab621d1066e414af9ce884f1252cdd53894263e
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 

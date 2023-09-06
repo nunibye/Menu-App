@@ -9,6 +9,7 @@ menu_app/cert_key.pub
 .dart_tool/
 .packages
 build/
+menu_app/pubspec.lock
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
 

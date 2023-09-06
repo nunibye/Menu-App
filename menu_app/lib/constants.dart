@@ -94,3 +94,17 @@ TextStyle ContainerTextStyle = TextStyle(
   color: Color(titleColor),
   height: titleFontheight,
 );
+
+TextStyle ModalTitleStyle = TextStyle(
+  fontFamily: titleFont,
+  fontWeight: FontWeight.bold,
+  fontSize: 17,
+  color: Colors.black,
+  height: titleFontheight,
+);
+
+TextStyle ModalSubtitleStyle = TextStyle(
+  fontFamily: bodyFont,
+  color: Colors.black,
+  fontSize: 13,
+);

@@ -13,7 +13,7 @@ import pytz
 def menu_scrape():
     url = 'https://nutrition.sa.ucsc.edu/'
     halls_html = ['text=College Nine/John R. Lewis Dining Hall', 'text=Cowell/Stevenson Dining Hall', 'text=Crown/Merrill Dining Hall', 'text=Porter/Kresge Dining Hall']
-    dates = ["Today", "Tomorrow", "Day after tommorw"]
+    dates = ["Today", "Tomorrow", "Day after tomorrow"]
     halls_name = ['Nine', 'Cowell', 'Merrill', 'Porter']
     meals = ["Breakfast", "Lunch", "Dinner", "Late Night"]
     food_cat = {"*Hot Bars*": [], "*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": [], "*Miscellaneous*": [], "*Brunch*": []}

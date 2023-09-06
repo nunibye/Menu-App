@@ -20,6 +20,9 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'ad_helper.dart' as ad_helper;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 // Function builds the dining hall's meal full summmary page.
@@ -200,6 +203,10 @@ void adLoader() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await getAdBool();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   //AppLovinMAX.showMediationDebugger();
   SystemChrome.setPreferredOrientations([

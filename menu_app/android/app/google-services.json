@@ -41,6 +41,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674482500876:android:a28efd933f85960861c529",
+        "android_client_info": {
+          "package_name": "com.orderOfTheCone.android.menu_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674482500876-vcc527qpovi16oq0qo82ggm0nqfjsstb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMJxLZz0t2t1PmdEZUf_eMJlkCnebHy6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674482500876-vcc527qpovi16oq0qo82ggm0nqfjsstb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "674482500876-chma7rkrojbliqvvr764ileirifl4hve.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.menuApp"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

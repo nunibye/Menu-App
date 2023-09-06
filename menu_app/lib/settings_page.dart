@@ -35,8 +35,7 @@ class _SettingsPageState extends State<SettingsPage> {
       setState(() {
         colleges = textList;
       });
-    }
-    else if (text.split(',').length == 4) {
+    } else if (text.split(',').length == 4) {
       List<String> textList = ['Merrill', 'Cowell', 'Nine', 'Porter', 'Oakes'];
       setState(() {
         colleges = textList;
@@ -93,7 +92,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         body: Column(
           children: [
-            // Displays title/
+            // Displays title
             Container(
               decoration: const BoxDecoration(
                   border: Border(
@@ -105,7 +104,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   left: constants.containerPaddingTitle + 3,
                   right: constants.containerPaddingTitle),
               alignment: Alignment.bottomLeft,
-              height: 50,
+              height: 60,
               child: const Text(
                 "Change Layout",
                 style: TextStyle(

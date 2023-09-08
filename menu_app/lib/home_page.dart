@@ -176,7 +176,7 @@ class _HomePageState extends State<HomePage> {
     String mealTime = '';
 
     if (time.hour <= 4 || time.hour >= 23) {
-      mealTime = '';
+      mealTime = 'Null';
     } else if (time.hour < 10 && time.hour > 4) {
       mealTime = 'Breakfast';
     } else if (time.hour < 16) {

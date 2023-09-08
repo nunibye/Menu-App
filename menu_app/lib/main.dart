@@ -161,12 +161,17 @@ Future<List<FoodCategory>> fetchAlbum(String college, String mealTime,
 
       // Extract and structure the data
       List<FoodCategory> foodList = [];
-      data.forEach((key, value) {
+      data.forEach((key, value) { 
+        if (!value.toString().contains('update')) { // README: this code will ignore all instances where the values contain 'update'... please see TODO in menu_scraper_runner_copy.py for more information
+          String cleanedKey = key.toString().replaceAll('*', '').trim();
+
         if (value is List) {
           List<String> foodItems =
               value.map((item) => item.toString()).toList();
-          foodList.add(FoodCategory(key, foodItems));
+          foodList.add(FoodCategory(cleanedKey, foodItems));
         }
+        }
+        
       });
 
       return foodList;

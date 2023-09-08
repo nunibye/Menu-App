@@ -17,19 +17,27 @@ def menu_scrape():
     halls_name = ['Nine', 'Cowell', 'Merrill', 'Porter']
     meals = ["Breakfast", "Lunch", "Dinner", "Late Night"]
     food_cat = {"*Hot Bars*": [], "*Soups*": [], "*Entrees*": [], "*Grill*": [], "*Pizza*": [], "*Clean Plate*": [], "*Bakery*": [], "*Open Bars*": [], "*DH Baked*": [], "*Plant Based Station*": [], "*Miscellaneous*": [], "*Brunch*": []}
-
+    # food_cat_new = {"Hot Bars": [], "Soups": [], "Entrees": [], "Grill": [], "Pizza": [], "Clean Plate": [], "Bakery": [], "Open Bars": [], "DH Baked": [], "Plant Based Station": [], "Miscellaneous": [], "Brunch": []}
     # Create nested dictionary
     meal_times = {}
+    summary_times = {}
     for i in meals:
         meal_times.update({i: deepcopy(food_cat)})
+        summary_times.update({i: []})
 
     meal_dates = {}
+    summary_halls = {}
     for i in halls_name:
         meal_dates.update({i: deepcopy(meal_times)})
+        summary_halls.update({i: deepcopy(summary_times)})
 
     hall_menus = {}
+    summary = {}
     for i in dates:
         hall_menus.update({i: deepcopy(meal_dates)})
+
+    summary.update({'Summary': deepcopy(summary_halls)})
+    hall_menus.update(summary)
 
     # Go through every dining hall college and update hall_menus dictionary
     for j in range(len(halls_name)):
@@ -106,19 +114,30 @@ def menu_scrape():
                     # add to the dictionary if the meal category is not in the list
                     try:
                         hall_menus[date][halls_name[j]][meal_time][meal_cat].append(i)
+                        # hall_menus[date][halls_name[j]][meal_time]['*' + meal_cat + '*'].append(i)
                     except:
                         hall_menus[date][halls_name[j]][meal_time].update({meal_cat: []})
                         hall_menus[date][halls_name[j]][meal_time][meal_cat].append(i)
+                        # hall_menus[date][halls_name[j]][meal_time].update({'*' + meal_cat + '*': []})
+                        # hall_menus[date][halls_name[j]][meal_time]['*' + meal_cat + '*'].append(i)
 
             # TODO: TEMP SOLUTION TO THE OPEN BARS PROBLEM IN APP
             for time in meals:
+                if time == 'Breakfast': #keep this
+                    hall_menus['Summary'][halls_name[j]][time] = hall_menus['Today'][halls_name[j]][time]['*Breakfast*'] # keep this
+                    continue
+                
                 if len(hall_menus[date][halls_name[j]][time]['*Open Bars*']) == 0 and time != 'Breakfast':
                     if len(hall_menus[date][halls_name[j]][time]['*Entrees*']) == 0:
                         hall_menus[date][halls_name[j]][time]['*Open Bars*'] = hall_menus[date][halls_name[j]][time]['*Hot Bars*']
                         hall_menus[date][halls_name[j]][time]['*Hot Bars*'] = []
+                        hall_menus['Summary'][halls_name[j]][time] = hall_menus['Today'][halls_name[j]][time]['*Open Bars*'] # keep this
                     else:
                         hall_menus[date][halls_name[j]][time]['*Open Bars*'] = hall_menus[date][halls_name[j]][time]['*Entrees*']
                         hall_menus[date][halls_name[j]][time]['*Entrees*'] = []
+                        hall_menus['Summary'][halls_name[j]][time] = hall_menus['Today'][halls_name[j]][time]['*Open Bars*'] # keep this
+                else: # keep this
+                    hall_menus['Summary'][halls_name[j]][time] = hall_menus['Today'][halls_name[j]][time]['*Open Bars*'] # keep this
     
     # Add today's meals
     for hall in halls_name:

@@ -24,7 +24,7 @@ def UpdateDatabase(hall_menus):
     Takes a nested dictionary of Dining Hall, Meal Time, Meal Category, and Meals.
     Updates firebase json database.
     '''
-    references = ['/Merrill/', '/Oakes/', '/Cowell/', '/Nine/', '/Porter/', '/Today/', '/Tomorrow/', '/Day after tomorrow/']
+    references = ['/Merrill/', '/Oakes/', '/Cowell/', '/Nine/', '/Porter/', '/Today/', '/Tomorrow/', '/Day after tomorrow/', '/Summary/']
     for ref in references:
         DeleteReference(ref)
 

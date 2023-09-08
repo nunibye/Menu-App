@@ -155,7 +155,7 @@ class _CalculatorPageState extends State<Calculator> {
             shape: BoxShape.rectangle,
             borderRadius:
                 BorderRadius.circular(12), // Adjust the multiplier as needed.
-            color: Color.fromARGB(
+            color: const Color.fromARGB(
                 255, 30, 30, 30), // Change the background color as needed.
           ),
           child: Padding(

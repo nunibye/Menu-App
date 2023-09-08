@@ -5,21 +5,21 @@ import 'constants.dart' as constants;
 import 'main.dart' as main_page;
 import 'package:firebase_database/firebase_database.dart';
 
-class Hour {
+class Modal {
   final String day;
   final String schedule;
 
-  Hour(this.day, this.schedule);
+  Modal(this.day, this.schedule);
 }
 
-Future<List<Hour>> fetchDataFromDatabase(String name) async {
+Future<List<Modal>> fetchDataFromDatabase(String name) async {
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   final snapshot = await ref.child('Hours/$name').get();
   if (snapshot.exists) {
     final data = snapshot.value as List<dynamic>;
 
-    final hoursList = <Hour>[];
+    final hoursList = <Modal>[];
 
     for (int i = 0; i < data.length; i++) {
       final dayData = data[i];
@@ -27,7 +27,7 @@ Future<List<Hour>> fetchDataFromDatabase(String name) async {
         final dayKey = dayData.keys.first.toString();
         final schedule =
             dayData.values.first.toString().replaceAll('\\n', '\n');
-        hoursList.add(Hour(dayKey, schedule));
+        hoursList.add(Modal(dayKey, schedule));
       }
     }
 
@@ -404,38 +404,20 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: CircularProgressIndicator(),
+                  child: const CircularProgressIndicator(),
                 );
               } else if (snapshot.hasError) {
                 Container(
                   alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width,
                   child: Text(
                     'Error: ${snapshot.error}',
                     style: constants.ModalTitleStyle,
                   ),
-                  width: MediaQuery.of(context).size.width,
-                );
-              } else if (!snapshot.hasData) {
-                return Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'No data available',
-                    style: constants.ModalTitleStyle,
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                );
-              } else if (snapshot.data!.isEmpty) {
-                return Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'No data available',
-                    style: constants.ModalTitleStyle,
-                  ),
-                  width: MediaQuery.of(context).size.width,
                 );
               } else {
                 // Replace the itemCount and data with your fetched data
-                final List<Hour>? data = snapshot.data;
+                final List<Modal>? data = snapshot.data;
                 return ListView.builder(
                   itemCount: data?.length,
                   controller: scrollController,
@@ -465,7 +447,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                   },
                 );
               }
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             },
           );
         },

@@ -93,28 +93,6 @@ class AboutPage extends StatelessWidget {
                     ),
                   ),
                 )),
-            // SafeArea(
-            //   child: Html(
-            //     data:
-            //         '<div><a href="https://www.buymeacoffee.com/christiantknab" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 217px !important;" ></a></div>',
-            //     // Styling with CSS (not real CSS)
-            //     style: {
-            //       'div': Style(
-            //           textAlign: TextAlign.center,
-            //           padding: const EdgeInsets.only(bottom: 20))
-            //     },
-            //     onLinkTap: (url, _, __, ___) async {
-            //       Uri uri = Uri.parse(url!);
-            //       if (await canLaunchUrl(uri)) {
-            //         await launchUrl(
-            //           uri,
-            //         );
-            //       } else {
-            //         throw 'Could not launch $url';
-            //       }
-            //     },
-            //   ),
-            // ),
             SafeArea(
               child: Html(
                 data:

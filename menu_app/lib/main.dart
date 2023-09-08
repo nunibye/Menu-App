@@ -12,7 +12,6 @@ import 'package:menu_app/calculator.dart';
 import 'package:menu_app/about_page.dart';
 import 'package:menu_app/settings_page.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:applovin_max/applovin_max.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
@@ -23,7 +22,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -59,7 +57,7 @@ Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
                   padding: const EdgeInsets.only(
                       left: 14, right: 14, top: 5, bottom: 5),
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 30, 30, 30),
+                    color: const Color.fromARGB(255, 30, 30, 30),
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: Column(
@@ -133,10 +131,24 @@ class FoodCategory {
   FoodCategory(this.category, this.foodItems);
 }
 
-Future<List<FoodCategory>> fetchAlbum(String college, String meal,
+Future<List<FoodCategory>> fetchSummary(String college, String mealTime) async {
+  final DatabaseReference ref = FirebaseDatabase.instance.ref();
+  final path = 'Summary/$college/$mealTime';
+  final snapshot = await ref.child(path).get();
+
+  if (snapshot.exists) {
+    final data = snapshot.value as List<dynamic>;
+    List<String> foodItems = data.map((item) => item.toString()).toList();
+    return [FoodCategory("", foodItems)];
+  } else {
+    return [FoodCategory("Hall Closed", [])];
+  }
+}
+
+Future<List<FoodCategory>> fetchAlbum(String college, String mealTime,
     {String cat = "", String day = "Today"}) async {
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
-  final path = '$day/$college/$meal/$cat';
+  final path = '$day/$college/$mealTime/$cat';
   final snapshot = await ref.child(path).get();
   if (snapshot.exists) {
     if (cat.isEmpty) {
@@ -151,7 +163,8 @@ Future<List<FoodCategory>> fetchAlbum(String college, String meal,
       List<FoodCategory> foodList = [];
       data.forEach((key, value) {
         if (value is List) {
-          List<String> foodItems = value.map((item) => item.toString()).toList();
+          List<String> foodItems =
+              value.map((item) => item.toString()).toList();
           foodList.add(FoodCategory(key, foodItems));
         }
       });

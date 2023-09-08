@@ -65,7 +65,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     getCollegeOrder(); // Get SharedPreferences [prefs] for correct display order.
-    // setSummaries();
   }
 
   @override
@@ -115,12 +114,11 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.only(
                         top: 8, bottom: constants.containerPaddingTitle),
                     alignment: Alignment.topLeft,
-                    child:
-                        Text("$college", style: constants.ContainerTextStyle),
+                    child: Text(college, style: constants.ContainerTextStyle),
                   ),
 
                   // Display all the food categories and items.
-                    for (var foodCategory in foodCategories!)
+                  for (var foodCategory in foodCategories!)
                     if (foodCategory.foodItems.isNotEmpty)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,21 +140,21 @@ class _HomePageState extends State<HomePage> {
                             ),
                         ],
                       )
-                  else
-                   Container(
-                      padding: const EdgeInsets.only(
-                          top: constants.containerPaddingbody),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Hall Closed",
-                        textAlign: TextAlign.center,
-                        style: constants.ContainerTextStyle.copyWith(
-                          fontFamily: constants.bodyFont,
-                          fontSize: constants.bodyFontSize,
-                          height: constants.bodyFontheight,
+                    else
+                      Container(
+                        padding: const EdgeInsets.only(
+                            top: constants.containerPaddingbody),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Hall Closed",
+                          textAlign: TextAlign.center,
+                          style: constants.ContainerTextStyle.copyWith(
+                            fontFamily: constants.bodyFont,
+                            fontSize: constants.bodyFontSize,
+                            height: constants.bodyFontheight,
+                          ),
                         ),
-                      ),
-                    )
+                      )
                 ],
               ),
             );
@@ -180,8 +178,20 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.width / 2.7;
-    var timeFetch = DateTime.now();
-    String time = timeFetch.toString().substring(5, 19);
+    final time = DateTime.now();
+    String mealTime = '';
+
+    if (time.hour <= 4 || time.hour >= 23) {
+      mealTime = '';
+    } else if (time.hour < 10 && time.hour > 4) {
+      mealTime = 'Breakfast';
+    } else if (time.hour < 16) {
+      mealTime = 'Lunch';
+    } else if (time.hour < 20) {
+      mealTime = 'Dinner';
+    } else if (time.hour < 23) {
+      mealTime = 'Late Night';
+    }
 
     return Scaffold(
       // Display app bar header.
@@ -279,13 +289,12 @@ class _HomePageState extends State<HomePage> {
                 for (var i = 0; i < colleges.length; i++)
                   buildSummary(
                       colleges[i].trim(),
-                      main_page.fetchAlbum(colleges[i].trim(), "Lunch",
-                          cat: "*Open Bars*")),
+                      main_page.fetchSummary(colleges[i].trim(), mealTime)),
                 // Provide when the menu was last updated.
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: Text(
-                    "Last updated: $time\nData provided by nutrition.sa.ucsc.edu",
+                    "Last updated: ${time.toString().substring(5, 19)}\nData provided by nutrition.sa.ucsc.edu",
                     textAlign: TextAlign.center,
                     style: const TextStyle(color: Colors.grey),
                   ),

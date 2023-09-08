@@ -129,14 +129,10 @@ def menu_scrape():
                 
                 if len(hall_menus[date][halls_name[j]][time]['*Open Bars*']) == 0 and time != 'Breakfast':
                     if len(hall_menus[date][halls_name[j]][time]['*Entrees*']) == 0:
-                        hall_menus[date][halls_name[j]][time]['*Open Bars*'] = hall_menus[date][halls_name[j]][time]['*Hot Bars*']
-                        hall_menus[date][halls_name[j]][time]['*Hot Bars*'] = []
-                        hall_menus['Summary'][halls_name[j]][time] = hall_menus['Today'][halls_name[j]][time]['*Open Bars*'] # keep this
+                        hall_menus['Summary'][halls_name[j]][time] = hall_menus['Today'][halls_name[j]][time]['*Hot Bars*'] # keep this
                     else:
-                        hall_menus[date][halls_name[j]][time]['*Open Bars*'] = hall_menus[date][halls_name[j]][time]['*Entrees*']
-                        hall_menus[date][halls_name[j]][time]['*Entrees*'] = []
-                        hall_menus['Summary'][halls_name[j]][time] = hall_menus['Today'][halls_name[j]][time]['*Open Bars*'] # keep this
-                else: # keep this
+                        hall_menus['Summary'][halls_name[j]][time] = hall_menus['Today'][halls_name[j]][time]['*Entrees*'] # keep this
+                else:
                     hall_menus['Summary'][halls_name[j]][time] = hall_menus['Today'][halls_name[j]][time]['*Open Bars*'] # keep this
     
     # Add today's meals

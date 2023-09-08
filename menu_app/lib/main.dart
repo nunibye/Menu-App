@@ -193,7 +193,7 @@ Future<List<FoodCategory>> fetchAlbum(String college, String mealTime,
 Future<bool> getAdBool() async {
   final prefs = await SharedPreferences.getInstance();
   bool? adBool = prefs.getBool('showAd');
-  adBool = false;
+
   if (adBool == null || adBool == true) {
     adLoader();
   }

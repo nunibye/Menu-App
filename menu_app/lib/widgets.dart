@@ -398,13 +398,17 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
         expand: false,
         builder: (context, scrollController) {
           return FutureBuilder(
-            future: fetchDataFromDatabase(
-                name),
+            future: fetchDataFromDatabase(name),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: const CircularProgressIndicator(),
+                return Column(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 20,
+                    ),
+                    const CircularProgressIndicator(),
+                  ],
                 );
               } else if (snapshot.hasError) {
                 Container(

@@ -338,7 +338,7 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
           child: _widgetOptions.elementAt(selectedIndex),
         ),
       ),
-
+      // TODO: Comment this out to get rid of ad for screenshots!
       // AD bar.
       bottomNavigationBar: Container(
         //color: Colors.amber,

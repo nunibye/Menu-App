@@ -1,6 +1,7 @@
 // Page to load the Side Navagation Bar.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'constants.dart' as constants;
 import 'main.dart' as main_page;
 import 'package:firebase_database/firebase_database.dart';
@@ -262,7 +263,6 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
               child: DropdownButtonHideUnderline(
                 child: DropdownButton(
                   padding: const EdgeInsets.only(right: 10),
-                  enableFeedback: true,
                   borderRadius: BorderRadius.circular(20),
                   dropdownColor: const Color.fromARGB(255, 37, 37, 37),
                   value: _currentlySelected,

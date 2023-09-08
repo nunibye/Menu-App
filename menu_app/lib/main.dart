@@ -1,6 +1,7 @@
 // MAIN program.
 
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:menu_app/widgets.dart';
@@ -189,13 +190,14 @@ Future<List<FoodCategory>> fetchAlbum(String college, String mealTime,
 }
 
 // Get the adBool and call [adLoader].
-getAdBool() async {
+Future<bool> getAdBool() async {
   final prefs = await SharedPreferences.getInstance();
   bool? adBool = prefs.getBool('showAd');
-
+  adBool = false;
   if (adBool == null || adBool == true) {
     adLoader();
   }
+  return adBool ?? true;
 }
 
 // Function to load ad.
@@ -210,7 +212,7 @@ void adLoader() async {
 // MAIN function sets preferences.
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await getAdBool();
+  bool adBool = await getAdBool();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -220,13 +222,14 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((value) => runApp(const MyApp()));
+  ]).then((value) => runApp(MyApp(adBool: adBool,)));
 }
 
 final scakey = GlobalKey<_RootPageState>();
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool adBool;
+  const MyApp({required this.adBool, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -244,13 +247,14 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.dark(),
         ),
       ),
-      home: RootPage(key: scakey),
+      home: RootPage(key: scakey, adBool: adBool,),
     );
   }
 }
 
 class RootPage extends StatefulWidget {
-  const RootPage({super.key});
+  final bool adBool;
+  const RootPage({required this.adBool, super.key});
   @override
   State<RootPage> createState() => _RootPageState();
 }
@@ -345,29 +349,31 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
         alignment: Alignment.topCenter,
 
         height: rh,
-        child: MaxAdView(
-            adUnitId: ad_helper.getAdUnitId,
-            adFormat: AdFormat.banner,
-            listener: AdViewAdListener(
-                onAdLoadedCallback: (ad) {
-                  if (ad_helper.getDevice == 'android') {
-                    setState(() {
-                      rh = 50;
-                    });
-                  } else if (ad_helper.getDevice == 'ios') {
-                    setState(() {
-                      rh = 70;
-                    });
-                  }
-                },
-                onAdLoadFailedCallback: (adUnitId, error) {
-                  setState(() {
-                    rh = 0;
-                  });
-                },
-                onAdClickedCallback: (ad) {},
-                onAdExpandedCallback: (ad) {},
-                onAdCollapsedCallback: (ad) {})),
+        child: widget.adBool
+            ? MaxAdView(
+                adUnitId: ad_helper.getAdUnitId,
+                adFormat: AdFormat.banner,
+                listener: AdViewAdListener(
+                    onAdLoadedCallback: (ad) {
+                      if (ad_helper.getDevice == 'android') {
+                        setState(() {
+                          rh = 50;
+                        });
+                      } else if (ad_helper.getDevice == 'ios') {
+                        setState(() {
+                          rh = 70;
+                        });
+                      }
+                    },
+                    onAdLoadFailedCallback: (adUnitId, error) {
+                      setState(() {
+                        rh = 0;
+                      });
+                    },
+                    onAdClickedCallback: (ad) {},
+                    onAdExpandedCallback: (ad) {},
+                    onAdCollapsedCallback: (ad) {}))
+            : null,
       ),
     );
   }

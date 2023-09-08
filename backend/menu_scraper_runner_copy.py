@@ -1,9 +1,8 @@
 # This script has the ability to add "Today", "Tomorrow", and "Day after tomorrow", as parents to all the colleges
 # identical to the runner on azure 7/10/23
 
-# TODO: Once the update is pushed, and whenever we want, add a copy of all the categories WITHOUT the '*'.
-# THEN, so people on the previous version know that there is an update, and that the app is not broken, all categories with '*', their value
-# will say something like 'Please update app' so they know there is a new version
+# TODO: Once the update is pushed, and whenever we want, we should add a new category: {*ALERT*: New update available}
+# THEN, so people on the previous version know that there is an update
 
 from playwright.sync_api import sync_playwright, ViewportSize
 import re

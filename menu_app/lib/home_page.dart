@@ -15,12 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late Future futureAlbum;
-  late Future nineSummary;
-  late Future cowellSummary;
-  late Future merrillSummary;
-  late Future porterSummary;
-  late Future oakesSummary;
   List<String> colleges = [];
 
   // Function to load [colleges] list with SharedPreferences [prefs] hall disolay order.

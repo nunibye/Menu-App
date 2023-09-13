@@ -7,6 +7,8 @@ import 'package:menu_app/widgets.dart';
 import 'main.dart' as main_page;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:marquee/marquee.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -169,6 +171,46 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget buildBanner() {
+    Future<String> bannerText = main_page.fetchBanner();
+    return (FutureBuilder(
+        future: bannerText,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data != 'null') {
+              final bannerText = snapshot.data;
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 40),
+                child: Container(
+                  height: 30,
+                  color: const Color.fromARGB(100, 0, 60, 108),
+                  child: Marquee(
+                    text: bannerText!,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    scrollAxis: Axis.horizontal,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    blankSpace: 20,
+                    velocity: 30,
+                    showFadingOnlyWhenScrolling: true,
+                    fadingEdgeStartFraction: 0.1,
+                    fadingEdgeEndFraction: 0.1,
+                    startPadding: 10,
+                  ),
+                ),
+              );
+            } else {
+              return const SizedBox(
+                height: 40,
+              );
+            }
+          } else {
+            return const SizedBox(
+              height: 40,
+            );
+          }
+        }));
+  }
+
   @override
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.width / 2.7;
@@ -210,10 +252,11 @@ class _HomePageState extends State<HomePage> {
       ), // TODO: Make a refresh AND/OR create listeners (i have a copy of the file where it works)
       body: ListView(
         children: <Widget>[
+          buildBanner(),
           // Display header text.
           Container(
             alignment: Alignment.topLeft,
-            padding: const EdgeInsets.only(top: 40, left: 12),
+            padding: const EdgeInsets.only(left: 12),
             child: const Text(
               "Dining Halls",
               style: TextStyle(
@@ -281,8 +324,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 for (var i = 0; i < colleges.length; i++)
-                  buildSummary(
-                      colleges[i].trim(),
+                  buildSummary(colleges[i].trim(),
                       main_page.fetchSummary(colleges[i].trim(), mealTime)),
                 // Provide when the menu was last updated.
                 Padding(

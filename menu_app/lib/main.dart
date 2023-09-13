@@ -132,6 +132,15 @@ class FoodCategory {
   FoodCategory(this.category, this.foodItems);
 }
 
+Future<String> fetchBanner() async {
+  final snapshot = await FirebaseDatabase.instance.ref().child('/Banner').get();
+  if (snapshot.exists && snapshot.value != '') {
+    return snapshot.value as String;
+  }
+
+  return 'null';
+}
+
 Future<List<FoodCategory>> fetchSummary(String college, String mealTime) async {
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
   final path = 'Summary/$college/$mealTime';
@@ -222,7 +231,9 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((value) => runApp(MyApp(adBool: adBool,)));
+  ]).then((value) => runApp(MyApp(
+        adBool: adBool,
+      )));
 }
 
 final scakey = GlobalKey<_RootPageState>();
@@ -247,7 +258,10 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.dark(),
         ),
       ),
-      home: RootPage(key: scakey, adBool: adBool,),
+      home: RootPage(
+        key: scakey,
+        adBool: adBool,
+      ),
     );
   }
 }

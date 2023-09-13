@@ -1,7 +1,6 @@
 // Page to load the Side Navagation Bar.
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'constants.dart' as constants;
 import 'main.dart' as main_page;
 import 'package:firebase_database/firebase_database.dart';

@@ -1,11 +1,15 @@
-// Loads the Home Page to display College tiles and Summary below.
+// Loads the Summary Page to display College tiles and Summary below.
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'constants.dart' as constants;
-import 'package:menu_app/widgets.dart';
-import 'main.dart' as main_page;
+import 'package:go_router/go_router.dart';
+import 'package:menu_app/custom_widgets/banner.dart';
+import 'package:menu_app/models/menus.dart';
+import 'package:menu_app/utilities/constants.dart' as constants;
+import 'package:menu_app/views/nav_drawer.dart';
+import 'package:menu_app/views/hall_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:menu_app/views/root_page.dart';
 
 import 'package:marquee/marquee.dart';
 
@@ -17,6 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final scakey = GlobalKey<RootPageState>();
   List<String> colleges = [];
 
   // Function to load [colleges] list with SharedPreferences [prefs] hall disolay order.
@@ -68,13 +73,12 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  Widget buildSummary(
-      String college, Future<List<main_page.FoodCategory>> hallSummary) {
+  Widget buildSummary(String college, Future<List<FoodCategory>> hallSummary) {
     int index = 0;
     return Container(
       padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
       alignment: Alignment.topLeft,
-      child: FutureBuilder<List<main_page.FoodCategory>>(
+      child: FutureBuilder<List<FoodCategory>>(
         future: hallSummary,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -83,9 +87,7 @@ class _HomePageState extends State<HomePage> {
             return TextButton(
               // Give each [college] a button to lead to the full summary page.
               onPressed: () {
-                index = getIndex(college.trim());
-                main_page.scakey.currentState
-                    ?.onItemTapped(index, constants.aniLength);
+                context.push('/${college.trim()}');
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
@@ -155,11 +157,18 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           } else if (snapshot.hasError) {
-            return Text(
-              '${snapshot.error}',
-              style: const TextStyle(
-                fontSize: 25,
-                color: Color(constants.yellowGold),
+            return Container(
+              padding:
+                  const EdgeInsets.only(top: constants.containerPaddingbody),
+              alignment: Alignment.center,
+              child: Text(
+                "Could not connect... Please retry.",
+                textAlign: TextAlign.center,
+                style: constants.ContainerTextStyle.copyWith(
+                  fontFamily: constants.bodyFont,
+                  fontSize: constants.bodyFontSize,
+                  height: constants.bodyFontheight,
+                ),
               ),
             );
           } else {
@@ -169,46 +178,6 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
-  }
-
-  Widget buildBanner() {
-    Future<String> bannerText = main_page.fetchBanner();
-    return (FutureBuilder(
-        future: bannerText,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data != 'null') {
-              final bannerText = snapshot.data;
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 40),
-                child: Container(
-                  height: 30,
-                  color: const Color.fromARGB(100, 0, 60, 108),
-                  child: Marquee(
-                    text: bannerText!,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                    scrollAxis: Axis.horizontal,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    blankSpace: 20,
-                    velocity: 30,
-                    showFadingOnlyWhenScrolling: true,
-                    fadingEdgeStartFraction: 0.1,
-                    fadingEdgeEndFraction: 0.1,
-                    startPadding: 10,
-                  ),
-                ),
-              );
-            } else {
-              return const SizedBox(
-                height: 40,
-              );
-            }
-          } else {
-            return const SizedBox(
-              height: 40,
-            );
-          }
-        }));
   }
 
   @override
@@ -233,7 +202,7 @@ class _HomePageState extends State<HomePage> {
       // Display app bar header.
       drawer: const NavDrawer(),
       appBar: AppBar(
-        toolbarHeight: 80,
+        toolbarHeight: 65,
         centerTitle: true,
         backgroundColor: const Color(constants.darkBlue),
         surfaceTintColor: const Color.fromARGB(255, 60, 60, 60),
@@ -242,10 +211,11 @@ class _HomePageState extends State<HomePage> {
           child: Text(
             "UC Santa Cruz",
             style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 40,
-                fontFamily: 'Monoton',
-                color: Color(constants.yellowGold)),
+              fontWeight: FontWeight.normal,
+              fontSize: 40,
+              fontFamily: 'Monoton',
+              color: Color(constants.yellowGold),
+            ),
           ),
         ),
         shape: const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
@@ -282,9 +252,7 @@ class _HomePageState extends State<HomePage> {
                       // Icon button leads to specified [colleges] page.
                       child: IconButton(
                         onPressed: () {
-                          main_page.scakey.currentState?.onItemTapped(
-                              getIndex(colleges[i].trim()),
-                              constants.aniLength);
+                          context.push('/${colleges[i].trim()}');
                         },
                         icon: Image.asset('images/${colleges[i].trim()}.png'),
                         iconSize: iconSizeCollege,
@@ -296,9 +264,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(right: 7),
                       child: IconButton(
                         onPressed: () {
-                          main_page.scakey.currentState?.onItemTapped(
-                              getIndex(colleges[i].trim()),
-                              constants.aniLength);
+                          context.push('/${colleges[i].trim()}');
                         },
                         icon: Image.asset('images/${colleges[i].trim()}.png'),
                         iconSize: iconSizeCollege,
@@ -308,8 +274,7 @@ class _HomePageState extends State<HomePage> {
                   else
                     IconButton(
                       onPressed: () {
-                        main_page.scakey.currentState?.onItemTapped(
-                            getIndex(colleges[i].trim()), constants.aniLength);
+                        context.push('/${colleges[i].trim()}');
                       },
                       icon: Image.asset('images/${colleges[i].trim()}.png'),
                       iconSize: iconSizeCollege,
@@ -325,7 +290,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 for (var i = 0; i < colleges.length; i++)
                   buildSummary(colleges[i].trim(),
-                      main_page.fetchSummary(colleges[i].trim(), mealTime)),
+                      fetchSummary(colleges[i].trim(), mealTime)),
                 // Provide when the menu was last updated.
                 Padding(
                   padding: const EdgeInsets.only(top: 15),

@@ -1,8 +1,8 @@
 // Displays the slug points calculator.
 
 import 'package:flutter/material.dart';
-import 'constants.dart' as constants;
-import 'package:menu_app/widgets.dart';
+import 'package:menu_app/views/nav_drawer.dart';
+import '../utilities/constants.dart' as constants;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

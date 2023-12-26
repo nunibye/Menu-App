@@ -1,8 +1,8 @@
 // Displays the about page.
 
 import 'package:flutter/material.dart';
-import 'constants.dart' as constants;
-import 'package:menu_app/widgets.dart';
+import 'package:menu_app/views/nav_drawer.dart';
+import '../utilities/constants.dart' as constants;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_html/flutter_html.dart';
 

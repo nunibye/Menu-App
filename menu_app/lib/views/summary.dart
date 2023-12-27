@@ -21,11 +21,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final scakey = GlobalKey<RootPageState>();
   List<String> colleges = [];
 
   // Function to load [colleges] list with SharedPreferences [prefs] hall disolay order.
-  void getCollegeOrder() async {
+  getCollegeOrder() async {
     final prefs = await SharedPreferences.getInstance();
     String? text = prefs.getString('collegesString');
 
@@ -74,7 +73,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildSummary(String college, Future<List<FoodCategory>> hallSummary) {
-    int index = 0;
     return Container(
       padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
       alignment: Alignment.topLeft,
@@ -180,6 +178,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // Function to reload data when refresh is triggered
+  Future<void> _refresh() async {
+    await getCollegeOrder();
+  }
+
   @override
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.width / 2.7;
@@ -220,7 +223,9 @@ class _HomePageState extends State<HomePage> {
         ),
         shape: const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
       ), // TODO: Make a refresh AND/OR create listeners (i have a copy of the file where it works)
-      body: ListView(
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: ListView(
         children: <Widget>[
           buildBanner(),
           // Display header text.
@@ -306,6 +311,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      )
+      // body: 
+      
     );
   }
 }

@@ -2,17 +2,13 @@ import 'package:applovin_max/applovin_max.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:menu_app/views/about_page.dart';
-import 'package:menu_app/views/calculator.dart';
+import 'package:menu_app/models/version.dart';
 
-import 'package:menu_app/views/settings_page.dart';
 import 'package:menu_app/views/summary.dart';
-import 'package:menu_app/views/hall_page.dart';
 import 'package:menu_app/utilities/constants.dart' as constants;
 import 'package:menu_app/utilities/ad_helper.dart' as ad_helper;
 
 class RootPage extends StatefulWidget {
-  
   final bool adBool;
   const RootPage({required this.adBool, super.key});
   @override
@@ -22,29 +18,12 @@ class RootPage extends StatefulWidget {
 class RootPageState extends State<RootPage> with WidgetsBindingObserver {
   final scakey = GlobalKey<RootPageState>();
 
-  late Future futureAlbum;
-  late Future nineSummary;
-  late Future cowellSummary;
-  late Future merrillSummary;
-  late Future porterSummary;
   bool adLoad = false;
   bool showAd = true; //FIXME: CHANGE TO TRUE FOR RELEASE.
-  //BannerAd? _bannerAd;
 
   // Indicies of the app pages.
   int selectedIndex = 0;
   int animationms = 150;
-  final List<Widget> _widgetOptions = <Widget>[
-    const HomePage(),
-    const MenuPage(name: "Merrill", hasLateNight: false),
-    const MenuPage(name: "Cowell", hasLateNight: true),
-    const MenuPage(name: "Nine", hasLateNight: true),
-    const MenuPage(name: "Porter", hasLateNight: true),
-    const MenuPage(name: "Oakes", hasLateNight: true),
-    const Calculator(),
-    const SettingsPage(),
-    const AboutPage(),
-  ];
 
   // Changes page based on icon selected [index].
   onItemTapped(int index, int ani) {
@@ -65,9 +44,11 @@ class RootPageState extends State<RootPage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      scakey.currentState?.onItemTapped(1, 0);
-      await Future.delayed(const Duration(milliseconds: 10));
-      scakey.currentState?.onItemTapped(0, 0);
+      // Perform version check
+      bool versionCheckResult = await performVersionCheck();
+      if (!versionCheckResult) {
+        showUpdateDialog();
+      }
     }
   }
 
@@ -78,6 +59,30 @@ class RootPageState extends State<RootPage> with WidgetsBindingObserver {
     } else {
       return false;
     }
+  }
+
+  void showUpdateDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Update Required'),
+          content: Text(
+              'Your app is out of date. Please update to the latest version.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Replace the URL with your app's store URL
+                // This example assumes you're using the Google Play Store for Android
+                // and the App Store for iOS
+                // launchURL();
+              },
+              child: Text('Update Now'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -101,7 +106,7 @@ class RootPageState extends State<RootPage> with WidgetsBindingObserver {
                     .animate(animation),
                 child: child);
           },
-          child: _widgetOptions.elementAt(selectedIndex),
+          child: HomePage(),
         ),
       ),
       // TODO: Comment this out to get rid of ad for screenshots!

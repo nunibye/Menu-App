@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:menu_app/main.dart';
 import 'package:menu_app/models/menus.dart';
+import 'package:menu_app/views/meal_widget.dart';
 import '../utilities/constants.dart' as constants;
 
 class MenuPage extends StatefulWidget {

@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.0.1</string> <!--CHANGE HERE-->
+	<string>4.0.2</string> <!--CHANGE HERE-->
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -517,5 +517,17 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>googlegmail</string>
+    <string>x-dispatch</string>
+    <string>readdle-spark</string>
+    <string>airmail</string>
+    <string>ms-outlook</string>
+    <string>ymail</string>
+    <string>fastmail</string>
+    <string>superhuman</string>
+    <string>protonmail</string>
+</array>
 </dict>
 </plist>

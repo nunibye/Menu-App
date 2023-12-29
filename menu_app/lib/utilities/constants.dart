@@ -8,7 +8,7 @@ const yellowOrange = 0xFFF29813;
 const white = 0xffdbdbdb;
 
 // App Heading
-const double menuHeadingSize = 35;
+const double menuHeadingSize = 30;
 const double backArrowSize = 30;
 const double navigationBarTextSize = 16;
 

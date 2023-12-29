@@ -1,6 +1,7 @@
 // Displays the Settings Page to alow the user to change order each Hall is
 // displayed in on the Home Page.
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_app/views/nav_drawer.dart';
 import '../utilities/constants.dart' as constants;
@@ -175,6 +176,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ],
               ),
             ),
+            
           ],
         ));
   }

@@ -1,10 +1,15 @@
 // Displays the about page.
 
+import 'dart:io';
+
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_app/views/nav_drawer.dart';
 import '../utilities/constants.dart' as constants;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:open_mail_app/open_mail_app.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -14,11 +19,11 @@ class AboutPage extends StatelessWidget {
     // The text describing the app.
     final List<String> contents = [
       "About Us",
-      "This app is created by Eliah Reeves and Christian Knab from Merrill.\n\nPlease share this app with your friends!\n",
+      "This app is created by Eliah Reeves and Christian Knab from Merrill.\n",
       "Support Us",
-      "Please help keep this app on the App Store by donating!\n"
+      "Please help keep this app on the App Store by donating!",
     ];
-    final imageSize = MediaQuery.of(context).size.width - 200;
+    final imageSize = MediaQuery.of(context).size.width - 225;
 
     return Scaffold(
         // Display page heading.
@@ -86,57 +91,128 @@ class AboutPage extends StatelessWidget {
                     contents[i],
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                      fontFamily: constants.bodyFont,
                       fontSize: constants.bodyFontSize,
-                      color: Color(constants.bodyColor),
-                      height: constants.bodyFontheight,
                     ),
                   ),
                 )),
-            SafeArea(
-              child: Html(
-                data:
-                    '<div><a href="https://www.buymeacoffee.com/christiantknab" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" ></a></div>',
-                // Styling with CSS (not real CSS)
-                style: {
-                  'div': Style(
-                      textAlign: TextAlign.center,
-                      margin: Margins.only(left: 50, right: 50)
-                      // padding: const EdgeInsets.only(bottom: 20),
-                      )
-                },
-                onLinkTap: (url, _, __) {
-                  Uri uri = Uri.parse(url!);
-                  launchUrl(uri).catchError((error) {
-                    throw 'Could not launch $url: $error';
-                  });
-                },
+            // FIXME: idk about this sizing stuff...
+            Padding(
+              padding: const EdgeInsets.only(left: 90, right: 90, top: 10),
+              child: ElevatedButton(
+                onPressed: () => launchUrl(
+                    Uri.parse('https://www.buymeacoffee.com/christiantknab')),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      constants.darkThemeColors(context).onSurface),
+                  minimumSize: MaterialStateProperty.all<Size>(Size(
+                      double.infinity, 40)), // Adjust the height (40) as needed
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Buy us a coffee! ',
+                      style: TextStyle(
+                        color: constants.darkThemeColors(context).background,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '\u2615', // emoji characters
+                      style: TextStyle(
+                        fontFamily: 'EmojiOne',
+                        fontSize: 15,
+                        shadows: [
+                          Shadow(
+                            color:
+                                constants.darkThemeColors(context).onBackground,
+                            offset: Offset(0, 0),
+                            blurRadius: 7,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
 
             // Contact us body.
             Container(
               padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
-              child: InkWell(
-                child: const Text(
-                  'For issues, bugs, ideas, etc., email us at ucscmenuapp@gmail.com',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: constants.bodyFont,
-                    fontSize: constants.bodyFontSize,
-                    color: Color(constants.bodyColor),
-                    height: constants.bodyFontheight,
-                  ),
-                ),
-
-                // Links text to mail app.
-                onTap: () => launchUrl(
-                  Uri(
-                    scheme: 'mailto',
-                    path: 'ucscmenuapp@gmail.com',
-                  ),
+              alignment: Alignment.topLeft,
+              child: const Text(
+                'For issues, bugs, ideas, etc., email us at ucscmenuapp@gmail.com.',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: constants.bodyFontSize,
                 ),
               ),
+            ),
+            // FIXME: idk about this sizing stuff...
+            Padding(
+              padding: const EdgeInsets.only(left: 120, right: 120, top: 10),
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          constants.darkThemeColors(context).onSurface)),
+                  onPressed: // Links text to mail app.
+                      () async {
+                    EmailContent email =
+                        EmailContent(to: ["ucscmenuapp@gmail.com"]);
+                    // Android: Will open mail app or show native picker.
+                    // iOS: Will open mail app if single mail app found.
+                    var result = await OpenMailApp.composeNewEmailInMailApp(
+                      nativePickerTitle: 'Select email app to compose',
+                      emailContent: email,
+                    );
+
+                    // If no mail apps found, show error
+                    if (!result.didOpen && !result.canOpen) {
+                      showNoMailAppsDialog(context);
+
+                      // iOS: if multiple mail apps found, show dialog to select.
+                    } else if (!result.didOpen && result.canOpen) {
+                      showDialog(
+                        context: context,
+                        builder: (_) {
+                          return MailAppPickerDialog(
+                            mailApps: result.options,
+                            emailContent: email,
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: 'Email us! ',
+                            style: TextStyle(
+                              color:
+                                  constants.darkThemeColors(context).background,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        TextSpan(
+                          text: '\uD83D\uDCE8', // emoji characters
+                          style: TextStyle(
+                            fontFamily: 'EmojiOne',
+                            fontSize: 15,
+                            shadows: [
+                              Shadow(
+                                color: constants
+                                    .darkThemeColors(context)
+                                    .onBackground, // Set the color to match your background
+                                offset: Offset(0, 0),
+                                blurRadius: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
             ),
             const SizedBox(
               height: 50,
@@ -146,11 +222,22 @@ class AboutPage extends StatelessWidget {
   }
 }
 
-launchURL(Uri url) async {
-  if (await canLaunchUrl(url)) {
-    await launchUrl(url);
-  } else {
-    //TODO handle this
-    throw 'Could not launch $url';
-  }
+void showNoMailAppsDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text("Open Mail App"),
+        content: const Text("No mail apps installed"),
+        actions: <Widget>[
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      );
+    },
+  );
 }

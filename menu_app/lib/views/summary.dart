@@ -1,15 +1,18 @@
 // Loads the Summary Page to display College tiles and Summary below.
 
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:menu_app/custom_widgets/banner.dart';
 import 'package:menu_app/models/menus.dart';
+import 'package:menu_app/models/version.dart';
 import 'package:menu_app/utilities/constants.dart' as constants;
 import 'package:menu_app/views/nav_drawer.dart';
 import 'package:menu_app/views/hall_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:menu_app/views/root_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:marquee/marquee.dart';
 
@@ -43,6 +46,11 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         colleges = textList;
       });
+    }
+    // Perform version check
+    bool versionCheckResult = await performVersionCheck();
+    if (!versionCheckResult) {
+      showUpdateDialog();
     }
   }
 
@@ -183,6 +191,43 @@ class _HomePageState extends State<HomePage> {
     await getCollegeOrder();
   }
 
+  void showUpdateDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Update Required'),
+          content: const Text(
+              'Your app is out of date. It may not function properly. Please update to the latest version.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Replace the URL with your app's store URL
+                // This example assumes you're using the Google Play Store for Android
+                // and the App Store for iOS
+                if (Platform.isAndroid || Platform.isIOS) {
+                  final appId = Platform.isAndroid
+                      ? 'com.orderOfTheCone.android.menu_app'
+                      : '1670523487';
+                  final url = Uri.parse(
+                    Platform.isAndroid
+                        ? "market://details?id=$appId"
+                        : "https://apps.apple.com/app/id$appId",
+                  );
+                  launchUrl(
+                    url,
+                    mode: LaunchMode.externalApplication,
+                  );
+                }
+              },
+              child: const Text('Update Now'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double iconSizeCollege = MediaQuery.of(context).size.width / 2.7;
@@ -202,118 +247,121 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
-      // Display app bar header.
-      drawer: const NavDrawer(),
-      appBar: AppBar(
-        toolbarHeight: 65,
-        centerTitle: true,
-        backgroundColor: const Color(constants.darkBlue),
-        surfaceTintColor: const Color.fromARGB(255, 60, 60, 60),
-        title: const FittedBox(
-          fit: BoxFit.fitWidth,
-          child: Text(
-            "UC Santa Cruz",
-            style: TextStyle(
-              fontWeight: FontWeight.normal,
-              fontSize: 40,
-              fontFamily: 'Monoton',
-              color: Color(constants.yellowGold),
-            ),
-          ),
-        ),
-        shape: const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
-      ), // TODO: Make a refresh AND/OR create listeners (i have a copy of the file where it works)
-      body: RefreshIndicator(
-        onRefresh: _refresh,
-        child: ListView(
-        children: <Widget>[
-          buildBanner(),
-          // Display header text.
-          Container(
-            alignment: Alignment.topLeft,
-            padding: const EdgeInsets.only(left: 12),
-            child: const Text(
-              "Dining Halls",
+        // Display app bar header.
+        drawer: const NavDrawer(),
+        appBar: AppBar(
+          toolbarHeight: 65,
+          centerTitle: true,
+          backgroundColor: const Color(constants.darkBlue),
+          surfaceTintColor: const Color.fromARGB(255, 60, 60, 60),
+          title: const FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              "UC Santa Cruz",
               style: TextStyle(
-                  fontSize: 30,
-                  fontFamily: 'Montserat',
-                  fontWeight: FontWeight.w800,
-                  color: Color(constants.yellowOrange)),
+                fontWeight: FontWeight.normal,
+                fontSize: 30,
+                fontFamily: 'Monoton',
+                color: Color(constants.yellowGold),
+              ),
             ),
           ),
-          // Display all hall icons.
-          Container(
-            alignment: Alignment.topCenter,
-            height: MediaQuery.of(context).size.width / 2.3,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                // Loop through every college in [colleges].
-                for (var i = 0; i < colleges.length; i++)
-                  // Special formatting for first Icon.
-                  if (i == 0)
-                    Container(
-                      padding: const EdgeInsets.only(left: 7),
-                      // Icon button leads to specified [colleges] page.
-                      child: IconButton(
-                        onPressed: () {
-                          context.push('/${colleges[i].trim()}');
-                        },
-                        icon: Image.asset('images/${colleges[i].trim()}.png'),
-                        iconSize: iconSizeCollege,
-                      ),
-                    )
-                  // Special formatting for last Icon.
-                  else if (i == colleges.length - 1)
-                    Container(
-                      padding: const EdgeInsets.only(right: 7),
-                      child: IconButton(
-                        onPressed: () {
-                          context.push('/${colleges[i].trim()}');
-                        },
-                        icon: Image.asset('images/${colleges[i].trim()}.png'),
-                        iconSize: iconSizeCollege,
-                      ),
-                    )
-                  // Icon formatting.
-                  else
-                    IconButton(
-                      onPressed: () {
-                        context.push('/${colleges[i].trim()}');
-                      },
-                      icon: Image.asset('images/${colleges[i].trim()}.png'),
-                      iconSize: iconSizeCollege,
-                    ),
-              ],
-            ),
-          ),
-
-          // Displays summary for every college in [colleges].
-          Container(
-            alignment: Alignment.topLeft,
-            child: Column(
-              children: [
-                for (var i = 0; i < colleges.length; i++)
-                  buildSummary(colleges[i].trim(),
-                      fetchSummary(colleges[i].trim(), mealTime)),
-                // Provide when the menu was last updated.
-                Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: Text(
-                    "Last updated: ${time.toString().substring(5, 19)}\nData provided by nutrition.sa.ucsc.edu",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.grey),
-                  ),
+          shape:
+              const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
+        ), // TODO: Make a refresh AND/OR create listeners (i have a copy of the file where it works)
+        body: RefreshIndicator(
+          onRefresh: _refresh,
+          child: ListView(
+            children: <Widget>[
+              buildBanner(),
+              // Display header text.
+              Container(
+                alignment: Alignment.topLeft,
+                padding: const EdgeInsets.only(left: 12),
+                child: const Text(
+                  "Dining Halls",
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'Montserat',
+                      fontWeight: FontWeight.w800,
+                      color: Color(constants.yellowOrange)),
                 ),
-                const SizedBox(height: 70),
-              ],
-            ),
+              ),
+              // Display all hall icons.
+              Container(
+                alignment: Alignment.topCenter,
+                height: MediaQuery.of(context).size.width / 2.3,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    // Loop through every college in [colleges].
+                    for (var i = 0; i < colleges.length; i++)
+                      // Special formatting for first Icon.
+                      if (i == 0)
+                        Container(
+                          padding: const EdgeInsets.only(left: 7),
+                          // Icon button leads to specified [colleges] page.
+                          child: IconButton(
+                            onPressed: () {
+                              context.push('/${colleges[i].trim()}');
+                            },
+                            icon:
+                                Image.asset('images/${colleges[i].trim()}.png'),
+                            iconSize: iconSizeCollege,
+                          ),
+                        )
+                      // Special formatting for last Icon.
+                      else if (i == colleges.length - 1)
+                        Container(
+                          padding: const EdgeInsets.only(right: 7),
+                          child: IconButton(
+                            onPressed: () {
+                              context.push('/${colleges[i].trim()}');
+                            },
+                            icon:
+                                Image.asset('images/${colleges[i].trim()}.png'),
+                            iconSize: iconSizeCollege,
+                          ),
+                        )
+                      // Icon formatting.
+                      else
+                        IconButton(
+                          onPressed: () {
+                            context.push('/${colleges[i].trim()}');
+                          },
+                          icon: Image.asset('images/${colleges[i].trim()}.png'),
+                          iconSize: iconSizeCollege,
+                        ),
+                  ],
+                ),
+              ),
+
+              // Displays summary for every college in [colleges].
+              Container(
+                alignment: Alignment.topLeft,
+                child: Column(
+                  children: [
+                    for (var i = 0; i < colleges.length; i++)
+                      buildSummary(colleges[i].trim(),
+                          fetchSummary(colleges[i].trim(), mealTime)),
+                    // Provide when the menu was last updated.
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Text(
+                        "Last updated: ${time.toString().substring(5, 19)}\nData provided by nutrition.sa.ucsc.edu",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    const SizedBox(height: 70),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-      )
-      // body: 
-      
-    );
+        )
+        // body:
+
+        );
   }
 }

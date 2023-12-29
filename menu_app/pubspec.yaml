@@ -49,6 +49,8 @@ dependencies:
   riverpod_annotation: ^2.3.3
   riverpod: ^2.4.9
   go_router: ^7.1.1
+  android_intent_plus: ^4.0.3
+  open_mail_app: ^0.4.5
   #app_tracking_transparency: ^2.0.3
   
 flutter_icons:

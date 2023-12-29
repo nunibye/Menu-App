@@ -41,16 +41,16 @@ class RootPageState extends State<RootPage> with WidgetsBindingObserver {
     BackButtonInterceptor.add(myInterceptor);
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (state == AppLifecycleState.resumed) {
-      // Perform version check
-      bool versionCheckResult = await performVersionCheck();
-      if (!versionCheckResult) {
-        showUpdateDialog();
-      }
-    }
-  }
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) async {
+  //   if (state == AppLifecycleState.resumed) {
+  //     // Perform version check
+  //     bool versionCheckResult = await performVersionCheck();
+  //     if (!versionCheckResult) {
+  //       showUpdateDialog();
+  //     }
+  //   }
+  // }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
     if (selectedIndex != 0) {
@@ -59,30 +59,6 @@ class RootPageState extends State<RootPage> with WidgetsBindingObserver {
     } else {
       return false;
     }
-  }
-
-  void showUpdateDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Update Required'),
-          content: Text(
-              'Your app is out of date. Please update to the latest version.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // Replace the URL with your app's store URL
-                // This example assumes you're using the Google Play Store for Android
-                // and the App Store for iOS
-                // launchURL();
-              },
-              child: Text('Update Now'),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
@@ -106,7 +82,7 @@ class RootPageState extends State<RootPage> with WidgetsBindingObserver {
                     .animate(animation),
                 child: child);
           },
-          child: HomePage(),
+          child: const HomePage(),
         ),
       ),
       // TODO: Comment this out to get rid of ad for screenshots!

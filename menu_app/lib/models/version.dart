@@ -11,15 +11,11 @@ Future<bool> performVersionCheck() async {
 
   // Get the current app version
   String currentAppVersion = await getCurrentAppVersion();
-  print(currentAppVersion);
   // Compare versions
   if (compareVersions(currentAppVersion, firebaseAppVersion) >= 0) {
     // App is up-to-date or newer
     return true;
   } else {
-    // Show an update dialog or take appropriate action
-    // For simplicity, you can print a message here
-    print('Update your app to the latest version.');
     return false;
   }
 }

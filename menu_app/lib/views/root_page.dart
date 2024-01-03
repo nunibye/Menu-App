@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:menu_app/models/version.dart';
 
-import 'package:menu_app/views/summary.dart';
+import 'package:menu_app/views/home_page.dart';
 import 'package:menu_app/utilities/constants.dart' as constants;
 import 'package:menu_app/utilities/ad_helper.dart' as ad_helper;
 

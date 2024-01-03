@@ -1,14 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
-import 'package:menu_app/custom_widgets/banner.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/utilities/constants.dart' as constants;
-import 'package:menu_app/views/nav_drawer.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:menu_app/controllers/summary_controller.dart';
 
 Widget buildSummary(String college, Future<List<FoodCategory>> hallSummary) {
     return Container(

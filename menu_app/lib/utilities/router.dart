@@ -1,7 +1,9 @@
 import 'package:go_router/go_router.dart';
+import 'package:menu_app/models/ads.dart';
 import 'package:menu_app/views/about_page.dart';
 import 'package:menu_app/views/calculator.dart';
 import 'package:menu_app/main.dart';
+import 'package:menu_app/views/home_page.dart';
 import 'package:menu_app/views/settings_page.dart';
 import 'package:menu_app/views/root_page.dart';
 import 'package:menu_app/views/hall_page.dart';
@@ -11,12 +13,12 @@ final goRouter = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(
-        name:
-            'Home',
+        name: 'Home',
         path: '/',
         builder: (context, state) {
           // bool adbool = getAdBool() as bool;
-          return RootPage(adBool: false); // FIXME CHANGE THISSSS
+          return RootPage(adBool: true); // FIXME CHANGE THISSSS to HomePage
+          // return HomePage();
         }),
     GoRoute(
       name: 'Merrill',
@@ -45,26 +47,23 @@ final goRouter = GoRouter(
     GoRoute(
       name: 'Oakes',
       path: '/Oakes',
-      builder: (context, state) =>
-          const MenuPage(name: "Oakes", hasLateNight: true), // FIXME change to Carson
+      builder: (context, state) => const MenuPage(
+          name: "Oakes", hasLateNight: true), // FIXME change to Carson
     ),
     GoRoute(
       name: 'Calculator',
       path: '/Calculator',
-      builder: (context, state) =>
-          const Calculator(),
+      builder: (context, state) => const Calculator(),
     ),
     GoRoute(
       name: 'Settings',
       path: '/Settings',
-      builder: (context, state) =>
-          const SettingsPage(),
+      builder: (context, state) => const SettingsPage(),
     ),
     GoRoute(
       name: 'About',
       path: '/About',
-      builder: (context, state) =>
-          const AboutPage(),
+      builder: (context, state) => const AboutPage(),
     ),
   ],
 );

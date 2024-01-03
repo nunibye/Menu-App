@@ -54,14 +54,14 @@ class _CalculatorPageState extends State<Calculator> {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
     // Set default end date based on current date.
-    if (summer.isAfter(now)) {
+    if (winter.isAfter(now)) {
+      dateController.text = formatter.format(winter);
+    } else if (spring.isAfter(now)) {
+      dateController.text = formatter.format(spring);
+    } else if (summer.isAfter(now)) {
       dateController.text = formatter.format(summer);
     } else if (fall.isAfter(now)) {
       dateController.text = formatter.format(fall);
-    } else if (spring.isAfter(now)) {
-      dateController.text = formatter.format(spring);
-    } else if (winter.isAfter(now)) {
-      dateController.text = formatter.format(winter);
     } else {
       dateController.text = formatter.format(now);
     }

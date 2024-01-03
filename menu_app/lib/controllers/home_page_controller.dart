@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/models/version.dart';
-import 'package:menu_app/views/update_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePageController extends ChangeNotifier {
@@ -29,9 +28,6 @@ class HomePageController extends ChangeNotifier {
 
     // Perform version check
     versionCheckResult = await performVersionCheck();
-    // if (!versionCheckResult) {
-    //   showUpdateDialog(context)
-    // }
     notifyListeners();
   }
 

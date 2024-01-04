@@ -21,28 +21,31 @@ class _AdBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var viewModel = Provider.of<AdBarController>(context);
-
-    return Container(
-      //color: Colors.amber,
-      alignment: Alignment.topCenter,
-      height: viewModel.adHeight,
-      child: viewModel.showAd
-          ? MaxAdView(
-              adUnitId: ad_helper.getAdUnitId,
-              adFormat: AdFormat.banner,
-              listener: AdViewAdListener(
-                onAdLoadedCallback: (ad) {
-                  viewModel.loadAd();
-                },
-                onAdLoadFailedCallback: (adUnitId, error) {
-                  viewModel.loadAd();
-                },
-                onAdClickedCallback: (ad) {},
-                onAdExpandedCallback: (ad) {},
-                onAdCollapsedCallback: (ad) {},
-              ),
-            )
-          : null,
-    );
+    if (viewModel.showAd) {
+      return Container(
+        //color: Colors.amber,
+        alignment: Alignment.topCenter,
+        height: viewModel.adHeight,
+        child: viewModel.showAd
+            ? MaxAdView(
+                adUnitId: ad_helper.getAdUnitId,
+                adFormat: AdFormat.banner,
+                listener: AdViewAdListener(
+                  onAdLoadedCallback: (ad) {
+                    viewModel.loadAd();
+                  },
+                  onAdLoadFailedCallback: (adUnitId, error) {
+                    viewModel.loadAd();
+                  },
+                  onAdClickedCallback: (ad) {},
+                  onAdExpandedCallback: (ad) {},
+                  onAdCollapsedCallback: (ad) {},
+                ),
+              )
+            : null,
+      );
+    } else {
+      return const SizedBox(width: 0, height: 0,);
+    }
   }
 }

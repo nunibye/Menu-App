@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:menu_app/models/ads.dart';
 import 'package:menu_app/utilities/ad_helper.dart' as ad_helper;
 
 class AdBarController extends ChangeNotifier {
@@ -8,6 +9,19 @@ class AdBarController extends ChangeNotifier {
 
   double get adHeight => _adHeight;
   bool get showAd => _showAd;
+
+  AdBarController() {
+    // Initialize _showAd asynchronously
+    getAdBool().then((value) {
+      _showAd = value;
+      notifyListeners();
+    });
+
+    // Load ad based on initial state
+    if (_showAd) {
+      loadAd();
+    }
+  }
 
   void loadAd() {
     // Update _adHeight and _showAd based on ad loading status
@@ -18,7 +32,6 @@ class AdBarController extends ChangeNotifier {
     } else {
       _adHeight = 0;
     }
-
     notifyListeners();
   }
 }

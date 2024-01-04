@@ -1,9 +1,6 @@
 import 'package:applovin_max/applovin_max.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:menu_app/models/version.dart';
-
 import 'package:menu_app/views/home_page.dart';
 import 'package:menu_app/utilities/constants.dart' as constants;
 import 'package:menu_app/utilities/ad_helper.dart' as ad_helper;
@@ -82,7 +79,7 @@ class RootPageState extends State<RootPage> with WidgetsBindingObserver {
                     .animate(animation),
                 child: child);
           },
-          child: const HomePage(),
+          child: const HomePage(adBool: true,),
         ),
       ),
       // TODO: Comment this out to get rid of ad for screenshots!

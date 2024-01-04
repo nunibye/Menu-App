@@ -1,10 +1,7 @@
 // MAIN program.
 
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:menu_app/models/ads.dart';
-import 'package:menu_app/models/menus.dart';
-import 'package:menu_app/models/version.dart';
 import 'package:menu_app/utilities/router.dart';
 import 'utilities/constants.dart' as constants;
 import 'package:flutter/services.dart';

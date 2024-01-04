@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePageController extends ChangeNotifier {
   List<String> colleges = [];
+  bool ad = false;
+  
   bool versionCheckResult = true;
 
   HomePageController() {

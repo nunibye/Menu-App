@@ -17,8 +17,8 @@ final goRouter = GoRouter(
         path: '/',
         builder: (context, state) {
           // bool adbool = getAdBool() as bool;
-          return RootPage(adBool: true); // FIXME CHANGE THISSSS to HomePage
-          // return HomePage();
+          // return RootPage(adBool: true); // FIXME CHANGE THISSSS to HomePage
+          return const HomePage(adBool: true);
         }),
     GoRoute(
       name: 'Merrill',

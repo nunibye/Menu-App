@@ -13,7 +13,9 @@ import 'package:menu_app/views/nav_drawer.dart';
 import 'package:menu_app/controllers/home_page_controller.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final bool adBool;
+  
+  const HomePage({Key? key, required this.adBool}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class HomePage extends StatelessWidget {
                 ),
                 shape: const Border(
                     bottom: BorderSide(color: Colors.orange, width: 4)),
-              ), // TODO: Make a refresh AND/OR create listeners (i have a copy of the file where it works)
+              ),
               body: RefreshIndicator(
                 onRefresh: controller.refresh,
                 child: ListView(
@@ -167,7 +169,7 @@ class HomePage extends StatelessWidget {
               ),
               // TODO: Comment this out to get rid of ad for screenshots!
               // AD bar.
-              // bottomNavigationBar: adBar(),
+              bottomNavigationBar: const AdBar(),
             );
           });
         });

@@ -1,0 +1,725 @@
+{
+    "Day after tomorrow": {
+        "Cowell": {
+            "Breakfast": {
+                "*Breakfast*": [
+                    "Cinnamon Raisin French Toast",
+                    "Hard-boiled Cage Free Egg (1)",
+                    "Harissa Potatoes",
+                    "Organic Gluten-Free Oatmeal",
+                    "Sausage Links",
+                    "Vegan Happy Scramble"
+                ],
+                "*Clean Plate*": [
+                    "Steamed Rice"
+                ],
+                "*Entrees*": [
+                    "Cage-Free Scrambled Eggs"
+                ]
+            },
+            "Dinner": {
+                "*Bakery*": [
+                    "Strawberry Almond Cake"
+                ],
+                "*Clean Plate*": [
+                    "Steamed Rice"
+                ],
+                "*Entrees*": [
+                    "Oven Roasted Turkey",
+                    "Red Skin Mashed Potatoes",
+                    "Steamed Carrots and Broccoli",
+                    "Turkey Gravy"
+                ],
+                "*Grill*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "BBQ Shredded Pork",
+                    "Chipotle Vegan Chik'n Strips",
+                    "Mac \u0026 Cheese Bar Condiments",
+                    "Mac and Cheese Bar",
+                    "Macaroni \u0026 Cheese",
+                    "Steamed Broccoli",
+                    "Vegan Macaroni \u0026 Cheese"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Roma Pesto Pizza"
+                ],
+                "*Soups*": [
+                    "Chicken and Pork Sausage Gumbo",
+                    "Thai Lentil and Coconut Soup"
+                ]
+            },
+            "Late Night": {
+                "*Grill*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Crinkle-Cut Fries",
+                    "Portobello Philly Sandwich",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "BBQ Shredded Pork",
+                    "Chipotle Vegan Chik'n Strips",
+                    "Mac \u0026 Cheese Bar Condiments",
+                    "Mac and Cheese Bar",
+                    "Macaroni \u0026 Cheese",
+                    "Steamed Broccoli",
+                    "Vegan Macaroni \u0026 Cheese"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Roma Pesto Pizza"
+                ]
+            },
+            "Lunch": {
+                "*Bakery*": [
+                    "Chocolate Chip Bread Pudding"
+                ],
+                "*Breakfast*": [
+                    "Cinnamon Raisin French Toast",
+                    "Harissa Potatoes",
+                    "Sausage Links",
+                    "Vegan Happy Scramble"
+                ],
+                "*Clean Plate*": [
+                    "Steamed Rice"
+                ],
+                "*Grill*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "Bar Indian",
+                    "Basmati Rice Pullao",
+                    "Chickpea Curry with Tomato and Kale",
+                    "Condiments",
+                    "Dal Saag",
+                    "Madras Chicken",
+                    "Original Naan",
+                    "Potato Samosas"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Roma Pesto Pizza"
+                ],
+                "*Soups*": [
+                    "Chicken and Pork Sausage Gumbo",
+                    "Thai Lentil and Coconut Soup"
+                ]
+            }
+        },
+        "Merrill": {
+            "Dinner": {},
+            "Lunch": {}
+        },
+        "Nine": {
+            "Breakfast": {
+                "*Breakfast*": [
+                    "Buttermilk Pancakes",
+                    "Hard-boiled Cage Free Egg (1)",
+                    "Organic Gluten-Free Oatmeal",
+                    "Potatoes O'Brien",
+                    "Tempeh, Black Bean, and Potato Hash",
+                    "Turkey Sausage Patty"
+                ],
+                "*Clean Plate*": [
+                    "Steamed Rice"
+                ],
+                "*Entrees*": [
+                    "Cage-Free Scrambled Eggs"
+                ]
+            },
+            "Dinner": {
+                "*Clean Plate*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Entrees*": [
+                    "Black Bean \u0026 Corn Saute",
+                    "Cilantro Lime Riced Cauliflower",
+                    "Citrus Marinated Tofu",
+                    "Rockfish Pico de Gallo with Lemon"
+                ],
+                "*Hot Bars*": [
+                    "Bar Indian",
+                    "Basmati Rice Pullao",
+                    "Chickpea Curry with Tomato and Kale",
+                    "Condiments",
+                    "Dal Saag",
+                    "Madras Chicken",
+                    "Original Naan",
+                    "Potato Samosas",
+                    "Vegan Madras Curry"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Margherita Pizza"
+                ],
+                "*Soups*": [
+                    "Chicken Spaetzle Soup",
+                    "Vegan Garbanzo Sesame Soup"
+                ]
+            },
+            "Late Night": {
+                "*Entrees*": [
+                    "Orange Glazed Vegan Chick'n"
+                ],
+                "*Grill*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Halal Crispy Chicken Patty Sandwich",
+                    "Regular Cut Fries",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "Bar Indian",
+                    "Basmati Rice Pullao",
+                    "Chickpea Curry with Tomato and Kale",
+                    "Condiments",
+                    "Dal Saag",
+                    "Madras Chicken",
+                    "Original Naan",
+                    "Potato Samosas",
+                    "Vegan Madras Curry"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Margherita Pizza"
+                ]
+            },
+            "Lunch": {
+                "*Breakfast*": [
+                    "Buttermilk Pancakes",
+                    "Potatoes O'Brien",
+                    "Tempeh, Black Bean, and Potato Hash",
+                    "Turkey Sausage Patty"
+                ],
+                "*Clean Plate*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "BBQ Shredded Pork",
+                    "Chipotle Vegan Chik'n Strips",
+                    "Mac \u0026 Cheese Bar Condiments",
+                    "Mac and Cheese Bar",
+                    "Macaroni \u0026 Cheese",
+                    "Steamed Broccoli",
+                    "Vegan Macaroni \u0026 Cheese"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Margherita Pizza"
+                ],
+                "*Soups*": [
+                    "Chicken Spaetzle Soup",
+                    "Vegan Garbanzo Sesame Soup"
+                ]
+            }
+        },
+        "Oaks": {
+            "Breakfast": {
+                "*Breakfast*": [
+                    "Biscuit and Gravy",
+                    "Hard-boiled Cage Free Egg (1)",
+                    "Organic Gluten-Free Oatmeal",
+                    "Pork Sausage Patties",
+                    "Tater Tots",
+                    "Thai Tofu Scramble"
+                ],
+                "*Clean Plate*": [
+                    "Steamed Rice"
+                ],
+                "*Entrees*": [
+                    "Cage-Free Scrambled Eggs"
+                ]
+            },
+            "Dinner": {
+                "*Clean Plate*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Entrees*": [
+                    "Black Beans with Cumin Spice",
+                    "Martha's Asado De Boda",
+                    "Mexican Rice",
+                    "Steamed Broccolini"
+                ],
+                "*Hot Bars*": [
+                    "Available Upon Request: Gluten Free Rotini Pasta",
+                    "Bar Pasta",
+                    "Bolognese Sauce",
+                    "Cheese Tortellini",
+                    "Cheesy Garlic Bread Sticks",
+                    "Condiments",
+                    "Penne",
+                    "Roasted Zucchini and Peppers",
+                    "Vegan Alfredo Sauce",
+                    "Vegan Meatballs"
+                ],
+                "*Miscellaneous*": [
+                    "Double Sausage and Mushroom Pizza"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza"
+                ],
+                "*Soups*": [
+                    "Organic Kale and Sweet Potato Soup",
+                    "Spicy North African Chicken Soup"
+                ]
+            },
+            "Late Night": {
+                "*Grill*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Garlic Fries",
+                    "Happy Plant Pambazo",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "Available Upon Request: Gluten Free Rotini Pasta",
+                    "Bar Pasta",
+                    "Bolognese Sauce",
+                    "Cheese Tortellini",
+                    "Cheesy Garlic Bread Sticks",
+                    "Condiments",
+                    "Penne",
+                    "Roasted Zucchini and Peppers",
+                    "Vegan Alfredo Sauce",
+                    "Vegan Meatballs"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Double Sausage and Mushroom Pizza"
+                ]
+            },
+            "Lunch": {
+                "*Breakfast*": [
+                    "Biscuit and Gravy",
+                    "Pork Sausage Patties",
+                    "Tater Tots",
+                    "Thai Tofu Scramble"
+                ],
+                "*Clean Plate*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "BAR Worldly Wings",
+                    "Baked Beans",
+                    "Buffalo Cauliflower",
+                    "Condiments",
+                    "Fresh Carrot Sticks",
+                    "Fresh Celery Sticks",
+                    "Lemon Pepper Chicken Wings",
+                    "Sticky Orange Chicken Wings",
+                    "Vegan Tenders"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Double Sausage and Mushroom Pizza"
+                ],
+                "*Soups*": [
+                    "Organic Kale and Sweet Potato Soup",
+                    "Spicy North African Chicken Soup"
+                ]
+            }
+        }
+    },
+    "Summary": {
+        "Cowell": {
+            "Dinner": [
+                "Chicken Enchilada Casserole",
+                "Roasted Kale and Butternut Squash",
+                "Tempeh Roasted with Salt"
+            ]
+        },
+        "Merrill": {
+            "Dinner": null
+        },
+        "Nine": {
+            "Dinner": [
+                "Farfalle Pasta",
+                "Roasted Cauliflower",
+                "Spicy Shrimp Fra Diavolo",
+                "Tofu Diablo"
+            ]
+        },
+        "Oaks": {
+            "Dinner": [
+                "Red Curry Tofu",
+                "Steamed Carrots and Broccoli",
+                "Sticky Rice",
+                "Thai Red Curry Beef"
+            ]
+        }
+    },
+    "Today": {
+        "Cowell": {
+            "Dinner": {
+                "*Bakery*": [
+                    "Brownie M\u0026M",
+                    "Sugar Cookie"
+                ],
+                "*Clean Plate*": [
+                    "Steamed Rice"
+                ],
+                "*Entrees*": [
+                    "Chicken Enchilada Casserole",
+                    "Roasted Kale and Butternut Squash",
+                    "Tempeh Roasted with Salt"
+                ],
+                "*Grill*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "Bar Taqueria",
+                    "Cilantro Lime Riced Cauliflower",
+                    "Condiments",
+                    "Flour Tortilla 6\"",
+                    "Happy Plant Vegan Chorizo Crumbles and Potatoes",
+                    "Mexican Rice",
+                    "Pork Carnitas",
+                    "Vegan Refried Beans",
+                    "White Corn Tortillas"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Vegan Spinach and Roasted Garlic Pizza"
+                ],
+                "*Soups*": [
+                    "Organic Vegan Chili"
+                ]
+            }
+        },
+        "Merrill": {
+            "Dinner": {}
+        },
+        "Nine": {
+            "Dinner": {
+                "*Clean Plate*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Entrees*": [
+                    "Farfalle Pasta",
+                    "Roasted Cauliflower",
+                    "Spicy Shrimp Fra Diavolo",
+                    "Tofu Diablo"
+                ],
+                "*Hot Bars*": [
+                    "Baked Potato Bar",
+                    "Baked Potato Bar Condiments",
+                    "Baked Potatoes",
+                    "Baked Sweet Potato",
+                    "Caramelized Onions",
+                    "Crumbled Bacon",
+                    "Sauteed Mushrooms",
+                    "Steamed Broccoli"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Cilantro Flatbread with Red Onions and Mushrooms"
+                ],
+                "*Soups*": [
+                    "New England Clam Chowder"
+                ]
+            }
+        },
+        "Oaks": {
+            "Dinner": {
+                "*Clean Plate*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Entrees*": [
+                    "Red Curry Tofu",
+                    "Steamed Carrots and Broccoli",
+                    "Sticky Rice",
+                    "Thai Red Curry Beef"
+                ],
+                "*Hot Bars*": [
+                    "Cheese Sauce",
+                    "Condiments",
+                    "Crumbled Bacon",
+                    "Green Onion Slaw",
+                    "Nacho Tots Bar",
+                    "Ranch Chili Beans",
+                    "Tater Tots",
+                    "Tempeh Roasted with Chorizo Spice"
+                ],
+                "*Soups*": [
+                    "Chicken and Pork Sausage Gumbo",
+                    "Vegan Tortilla Soup"
+                ]
+            }
+        }
+    },
+    "Tomorrow": {
+        "Cowell": {
+            "Breakfast": {
+                "*Breakfast*": [
+                    "Chocolate Chip Pancakes",
+                    "Crispy Bacon",
+                    "Hard-boiled Cage Free Egg (1)",
+                    "Organic Gluten-Free Oatmeal",
+                    "Potatoes O'Brien",
+                    "Thai Tofu Scramble"
+                ],
+                "*Clean Plate*": [
+                    "Steamed Rice"
+                ],
+                "*Entrees*": [
+                    "Cage-Free Scrambled Eggs"
+                ]
+            },
+            "Dinner": {
+                "*Bakery*": [
+                    "Carrot Cake"
+                ],
+                "*Clean Plate*": [
+                    "Steamed Rice"
+                ],
+                "*Entrees*": [
+                    "Herbed Lentils",
+                    "Roasted Green Beans in Garlic Oil",
+                    "Steamed Brown Rice",
+                    "Sustainably-Caught Rockfish Puttanesca"
+                ],
+                "*Grill*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "Cajun Bayou Bar",
+                    "Cajun Coleslaw",
+                    "Cajun Rice",
+                    "Chicken Tenders",
+                    "Jalapeno Corn Cakes",
+                    "Sausage Andouille",
+                    "Spicy Cajun Gravy",
+                    "Spicy Red Beans and Vegetables"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Hawaiian Pizza"
+                ],
+                "*Soups*": [
+                    "Hearty Beef Chili",
+                    "Tuscan Bean \u0026 Mushroom"
+                ]
+            },
+            "Lunch": {
+                "*Bakery*": [
+                    "Vegan Peach Cobbler"
+                ],
+                "*Breakfast*": [
+                    "Crispy Bacon",
+                    "Organic Gluten-Free Oatmeal",
+                    "Potatoes O'Brien",
+                    "Thai Tofu Scramble"
+                ],
+                "*Clean Plate*": [
+                    "Steamed Rice"
+                ],
+                "*Grill*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "Baja Fish For Tacos",
+                    "Baja Taco Bar",
+                    "Black Bean Corn Salsa",
+                    "Charro Beans",
+                    "Corn Tortillas",
+                    "Flour Tortilla 6\"",
+                    "Mexican Rice"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Hawaiian Pizza"
+                ],
+                "*Soups*": [
+                    "Hearty Beef Chili",
+                    "Tuscan Bean \u0026 Mushroom"
+                ]
+            }
+        },
+        "Merrill": {
+            "Dinner": {},
+            "Lunch": {}
+        },
+        "Nine": {
+            "Breakfast": {
+                "*Breakfast*": [
+                    "Apple Pancakes",
+                    "Cajun Roasted Red Potatoes",
+                    "Ham Steaks",
+                    "Hard-boiled Cage Free Egg (1)",
+                    "Organic Gluten-Free Oatmeal",
+                    "Vegan Happy Scramble"
+                ],
+                "*Clean Plate*": [
+                    "Steamed Rice"
+                ],
+                "*Entrees*": [
+                    "Cage-Free Scrambled Eggs"
+                ]
+            },
+            "Dinner": {
+                "*Clean Plate*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Entrees*": [
+                    "BBQ Beef",
+                    "BBQ Tempeh",
+                    "Savory Cheese Grits",
+                    "Steamed Green Beans"
+                ],
+                "*Hot Bars*": [
+                    "Baja Fish For Tacos",
+                    "Baja Taco Bar",
+                    "Black Bean Corn Salsa",
+                    "Charro Beans",
+                    "Corn Tortillas",
+                    "Flour Tortilla 6\"",
+                    "Mexican Rice"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Philly Steak Pizza"
+                ],
+                "*Soups*": [
+                    "Chicken \u0026 Rice Soup",
+                    "Garden Vegetable Soup"
+                ]
+            },
+            "Lunch": {
+                "*Breakfast*": [
+                    "Apple Pancakes",
+                    "Cajun Roasted Red Potatoes",
+                    "Ham Steaks",
+                    "Vegan Happy Scramble"
+                ],
+                "*Clean Plate*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "Cajun Bayou Bar",
+                    "Cajun Coleslaw",
+                    "Cajun Rice",
+                    "Chicken Tenders",
+                    "Jalapeno Corn Cakes",
+                    "Sausage Andouille",
+                    "Spicy Cajun Gravy",
+                    "Spicy Red Beans and Vegetables"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Philly Steak Pizza"
+                ],
+                "*Soups*": [
+                    "Chicken \u0026 Rice Soup",
+                    "Garden Vegetable Soup"
+                ]
+            }
+        },
+        "Oaks": {
+            "Breakfast": {
+                "*Breakfast*": [
+                    "French Toast Sticks",
+                    "Hard-boiled Cage Free Egg (1)",
+                    "Organic Gluten-Free Oatmeal",
+                    "Quiche Alsace with Ham",
+                    "Roasted Yukon Gold Potatoes",
+                    "Sausage Links",
+                    "Sweet Potato, Black Bean, and Kale Hash"
+                ],
+                "*Clean Plate*": [
+                    "Steamed Rice"
+                ],
+                "*Entrees*": [
+                    "Cage-Free Scrambled Eggs"
+                ]
+            },
+            "Dinner": {
+                "*Clean Plate*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Entrees*": [
+                    "Italian Roasted Tofu",
+                    "Rice Pilaf",
+                    "Sauteed Seasonal Vegetables",
+                    "Sustainably-Caught Rockfish Puttanesca"
+                ],
+                "*Hot Bars*": [
+                    "Bar Taqueria",
+                    "Charro Beans",
+                    "Condiments",
+                    "Flour Tortilla 6\"",
+                    "Happy Plant Vegan Chorizo Crumbles and Potatoes",
+                    "Mexican Rice",
+                    "Roasted Broccoli and Carrots",
+                    "Taqueria Chicken",
+                    "White Corn Tortillas"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Pepperoni Pizza"
+                ],
+                "*Soups*": [
+                    "Chicken Tortilla Soup",
+                    "Moroccan Lentil Soup"
+                ]
+            },
+            "Lunch": {
+                "*Breakfast*": [
+                    "Quiche Alsace with Ham",
+                    "Roasted Yukon Gold Potatoes",
+                    "Sausage Links",
+                    "Sweet Potato, Black Bean, and Kale Hash"
+                ],
+                "*Clean Plate*": [
+                    "Allergen Free Halal Chicken Thigh",
+                    "Steamed Rice",
+                    "Tofu with Kosher Salt"
+                ],
+                "*Hot Bars*": [
+                    "Gardein and Broccoli Stir Fry",
+                    "Grilled Huli Huli Chicken",
+                    "Hawaiian Bar",
+                    "Hawaiian Coleslaw",
+                    "Spam Fried Rice",
+                    "Vegan Hawaiian Macaroni Salad"
+                ],
+                "*Miscellaneous*": [
+                    "French Toast Sticks"
+                ],
+                "*Pizza*": [
+                    "Cheese Pizza",
+                    "Pepperoni Pizza"
+                ],
+                "*Soups*": [
+                    "Chicken Tortilla Soup",
+                    "Moroccan Lentil Soup"
+                ]
+            }
+        }
+    }
+}

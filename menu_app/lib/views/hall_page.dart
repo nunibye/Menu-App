@@ -1,169 +1,10 @@
 // Page to load the Side Navagation Bar.
 
 import 'package:flutter/material.dart';
-import 'constants.dart' as constants;
-import 'main.dart' as main_page;
-import 'package:firebase_database/firebase_database.dart';
-
-class Modal {
-  final String day;
-  final String schedule;
-
-  Modal(this.day, this.schedule);
-}
-
-Future<List<Modal>> fetchDataFromDatabase(String name) async {
-  final DatabaseReference ref = FirebaseDatabase.instance.ref();
-
-  final snapshot = await ref.child('Hours/$name').get();
-  if (snapshot.exists) {
-    final data = snapshot.value as List<dynamic>;
-
-    final hoursList = <Modal>[];
-
-    for (int i = 0; i < data.length; i++) {
-      final dayData = data[i];
-      if (dayData != null && dayData is Map<dynamic, dynamic>) {
-        final dayKey = dayData.keys.first.toString();
-        final schedule =
-            dayData.values.first.toString().replaceAll('\\n', '\n');
-        hoursList.add(Modal(dayKey, schedule));
-      }
-    }
-
-    return hoursList;
-  } else {
-    return [];
-  }
-}
-
-class NavDrawer extends StatelessWidget {
-  const NavDrawer({super.key});
-  @override
-
-  // Build navagation page.
-  Widget build(BuildContext context) {
-    // Get 2/3 of the screen size.
-    double screenWidth = MediaQuery.of(context).size.width * 0.75;
-    return SizedBox(
-        width: screenWidth,
-        child: Drawer(
-          backgroundColor: const Color(constants.backgroundColor),
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              // Padding.
-              const SizedBox(
-                height: 30,
-              ),
-
-              // Display Slug Menu image.
-              Container(
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                            width: constants.borderWidth,
-                            color: Color(constants.darkGray)))),
-                height: (screenWidth * 0.75) * 0.8,
-                child: Image(
-                  image: const AssetImage('images/menu_header.png'),
-                  width: screenWidth - 50,
-                ),
-              ),
-
-              // Link to Homepage.
-              ListTile(
-                leading: const Icon(
-                  Icons.house,
-                  color: Color(constants.menuColor),
-                ),
-                title: const Text(
-                  'Home',
-                  style: TextStyle(
-                    fontFamily: constants.menuFont,
-                    fontSize: constants.menuFontSize,
-                    color: Color(constants.menuColor),
-                    height: constants.menuFontheight,
-                  ),
-                ),
-                onTap: () => {
-                  Navigator.pop(context),
-                  main_page.scakey.currentState
-                      ?.onItemTapped(0, constants.aniLength)
-                },
-              ),
-
-              // Link to Calculator.
-              ListTile(
-                leading: const Icon(
-                  Icons.calculate,
-                  color: Color(constants.menuColor),
-                ),
-                title: const Text(
-                  'Calculator',
-                  style: TextStyle(
-                    fontFamily: constants.menuFont,
-                    fontSize: constants.menuFontSize,
-                    color: Color(constants.menuColor),
-                    height: constants.menuFontheight,
-                  ),
-                ),
-                onTap: () => {
-                  Navigator.pop(context),
-                  main_page.scakey.currentState
-                      ?.onItemTapped(6, constants.aniLength)
-                },
-              ),
-
-              // Link to Settings Page
-              ListTile(
-                leading: const Icon(
-                  Icons.settings,
-                  color: Color(constants.menuColor),
-                ),
-                title: const Text(
-                  'Settings',
-                  style: TextStyle(
-                    fontFamily: constants.menuFont,
-                    fontSize: constants.menuFontSize,
-                    color: Color(constants.menuColor),
-                    height: constants.menuFontheight,
-                  ),
-                ),
-                onTap: () => {
-                  Navigator.pop(context),
-                  main_page.scakey.currentState
-                      ?.onItemTapped(7, constants.aniLength)
-                },
-              ),
-
-              // Link to About Us page.
-              ListTile(
-                leading: const Icon(
-                  Icons.info_outline,
-                  color: Color(constants.menuColor),
-                ),
-                title: const Text(
-                  'About Us',
-                  style: TextStyle(
-                    fontFamily: constants.menuFont,
-                    fontSize: constants.menuFontSize,
-                    color: Color(constants.menuColor),
-                    height: constants.menuFontheight,
-                  ),
-                ),
-                onTap: () => {
-                  Navigator.pop(context),
-                  main_page.scakey.currentState
-                      ?.onItemTapped(8, constants.aniLength)
-                },
-              ),
-            ],
-          ),
-        ));
-  }
-}
+import 'package:go_router/go_router.dart';
+import 'package:menu_app/models/menus.dart';
+import 'package:menu_app/custom_widgets/menu.dart';
+import '../utilities/constants.dart' as constants;
 
 class MenuPage extends StatefulWidget {
   final bool hasLateNight;
@@ -177,10 +18,10 @@ class MenuPage extends StatefulWidget {
 /// AnimationControllers can be created with `vsync: this` because of TickerProviderStateMixin.
 class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
   late TabController _tabController;
-  late Future<List<main_page.FoodCategory>> futureBreakfast;
-  late Future<List<main_page.FoodCategory>> futureLunch;
-  late Future<List<main_page.FoodCategory>> futureDinner;
-  late Future<List<main_page.FoodCategory>> futureLateNight;
+  late Future<List<FoodCategory>> futureBreakfast;
+  late Future<List<FoodCategory>> futureLunch;
+  late Future<List<FoodCategory>> futureDinner;
+  late Future<List<FoodCategory>> futureLateNight;
 
   final time = DateTime.now();
 
@@ -194,11 +35,11 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
     // Call [fetchAlbum] to return list of meals during each food category.
     _tabController =
         TabController(length: widget.hasLateNight ? 4 : 3, vsync: this);
-    futureBreakfast = main_page.fetchAlbum(widget.name, 'Breakfast');
-    futureLunch = main_page.fetchAlbum(widget.name, 'Lunch');
-    futureDinner = main_page.fetchAlbum(widget.name, 'Dinner');
+    futureBreakfast = fetchAlbum(widget.name, 'Breakfast');
+    futureLunch = fetchAlbum(widget.name, 'Lunch');
+    futureDinner = fetchAlbum(widget.name, 'Dinner');
     if (widget.hasLateNight) {
-      futureLateNight = main_page.fetchAlbum(widget.name, 'Late Night');
+      futureLateNight = fetchAlbum(widget.name, 'Late Night');
     }
 
     // Change default displayed tab [_tabController] based on time of day.
@@ -248,7 +89,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
-            main_page.scakey.currentState?.onItemTapped(0, constants.aniLength);
+            context.pop();
           },
           icon: const Icon(Icons.arrow_back_ios_new_rounded,
               color: Colors.orange, size: constants.backArrowSize),
@@ -272,42 +113,33 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                       _currentlySelected = newValue as String;
 
                       if (_currentlySelected == "Tomorrow") {
-                        futureBreakfast = main_page.fetchAlbum(
-                            widget.name, 'Breakfast',
+                        futureBreakfast = fetchAlbum(widget.name, 'Breakfast',
                             day: "Tomorrow");
-                        futureLunch = main_page.fetchAlbum(widget.name, 'Lunch',
-                            day: "Tomorrow");
-                        futureDinner = main_page
-                            .fetchAlbum(widget.name, 'Dinner', day: "Tomorrow");
-                        futureLateNight = main_page.fetchAlbum(
-                            widget.name, 'Late Night',
+                        futureLunch =
+                            fetchAlbum(widget.name, 'Lunch', day: "Tomorrow");
+                        futureDinner =
+                            fetchAlbum(widget.name, 'Dinner', day: "Tomorrow");
+                        futureLateNight = fetchAlbum(widget.name, 'Late Night',
                             day: "Tomorrow");
                       } else if (_currentlySelected == "Day After") {
-                        futureBreakfast = main_page.fetchAlbum(
-                            widget.name, 'Breakfast',
+                        futureBreakfast = fetchAlbum(widget.name, 'Breakfast',
                             day: "Day after tomorrow");
-                        futureLunch = main_page.fetchAlbum(widget.name, 'Lunch',
+                        futureLunch = fetchAlbum(widget.name, 'Lunch',
                             day: "Day after tomorrow");
-                        futureDinner = main_page.fetchAlbum(
-                            widget.name, 'Dinner',
+                        futureDinner = fetchAlbum(widget.name, 'Dinner',
                             day: "Day after tomorrow");
-                        futureLateNight = main_page.fetchAlbum(
-                            widget.name, 'Late Night',
+                        futureLateNight = fetchAlbum(widget.name, 'Late Night',
                             day: "Day after tomorrow");
                       } else {
-                        futureBreakfast =
-                            main_page.fetchAlbum(widget.name, 'Breakfast');
-                        futureLunch =
-                            main_page.fetchAlbum(widget.name, 'Lunch');
-                        futureDinner =
-                            main_page.fetchAlbum(widget.name, 'Dinner');
-                        futureLateNight =
-                            main_page.fetchAlbum(widget.name, 'Late Night');
+                        futureBreakfast = fetchAlbum(widget.name, 'Breakfast');
+                        futureLunch = fetchAlbum(widget.name, 'Lunch');
+                        futureDinner = fetchAlbum(widget.name, 'Dinner');
+                        futureLateNight = fetchAlbum(widget.name, 'Late Night');
                       }
-                      main_page.buildMeal(futureBreakfast);
-                      main_page.buildMeal(futureLunch);
-                      main_page.buildMeal(futureDinner);
-                      main_page.buildMeal(futureLateNight);
+                      buildMeal(futureBreakfast);
+                      buildMeal(futureLunch);
+                      buildMeal(futureDinner);
+                      buildMeal(futureLateNight);
                     });
                   },
                   selectedItemBuilder: (BuildContext context) {
@@ -375,10 +207,10 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          main_page.buildMeal(futureBreakfast),
-          main_page.buildMeal(futureLunch),
-          main_page.buildMeal(futureDinner),
-          if (widget.hasLateNight) main_page.buildMeal(futureLateNight),
+          buildMeal(futureBreakfast),
+          buildMeal(futureLunch),
+          buildMeal(futureDinner),
+          if (widget.hasLateNight) buildMeal(futureLateNight),
         ],
       ),
     );
@@ -410,13 +242,17 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                   ],
                 );
               } else if (snapshot.hasError) {
-                Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width,
-                  child: Text(
-                    'Error: ${snapshot.error}',
-                    style: constants.ModalTitleStyle,
-                  ),
+                return Column(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 20,
+                    ),
+                    Text(
+                      'Error fetching data',
+                      style: constants.modalTitleStyle,
+                    ),
+                  ],
                 );
               } else {
                 // Replace the itemCount and data with your fetched data
@@ -434,14 +270,14 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                             hour?.day ?? 'No data',
                             textAlign: TextAlign.center,
                           ),
-                          titleTextStyle: constants.ModalTitleStyle,
+                          titleTextStyle: constants.modalTitleStyle,
                           subtitle: Container(
                             padding: EdgeInsets.only(
                                 left: MediaQuery.of(context).size.width / 5,
                                 top: 5),
                             child: Text(
                               hour?.schedule ?? 'No data',
-                              style: constants.ModalSubtitleStyle,
+                              style: constants.modalSubtitleStyle,
                             ),
                           ),
                         ),
@@ -450,7 +286,6 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                   },
                 );
               }
-              return const CircularProgressIndicator();
             },
           );
         },

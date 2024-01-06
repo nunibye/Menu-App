@@ -1,8 +1,5 @@
 import 'dart:io';
-
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
-import 'package:menu_app/utilities/constants.dart' as constants;
 import 'package:package_info_plus/package_info_plus.dart';
 
 Future<bool> performVersionCheck() async {

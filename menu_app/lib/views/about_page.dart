@@ -1,14 +1,8 @@
 // Displays the about page.
-
-import 'dart:io';
-
-import 'package:android_intent_plus/android_intent.dart';
-import 'package:android_intent_plus/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_app/views/nav_drawer.dart';
 import '../utilities/constants.dart' as constants;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
 class AboutPage extends StatelessWidget {

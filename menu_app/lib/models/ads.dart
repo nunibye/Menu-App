@@ -17,6 +17,6 @@ void adLoader() async {
   AppLovinMAX.setHasUserConsent(false);
   AppLovinMAX.setIsAgeRestrictedUser(false);
   AppLovinMAX.setDoNotSell(true);
-  Map? sdkConfiguration = await AppLovinMAX.initialize(
+  await AppLovinMAX.initialize(
       'GFr_0T7XJkpH_DCfXDvsS60h31yU80TT5Luv56H6OglFi3tzt7SCQgZVD6nSJlvFCxyVoqCaS5drzhDtV1MKL0');
 }

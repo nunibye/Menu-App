@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CalculatorController extends ChangeNotifier {
-  // late CalculatorModel calculator;
 
   CalculatorController() {
     loadValuesFromSharedPreferences();
@@ -21,11 +20,6 @@ class CalculatorController extends ChangeNotifier {
   final mealCostController = TextEditingController(text: mealCost.toString());
   final dateController = TextEditingController(
       text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
-
-  final pointsFocus = FocusNode();
-  final mealDayFocus = FocusNode();
-  final mealCostFocus = FocusNode();
-  final dateFocus = FocusNode();
 
   // Function to load values from shared preferences.
   Future<void> loadValuesFromSharedPreferences() async {
@@ -114,21 +108,32 @@ class CalculatorController extends ChangeNotifier {
             .toString());
   }
 
+  double getTotalSlugPoints() {
+    return double.tryParse(totalSlugPointsController.text) ?? 0;
+  }
+
+  double getMealDay() {
+    return double.tryParse(mealDayController.text) ?? 0;
+  }
+
+  double getMealCost() {
+    return double.tryParse(mealCostController.text) ?? 0;
+  }
+
   String getMealAmount() {
-    return (((double.tryParse(totalSlugPointsController.text) ?? 0) -
-                ((double.tryParse(mealDayController.text) ?? 0) *
-                    (double.tryParse(mealCostController.text) ?? 0) *
-                    getDays())) /
-            (double.tryParse(mealCostController.text) ?? 1))
+    return ((getTotalSlugPoints() -
+                (getMealDay() * getMealCost() * getDays())) /
+            getMealCost())
         .toStringAsFixed(2);
   }
 
   String getPointsAmount() {
-    return (((double.tryParse(totalSlugPointsController.text) ?? 0) - ((double.tryParse(mealDayController.text) ?? 0) * (double.tryParse(mealCostController.text) ?? 0) * getDays())))
+    return ((getTotalSlugPoints() - (getMealDay() * getMealCost() * getDays())))
         .toStringAsFixed(2);
   }
 
   String getMealDayAmount() {
-    return ((((double.tryParse(totalSlugPointsController.text) ?? 0) / (double.tryParse(mealCostController.text) ?? 1)) / getDays())).toStringAsFixed(2);
+    return (((getTotalSlugPoints() / getMealCost()) / getDays()))
+        .toStringAsFixed(2);
   }
 }

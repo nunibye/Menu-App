@@ -21,7 +21,7 @@ var diningHallNames = map[string]string{
 	"Cowell/Stevenson Dining Hall":           "Cowell",
 	"Crown/Merrill Dining Hall":              "Merrill",
 	"Porter/Kresge Dining Hall":              "Porter",
-	"Rachel Carson/Oakes Dining Hall":        "Oaks",
+	"Rachel Carson/Oakes Dining Hall":        "Oakes",
 }
 var mealCats = []string{
 	"*Hot Bars*",

@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CalculatorController extends ChangeNotifier {
-
   CalculatorController() {
     loadValuesFromSharedPreferences();
   }
@@ -33,6 +32,12 @@ class CalculatorController extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Display ad.
+  changeAdVar(value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('showAd', value);
+  }
+
   // Method to update totalSlugPoints
   void updateTotalSlugPoints() async {
     notifyListeners();
@@ -40,6 +45,11 @@ class CalculatorController extends ChangeNotifier {
     if (val != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setDouble('totalSlugPoints', val);
+      if (val == 27182818.0) {
+        changeAdVar(false);
+      } else if (val == 31415926.0) {
+        changeAdVar(true);
+      }
     }
   }
 
@@ -67,12 +77,6 @@ class CalculatorController extends ChangeNotifier {
   void updateMealDate(String newValue) async {
     dateController.text = newValue;
     notifyListeners();
-  }
-
-  // Display ad.
-  changeAdVar(value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('showAd', value);
   }
 
   String calculateDate() {

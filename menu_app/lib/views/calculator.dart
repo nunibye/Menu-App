@@ -128,7 +128,7 @@ class Calculator extends StatelessWidget {
                             );
 
                             // Format date and set the [dateController] text.
-                            if (pickedDate != null) {
+                            if (pickedDate != null && context.mounted) {
                               String formattedDate = DateFormat('yyyy-MM-dd')
                                   .format(
                                       pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed.

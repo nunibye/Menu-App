@@ -165,7 +165,7 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              // TODO: Comment this out to get rid of ad for screenshots!
+              // Comment this out to get rid of ad for screenshots!
               // AD bar.
               bottomNavigationBar: const AdBar(),
             );

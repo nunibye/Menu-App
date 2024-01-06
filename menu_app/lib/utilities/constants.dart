@@ -87,7 +87,7 @@ InputDecoration customInputDecoration = InputDecoration(
   ),
 );
 
-TextStyle ContainerTextStyle = const TextStyle(
+TextStyle containerTextStyle = const TextStyle(
   fontFamily: titleFont,
   fontWeight: FontWeight.bold,
   fontSize: titleFontSize,
@@ -95,7 +95,7 @@ TextStyle ContainerTextStyle = const TextStyle(
   height: titleFontheight,
 );
 
-TextStyle ModalTitleStyle = const TextStyle(
+TextStyle modalTitleStyle = const TextStyle(
   fontFamily: titleFont,
   fontWeight: FontWeight.bold,
   fontSize: 17,
@@ -103,7 +103,7 @@ TextStyle ModalTitleStyle = const TextStyle(
   height: titleFontheight,
 );
 
-TextStyle ModalSubtitleStyle = const TextStyle(
+TextStyle modalSubtitleStyle = const TextStyle(
   fontFamily: bodyFont,
   color: Colors.black,
   fontSize: 13,

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/utilities/constants.dart' as constants;
+
 // FIXME to controller
 Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
   return Container(
@@ -18,7 +19,7 @@ Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
               decoration: const BoxDecoration(),
               padding: const EdgeInsets.only(top: 20),
               alignment: Alignment.topCenter,
-              child: Text('Hall Closed', style: constants.ContainerTextStyle),
+              child: Text('Hall Closed', style: constants.containerTextStyle),
             );
 
             // Display the food categories and food items.
@@ -54,7 +55,7 @@ Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
                         alignment: Alignment.topLeft,
                         child: Text(
                           category.category,
-                          style: constants.ContainerTextStyle.copyWith(
+                          style: constants.containerTextStyle.copyWith(
                             fontSize: constants.titleFontSize - 2,
                           ),
                         ),
@@ -68,7 +69,7 @@ Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
                             alignment: Alignment.topLeft,
                             child: Text(
                               foodItem,
-                              style: constants.ContainerTextStyle.copyWith(
+                              style: constants.containerTextStyle.copyWith(
                                   fontSize: constants.bodyFontSize - 2,
                                   height: constants.bodyFontheight,
                                   fontWeight: FontWeight.normal),
@@ -85,21 +86,20 @@ Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
 
           // If there is an error, display error.
         } else if (snapshot.hasError) {
-            return Container(
-              padding:
-                  const EdgeInsets.only(top: constants.containerPaddingbody),
-              alignment: Alignment.topCenter,
-              child: Text(
-                "Could not connect... Please retry.",
-                textAlign: TextAlign.center,
-                style: constants.ContainerTextStyle.copyWith(
-                  fontFamily: constants.bodyFont,
-                  fontSize: constants.bodyFontSize,
-                  height: constants.bodyFontheight,
-                ),
+          return Container(
+            padding: const EdgeInsets.only(top: constants.containerPaddingbody),
+            alignment: Alignment.topCenter,
+            child: Text(
+              "Could not connect... Please retry.",
+              textAlign: TextAlign.center,
+              style: constants.containerTextStyle.copyWith(
+                fontFamily: constants.bodyFont,
+                fontSize: constants.bodyFontSize,
+                height: constants.bodyFontheight,
               ),
-            );
-          }
+            ),
+          );
+        }
 
         // By default, show a loading spinner.
         return const Center(child: CircularProgressIndicator());

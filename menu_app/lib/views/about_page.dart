@@ -93,7 +93,6 @@ class AboutPage extends StatelessWidget {
                           ),
                         ),
                       )),
-                  // FIXME: idk about this sizing stuff...
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 50, right: 50, top: 10),

@@ -250,7 +250,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                     ),
                     Text(
                       'Error fetching data',
-                      style: constants.ModalTitleStyle,
+                      style: constants.modalTitleStyle,
                     ),
                   ],
                 );
@@ -270,14 +270,14 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                             hour?.day ?? 'No data',
                             textAlign: TextAlign.center,
                           ),
-                          titleTextStyle: constants.ModalTitleStyle,
+                          titleTextStyle: constants.modalTitleStyle,
                           subtitle: Container(
                             padding: EdgeInsets.only(
                                 left: MediaQuery.of(context).size.width / 5,
                                 top: 5),
                             child: Text(
                               hour?.schedule ?? 'No data',
-                              style: constants.ModalSubtitleStyle,
+                              style: constants.modalSubtitleStyle,
                             ),
                           ),
                         ),

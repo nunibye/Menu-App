@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:menu_app/controllers/hall_controller.dart';
+import 'package:menu_app/custom_widgets/ad_bar.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/custom_widgets/menu.dart';
 import 'package:provider/provider.dart';
@@ -169,6 +170,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                     .futureLateNight),
             ],
           ),
+          bottomNavigationBar: const AdBar(),
         );
       },
     );

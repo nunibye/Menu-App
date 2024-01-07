@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:menu_app/custom_widgets/ad_bar.dart';
 import 'package:menu_app/views/about_page.dart';
 import 'package:menu_app/views/calculator.dart';
 import 'package:menu_app/views/home_page.dart';
@@ -13,7 +14,6 @@ final goRouter = GoRouter(
         name: 'Home',
         path: '/',
         builder: (context, state) {
-          // bool adbool = getAdBool() as bool;
           return const HomePage();
         }),
     GoRoute(

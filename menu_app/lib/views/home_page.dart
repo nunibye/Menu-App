@@ -29,23 +29,8 @@ class HomePage extends StatelessWidget {
                 showUpdateDialog(context);
               }
             });
-
             double iconSizeCollege = MediaQuery.of(context).size.width / 2.7;
             final time = DateTime.now();
-            String mealTime = '';
-            // TODO make into controller
-            if (time.hour <= 4 || time.hour >= 23) {
-              mealTime = 'Null';
-            } else if (time.hour < 10 && time.hour > 4) {
-              mealTime = 'Breakfast';
-            } else if (time.hour < 16) {
-              mealTime = 'Lunch';
-            } else if (time.hour < 20) {
-              mealTime = 'Dinner';
-            } else if (time.hour < 23) {
-              mealTime = 'Late Night';
-            }
-
             return Scaffold(
               // Display app bar header.
               drawer: const NavDrawer(),
@@ -72,15 +57,15 @@ class HomePage extends StatelessWidget {
               body: RefreshIndicator(
                 onRefresh: controller.refresh,
                 // indicatorBuilder: (context, controller) {
-                  // return const Icon(
-                  //   Icons.fastfood_outlined,
-                  //   color: Colors.blueGrey,
-                  //   size: 30,
-                  // );
-                  // return Image.asset(
-                  //   'images/slug.png',
-                  //   scale: 0.5,
-                  // );
+                // return const Icon(
+                //   Icons.fastfood_outlined,
+                //   color: Colors.blueGrey,
+                //   size: 30,
+                // );
+                // return Image.asset(
+                //   'images/slug.png',
+                //   scale: 0.5,
+                // );
                 // },
                 child: ListView(
                   children: <Widget>[
@@ -153,14 +138,14 @@ class HomePage extends StatelessWidget {
 
                     // Displays summary for every college in [colleges].
                     Container(
-                      alignment: Alignment.topLeft,
+                      alignment: Alignment.topCenter,
                       child: Column(
                         children: [
                           for (var i = 0; i < controller.colleges.length; i++)
                             buildSummary(
                                 controller.colleges[i].trim(),
                                 fetchSummary(
-                                    controller.colleges[i].trim(), mealTime)),
+                                    controller.colleges[i].trim(), controller.mealTime)),
                           // Provide when the menu was last updated.
                           Padding(
                             padding: const EdgeInsets.only(top: 15),

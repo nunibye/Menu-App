@@ -19,10 +19,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => HomePageController(),
-        builder: (context, child) {
-          return Consumer<HomePageController>(
-              builder: (context, controller, child) {
+      create: (context) => HomePageController(),
+      builder: (context, child) {
+        return Consumer<HomePageController>(
+          builder: (context, controller, child) {
             // Needs to be built before showing the update dialog
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (!controller.versionCheckResult) {
@@ -85,56 +85,51 @@ class HomePage extends StatelessWidget {
                     ),
                     // Display all hall icons.
                     Container(
-                      alignment: Alignment.topCenter,
-                      height: MediaQuery.of(context).size.width / 2.3,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          // Loop through every college in [colleges].
-                          for (var i = 0; i < controller.colleges.length; i++)
-                            // Special formatting for first Icon.
-                            if (i == 0)
-                              Container(
+                        alignment: Alignment.topCenter,
+                        height: MediaQuery.of(context).size.width / 2.3,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: controller.colleges.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index == 0) {
+                              return Padding(
                                 padding: const EdgeInsets.only(left: 7),
-                                // Icon button leads to specified [colleges] page.
                                 child: IconButton(
                                   onPressed: () {
                                     context.push(
-                                        '/${controller.colleges[i].trim()}');
+                                        '/${controller.colleges[index].trim()}');
                                   },
                                   icon: Image.asset(
-                                      'images/${controller.colleges[i].trim()}.png'),
+                                      'images/${controller.colleges[index].trim()}.png'),
                                   iconSize: iconSizeCollege,
                                 ),
-                              )
-                            // Special formatting for last Icon.
-                            else if (i == controller.colleges.length - 1)
-                              Container(
+                              );
+                            } else if (index ==
+                                controller.colleges.length - 1) {
+                              return Padding(
                                 padding: const EdgeInsets.only(right: 7),
                                 child: IconButton(
                                   onPressed: () {
                                     context.push(
-                                        '/${controller.colleges[i].trim()}');
+                                        '/${controller.colleges[index].trim()}');
                                   },
                                   icon: Image.asset(
-                                      'images/${controller.colleges[i].trim()}.png'),
+                                      'images/${controller.colleges[index].trim()}.png'),
                                   iconSize: iconSizeCollege,
                                 ),
-                              )
-                            // Icon formatting.
-                            else
-                              IconButton(
-                                onPressed: () {
-                                  context.push(
-                                      '/${controller.colleges[i].trim()}');
-                                },
-                                icon: Image.asset(
-                                    'images/${controller.colleges[i].trim()}.png'),
-                                iconSize: iconSizeCollege,
-                              ),
-                        ],
-                      ),
-                    ),
+                              );
+                            }
+                            return IconButton(
+                              onPressed: () {
+                                context.push(
+                                    '/${controller.colleges[index].trim()}');
+                              },
+                              icon: Image.asset(
+                                  'images/${controller.colleges[index].trim()}.png'),
+                              iconSize: iconSizeCollege,
+                            );
+                          },
+                        )),
 
                     // Displays summary for every college in [colleges].
                     Container(
@@ -144,8 +139,8 @@ class HomePage extends StatelessWidget {
                           for (var i = 0; i < controller.colleges.length; i++)
                             buildSummary(
                                 controller.colleges[i].trim(),
-                                fetchSummary(
-                                    controller.colleges[i].trim(), controller.mealTime)),
+                                fetchSummary(controller.colleges[i].trim(),
+                                    controller.mealTime)),
                           // Provide when the menu was last updated.
                           Padding(
                             padding: const EdgeInsets.only(top: 15),
@@ -166,7 +161,9 @@ class HomePage extends StatelessWidget {
               // AD bar.
               bottomNavigationBar: const AdBar(),
             );
-          });
-        });
+          },
+        );
+      },
+    );
   }
 }

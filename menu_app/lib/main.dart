@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:menu_app/custom_widgets/controllers/ad_bar_controller.dart';
-import 'package:menu_app/models/ads.dart';
 import 'package:menu_app/utilities/router.dart';
 import 'package:provider/provider.dart';
 import 'utilities/constants.dart' as constants;

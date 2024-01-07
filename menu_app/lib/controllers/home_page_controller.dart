@@ -1,6 +1,5 @@
 // home_page_view_model.dart
 import 'package:flutter/material.dart';
-import 'package:menu_app/custom_widgets/summary.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/models/version.dart';
 import 'package:shared_preferences/shared_preferences.dart';

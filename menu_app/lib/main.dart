@@ -21,9 +21,11 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((value) => runApp(MyApp(
+  ]).then((value) => runApp(
+    MyApp(
         adBool: adBool,
-      )));
+      )
+      ));
 }
 
 class MyApp extends StatelessWidget {

@@ -52,6 +52,7 @@ dependencies:
   android_intent_plus: ^4.0.3
   open_mail_app: ^0.4.5
   provider: ^6.1.1
+  custom_refresh_indicator: ^3.0.0
   #app_tracking_transparency: ^2.0.3
   
 flutter_icons:

@@ -1,5 +1,6 @@
 // Loads the Summary Page to display College tiles and Summary below.
 
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_app/custom_widgets/ad_bar.dart';
 import 'package:menu_app/custom_widgets/summary.dart';
@@ -12,7 +13,7 @@ import 'package:menu_app/utilities/constants.dart' as constants;
 import 'package:menu_app/views/nav_drawer.dart';
 import 'package:menu_app/controllers/home_page_controller.dart';
 
-class HomePage extends StatelessWidget {  
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -70,6 +71,17 @@ class HomePage extends StatelessWidget {
               ),
               body: RefreshIndicator(
                 onRefresh: controller.refresh,
+                // indicatorBuilder: (context, controller) {
+                  // return const Icon(
+                  //   Icons.fastfood_outlined,
+                  //   color: Colors.blueGrey,
+                  //   size: 30,
+                  // );
+                  // return Image.asset(
+                  //   'images/slug.png',
+                  //   scale: 0.5,
+                  // );
+                // },
                 child: ListView(
                   children: <Widget>[
                     buildBanner(),

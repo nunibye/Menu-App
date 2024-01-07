@@ -1,14 +1,18 @@
-package main
+package scraper
 
 import (
 	"bytes"
-	"encoding/json"
-	"os"
+	"context"
+	"crypto/tls"
+	"log"
+	"net/http"
 	"strings"
 	"time"
 
+	firebase "firebase.google.com/go"
+	"firebase.google.com/go/db"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/gocolly/colly"
+	"github.com/gocolly/colly/v2"
 )
 
 var url = "https://nutrition.sa.ucsc.edu/"
@@ -17,7 +21,7 @@ var diningHallNames = map[string]string{
 	"Cowell/Stevenson Dining Hall":           "Cowell",
 	"Crown/Merrill Dining Hall":              "Merrill",
 	"Porter/Kresge Dining Hall":              "Porter",
-	"Rachel Carson/Oakes Dining Hall":        "Oaks",
+	"Rachel Carson/Oakes Dining Hall":        "Oakes",
 }
 var mealCats = []string{
 	"*Hot Bars*",
@@ -37,16 +41,41 @@ var mealCats = []string{
 
 var menu = make(map[string]interface{})
 
-// TODO: check categories, make into cloud functions, change makeFile to write to database
-func main() {
-	scrape()
-	makeSummary()
-	makeFile()
+type PubSubMessage struct {
+	Data []byte `json:"data"`
 }
 
-// writes all data from website to data map
+func ScraperRun(ctx context.Context, m PubSubMessage) error {
+	config := &firebase.Config{
+		DatabaseURL: "https://ucsc-menu-app-default-rtdb.firebaseio.com/",
+	}
+	app, err := firebase.NewApp(context.Background(), config)
+	if err != nil {
+		log.Fatalf("error initializing app: %v\n", err)
+	}
+
+	db, err := app.Database(context.Background())
+	if err != nil {
+		log.Fatalln("Error initializing database client:", err)
+	}
+
+	scrape()
+	makeSummary()
+	err = UpdateDatabase(db, menu)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func scrape() {
 	a := colly.NewCollector()
+
+	t := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	a.WithTransport(t)
 
 	// visits links with dining hall
 	a.OnHTML("a[href]", func(e *colly.HTMLElement) {
@@ -183,14 +212,25 @@ func makeSummary() {
 	}
 }
 
-func makeFile() {
-	file, _ := os.Create("menu.json")
-	defer file.Close()
+func DeleteReference(client *db.Client, ref_str string) {
+	ref := client.NewRef(ref_str)
+	if err := ref.Delete(context.Background()); err != nil {
+		log.Fatalln("Error deleting reference:", err)
+	}
+}
 
-	encoder := json.NewEncoder(file)
+func UpdateDatabase(client *db.Client, hall_menus map[string]interface{}) error {
+	references := []string{"/Merrill/", "/Oakes/", "/Cowell/", "/Nine/", "/Porter/", "/Today/", "/Tomorrow/", "/Day after tomorrow/", "/Summary/"}
+	for _, ref := range references {
+		DeleteReference(client, ref)
+	}
 
-	// set encoder to use indented output
-	encoder.SetIndent("", "    ")
+	ref := client.NewRef("/")
+	err := ref.Update(context.Background(), hall_menus)
+	if err != nil {
+		log.Fatalln("Error updating database:", err)
+		return err
+	}
 
-	encoder.Encode(menu)
+	return nil
 }

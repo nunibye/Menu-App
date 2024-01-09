@@ -9,6 +9,7 @@ import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/utilities/constants.dart' as constants;
 import 'package:menu_app/views/nav_drawer.dart';
 import 'package:menu_app/controllers/home_page_controller.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

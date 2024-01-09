@@ -111,7 +111,6 @@ class _AdBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var viewModel = Provider.of<AdBarController>(context, listen: true);
-    print(viewModel.showAd);
     if (viewModel.showAd) {
       return Container(
         //color: Colors.amber,

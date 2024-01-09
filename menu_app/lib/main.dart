@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:menu_app/custom_widgets/ad_bar.dart';
 import 'package:menu_app/models/ads.dart';
 import 'package:menu_app/utilities/router.dart';
-import 'package:provider/provider.dart';
 import 'utilities/constants.dart' as constants;
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';

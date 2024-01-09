@@ -1,9 +1,7 @@
 // Loads the Summary Page to display College tiles and Summary below.
 
 import 'package:flutter/material.dart';
-import 'package:menu_app/custom_widgets/ad_bar.dart';
 import 'package:menu_app/custom_widgets/summary.dart';
-import 'package:menu_app/custom_widgets/update_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:menu_app/custom_widgets/banner.dart';
@@ -13,7 +11,7 @@ import 'package:menu_app/views/nav_drawer.dart';
 import 'package:menu_app/controllers/home_page_controller.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:menu_app/controllers/settings_controller.dart';
-import 'package:menu_app/custom_widgets/ad_bar.dart';
 import 'package:menu_app/views/nav_drawer.dart';
 import 'package:provider/provider.dart';
 import '../utilities/constants.dart' as constants;

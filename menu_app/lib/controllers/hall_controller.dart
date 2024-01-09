@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_app/custom_widgets/menu.dart';
 import 'package:menu_app/models/menus.dart';

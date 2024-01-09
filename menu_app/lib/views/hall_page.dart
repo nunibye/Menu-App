@@ -170,7 +170,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                     .futureLateNight),
             ],
           ),
-          bottomNavigationBar: const AdBar(),
+          
         );
       },
     );

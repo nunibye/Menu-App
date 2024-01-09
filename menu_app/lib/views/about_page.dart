@@ -187,7 +187,6 @@ class AboutPage extends StatelessWidget {
                 ),
               ],
             ),
-            bottomNavigationBar: const AdBar(),
           ),
         );
       },

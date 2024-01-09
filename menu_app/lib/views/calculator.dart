@@ -267,7 +267,6 @@ class Calculator extends StatelessWidget {
                   ),
                 ),
               ),
-              bottomNavigationBar: const AdBar(),
             ),
           ),
         );

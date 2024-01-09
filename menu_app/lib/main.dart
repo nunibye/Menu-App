@@ -1,7 +1,7 @@
 // MAIN program.
 
 import 'package:flutter/material.dart';
-import 'package:menu_app/custom_widgets/controllers/ad_bar_controller.dart';
+import 'package:menu_app/custom_widgets/ad_bar.dart';
 import 'package:menu_app/models/ads.dart';
 import 'package:menu_app/utilities/router.dart';
 import 'package:provider/provider.dart';
@@ -31,21 +31,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      // Ignores IOS set to bold text
-      builder: (context, child) => MediaQuery(
-        data: MediaQuery.of(context).copyWith(boldText: false),
-        child: child!,
+    return MaterialApp(
+      home: Column(
+        children: [
+          Expanded(
+            child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              // Ignores IOS set to bold text
+              builder: (context, child) => MediaQuery(
+                data: MediaQuery.of(context).copyWith(boldText: false),
+                child: child!,
+              ),
+              theme: ThemeData(
+                useMaterial3: true,
+                colorScheme: constants.darkThemeColors(context),
+                buttonTheme: const ButtonThemeData(
+                  colorScheme: ColorScheme.dark(),
+                ),
+              ),
+              routerConfig: goRouter,
+            ),
+          ),
+          const AdBar(),
+        ],
       ),
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: constants.darkThemeColors(context),
-        buttonTheme: const ButtonThemeData(
-          colorScheme: ColorScheme.dark(),
-        ),
-      ),
-      routerConfig: goRouter,
     );
   }
 }

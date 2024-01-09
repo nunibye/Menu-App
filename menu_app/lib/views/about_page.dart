@@ -5,6 +5,7 @@ import 'package:menu_app/custom_widgets/ad_bar.dart';
 import 'package:menu_app/views/nav_drawer.dart';
 import 'package:provider/provider.dart';
 import '../utilities/constants.dart' as constants;
+import 'package:go_router/go_router.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -12,18 +13,21 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => AboutController(context: context),
-        builder: (context, child) {
-          // The text describing the app.
-          final List<String> contents = [
-            "About Us",
-            "This app is created by Eliah Reeves and Christian Knab from Merrill.\n",
-            "Support Us",
-            "Please help keep this app on the App Store by donating!",
-          ];
-          final imageSize = MediaQuery.of(context).size.width - 225;
+      create: (context) => AboutController(context: context),
+      builder: (context, child) {
+        // The text describing the app.
+        final List<String> contents = [
+          "About Us",
+          "This app is created by Eliah Reeves and Christian Knab from Merrill.\n",
+          "Support Us",
+          "Please help keep this app on the App Store by donating!",
+        ];
+        final imageSize = MediaQuery.of(context).size.width - 225;
 
-          return Scaffold(
+        return PopScope(
+          canPop: false,
+          onPopInvoked: (didPop) => context.go('/'),
+          child: Scaffold(
             // Display page heading.
             drawer: const NavDrawer(),
             appBar: AppBar(
@@ -184,8 +188,10 @@ class AboutPage extends StatelessWidget {
               ],
             ),
             bottomNavigationBar: const AdBar(),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
 

@@ -7,7 +7,7 @@ import 'package:menu_app/custom_widgets/ad_bar.dart';
 import 'package:menu_app/views/nav_drawer.dart';
 import 'package:provider/provider.dart';
 import '../utilities/constants.dart' as constants;
-
+import 'package:go_router/go_router.dart';
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => SettingsController(),
       builder: (context, child) {
-        return Scaffold(
+        return PopScope(canPop: false,onPopInvoked: (didPop) => context.go('/'),child:Scaffold(
           // Displays app heading.
           drawer: const NavDrawer(),
           appBar: AppBar(
@@ -127,7 +127,7 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
           bottomNavigationBar: const AdBar(),
-        );
+        ),);
       },
     );
   }

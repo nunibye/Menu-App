@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import "package:firebase_analytics/firebase_analytics.dart";
 
 class CalculatorController extends ChangeNotifier {
   CalculatorController() {
+    // print("checking");
+    // log();
+
     loadValuesFromSharedPreferences();
   }
+
+  // void log() async {
+  //   await FirebaseAnalytics.instance.log(
+  //       value: 10.0,
+  //       currency: 'USD',
+  //       items: [
+  //         AnalyticsEventItem(
+  //             itemName: 'Socks', itemId: 'xjw73ndnw'),
+  //       ],
+  //       coupon: '10PERCENTOFF');
+  // }
 
   // Create default variables.
   static const totalSlugPoints = 1000.0;

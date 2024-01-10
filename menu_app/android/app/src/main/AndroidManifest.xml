@@ -1,6 +1,6 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.menu_app">
+    package="com.orderOfTheCone.android.menu_app">
     
 
     <uses-permission

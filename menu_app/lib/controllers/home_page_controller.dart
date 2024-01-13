@@ -3,22 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/models/version.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:menu_app/custom_widgets/update_dialog.dart';
 
 class HomePageController extends ChangeNotifier {
   List<String> colleges = [];
+  List<Widget> summaries = [];
   bool ad = false;
-  
   bool versionCheckResult = true;
+  final BuildContext context;
+  String mealTime = '';
 
-  HomePageController() {
+  HomePageController({required this.context}) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!await performVersionCheck()) {
+        _showDialog();
+      }
+    });
     init();
+  }
+
+  void _showDialog() {
+    showUpdateDialog(context);
   }
 
   Future<void> init() async {
     getCollegeOrder();
+    loadMealTime();
   }
 
-  Future<void> getCollegeOrder() async {
+  void getCollegeOrder() async {
     final prefs = await SharedPreferences.getInstance();
     String? text = prefs.getString('collegesString');
 
@@ -27,9 +40,22 @@ class HomePageController extends ChangeNotifier {
     } else {
       colleges = text.split(',');
     }
+    notifyListeners();
+  }
 
-    // Perform version check
-    versionCheckResult = await performVersionCheck();
+  void loadMealTime() {
+    DateTime time = DateTime.now();
+    if (time.hour <= 4 || time.hour >= 23) {
+      mealTime = 'Null';
+    } else if (time.hour < 11 && time.hour > 4) {
+      mealTime = 'Breakfast';
+    } else if (time.hour < 16) {
+      mealTime = 'Lunch';
+    } else if (time.hour < 20) {
+      mealTime = 'Dinner';
+    } else if (time.hour < 23) {
+      mealTime = 'Late Night';
+    }
     notifyListeners();
   }
 
@@ -54,6 +80,6 @@ class HomePageController extends ChangeNotifier {
 
   // Function to reload data when refresh is triggered
   Future<void> refresh() async {
-    await getCollegeOrder();
+    getCollegeOrder();
   }
 }

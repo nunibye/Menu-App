@@ -1,4 +1,4 @@
-package com.example.menu_app
+package com.orderOfTheCone.android.menu_app
 
 import io.flutter.embedding.android.FlutterActivity
 

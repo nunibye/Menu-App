@@ -6,6 +6,7 @@ import 'package:menu_app/views/nav_drawer.dart';
 import 'package:provider/provider.dart';
 import '../utilities/constants.dart' as constants;
 import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
 
 // Function to create a text widget with an oval background.
 Widget summaryWidget(String label, String result) {
@@ -48,7 +49,10 @@ class Calculator extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => CalculatorController(),
       builder: (context, child) {
-        return GestureDetector(
+        return PopScope(
+          canPop: false,
+          onPopInvoked: (didPop) => context.go('/'),
+          child: GestureDetector(
             onTap: () =>
                 Provider.of<CalculatorController>(context, listen: false)
                     .hideKeyboard(),
@@ -262,7 +266,9 @@ class Calculator extends StatelessWidget {
                   ),
                 ),
               ),
-            ));
+            ),
+          ),
+        );
       },
     );
   }

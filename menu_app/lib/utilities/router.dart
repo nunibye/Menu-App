@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:go_router/go_router.dart';
 import 'package:menu_app/views/about_page.dart';
 import 'package:menu_app/views/calculator.dart';
@@ -8,12 +9,14 @@ import 'package:menu_app/views/hall_page.dart';
 // GoRouter configuration
 final goRouter = GoRouter(
   initialLocation: '/',
+  observers: [
+    FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+  ],
   routes: [
     GoRoute(
         name: 'Home',
         path: '/',
         builder: (context, state) {
-          // bool adbool = getAdBool() as bool;
           return const HomePage();
         }),
     GoRoute(

@@ -85,9 +85,11 @@ func scrape() {
 
 			// visits links for today, tomorrow, day after
 			b.OnHTML("option", func(f *colly.HTMLElement) {
-				today := time.Now().Format("Monday, January 2")
-				tomorrow := time.Now().AddDate(0, 0, 1).Format("Monday, January 2")
-				dayAfter := time.Now().AddDate(0, 0, 2).Format("Monday, January 2")
+				location, _ := time.LoadLocation("America/Los_Angeles")
+
+				today := time.Now().In(location).Format("Monday, January 2")
+				tomorrow := time.Now().In(location).AddDate(0, 0, 1).Format("Monday, January 2")
+				dayAfter := time.Now().In(location).AddDate(0, 0, 2).Format("Monday, January 2")
 
 				// set day label for dictionary
 				var day string
@@ -200,13 +202,14 @@ func makeSummary() {
 				continue
 			}
 
-			// Try to get data from "*Open Bars*", then "*Entrees*", and then "*Hot Bars*"
+			// Try to get data from "*Open Bars*", then "*Hot Bars*", and then "*Entrees*"
 			if len(mealTimeData["*Open Bars*"]) > 0 {
 				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Open Bars*"]...)
-			} else if len(mealTimeData["*Entrees*"]) > 0 {
-				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Entrees*"]...)
-			} else {
+			} else if len(mealTimeData["*Hot Bars*"]) > 0 {
 				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Hot Bars*"]...)
+			} else {
+				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Entrees*"]...)
+
 			}
 		}
 	}

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:menu_app/custom_widgets/summary.dart';
+import 'package:menu_app/custom_widgets/tab_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:menu_app/custom_widgets/banner.dart';
@@ -19,7 +20,7 @@ class HomePage extends StatelessWidget {
       builder: (context, child) {
         // Needs to be built before showing the update dialog
         double iconSizeCollege = MediaQuery.of(context).size.width / 2.7;
-        final time = DateTime.now();
+
         return Scaffold(
           // Display app bar header.
           drawer: const NavDrawer(),
@@ -58,78 +59,89 @@ class HomePage extends StatelessWidget {
             // );
             // },
             child: Consumer<HomePageController>(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: Text(
-                  "Last updated: ${time.toString().substring(5, 19)}\nData provided by nutrition.sa.ucsc.edu",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.grey),
-                ),
-              ),
-              builder: (context, controller, child) => ListView(
-                children: <Widget>[
-                  buildBanner(),
-                  // Display header text.
-                  Container(
-                    alignment: Alignment.topLeft,
-                    padding: const EdgeInsets.only(left: 12),
-                    child: const Text(
-                      "Dining Halls",
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'Montserat',
-                          fontWeight: FontWeight.w800,
-                          color: Color(constants.yellowOrange)),
+              builder: (context, controller, child) => Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: <Widget>[
+                        buildBanner(),
+                        // Display header text.
+                        Container(
+                          alignment: Alignment.topLeft,
+                          padding: const EdgeInsets.only(left: 12),
+                          child: const Text(
+                            "Dining Halls",
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontFamily: 'Montserat',
+                                fontWeight: FontWeight.w800,
+                                color: Color(constants.yellowOrange)),
+                          ),
+                        ),
+                        // Display all hall icons.
+                        Container(
+                          alignment: Alignment.topCenter,
+                          height: MediaQuery.of(context).size.width / 2.3,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: controller.colleges.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index == 0) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 7),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      context.push(
+                                          '/${controller.colleges[index].trim()}');
+                                    },
+                                    icon: Image.asset(
+                                        'images/${controller.colleges[index].trim()}.png'),
+                                    iconSize: iconSizeCollege,
+                                  ),
+                                );
+                              } else if (index ==
+                                  controller.colleges.length - 1) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 7),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      context.push(
+                                          '/${controller.colleges[index].trim()}');
+                                    },
+                                    icon: Image.asset(
+                                        'images/${controller.colleges[index].trim()}.png'),
+                                    iconSize: iconSizeCollege,
+                                  ),
+                                );
+                              }
+                              return IconButton(
+                                onPressed: () {
+                                  context.push(
+                                      '/${controller.colleges[index].trim()}');
+                                },
+                                icon: Image.asset(
+                                    'images/${controller.colleges[index].trim()}.png'),
+                                iconSize: iconSizeCollege,
+                              );
+                            },
+                          ),
+                        ),
+                        const Padding(
+                            padding: EdgeInsets.only(bottom: 6, top: 6),
+                            child: CustomTabBar()),
+                        buildSummaryList(
+                            controller.colleges, controller.mealTime),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15),
+                          child: Text(
+                            "Last updated: ${Provider.of<HomePageController>(context, listen: false).time.toString().substring(5, 19)}\nData provided by nutrition.sa.ucsc.edu",
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  // Display all hall icons.
-                  Container(
-                    alignment: Alignment.topCenter,
-                    height: MediaQuery.of(context).size.width / 2.3,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: controller.colleges.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index == 0) {
-                          return Padding(
-                            padding: const EdgeInsets.only(left: 7),
-                            child: IconButton(
-                              onPressed: () {
-                                context.push(
-                                    '/${controller.colleges[index].trim()}');
-                              },
-                              icon: Image.asset(
-                                  'images/${controller.colleges[index].trim()}.png'),
-                              iconSize: iconSizeCollege,
-                            ),
-                          );
-                        } else if (index == controller.colleges.length - 1) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 7),
-                            child: IconButton(
-                              onPressed: () {
-                                context.push(
-                                    '/${controller.colleges[index].trim()}');
-                              },
-                              icon: Image.asset(
-                                  'images/${controller.colleges[index].trim()}.png'),
-                              iconSize: iconSizeCollege,
-                            ),
-                          );
-                        }
-                        return IconButton(
-                          onPressed: () {
-                            context
-                                .push('/${controller.colleges[index].trim()}');
-                          },
-                          icon: Image.asset(
-                              'images/${controller.colleges[index].trim()}.png'),
-                          iconSize: iconSizeCollege,
-                        );
-                      },
-                    ),
-                  ),
-                  buildSummaryList(controller.colleges, controller.mealTime)
                 ],
               ),
             ),

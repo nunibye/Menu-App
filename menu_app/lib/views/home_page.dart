@@ -5,11 +5,9 @@ import 'package:menu_app/custom_widgets/summary.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:menu_app/custom_widgets/banner.dart';
-import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/utilities/constants.dart' as constants;
 import 'package:menu_app/views/nav_drawer.dart';
 import 'package:menu_app/controllers/home_page_controller.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,10 +17,7 @@ class HomePage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => HomePageController(context: context),
       builder: (context, child) {
-
-
         // Needs to be built before showing the update dialog
-
         double iconSizeCollege = MediaQuery.of(context).size.width / 2.7;
         final time = DateTime.now();
         return Scaffold(
@@ -63,14 +58,14 @@ class HomePage extends StatelessWidget {
             // );
             // },
             child: Consumer<HomePageController>(
-              child:Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "Last updated: ${time.toString().substring(5, 19)}\nData provided by nutrition.sa.ucsc.edu",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(color: Colors.grey),
-                          ),
-                        ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Text(
+                  "Last updated: ${time.toString().substring(5, 19)}\nData provided by nutrition.sa.ucsc.edu",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.grey),
+                ),
+              ),
               builder: (context, controller, child) => ListView(
                 children: <Widget>[
                   buildBanner(),
@@ -134,29 +129,11 @@ class HomePage extends StatelessWidget {
                       },
                     ),
                   ),
-
-                  // Displays summary for every college in [colleges].
-                  Container(
-                    alignment: Alignment.topCenter,
-                    child: Column(
-                      children: [
-                        for (var i = 0; i < controller.colleges.length; i++)
-                          buildSummary(
-                              controller.colleges[i].trim(),
-                              fetchSummary(controller.colleges[i].trim(),
-                                  controller.mealTime)),
-                        // Provide when the menu was last updated.
-                        child!,
-                        const SizedBox(height: 70),
-                      ],
-                    ),
-                  ),
+                  buildSummaryList(controller.colleges, controller.mealTime)
                 ],
               ),
             ),
           ),
-          // Comment this out to get rid of ad for screenshots!
-          // AD bar.
         );
       },
     );

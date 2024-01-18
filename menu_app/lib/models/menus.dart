@@ -31,6 +31,21 @@ Future<List<FoodCategory>> fetchSummary(String college, String mealTime) async {
   }
 }
 
+Future<List<FoodCategory>> fetchSummaryList(
+    List<String> colleges, String mealTime) async {
+  List<Future<List<FoodCategory>>> futures = [];
+
+  for (var college in colleges) {
+    futures.add(fetchSummary(college, mealTime));
+  }
+  List<List<FoodCategory>> results = await Future.wait(futures);
+  List<FoodCategory> combinedResults = [];
+  for (var resultList in results) {
+    combinedResults.addAll(resultList);
+  }
+  return combinedResults;
+}
+
 Future<List<FoodCategory>> fetchAlbum(String college, String mealTime,
     {String cat = "", String day = "Today"}) async {
   final DatabaseReference ref = FirebaseDatabase.instance.ref();

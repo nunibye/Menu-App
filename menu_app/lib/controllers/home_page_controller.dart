@@ -1,5 +1,6 @@
 // home_page_view_model.dart
 import 'package:flutter/material.dart';
+import 'package:menu_app/custom_widgets/summary.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/models/version.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,7 +44,6 @@ class HomePageController extends ChangeNotifier {
         mealTime = 'Null';
         break;
     }
-
     notifyListeners();
   }
 
@@ -87,10 +87,6 @@ class HomePageController extends ChangeNotifier {
       index = 3;
     }
     notifyListeners();
-  }
-
-  Future<List<FoodCategory>> fetchSummary(String college, String mealTime) {
-    return fetchSummary(college, mealTime);
   }
 
   // Function to return the [index] of [college] to display correct page onTap.

@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
           // Display app bar header.
           drawer: const NavDrawer(),
           appBar: AppBar(
-            toolbarHeight: 65,
+            toolbarHeight: 60,
             centerTitle: true,
             backgroundColor: const Color(constants.darkBlue),
             surfaceTintColor: const Color.fromARGB(255, 60, 60, 60),

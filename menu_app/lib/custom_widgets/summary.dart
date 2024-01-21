@@ -46,6 +46,12 @@ Widget buildSummaryList(List<String> colleges, String mealTime) {
                         child: Text(colleges[index],
                             style: constants.containerTextStyle),
                       ),
+                      if (summarySnap.connectionState ==
+                          ConnectionState.waiting)
+                        Center(
+                            child: Padding(
+                                padding: EdgeInsets.only(top: 20, bottom: 20),
+                                child: CircularProgressIndicator())),
 
                       // Check if snapshot data is not null before accessing its elements
                       if (summarySnap.data != null &&

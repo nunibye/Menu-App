@@ -10,7 +10,7 @@ Widget buildBanner() {
           if (snapshot.data != 'null') {
             final bannerText = snapshot.data;
             return Padding(
-              padding: const EdgeInsets.only(bottom: 30),
+              padding: const EdgeInsets.only(bottom: 15),
               child: Container(
                 height: 30,
                 color: const Color.fromARGB(100, 0, 60, 108),
@@ -30,12 +30,12 @@ Widget buildBanner() {
             );
           } else {
             return const SizedBox(
-              height: 30,
+              height: 20,
             );
           }
         } else {
           return const SizedBox(
-            height: 30,
+            height: 20,
           );
         }
       }));

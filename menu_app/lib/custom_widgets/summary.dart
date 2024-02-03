@@ -51,10 +51,9 @@ Widget buildSummaryList(List<String> colleges, String mealTime) {
                         Center(
                             child: Padding(
                                 padding: EdgeInsets.only(top: 20, bottom: 20),
-                                child: CircularProgressIndicator())),
-
+                                child: CircularProgressIndicator()))
                       // Check if snapshot data is not null before accessing its elements
-                      if (summarySnap.data != null &&
+                      else if (summarySnap.data != null &&
                           summarySnap.data!
                               .isNotEmpty) // Display all the food categories and items.
                         // for (var foodCategory in summarySnap.data!)
@@ -111,12 +110,6 @@ Widget buildSummaryList(List<String> colleges, String mealTime) {
                             ),
                           ),
                         )
-                      else
-                        // By default, show a loading spinner.
-                        const Center(
-                            child: Padding(
-                                padding: EdgeInsets.only(top: 20, bottom: 20),
-                                child: CircularProgressIndicator())),
                     ],
                   ),
                 ),

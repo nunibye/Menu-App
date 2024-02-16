@@ -69,6 +69,16 @@ func ScraperRun(ctx context.Context, m PubSubMessage) error {
 	return nil
 }
 
+// func main() {
+// 	start := time.Now()
+// 	scrape()
+// 	elapsed := time.Since(start)
+// 	log.Printf("Scrape took %.2f seconds", elapsed.Seconds())
+
+// 	menuJson, _ := json.MarshalIndent(menu, "", "  ")
+// 	os.WriteFile("menu.json", menuJson, 0644)
+// }
+
 func scrape() {
 	a := colly.NewCollector()
 
@@ -76,6 +86,8 @@ func scrape() {
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 	a.WithTransport(t)
+
+	sem := make(chan bool, 10)
 
 	// visits links with dining hall
 	a.OnHTML("a[href]", func(e *colly.HTMLElement) {
@@ -164,8 +176,10 @@ func scrape() {
 										}
 									}
 								})
+								<-sem
 							})
-							d.Visit(nutritionLink)
+							sem <- true
+							go d.Visit(nutritionLink)
 						}
 					})
 					c.Visit(dateLink)
@@ -175,6 +189,10 @@ func scrape() {
 		}
 	})
 	a.Visit(url)
+
+	for i := 0; i < cap(sem); i++ {
+		sem <- true
+	}
 }
 
 func makeSummary() {

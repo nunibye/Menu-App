@@ -1,5 +1,6 @@
 // home_page_view_model.dart
 import 'package:flutter/material.dart';
+import 'package:menu_app/custom_widgets/summary.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/models/version.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,8 @@ class HomePageController extends ChangeNotifier {
   bool versionCheckResult = true;
   final BuildContext context;
   String mealTime = '';
+  DateTime time = DateTime.now();
+  int index = 0;
 
   HomePageController({required this.context}) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -20,6 +23,28 @@ class HomePageController extends ChangeNotifier {
       }
     });
     init();
+  }
+
+  void onTabPressed(int newIndex) {
+    index = newIndex;
+    switch (index) {
+      case 0:
+        mealTime = 'Breakfast';
+        break;
+      case 1:
+        mealTime = 'Lunch';
+        break;
+      case 2:
+        mealTime = 'Dinner';
+        break;
+      case 3:
+        mealTime = 'Late Night';
+        break;
+      case 4:
+        mealTime = 'Null';
+        break;
+    }
+    notifyListeners();
   }
 
   void _showDialog() {
@@ -47,20 +72,21 @@ class HomePageController extends ChangeNotifier {
     DateTime time = DateTime.now();
     if (time.hour <= 4 || time.hour >= 23) {
       mealTime = 'Null';
+      index = 4; // will not highlight a button time
     } else if (time.hour < 11 && time.hour > 4) {
       mealTime = 'Breakfast';
+      index = 0;
     } else if (time.hour < 16) {
       mealTime = 'Lunch';
+      index = 1;
     } else if (time.hour < 20) {
       mealTime = 'Dinner';
+      index = 2;
     } else if (time.hour < 23) {
       mealTime = 'Late Night';
+      index = 3;
     }
     notifyListeners();
-  }
-
-  Future<List<FoodCategory>> fetchSummary(String college, String mealTime) {
-    return fetchSummary(college, mealTime);
   }
 
   // Function to return the [index] of [college] to display correct page onTap.
@@ -81,5 +107,7 @@ class HomePageController extends ChangeNotifier {
   // Function to reload data when refresh is triggered
   Future<void> refresh() async {
     getCollegeOrder();
+    time = DateTime.now();
+    loadMealTime();
   }
 }

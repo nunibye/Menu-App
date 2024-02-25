@@ -4,9 +4,11 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
-	"log"
+	"errors"
+	"fmt"
 	"net/http"
 	"strings"
+	"sync"
 	"time"
 
 	firebase "firebase.google.com/go"
@@ -40,6 +42,7 @@ var mealCats = []string{
 }
 
 var menu = make(map[string]interface{})
+var mutex sync.Mutex
 
 type PubSubMessage struct {
 	Data []byte `json:"data"`
@@ -51,35 +54,35 @@ func ScraperRun(ctx context.Context, m PubSubMessage) error {
 	}
 	app, err := firebase.NewApp(context.Background(), config)
 	if err != nil {
-		log.Fatalf("error initializing app: %v\n", err)
+		return fmt.Errorf("error initializing app: %v", err)
 	}
 
 	db, err := app.Database(context.Background())
 	if err != nil {
-		log.Fatalln("Error initializing database client:", err)
+		return fmt.Errorf("error initializing database client: %v", err)
 	}
 
-	scrape()
-	makeSummary()
+	menu = make(map[string]interface{}) // clear menu map
+
+	err = scrape()
+	if err != nil {
+		return fmt.Errorf("error in scrape function: %v", err)
+
+	}
+
+	err = makeSummary()
+	if err != nil {
+		return fmt.Errorf("error in makeSummary function: %v", err)
+	}
+
 	err = UpdateDatabase(db, menu)
 	if err != nil {
-		return err
+		return fmt.Errorf("error updating database: %v", err)
 	}
-
 	return nil
 }
 
-// func main() {
-// 	start := time.Now()
-// 	scrape()
-// 	elapsed := time.Since(start)
-// 	log.Printf("Scrape took %.2f seconds", elapsed.Seconds())
-
-// 	menuJson, _ := json.MarshalIndent(menu, "", "  ")
-// 	os.WriteFile("menu.json", menuJson, 0644)
-// }
-
-func scrape() {
+func scrape() error {
 	a := colly.NewCollector()
 
 	t := &http.Transport{
@@ -165,14 +168,18 @@ func scrape() {
 										// Check if the current category is in the mealCats slice
 										for _, cat := range mealCats {
 											if currentCategory == cat {
+												mutex.Lock()
 												dayData[diningHall][mealTime][currentCategory] = []string{}
+												mutex.Unlock()
 												break
 											}
 										}
 									} else { //food item
 										// Check if the current category is in the map before appending the food item
 										if _, ok := dayData[diningHall][mealTime][currentCategory]; ok {
+											mutex.Lock()
 											dayData[diningHall][mealTime][currentCategory] = append(dayData[diningHall][mealTime][currentCategory], s.Text())
+											mutex.Unlock()
 										}
 									}
 								})
@@ -188,14 +195,19 @@ func scrape() {
 			b.Visit(dhLink)
 		}
 	})
-	a.Visit(url)
+	err := a.Visit(url)
+	if err != nil {
+		return err
+	}
 
 	for i := 0; i < cap(sem); i++ {
 		sem <- true
 	}
+
+	return nil
 }
 
-func makeSummary() {
+func makeSummary() error {
 	// Check if "Summary" key exists in data map, if not, create it
 	summaryData, ok := menu["Summary"].(map[string]map[string][]string)
 	if !ok {
@@ -204,7 +216,10 @@ func makeSummary() {
 	}
 
 	// Get the data for "Today"
-	dayData, _ := menu["Today"].(map[string]map[string]map[string][]string)
+	dayData, ok := menu["Today"].(map[string]map[string]map[string][]string)
+	if !ok {
+		return errors.New("no data for 'Today' in menu")
+	}
 
 	// Iterate over each dining hall
 	for diningHall, diningHallData := range dayData {
@@ -231,25 +246,30 @@ func makeSummary() {
 			}
 		}
 	}
+
+	return nil
 }
 
-func DeleteReference(client *db.Client, ref_str string) {
+func DeleteReference(client *db.Client, ref_str string) error {
 	ref := client.NewRef(ref_str)
 	if err := ref.Delete(context.Background()); err != nil {
-		log.Fatalln("Error deleting reference:", err)
+		return err
 	}
+	return nil
 }
 
 func UpdateDatabase(client *db.Client, hall_menus map[string]interface{}) error {
 	references := []string{"/Merrill/", "/Oakes/", "/Cowell/", "/Nine/", "/Porter/", "/Today/", "/Tomorrow/", "/Day after tomorrow/", "/Summary/"}
 	for _, ref := range references {
-		DeleteReference(client, ref)
+		err := DeleteReference(client, ref)
+		if err != nil {
+			return err
+		}
 	}
 
 	ref := client.NewRef("/")
 	err := ref.Update(context.Background(), hall_menus)
 	if err != nil {
-		log.Fatalln("Error updating database:", err)
 		return err
 	}
 

@@ -25,20 +25,33 @@ var diningHallNames = map[string]string{
 	"Porter/Kresge Dining Hall":              "Porter",
 	"Rachel Carson/Oakes Dining Hall":        "Oakes",
 }
-var mealCats = []string{
-	"*Hot Bars*",
-	"*Soups*",
-	"*Entrees*",
-	"*Grill*",
-	"*Pizza*",
-	"*Clean Plate*",
-	"*Bakery*",
-	"*Open Bars*",
-	"*DH Baked*",
-	"*Plant Based Station*",
-	"*Miscellaneous*",
-	"*Brunch*",
-	"*Breakfast*",
+
+//	var mealCats = []string{
+//		"*Hot Bars*",
+//		"*Soups*",
+//		"*Entrees*",
+//		"*Grill*",
+//		"*Pizza*",
+//		"*Clean Plate*",
+//		"*Bakery*",
+//		"*Open Bars*",
+//		"*DH Baked*",
+//		"*Plant Based Station*",
+//		"*Miscellaneous*",
+//		"*Brunch*",
+//		"*Breakfast*",
+//		"*Unit Specialties*",
+//	}
+
+var excludeCategories = []string{
+	"*Cereal*",
+	"*All Day*",
+	"*Condiments*",
+	"*Breakfast Bar*",
+	"*Bread and Bagels*",
+	"*Beverages*",
+	"*Salad Bar*",
+	"*Deli Bar*",
 }
 
 var menu = make(map[string]interface{})
@@ -47,6 +60,33 @@ var mutex sync.Mutex
 type PubSubMessage struct {
 	Data []byte `json:"data"`
 }
+
+// func main() {
+// 	config := &firebase.Config{
+// 		DatabaseURL: "https://ucsc-menu-app-default-rtdb.firebaseio.com/",
+// 	}
+// 	app, err := firebase.NewApp(context.Background(), config)
+// 	if err != nil {
+// 		fmt.Printf("error initializing app: %v", err)
+// 	}
+// 	db, err := app.Database(context.Background())
+// 	if err != nil {
+// 		fmt.Printf("error initializing database client: %v", err)
+// 	}
+// 	menu = make(map[string]interface{}) // clear menu map
+// 	err = scrape()
+// 	if err != nil {
+// 		fmt.Printf("error in scrape function: %v", err)
+// 	}
+// 	err = makeSummary()
+// 	if err != nil {
+// 		fmt.Printf("error in makeSummary function: %v", err)
+// 	}
+// 	err = UpdateDatabase(db, menu)
+// 	if err != nil {
+// 		fmt.Printf("error updating database: %v", err)
+// 	}
+// }
 
 func ScraperRun(ctx context.Context, m PubSubMessage) error {
 	config := &firebase.Config{
@@ -165,14 +205,33 @@ func scrape() error {
 									if s.HasClass("longmenucolmenucat") { //category
 										currentCategory = strings.Replace(s.Text(), "-- ", "*", -1)
 										currentCategory = strings.Replace(currentCategory, " --", "*", -1)
+
 										// Check if the current category is in the mealCats slice
-										for _, cat := range mealCats {
+										// for _, cat := range mealCats {
+										// 	if currentCategory == cat {
+										// 		mutex.Lock()
+										// 		dayData[diningHall][mealTime][currentCategory] = []string{}
+										// 		mutex.Unlock()
+										// 		break
+										// 	}
+										// }
+
+										// Check if the current category is in the exclusion list
+										excluded := false
+										for _, cat := range excludeCategories {
 											if currentCategory == cat {
-												mutex.Lock()
-												dayData[diningHall][mealTime][currentCategory] = []string{}
-												mutex.Unlock()
+												excluded = true
 												break
 											}
+										}
+
+										// If the category is not in the exclusion list, add it to the map
+										if !excluded {
+											mutex.Lock()
+											if _, ok := dayData[diningHall][mealTime][currentCategory]; !ok {
+												dayData[diningHall][mealTime][currentCategory] = []string{}
+											}
+											mutex.Unlock()
 										}
 									} else { //food item
 										// Check if the current category is in the map before appending the food item
@@ -235,14 +294,25 @@ func makeSummary() error {
 				continue
 			}
 
-			// Try to get data from "*Open Bars*", then "*Hot Bars*", and then "*Entrees*"
+			// Try to get data from "*Open Bars*", then "*Hot Bars*", then "*Entrees*", then "*Unit Specialties*", then "*Grill*"
 			if len(mealTimeData["*Open Bars*"]) > 0 {
 				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Open Bars*"]...)
 			} else if len(mealTimeData["*Hot Bars*"]) > 0 {
 				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Hot Bars*"]...)
-			} else {
+			} else if len(mealTimeData["*Entrees*"]) > 0 {
 				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Entrees*"]...)
-
+			} else if len(mealTimeData["*Unit Specialties*"]) > 0 {
+				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Unit Specialties*"]...)
+			} else if len(mealTimeData["*Grill*"]) > 0 {
+				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Grill*"]...)
+			} else {
+				// If none of the above categories exist, add the first category that exists
+				for _, items := range mealTimeData {
+					if len(items) > 0 {
+						summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], items...)
+						break
+					}
+				}
 			}
 		}
 	}

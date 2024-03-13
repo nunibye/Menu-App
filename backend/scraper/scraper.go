@@ -294,6 +294,12 @@ func makeSummary() error {
 				continue
 			}
 
+			// Handle late night at Merrill
+			if diningHall == "Merrill" && mealTime == "Late Night" {
+				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Banana Joes*"]...)
+				continue
+			}
+
 			// Try to get data from "*Open Bars*", then "*Hot Bars*", then "*Entrees*", then "*Unit Specialties*", then "*Grill*"
 			if len(mealTimeData["*Open Bars*"]) > 0 {
 				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Open Bars*"]...)

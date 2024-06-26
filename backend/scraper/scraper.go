@@ -104,21 +104,42 @@ func ScraperRun(ctx context.Context, m PubSubMessage) error {
 
 	menu = make(map[string]interface{}) // clear menu map
 
-	err = scrape()
+	maxRetries := 3
+	retryDelay := 5 * time.Second
+
+	for retry := 0; retry < maxRetries; retry++ {
+		err = scrape()
+		if err == nil {
+			break
+		}
+		time.Sleep(retryDelay)
+	}
 	if err != nil {
 		return fmt.Errorf("error in scrape function: %v", err)
-
 	}
 
-	err = makeSummary()
+	for retry := 0; retry < maxRetries; retry++ {
+		err = makeSummary()
+		if err == nil {
+			break
+		}
+		time.Sleep(retryDelay)
+	}
 	if err != nil {
 		return fmt.Errorf("error in makeSummary function: %v", err)
 	}
 
-	err = UpdateDatabase(db, menu)
+	for retry := 0; retry < maxRetries; retry++ {
+		err = UpdateDatabase(db, menu)
+		if err == nil {
+			break
+		}
+		time.Sleep(retryDelay)
+	}
 	if err != nil {
 		return fmt.Errorf("error updating database: %v", err)
 	}
+
 	return nil
 }
 

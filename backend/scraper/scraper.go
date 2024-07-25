@@ -47,11 +47,17 @@ var excludeCategories = []string{
 	"*Cereal*",
 	"*All Day*",
 	"*Condiments*",
+	"*ACI CONDIMENTS*",
 	"*Breakfast Bar*",
+	"*ACI BRK BAR*",
 	"*Bread and Bagels*",
+	"*ACI BREAD $ BAGELS*",
 	"*Beverages*",
+	"*ACI BEVERAGES*",
 	"*Salad Bar*",
+	"*ACI SALAD BAR*",
 	"*Deli Bar*",
+	"*ACI DELI BAR*",
 }
 
 var menu = make(map[string]interface{})
@@ -82,6 +88,24 @@ type PubSubMessage struct {
 // 	if err != nil {
 // 		fmt.Printf("error in makeSummary function: %v", err)
 // 	}
+
+// 	// Create a file
+// 	file, err := os.Create("menu.json")
+// 	if err != nil {
+// 		fmt.Printf("error creating file: %v", err)
+// 	}
+// 	defer file.Close()
+
+// 	// Write the menu to the file in a readable format
+// 	menuJson, err := json.MarshalIndent(menu, "", "  ")
+// 	if err != nil {
+// 		fmt.Printf("error marshalling menu: %v", err)
+// 	}
+// 	_, err = file.Write(menuJson)
+// 	if err != nil {
+// 		fmt.Printf("error writing to file: %v", err)
+// 	}
+
 // 	err = UpdateDatabase(db, menu)
 // 	if err != nil {
 // 		fmt.Printf("error updating database: %v", err)

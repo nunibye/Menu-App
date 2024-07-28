@@ -1,23 +1,23 @@
-package scraper
+package main
 
 import (
-	"bytes"
 	"context"
 	"crypto/tls"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
-	"sync"
 	"time"
 
 	firebase "firebase.google.com/go"
 	"firebase.google.com/go/db"
-	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
 )
 
 var url = "https://nutrition.sa.ucsc.edu/"
+
 var diningHallNames = map[string]string{
 	"College Nine/John R. Lewis Dining Hall": "Nine",
 	"Cowell/Stevenson Dining Hall":           "Cowell",
@@ -25,23 +25,6 @@ var diningHallNames = map[string]string{
 	"Porter/Kresge Dining Hall":              "Porter",
 	"Rachel Carson/Oakes Dining Hall":        "Oakes",
 }
-
-//	var mealCats = []string{
-//		"*Hot Bars*",
-//		"*Soups*",
-//		"*Entrees*",
-//		"*Grill*",
-//		"*Pizza*",
-//		"*Clean Plate*",
-//		"*Bakery*",
-//		"*Open Bars*",
-//		"*DH Baked*",
-//		"*Plant Based Station*",
-//		"*Miscellaneous*",
-//		"*Brunch*",
-//		"*Breakfast*",
-//		"*Unit Specialties*",
-//	}
 
 var excludeCategories = []string{
 	"*Cereal*",
@@ -60,57 +43,87 @@ var excludeCategories = []string{
 	"*ACI DELI BAR*",
 }
 
+type NutritionalInfo struct {
+	ServingSize  string
+	Calories     string
+	TotalFat     string
+	SaturatedFat string
+	TransFat     string
+	Cholesterol  string
+	Sodium       string
+	TotalCarb    string
+	DietaryFiber string
+	Sugars       string
+	Protein      string
+	Ingredients  string
+	Allergens    string
+}
+
+type FoodItem struct {
+	Name            string
+	NutritionalInfo NutritionalInfo
+}
+
 var menu = make(map[string]interface{})
-var mutex sync.Mutex
+
+// FIXME:
+// var mutex sync.Mutex
 
 type PubSubMessage struct {
 	Data []byte `json:"data"`
 }
 
-// func main() {
-// 	config := &firebase.Config{
-// 		DatabaseURL: "https://ucsc-menu-app-default-rtdb.firebaseio.com/",
-// 	}
-// 	app, err := firebase.NewApp(context.Background(), config)
-// 	if err != nil {
-// 		fmt.Printf("error initializing app: %v", err)
-// 	}
-// 	db, err := app.Database(context.Background())
-// 	if err != nil {
-// 		fmt.Printf("error initializing database client: %v", err)
-// 	}
-// 	menu = make(map[string]interface{}) // clear menu map
-// 	err = scrape()
-// 	if err != nil {
-// 		fmt.Printf("error in scrape function: %v", err)
-// 	}
-// 	err = makeSummary()
-// 	if err != nil {
-// 		fmt.Printf("error in makeSummary function: %v", err)
-// 	}
+func main() {
+	// config := &firebase.Config{
+	// 	DatabaseURL: "https://ucsc-menu-app-default-rtdb.firebaseio.com/",
+	// }
+	// app, err := firebase.NewApp(context.Background(), config)
+	// if err != nil {
+	// 	fmt.Printf("error initializing app: %v", err)
+	// }
+	// db, err := app.Database(context.Background())
+	// if err != nil {
+	// 	fmt.Printf("error initializing database client: %v", err)
+	// }
+	menu = make(map[string]interface{}) // clear menu map
 
-// 	// Create a file
-// 	file, err := os.Create("menu.json")
-// 	if err != nil {
-// 		fmt.Printf("error creating file: %v", err)
-// 	}
-// 	defer file.Close()
+	start := time.Now()
 
-// 	// Write the menu to the file in a readable format
-// 	menuJson, err := json.MarshalIndent(menu, "", "  ")
-// 	if err != nil {
-// 		fmt.Printf("error marshalling menu: %v", err)
-// 	}
-// 	_, err = file.Write(menuJson)
-// 	if err != nil {
-// 		fmt.Printf("error writing to file: %v", err)
-// 	}
+	err := scrape()
+	if err != nil {
+		fmt.Printf("error in scrape function: %v\n", err)
+	}
 
-// 	err = UpdateDatabase(db, menu)
-// 	if err != nil {
-// 		fmt.Printf("error updating database: %v", err)
-// 	}
-// }
+	duration := time.Since(start)
+	fmt.Printf("Scraping completed in %v\n", duration)
+
+	// err = makeSummary()
+	// if err != nil {
+	// 	fmt.Printf("error in makeSummary function: %v", err)
+	// }
+
+	// Create a file
+	file, err := os.Create("menu.json")
+	if err != nil {
+		fmt.Printf("error creating file: %v", err)
+	}
+	defer file.Close()
+
+	// Write the menu to the file in a readable format
+	menuJson, err := json.MarshalIndent(menu, "", "  ")
+	if err != nil {
+		fmt.Printf("error marshalling menu: %v", err)
+	}
+	_, err = file.Write(menuJson)
+	if err != nil {
+		fmt.Printf("error writing to file: %v", err)
+	}
+
+	// err = UpdateDatabase(db, menu)
+	// if err != nil {
+	// 	fmt.Printf("error updating database: %v", err)
+	// }
+}
 
 func ScraperRun(ctx context.Context, m PubSubMessage) error {
 	config := &firebase.Config{
@@ -175,12 +188,14 @@ func scrape() error {
 	}
 	a.WithTransport(t)
 
-	sem := make(chan bool, 10)
+	// FIXME:
+	// sem := make(chan bool, 10)
 
 	// visits links with dining hall
 	a.OnHTML("a[href]", func(e *colly.HTMLElement) {
 		dhLink := url + e.Attr("href")
-		if strings.Contains(dhLink, "+Dining+Hall") {
+
+		if strings.Contains(dhLink, "Dining+Hall") {
 			b := a.Clone()
 
 			// visits links for today, tomorrow, day after
@@ -227,39 +242,28 @@ func scrape() error {
 							}
 
 							// initialize map
-							dayData, ok := menu[day].(map[string]map[string]map[string][]string)
+							dayData, ok := menu[day].(map[string]map[string]map[string][]FoodItem)
 							if !ok {
-								dayData = make(map[string]map[string]map[string][]string)
+								dayData = make(map[string]map[string]map[string][]FoodItem)
 								menu[day] = dayData
 							}
 							if dayData[diningHall] == nil {
-								dayData[diningHall] = make(map[string]map[string][]string)
+								dayData[diningHall] = make(map[string]map[string][]FoodItem)
 							}
 							if dayData[diningHall][mealTime] == nil {
-								dayData[diningHall][mealTime] = make(map[string][]string)
+								dayData[diningHall][mealTime] = make(map[string][]FoodItem)
 							}
 
 							// writes data from table to map
-							d.OnResponse(func(g *colly.Response) {
-								reader := bytes.NewReader(g.Body)
-								doc, _ := goquery.NewDocumentFromReader(reader)
+							d.OnHTML("table[bordercolor=\"#C0C0C0\"]", func(h *colly.HTMLElement) {
 								var currentCategory string
 
-								// gets all objects from table in the food name or category classes
-								doc.Find("table[bordercolor=\"#C0C0C0\"] div.longmenucoldispname, div.longmenucolmenucat").Each(func(i int, s *goquery.Selection) {
-									if s.HasClass("longmenucolmenucat") { //category
-										currentCategory = strings.Replace(s.Text(), "-- ", "*", -1)
-										currentCategory = strings.Replace(currentCategory, " --", "*", -1)
+								h.ForEach("div.longmenucoldispname, div.longmenucolmenucat", func(_ int, s *colly.HTMLElement) {
+									class := s.Attr("class")
+									if strings.Contains(class, "longmenucolmenucat") { //category
 
-										// Check if the current category is in the mealCats slice
-										// for _, cat := range mealCats {
-										// 	if currentCategory == cat {
-										// 		mutex.Lock()
-										// 		dayData[diningHall][mealTime][currentCategory] = []string{}
-										// 		mutex.Unlock()
-										// 		break
-										// 	}
-										// }
+										currentCategory = strings.Replace(s.Text, "-- ", "*", -1)
+										currentCategory = strings.Replace(currentCategory, " --", "*", -1)
 
 										// Check if the current category is in the exclusion list
 										excluded := false
@@ -272,25 +276,95 @@ func scrape() error {
 
 										// If the category is not in the exclusion list, add it to the map
 										if !excluded {
-											mutex.Lock()
+											// mutex.Lock()
 											if _, ok := dayData[diningHall][mealTime][currentCategory]; !ok {
-												dayData[diningHall][mealTime][currentCategory] = []string{}
+												dayData[diningHall][mealTime][currentCategory] = []FoodItem{}
 											}
-											mutex.Unlock()
+											// mutex.Unlock()
 										}
 									} else { //food item
 										// Check if the current category is in the map before appending the food item
 										if _, ok := dayData[diningHall][mealTime][currentCategory]; ok {
-											mutex.Lock()
-											dayData[diningHall][mealTime][currentCategory] = append(dayData[diningHall][mealTime][currentCategory], s.Text())
-											mutex.Unlock()
+											foodName := s.ChildText("a")
+											foodLink := url + s.ChildAttr("a", "href")
+
+											// Create a new collector for the nutritional info page
+											e := d.Clone()
+
+											var nutritionalInfo NutritionalInfo
+
+											e.OnHTML("body.labelbody", func(body *colly.HTMLElement) {
+												var servingSizeNext bool
+												// Get serving size and calories
+												body.ForEach("td[rowspan='8']", func(_ int, cell *colly.HTMLElement) {
+													cell.ForEach("font", func(i int, font *colly.HTMLElement) {
+														text := strings.TrimSpace(font.Text)
+														if servingSizeNext {
+															nutritionalInfo.ServingSize = text
+															servingSizeNext = false
+														} else if strings.Contains(text, "Serving Size") {
+															servingSizeNext = true
+														} else if strings.Contains(text, "Calories") {
+															calories := strings.TrimSpace(strings.TrimPrefix(text, "Calories"))
+															nutritionalInfo.Calories = calories
+														}
+													})
+												})
+
+												// Nutrition Facts table
+												body.ForEach("table[border='1'] tr", func(_ int, row *colly.HTMLElement) {
+													row.ForEach("td", func(i int, cell *colly.HTMLElement) {
+														label := strings.TrimSpace(cell.ChildText("font:first-child"))
+														value := strings.TrimSpace(cell.ChildText("font:nth-child(2)"))
+
+														switch {
+														case strings.Contains(label, "Total Fat"):
+															nutritionalInfo.TotalFat = value
+														case strings.Contains(label, "Sat. Fat"):
+															nutritionalInfo.SaturatedFat = value
+														case strings.Contains(label, "Trans Fat"):
+															nutritionalInfo.TransFat = value
+														case strings.Contains(label, "Cholesterol"):
+															nutritionalInfo.Cholesterol = value
+														case strings.Contains(label, "Sodium"):
+															nutritionalInfo.Sodium = value
+														case strings.Contains(label, "Tot. Carb."):
+															nutritionalInfo.TotalCarb = value
+														case strings.Contains(label, "Dietary Fiber"):
+															nutritionalInfo.DietaryFiber = value
+														case strings.Contains(label, "Sugars"):
+															nutritionalInfo.Sugars = value
+														case strings.Contains(label, "Protein"):
+															nutritionalInfo.Protein = value
+														}
+													})
+												})
+
+												// Ingredients
+												nutritionalInfo.Ingredients = body.ChildText(".labelingredientsvalue")
+
+												// Allergens
+												nutritionalInfo.Allergens = body.ChildText(".labelallergensvalue")
+
+												// Add the food item to the dayData map
+												// mutex.Lock()
+												dayData[diningHall][mealTime][currentCategory] = append(
+													dayData[diningHall][mealTime][currentCategory],
+													FoodItem{Name: foodName, NutritionalInfo: nutritionalInfo},
+												)
+												// mutex.Unlock()
+											})
+											e.Visit(foodLink)
 										}
 									}
 								})
-								<-sem
+								// FIXME:
+								// <-sem
 							})
-							sem <- true
-							go d.Visit(nutritionLink)
+							// FIXME:
+							// sem <- true
+							// go d.Visit(nutritionLink)
+							d.Visit(nutritionLink)
 						}
 					})
 					c.Visit(dateLink)
@@ -304,9 +378,10 @@ func scrape() error {
 		return err
 	}
 
-	for i := 0; i < cap(sem); i++ {
-		sem <- true
-	}
+	// FIXME:
+	// for i := 0; i < cap(sem); i++ {
+	// 	sem <- true
+	// }
 
 	return nil
 }

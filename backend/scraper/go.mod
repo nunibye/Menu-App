@@ -4,6 +4,7 @@ go 1.21.0
 
 require (
 	firebase.google.com/go v3.13.0+incompatible
+	github.com/PuerkitoBio/goquery v1.8.1
 	github.com/gocolly/colly/v2 v2.1.0
 )
 
@@ -15,7 +16,6 @@ require (
 	cloud.google.com/go/iam v1.1.5 // indirect
 	cloud.google.com/go/longrunning v0.5.4 // indirect
 	cloud.google.com/go/storage v1.30.1 // indirect
-	github.com/PuerkitoBio/goquery v1.8.1 // indirect
 	github.com/andybalholm/cascadia v1.3.2 // indirect
 	github.com/antchfx/htmlquery v1.3.0 // indirect
 	github.com/antchfx/xmlquery v1.3.18 // indirect

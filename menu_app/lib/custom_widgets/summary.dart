@@ -40,15 +40,63 @@ Widget buildSummaryList(List<String> colleges, String mealTime) {
                             ),
                           ),
                         ),
-                        padding: const EdgeInsets.only(
-                            top: 8, bottom: constants.containerPaddingTitle),
                         alignment: Alignment.topLeft,
-                        child: Text(colleges[index],
-                            style: constants.containerTextStyle),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8,
+                                  bottom: constants.containerPaddingTitle),
+                              child: Text(
+                                colleges[index],
+                                style: constants.containerTextStyle,
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      "10m ",
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                          fontSize: 13),
+                                    ),
+                                    Icon(
+                                      Icons.schedule,
+                                      size: 13,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                SizedBox(
+                                  width: 80,
+                                  child: LinearProgressIndicator(
+                                    value: 0.5,
+                                    color: Colors.green,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                       if (summarySnap.connectionState ==
                           ConnectionState.waiting)
-                        Center(
+                        const Center(
                             child: Padding(
                                 padding: EdgeInsets.only(top: 20, bottom: 20),
                                 child: CircularProgressIndicator()))
@@ -56,7 +104,6 @@ Widget buildSummaryList(List<String> colleges, String mealTime) {
                       else if (summarySnap.data != null &&
                           summarySnap.data!
                               .isNotEmpty) // Display all the food categories and items.
-                        // for (var foodCategory in summarySnap.data!)
                         if (summarySnap.data![index].foodItems.isNotEmpty)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 
 class FoodCategory {
@@ -30,6 +32,19 @@ Future<List<FoodCategory>> fetchSummary(String college, String mealTime) async {
     return [FoodCategory("Hall Closed", [])];
   }
 }
+// Future<List<FoodCategory>> fetchSummary(List<String> colleges) async {
+//   final DatabaseReference ref = FirebaseDatabase.instance.ref();
+//   final path = 'Summary';
+//   final snapshot = await ref.child(path).get();
+
+//   if (snapshot.exists) {
+//     final data = snapshot.value as List<dynamic>;
+//     List<String> foodItems = data.map((item) => item.toString()).toList();
+//     return [FoodCategory("", foodItems)];
+//   } else {
+//     return [FoodCategory("Hall Closed", [])];
+//   }
+// }
 
 Future<List<FoodCategory>> fetchSummaryList(
     List<String> colleges, String mealTime) async {

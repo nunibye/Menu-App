@@ -179,6 +179,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
 // Displays Hall default weekly hours.
 void _timeModalBottom(context, String name) {
   showModalBottomSheet(
+    useRootNavigator: true,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(50), topRight: Radius.circular(50)),

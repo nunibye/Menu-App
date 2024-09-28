@@ -3,7 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/utilities/constants.dart' as constants;
 
-Widget buildSummaryList(List<String> colleges, String mealTime) {
+Widget buildSummaryList(
+    List<String> colleges, String mealTime, Map<String, num> waitz) {
   return FutureBuilder(
       future: fetchSummaryList(colleges, mealTime),
       builder: (context, summarySnap) {
@@ -75,20 +76,30 @@ Widget buildSummaryList(List<String> colleges, String mealTime) {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                SizedBox(
-                                  width: 80,
-                                  child: LinearProgressIndicator(
-                                    value: 0.5,
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(20),
+                                if (waitz[colleges[index]] != null)
+                                  const SizedBox(
+                                    height: 4,
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
+                                if (waitz[colleges[index]] != null)
+                                  SizedBox(
+                                    width: 80,
+                                    child: LinearProgressIndicator(
+                                      // Use the busyness data for this college
+                                      value:
+                                          waitz[colleges[index]]!.toDouble() /
+                                              100,
+                                      color: waitz[colleges[index]]! < 40
+                                          ? Colors.green
+                                          : (waitz[colleges[index]]! < 75
+                                              ? Colors.orange
+                                              : Colors.red),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
+                                if (waitz[colleges[index]] != null)
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                               ],
                             )
                           ],

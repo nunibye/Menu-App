@@ -1,6 +1,8 @@
 // home_page_view_model.dart
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:menu_app/custom_widgets/summary.dart';
+import 'package:http/http.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/models/version.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +10,7 @@ import 'package:menu_app/custom_widgets/update_dialog.dart';
 
 class HomePageController extends ChangeNotifier {
   List<String> colleges = [];
+  Map<String, num> busyness = {};
   List<Widget> summaries = [];
   bool ad = false;
   bool versionCheckResult = true;
@@ -54,6 +57,7 @@ class HomePageController extends ChangeNotifier {
   Future<void> init() async {
     getCollegeOrder();
     loadMealTime();
+    getWaitz();
   }
 
   void getCollegeOrder() async {
@@ -87,6 +91,33 @@ class HomePageController extends ChangeNotifier {
       index = 3;
     }
     notifyListeners();
+  }
+
+  void getWaitz() async {
+    final response = await get(Uri.parse('https://waitz.io/live/ucsc'));
+
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      List<dynamic> locations = jsonData['data'];
+
+      Map<String, int> data = {};
+
+      for (final location in locations) {
+        WaitzData loc = WaitzData.fromJson(location);
+        for (String college in colleges) {
+          if (loc.name.contains(college)) {
+            busyness[college] = loc.busyness;
+          }
+          // "Nine" is "9" from Waitz
+          else if (loc.name.contains("9")) {
+            busyness[college] = loc.busyness;
+          }
+        }
+      }
+      notifyListeners(); // Notify the UI to update with the new data
+    } else {
+      print("Error fetching Waitz data");
+    }
   }
 
   // Function to return the [index] of [college] to display correct page onTap.

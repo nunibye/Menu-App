@@ -130,7 +130,7 @@ class HomePage extends StatelessWidget {
                             padding: EdgeInsets.only(bottom: 6, top: 6),
                             child: CustomTabBar()),
                         buildSummaryList(
-                            controller.colleges, controller.mealTime),
+                            controller.colleges, controller.mealTime, controller.busyness),
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
                           child: Text(

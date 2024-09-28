@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
                   Expanded(
                     child: ListView(
                       children: <Widget>[
-                        buildBanner(),
+                        // buildBanner(),
                         // Display header text.
                         Container(
                           alignment: Alignment.topLeft,

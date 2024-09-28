@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:menu_app/controllers/hall_controller.dart';
+import 'package:menu_app/controllers/time_notifier.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/custom_widgets/menu.dart';
+import 'package:menu_app/views/time_modal_widget.dart';
 import 'package:provider/provider.dart';
 import '../utilities/constants.dart' as constants;
 
@@ -169,7 +171,6 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                     .futureLateNight),
             ],
           ),
-          
         );
       },
     );
@@ -189,67 +190,69 @@ void _timeModalBottom(context, String name) {
     builder: (context) => DraggableScrollableSheet(
       expand: false,
       builder: (context, scrollController) {
-        return FutureBuilder(
-          future: fetchDataFromDatabase(name),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Column(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 20,
-                  ),
-                  const CircularProgressIndicator(),
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Column(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 20,
-                  ),
-                  Text(
-                    'Error fetching data',
-                    style: constants.modalTitleStyle,
-                  ),
-                ],
-              );
-            } else {
-              // Replace the itemCount and data with your fetched data
-              final List<Modal>? data = snapshot.data;
-              return ListView.builder(
-                itemCount: data?.length,
-                controller: scrollController,
-                itemBuilder: (context, index) {
-                  final hour = data?[index];
-                  return Column(
-                    children: [
-                      ListTile(
-                        contentPadding: const EdgeInsets.only(top: 10),
-                        title: Text(
-                          hour?.day ?? 'No data',
-                          textAlign: TextAlign.center,
-                        ),
-                        titleTextStyle: constants.modalTitleStyle,
-                        subtitle: Container(
-                          padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width / 5,
-                              top: 5),
-                          child: Text(
-                            hour?.schedule ?? 'No data',
-                            style: constants.modalSubtitleStyle,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              );
-            }
-          },
-        );
+        return TimeModalWidget(name: name, scrollController: scrollController,);
+       
       },
     ),
   );
 }
+ // return FutureBuilder(
+        //   future: fetchHoursFromDatabase(name),
+        //   builder: (context, snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.waiting) {
+        //       return Column(
+        //         children: [
+        //           SizedBox(
+        //             width: MediaQuery.of(context).size.width,
+        //             height: 20,
+        //           ),
+        //           const CircularProgressIndicator(),
+        //         ],
+        //       );
+        //     } else if (snapshot.hasError) {
+        //       return Column(
+        //         children: [
+        //           SizedBox(
+        //             width: MediaQuery.of(context).size.width,
+        //             height: 20,
+        //           ),
+        //           Text(
+        //             'Error fetching data',
+        //             style: constants.modalTitleStyle,
+        //           ),
+        //         ],
+        //       );
+        //     } else {
+        //       // Replace the itemCount and data with your fetched data
+        //       final List<Modal>? data = snapshot.data;
+        //       return ListView.builder(
+        //         itemCount: data?.length,
+        //         controller: scrollController,
+        //         itemBuilder: (context, index) {
+        //           final hour = data?[index];
+        //           return Column(
+        //             children: [
+        //               ListTile(
+        //                 contentPadding: const EdgeInsets.only(top: 10),
+        //                 title: Text(
+        //                   hour?.day ?? 'No data',
+        //                   textAlign: TextAlign.center,
+        //                 ),
+        //                 titleTextStyle: constants.modalTitleStyle,
+        //                 subtitle: Container(
+        //                   padding: EdgeInsets.only(
+        //                       left: MediaQuery.of(context).size.width / 5,
+        //                       top: 5),
+        //                   child: Text(
+        //                     hour?.schedule ?? 'No data',
+        //                     style: constants.modalSubtitleStyle,
+        //                   ),
+        //                 ),
+        //               ),
+        //             ],
+        //           );
+        //         },
+        //       );
+        //     }
+        //   },
+        // );

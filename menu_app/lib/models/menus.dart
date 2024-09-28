@@ -104,21 +104,21 @@ Future<List<FoodCategory>> fetchAlbum(String college, String mealTime,
   }
 }
 
-class Modal {
+class Hours {
   final String day;
   final String schedule;
 
-  Modal(this.day, this.schedule);
+  Hours(this.day, this.schedule);
 }
 
-Future<List<Modal>> fetchDataFromDatabase(String name) async {
+Future<List<Hours>> fetchHoursFromDatabase(String name) async {
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   final snapshot = await ref.child('Hours/$name').get();
   if (snapshot.exists) {
     final data = snapshot.value as List<dynamic>;
 
-    final hoursList = <Modal>[];
+    final hoursList = <Hours>[];
 
     for (int i = 0; i < data.length; i++) {
       final dayData = data[i];
@@ -126,7 +126,7 @@ Future<List<Modal>> fetchDataFromDatabase(String name) async {
         final dayKey = dayData.keys.first.toString();
         final schedule =
             dayData.values.first.toString().replaceAll('\\n', '\n');
-        hoursList.add(Modal(dayKey, schedule));
+        hoursList.add(Hours(dayKey, schedule));
       }
     }
 

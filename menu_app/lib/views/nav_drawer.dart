@@ -13,6 +13,7 @@ class NavDrawer extends StatelessWidget {
     return SizedBox(
         width: screenWidth,
         child: Drawer(
+          
           backgroundColor: const Color(constants.backgroundColor),
           child: ListView(
             padding: EdgeInsets.zero,

@@ -60,8 +60,8 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
             toolbarHeight: 60,
             centerTitle: false,
             backgroundColor: const Color(constants.darkBlue),
-            shape: const Border(
-                bottom: BorderSide(color: Colors.orange, width: 4)),
+            // shape: const Border(
+            //     bottom: BorderSide(color: Colors.orange, width: 4)),
             automaticallyImplyLeading: false,
             leading: IconButton(
               onPressed: () {
@@ -126,15 +126,14 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
               )
             ],
 
-            // Categorized menu time [TabBar].
             bottom: TabBar(
-              indicatorColor: Colors.orange,
+              dividerColor: Colors.orange,
+              dividerHeight: 2,
+              indicator: CustomTabIndicator(),
+              labelColor: const Color(constants.bodyColor),
+              unselectedLabelColor: const Color(constants.bodyColor),
               indicatorSize: TabBarIndicatorSize.tab,
-              indicator: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(width: 6, color: Colors.orange),
-                ),
-              ),
+              splashBorderRadius: const BorderRadius.vertical(top:Radius.circular(20)),
               controller: Provider.of<HallController>(context, listen: false)
                   .tabController,
               tabs: <Widget>[
@@ -150,11 +149,14 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                 if (Provider.of<HallController>(context, listen: false)
                     .hasLateNight)
                   const Tab(
-                    icon: Icon(Icons.bedtime_outlined),
+                    icon: Icon(
+                      Icons.bedtime_outlined,
+                    ),
                   ),
               ],
             ),
           ),
+
           body: TabBarView(
             controller: Provider.of<HallController>(context, listen: false)
                 .tabController,
@@ -190,69 +192,74 @@ void _timeModalBottom(context, String name) {
     builder: (context) => DraggableScrollableSheet(
       expand: false,
       builder: (context, scrollController) {
-        return TimeModalWidget(name: name, scrollController: scrollController,);
-       
+        return TimeModalWidget(
+          name: name,
+          scrollController: scrollController,
+        );
       },
     ),
   );
 }
- // return FutureBuilder(
-        //   future: fetchHoursFromDatabase(name),
-        //   builder: (context, snapshot) {
-        //     if (snapshot.connectionState == ConnectionState.waiting) {
-        //       return Column(
-        //         children: [
-        //           SizedBox(
-        //             width: MediaQuery.of(context).size.width,
-        //             height: 20,
-        //           ),
-        //           const CircularProgressIndicator(),
-        //         ],
-        //       );
-        //     } else if (snapshot.hasError) {
-        //       return Column(
-        //         children: [
-        //           SizedBox(
-        //             width: MediaQuery.of(context).size.width,
-        //             height: 20,
-        //           ),
-        //           Text(
-        //             'Error fetching data',
-        //             style: constants.modalTitleStyle,
-        //           ),
-        //         ],
-        //       );
-        //     } else {
-        //       // Replace the itemCount and data with your fetched data
-        //       final List<Modal>? data = snapshot.data;
-        //       return ListView.builder(
-        //         itemCount: data?.length,
-        //         controller: scrollController,
-        //         itemBuilder: (context, index) {
-        //           final hour = data?[index];
-        //           return Column(
-        //             children: [
-        //               ListTile(
-        //                 contentPadding: const EdgeInsets.only(top: 10),
-        //                 title: Text(
-        //                   hour?.day ?? 'No data',
-        //                   textAlign: TextAlign.center,
-        //                 ),
-        //                 titleTextStyle: constants.modalTitleStyle,
-        //                 subtitle: Container(
-        //                   padding: EdgeInsets.only(
-        //                       left: MediaQuery.of(context).size.width / 5,
-        //                       top: 5),
-        //                   child: Text(
-        //                     hour?.schedule ?? 'No data',
-        //                     style: constants.modalSubtitleStyle,
-        //                   ),
-        //                 ),
-        //               ),
-        //             ],
-        //           );
-        //         },
-        //       );
-        //     }
-        //   },
-        // );
+
+// class CustomTabIndicator extends Decoration {
+//   @override
+//   BoxPainter createBoxPainter([VoidCallback? onChanged]) {
+//     return _CustomPainter();
+//   }
+// }
+
+// class _CustomPainter extends BoxPainter {
+//   @override
+//   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
+//     final Rect rect = offset & configuration.size!;
+//     final Paint paint = Paint();
+//     paint.color = Colors.orange;
+//     paint.style = PaintingStyle.fill;
+
+//     final double indicatorHeight = 4;
+//     final double radius = indicatorHeight / 2;
+
+//     canvas.drawRRect(
+//       RRect.fromRectAndCorners(
+//         Rect.fromPoints(
+//           rect.bottomLeft,
+//           rect.bottomRight.translate(0, -indicatorHeight),
+//         ),
+//         topLeft: Radius.circular(radius),
+//         topRight: Radius.circular(radius),
+//       ),
+//       paint,
+//     );
+//   }
+// }
+class CustomTabIndicator extends Decoration {
+  @override
+  BoxPainter createBoxPainter([VoidCallback? onChanged]) {
+    return _CustomPainter();
+  }
+}
+
+class _CustomPainter extends BoxPainter {
+  @override
+  void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
+    final Rect rect = offset & configuration.size!;
+    final Paint paint = Paint();
+    paint.color = Colors.orange;
+    paint.style = PaintingStyle.fill;
+
+    final double indicatorHeight = 4;
+    final double radius = indicatorHeight / 2;
+
+    canvas.drawRRect(
+      RRect.fromRectAndCorners(
+        Rect.fromPoints(
+          rect.bottomLeft,
+          rect.bottomRight.translate(0, -indicatorHeight),
+        ),
+        topLeft: Radius.circular(radius),
+        topRight: Radius.circular(radius),
+      ),
+      paint,
+    );
+  }
+}

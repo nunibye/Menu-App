@@ -53,34 +53,48 @@ class _TimeModalWidgetState extends State<TimeModalWidget> {
       // }
       else {
         // Replace the itemCount and data with your fetched data
-        final List<Hours> data = timeNotifier.hours[widget.name] ?? [];
-        return ListView.builder(
-          itemCount: timeNotifier.hours[widget.name]?.length,
-          controller: widget.scrollController,
-          itemBuilder: (context, index) {
-            final hour = data[index];
-            return Column(
-              children: [
-                ListTile(
-                  contentPadding: const EdgeInsets.only(top: 10),
-                  title: Text(
-                    hour.day,
-                    textAlign: TextAlign.center,
-                  ),
-                  titleTextStyle: constants.modalTitleStyle,
-                  subtitle: Container(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 5, top: 5),
-                    child: Text(
-                      hour.schedule,
-                      style: constants.modalSubtitleStyle,
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
+        // final List<Hours> data = timeNotifier.hours[widget.name] ?? [];
+        return SingleChildScrollView(
+            child: ExpansionPanelList(
+          children: timeNotifier.hoursEvents.keys.map((item) {
+            return ExpansionPanel(
+                headerBuilder: (BuildContext context, bool isExpanded) {
+                  return ListTile(
+                    title: Text(item),
+                  );
+                },
+                body: ListTile(
+                  title: Text(item),
+                ));
+          }).toList(),
+        ));
+        // return ListView.builder(
+        //   itemCount: timeNotifier.hours[widget.name]?.length,
+        //   controller: widget.scrollController,
+        //   itemBuilder: (context, index) {
+        //     final hour = data[index];
+        //     return Column(
+        //       children: [
+        //         ListTile(
+        //           contentPadding: const EdgeInsets.only(top: 10),
+        //           title: Text(
+        //             hour.day,
+        //             textAlign: TextAlign.center,
+        //           ),
+        //           titleTextStyle: constants.modalTitleStyle,
+        //           subtitle: Container(
+        //             padding: EdgeInsets.only(
+        //                 left: MediaQuery.of(context).size.width / 5, top: 5),
+        //             child: Text(
+        //               hour.schedule,
+        //               style: constants.modalSubtitleStyle,
+        //             ),
+        //           ),
+        //         ),
+        //       ],
+        //     );
+        //   },
+        // );
       }
     });
   }

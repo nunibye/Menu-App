@@ -6,9 +6,47 @@ import 'package:menu_app/controllers/time_notifier.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:provider/provider.dart';
 
+class WaitzIndicator extends StatelessWidget {
+  const WaitzIndicator({
+    super.key,
+    this.number,
+  });
+  final num? number;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        if (number != null)
+          const SizedBox(
+            height: 4,
+          ),
+        if (number != null)
+          SizedBox(
+            width: 80,
+            child: LinearProgressIndicator(
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              // Use the busyness data for this college
+              value: number!.toDouble() / 100,
+              color: number! < 40
+                  ? Colors.green
+                  : (number! < 75 ? Colors.orange : Colors.red),
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+        if (number != null)
+          const SizedBox(
+            height: 10,
+          ),
+      ],
+    );
+  }
+}
+
 class TimeStateDisplay extends StatefulWidget {
-  const TimeStateDisplay({super.key, required this.name});
+  const TimeStateDisplay({super.key, required this.name, this.waitzNum});
   final String name;
+  final num? waitzNum;
 
   @override
   State<TimeStateDisplay> createState() => _TimeStateDisplayState();
@@ -83,7 +121,7 @@ class _TimeStateDisplayState extends State<TimeStateDisplay> {
                 events[nextPhaseIndex].time.hour,
                 events[nextPhaseIndex].time.minute)
             .difference(now);
-        if (timeDif <= const Duration(minutes: 30)) {
+        if (timeDif <= const Duration(minutes: 30) && !timeDif.isNegative) {
           final eventName =
               events[nextPhaseIndex].name.startsWith("Continuous Dining")
                   ? "Continuous Dining"
@@ -105,11 +143,18 @@ class _TimeStateDisplayState extends State<TimeStateDisplay> {
   @override
   Widget build(BuildContext context) {
     return Consumer<TimeNotifier>(builder: (context, timeNotifier, child) {
-      return Text(
-        _displayString,
-        style: TextStyle(
-            color: Theme.of(context).colorScheme.onPrimary, fontSize: 13),
-      );
+      return Column(crossAxisAlignment: CrossAxisAlignment.end,children: [
+        
+        Text(
+          _displayString,
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary, fontSize: 14),
+        ),
+        if (_displayString != "Closed")
+          WaitzIndicator(
+            number: widget.waitzNum,
+          )
+      ]);
     });
   }
 }

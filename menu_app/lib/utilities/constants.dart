@@ -1,6 +1,16 @@
 // Constants file to keep consistent formatting across app.
 import 'package:flutter/material.dart';
 
+const daysOfWeek = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
+];
+
 // Colors
 const darkBlue = 0xff0f0f0f; //0xff000237
 const yellowGold = 0xFFFFC82F;
@@ -56,10 +66,11 @@ ColorScheme darkThemeColors(context) {
     tertiary: Color(0xffffffff),
     error: Color(0xFFF32424),
     onError: Color(0xFFF32424),
-    background: Color(0xFF101010),
-    onBackground: Color(0xFF202020),
-    surface: Color.fromARGB(255, 0, 0, 0),
-    onSurface: Color(bodyColor),
+    surface: Color(0xFF101010),
+    // onSurface: Color(0xFF202020),
+    onSurface: Color(0xffdbdbdb),
+    onSurfaceVariant: Color(0xFF202020)
+
   );
 }
 

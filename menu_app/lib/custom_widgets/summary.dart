@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:menu_app/custom_widgets/time_state_display.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/utilities/constants.dart' as constants;
 
@@ -22,9 +23,9 @@ Widget buildSummaryList(
                     context.push('/${colleges[index].trim()}');
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
+                    backgroundColor: WidgetStateProperty.all<Color>(
                         const Color.fromARGB(255, 30, 30, 30)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    shape:  WidgetStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
@@ -59,21 +60,14 @@ Widget buildSummaryList(
                               children: [
                                 Row(
                                   children: [
-                                    Text(
-                                      "10m ",
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
-                                          fontSize: 13),
-                                    ),
-                                    Icon(
-                                      Icons.schedule,
-                                      size: 13,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary,
-                                    ),
+                                    TimeStateDisplay(name: colleges[index])
+                                    // Icon(
+                                    //   Icons.schedule,
+                                    //   size: 13,
+                                    //   color: Theme.of(context)
+                                    //       .colorScheme
+                                    //       .onPrimary,
+                                    // ),
                                   ],
                                 ),
                                 if (waitz[colleges[index]] != null)
@@ -84,6 +78,9 @@ Widget buildSummaryList(
                                   SizedBox(
                                     width: 80,
                                     child: LinearProgressIndicator(
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .surface,
                                       // Use the busyness data for this college
                                       value:
                                           waitz[colleges[index]]!.toDouble() /

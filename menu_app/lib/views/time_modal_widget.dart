@@ -20,7 +20,6 @@ class _TimeModalWidgetState extends State<TimeModalWidget> {
   void initState() {
     super.initState();
     _controller = context.read<TimeNotifier>();
-    _controller.clearAll();
     Future.microtask(() => _controller.pullHours(widget.name));
   }
 

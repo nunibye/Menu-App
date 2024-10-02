@@ -104,7 +104,7 @@ class HomePageController extends ChangeNotifier {
 
       for (final location in locations) {
         WaitzData loc = WaitzData.fromJson(location);
-        for (String college in colleges) {
+        for (final college in colleges) {
           if (loc.name.contains(college)) {
             busyness[college] = loc.busyness;
           }

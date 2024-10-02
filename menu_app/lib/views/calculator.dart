@@ -277,6 +277,7 @@ class Calculator extends StatelessWidget {
 // Function [_timeModalBottom] opens [FloatingActionButton] calculator description.
 void _timeModalBottom(context) {
   showModalBottomSheet(
+    showDragHandle: true,
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(

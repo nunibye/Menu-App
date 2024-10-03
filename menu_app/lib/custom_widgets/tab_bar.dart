@@ -52,7 +52,7 @@ class _Button extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: isActive
-                  ? Theme.of(context).colorScheme.onBackground
+                  ? Theme.of(context).colorScheme.onSurfaceVariant
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(10),
             ),

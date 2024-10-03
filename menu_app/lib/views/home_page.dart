@@ -25,6 +25,17 @@ class HomePage extends StatelessWidget {
           // Display app bar header.
           drawer: const NavDrawer(),
           appBar: AppBar(
+            // leading: Builder(
+            //   builder: (BuildContext context) {
+            //     return IconButton(
+            //       icon: const Icon(Icons.menu),
+            //       color: Colors.white, // Change this to your desired color
+            //       onPressed: () {
+            //         Scaffold.of(context).openDrawer();
+            //       },
+            //     );
+            //   },
+            // ),
             toolbarHeight: 60,
             centerTitle: true,
             backgroundColor: const Color(constants.darkBlue),
@@ -64,7 +75,7 @@ class HomePage extends StatelessWidget {
                   Expanded(
                     child: ListView(
                       children: <Widget>[
-                        buildBanner(),
+                        // buildBanner(),
                         // Display header text.
                         Container(
                           alignment: Alignment.topLeft,
@@ -129,8 +140,8 @@ class HomePage extends StatelessWidget {
                         const Padding(
                             padding: EdgeInsets.only(bottom: 6, top: 6),
                             child: CustomTabBar()),
-                        buildSummaryList(
-                            controller.colleges, controller.mealTime),
+                        buildSummaryList(controller.colleges,
+                            controller.mealTime, controller.busyness),
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
                           child: Text(

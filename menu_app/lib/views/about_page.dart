@@ -30,6 +30,7 @@ class AboutPage extends StatelessWidget {
             // Display page heading.
             drawer: const NavDrawer(),
             appBar: AppBar(
+              surfaceTintColor: Colors. transparent,
               title: const Text(
                 "About  Us",
                 style: TextStyle(
@@ -104,7 +105,7 @@ class AboutPage extends StatelessWidget {
                         Provider.of<AboutController>(context, listen: false)
                             .launchDonateLink(),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
+                      backgroundColor: WidgetStateProperty.all<Color>(
                           constants.darkThemeColors(context).onSurface),
                     ),
                     child: Row(
@@ -114,7 +115,7 @@ class AboutPage extends StatelessWidget {
                           'Buy us a coffee! ',
                           style: TextStyle(
                             color:
-                                constants.darkThemeColors(context).background,
+                                constants.darkThemeColors(context).surface,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -159,7 +160,7 @@ class AboutPage extends StatelessWidget {
                                 style: TextStyle(
                                   color: constants
                                       .darkThemeColors(context)
-                                      .background,
+                                      .surface,
                                   fontWeight: FontWeight.bold,
                                 )),
                             TextSpan(
@@ -171,7 +172,7 @@ class AboutPage extends StatelessWidget {
                                   Shadow(
                                     color: constants
                                         .darkThemeColors(context)
-                                        .onBackground, // Set the color to match your background
+                                        .onSurfaceVariant, // Set the color to match your background
                                     blurRadius: 10,
                                   ),
                                 ],

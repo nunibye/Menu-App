@@ -6,7 +6,7 @@ import 'package:menu_app/utilities/constants.dart' as constants;
 // FIXME to controller
 Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
   return Container(
-    padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
+    padding: const EdgeInsets.only(left: 12, right: 12, top: 0),
     alignment: Alignment.topLeft,
     child: FutureBuilder(
       future: hallSummary,
@@ -26,7 +26,7 @@ Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
           } else {
             return ListView.builder(
               padding: const EdgeInsets.only(
-                  top: 8, bottom: constants.containerPaddingTitle),
+                  top: 12, bottom: constants.containerPaddingTitle),
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 final category = snapshot.data![index];

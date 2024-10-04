@@ -6,6 +6,7 @@ import 'package:menu_app/utilities/constants.dart' as constants;
 
 Widget buildSummaryList(
     List<String> colleges, String mealTime, Map<String, num> waitz) {
+  
   return FutureBuilder(
       future: fetchSummaryList(colleges, mealTime),
       builder: (context, summarySnap) {

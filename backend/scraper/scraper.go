@@ -18,6 +18,7 @@ import (
 )
 
 var url = "https://nutrition.sa.ucsc.edu/"
+
 var diningHallNames = map[string]string{
 	"John R. Lewis & College Nine Dining Hall": "Nine",
 	"Cowell & Stevenson Dining Hall":           "Cowell",
@@ -25,23 +26,6 @@ var diningHallNames = map[string]string{
 	"Porter & Kresge Dining Hall":              "Porter",
 	"Rachel Carson & Oakes Dining Hall":        "Oakes",
 }
-
-//	var mealCats = []string{
-//		"*Hot Bars*",
-//		"*Soups*",
-//		"*Entrees*",
-//		"*Grill*",
-//		"*Pizza*",
-//		"*Clean Plate*",
-//		"*Bakery*",
-//		"*Open Bars*",
-//		"*DH Baked*",
-//		"*Plant Based Station*",
-//		"*Miscellaneous*",
-//		"*Brunch*",
-//		"*Breakfast*",
-//		"*Unit Specialties*",
-//	}
 
 var excludeCategories = []string{
 	"*Cereal*",
@@ -51,6 +35,7 @@ var excludeCategories = []string{
 	"*Breakfast Bar*",
 	"*ACI BRK BAR*",
 	"*Bread and Bagels*",
+	"*Bread & Bagels*",
 	"*ACI BREAD $ BAGELS*",
 	"*Beverages*",
 	"*ACI BEVERAGES*",

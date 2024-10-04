@@ -67,6 +67,8 @@ ColorScheme darkThemeColors(context) {
     error: Color(0xFFF32424),
     onError: Color(0xFFF32424),
     surface: Color(0xFF101010),
+    onSecondaryContainer: Colors.black,
+    secondaryContainer: Colors.white,
     // onSurface: Color(0xFF202020),
     onSurface: Color(0xffdbdbdb),
     onSurfaceVariant: Color(0xFF202020)

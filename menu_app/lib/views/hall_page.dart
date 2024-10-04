@@ -133,7 +133,8 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
               labelColor: const Color(constants.bodyColor),
               unselectedLabelColor: const Color(constants.bodyColor),
               indicatorSize: TabBarIndicatorSize.tab,
-              splashBorderRadius: const BorderRadius.vertical(top:Radius.circular(20)),
+              splashBorderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(20)),
               controller: Provider.of<HallController>(context, listen: false)
                   .tabController,
               tabs: <Widget>[
@@ -182,23 +183,21 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
 // Displays Hall default weekly hours.
 void _timeModalBottom(context, String name) {
   showModalBottomSheet(
-    useRootNavigator: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(50), topRight: Radius.circular(50)),
-    ),
-    backgroundColor: Colors.white,
-    context: context,
-    builder: (context) => DraggableScrollableSheet(
-      expand: false,
-      builder: (context, scrollController) {
+      enableDrag: true,
+      showDragHandle: true,
+      useRootNavigator: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(50), topRight: Radius.circular(50)),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+      context: context,
+      builder: (BuildContext context) {
         return TimeModalWidget(
+          width: MediaQuery.sizeOf(context).width,
           name: name,
-          scrollController: scrollController,
         );
-      },
-    ),
-  );
+      });
 }
 
 // class CustomTabIndicator extends Decoration {

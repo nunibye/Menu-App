@@ -38,46 +38,55 @@ Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
                     color: const Color.fromARGB(255, 30, 30, 30),
                     borderRadius: BorderRadius.circular(20.0),
                   ),
-                  child: Column(
-                    children: [
-                      // Display the food category.
-                      Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              width: constants.borderWidth,
-                              color: Color(constants.darkGray),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 7),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Display the food category.
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 7),
+                          child: Text(
+                            category.category,
+                            style: constants.containerTextStyle.copyWith(
+                              fontSize: constants.titleFontSize - 2,
                             ),
                           ),
                         ),
-                        padding: const EdgeInsets.only(
-                            top: 8, bottom: constants.containerPaddingTitle),
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          category.category,
-                          style: constants.containerTextStyle.copyWith(
-                            fontSize: constants.titleFontSize - 2,
-                          ),
-                        ),
-                      ),
-
-                      // Display the food items.
-                      Column(
-                        children: category.foodItems.map((foodItem) {
-                          return Container(
-                            padding: const EdgeInsets.only(left: 15),
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              foodItem,
-                              style: constants.containerTextStyle.copyWith(
-                                  fontSize: constants.bodyFontSize - 2,
-                                  height: constants.bodyFontheight,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          );
-                        }).toList(),
-                      )
-                    ],
+                        // Display the food items.
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: category.foodItems.map((foodItem) {
+                            return Row(children: [
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    foodItem,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: constants.containerTextStyle
+                                        .copyWith(
+                                            fontSize:
+                                                constants.bodyFontSize - 2,
+                                            height: constants.bodyFontheight,
+                                            fontWeight: FontWeight.normal),
+                                  ),
+                                ),
+                              ),
+                              // TODO nutrition images here
+                              // ClipOval(
+                              //   child: Image.asset(
+                              //     'icons/soy.gif',
+                              //     isAntiAlias: true,
+                              //     fit: BoxFit.contain,
+                              //     scale: 1.25,
+                              //   ),
+                              // ),
+                            ]);
+                          }).toList(),
+                        )
+                      ],
+                    ),
                   ),
                 );
               },

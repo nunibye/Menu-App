@@ -32,7 +32,7 @@ Widget buildSummaryList(
                     ),
                   ),
                   child: Container(
-                    padding:const EdgeInsets.symmetric(horizontal: 7),
+                    padding: const EdgeInsets.symmetric(horizontal: 7),
                     child: Column(
                       children: [
                         Row(

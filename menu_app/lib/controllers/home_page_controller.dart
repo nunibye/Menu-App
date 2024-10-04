@@ -10,7 +10,7 @@ import 'package:menu_app/custom_widgets/update_dialog.dart';
 
 class HomePageController extends ChangeNotifier {
   List<String> colleges = [];
-  Map<String, num> busyness = {};
+  Map<String, int> busyness = {};
   List<Widget> summaries = [];
   bool ad = false;
   bool versionCheckResult = true;
@@ -95,26 +95,21 @@ class HomePageController extends ChangeNotifier {
 
   void getWaitz() async {
     final response = await get(Uri.parse('https://waitz.io/live/ucsc'));
+    Map<String, String> locations = await fetchWaitzMap();
+    Map<String, int> waitz = {};
 
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
-      List<dynamic> locations = jsonData['data'];
+      List<dynamic> waitzJson = jsonData['data'];
 
-      Map<String, int> data = {};
-
-      for (final location in locations) {
-        WaitzData loc = WaitzData.fromJson(location);
-        for (String college in colleges) {
-          if (loc.name.contains(college)) {
-            busyness[college] = loc.busyness;
-          }
-          // "Nine" is "9" from Waitz
-          else if (loc.name.contains("9")) {
-            busyness[college] = loc.busyness;
-          }
-        }
+      for (final waitzData in waitzJson) {
+        WaitzData loc = WaitzData.fromJson(waitzData);
+        waitz[loc.name] = loc.busyness;
       }
-      notifyListeners(); // Notify the UI to update with the new data
+      for (final college in colleges) {
+        busyness[college] = waitz[locations[college]!]!;
+      }
+      notifyListeners();
     } else {
       print("Error fetching Waitz data");
     }

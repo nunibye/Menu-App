@@ -51,15 +51,15 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
           appBar: AppBar(
             title: Text(
               Provider.of<HallController>(context, listen: false).name,
-              style: const TextStyle(
+              style: TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: constants.menuHeadingSize,
                   fontFamily: 'Monoton',
-                  color: Color(constants.yellowGold)),
+                  color: Theme.of(context).colorScheme.primary),
             ),
             toolbarHeight: 60,
             centerTitle: false,
-            backgroundColor: const Color(constants.darkBlue),
+            backgroundColor: Theme.of(context).colorScheme.surface,
             // shape: const Border(
             //     bottom: BorderSide(color: Colors.orange, width: 4)),
             automaticallyImplyLeading: false,
@@ -67,8 +67,9 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
               onPressed: () {
                 context.pop();
               },
-              icon: const Icon(Icons.arrow_back_ios_new_rounded,
-                  color: Colors.orange, size: constants.backArrowSize),
+              icon: Icon(Icons.arrow_back_ios_new_rounded,
+                  color: Theme.of(context).colorScheme.secondary,
+                  size: constants.backArrowSize),
             ),
 
             // Choose later date
@@ -127,9 +128,9 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
             ],
 
             bottom: TabBar(
-              dividerColor: Colors.orange,
+              dividerColor: Theme.of(context).colorScheme.secondary,
               dividerHeight: 2,
-              indicator: CustomTabIndicator(),
+              indicator: CustomTabIndicator(Theme.of(context).colorScheme.secondary),
               labelColor: const Color(constants.bodyColor),
               unselectedLabelColor: const Color(constants.bodyColor),
               indicatorSize: TabBarIndicatorSize.tab,
@@ -232,18 +233,22 @@ void _timeModalBottom(context, String name) {
 //   }
 // }
 class CustomTabIndicator extends Decoration {
+  final Color color;
+  const CustomTabIndicator(this.color);
   @override
   BoxPainter createBoxPainter([VoidCallback? onChanged]) {
-    return _CustomPainter();
+    return _CustomPainter(color);
   }
 }
 
 class _CustomPainter extends BoxPainter {
+  final Color color;
+  const _CustomPainter(this.color);
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
     final Rect rect = offset & configuration.size!;
     final Paint paint = Paint();
-    paint.color = Colors.orange;
+    paint.color = color;
     paint.style = PaintingStyle.fill;
 
     final double indicatorHeight = 4;

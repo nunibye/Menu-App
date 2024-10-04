@@ -38,9 +38,9 @@ class HomePage extends StatelessWidget {
             // ),
             toolbarHeight: 60,
             centerTitle: true,
-            backgroundColor: const Color(constants.darkBlue),
+            backgroundColor: Theme.of(context).colorScheme.surface,
             surfaceTintColor: const Color.fromARGB(255, 60, 60, 60),
-            title: const FittedBox(
+            title: FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
                 "UC Santa Cruz",
@@ -48,12 +48,13 @@ class HomePage extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: 30,
                   fontFamily: 'Monoton',
-                  color: Color(constants.yellowGold),
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
-            shape: const Border(
-                bottom: BorderSide(color: Colors.orange, width: 4)),
+            shape: Border(
+                bottom: BorderSide(
+                    color: Theme.of(context).colorScheme.secondary, width: 4)),
           ),
           body: RefreshIndicator(
             onRefresh:
@@ -80,13 +81,13 @@ class HomePage extends StatelessWidget {
                         Container(
                           alignment: Alignment.topLeft,
                           padding: const EdgeInsets.only(left: 12),
-                          child: const Text(
+                          child: Text(
                             "Dining Halls",
                             style: TextStyle(
                                 fontSize: 30,
                                 fontFamily: 'Montserat',
                                 fontWeight: FontWeight.w800,
-                                color: Color(constants.yellowOrange)),
+                                color: Theme.of(context).colorScheme.secondary),
                           ),
                         ),
                         // Display all hall icons.
@@ -105,8 +106,27 @@ class HomePage extends StatelessWidget {
                                       context.push(
                                           '/${controller.colleges[index].trim()}');
                                     },
-                                    icon: Image.asset(
-                                        'images/${controller.colleges[index].trim()}.png'),
+                                    icon: Container(
+                                      width: iconSizeCollege,
+                                      height: iconSizeCollege,
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            colors: [
+                                              Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                            ],
+                                          ),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(20))),
+                                    ),
+                                    //  Image.asset(
+                                    //     'images/${controller.colleges[index].trim()}.png'),
                                     iconSize: iconSizeCollege,
                                   ),
                                 );
@@ -162,3 +182,12 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+// class _ extends StatelessWidget {
+//   const _({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Placeholder();
+//   }
+// }

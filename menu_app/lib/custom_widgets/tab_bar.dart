@@ -62,8 +62,8 @@ class _Button extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: isActive
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.onPrimary,
+                    ? Theme.of(context).colorScheme.onSurface
+                    : Theme.of(context).colorScheme.inverseSurface,
                 fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
               ),
             ),

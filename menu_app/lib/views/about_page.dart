@@ -30,20 +30,22 @@ class AboutPage extends StatelessWidget {
             // Display page heading.
             drawer: const NavDrawer(),
             appBar: AppBar(
-              surfaceTintColor: Colors. transparent,
-              title: const Text(
+              surfaceTintColor: Colors.transparent,
+              title: Text(
                 "About  Us",
                 style: TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: constants.menuHeadingSize,
                     fontFamily: 'Monoton',
-                    color: Color(constants.yellowGold)),
+                    color: Theme.of(context).colorScheme.primary),
               ),
               toolbarHeight: 60,
               centerTitle: false,
-              backgroundColor: const Color(constants.darkBlue),
-              shape: const Border(
-                  bottom: BorderSide(color: Colors.orange, width: 4)),
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              shape: Border(
+                  bottom: BorderSide(
+                      color: Theme.of(context).colorScheme.secondary,
+                      width: 4)),
             ),
 
             // Display company image.
@@ -114,8 +116,7 @@ class AboutPage extends StatelessWidget {
                         Text(
                           'Buy us a coffee! ',
                           style: TextStyle(
-                            color:
-                                constants.darkThemeColors(context).surface,
+                            color: constants.darkThemeColors(context).surface,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

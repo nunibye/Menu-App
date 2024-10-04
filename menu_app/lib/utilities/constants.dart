@@ -12,9 +12,9 @@ const daysOfWeek = [
 ];
 
 // Colors
-const darkBlue = 0xff0f0f0f; //0xff000237
-const yellowGold = 0xFFFFC82F;
-const yellowOrange = 0xFFF29813;
+// const darkBlue = 0xff0f0f0f; //0xff000237
+// const yellowGold = 0xFFFFC82F;
+// const yellowOrange = 0xFFF29813;
 const white = 0xffdbdbdb;
 
 // App Heading
@@ -58,22 +58,46 @@ const aniLength = 150;
 //Dark
 ColorScheme darkThemeColors(context) {
   return const ColorScheme(
-    brightness: Brightness.dark,
-    primary: Color(bodyColor),
-    onPrimary: Color.fromARGB(255, 139, 139, 139),
-    secondary: Color.fromARGB(255, 14, 54, 235),
-    onSecondary: Color(0xFFEAEAEA),
-    tertiary: Color(0xffffffff),
-    error: Color(0xFFF32424),
-    onError: Color(0xFFF32424),
-    surface: Color(0xFF101010),
-    onSecondaryContainer: Colors.black,
-    secondaryContainer: Colors.white,
-    // onSurface: Color(0xFF202020),
-    onSurface: Color(0xffdbdbdb),
-    onSurfaceVariant: Color(0xFF202020)
+      brightness: Brightness.dark,
+      //
+      primary: Color(0xFFFFC82F),
+      onPrimary: Color.fromARGB(255, 139, 139, 139),
+      //
+      secondary: Color(0xFFF29813),
+      onSecondary: Color(0xFFEAEAEA),
+      // tertiary: Colors.orange,
+      error: Color(0xFFF32424),
+      onError: Color(0xFFF32424),
+      surface: Color(0xff0f0f0f),
+      onSecondaryContainer: Colors.black,
+      secondaryContainer: Colors.white,
+      inverseSurface: Color.fromARGB(255, 139, 139, 139),
 
-  );
+      // onSurface: Color(0xFF202020),
+      onSurface: Color(0xffdbdbdb),
+      onSurfaceVariant: Color(0xFF202020));
+}
+
+ColorScheme greenThemeColors(context) {
+  return const ColorScheme(
+      brightness: Brightness.dark,
+      //
+      primary: Color.fromARGB(255, 153, 252, 137),
+      onPrimary: Color.fromARGB(255, 139, 139, 139),
+      //
+      secondary: Color.fromARGB(255, 89, 202, 74),
+      onSecondary: Color(0xFFEAEAEA),
+      // tertiary: Colors.orange,
+      error: Color(0xFFF32424),
+      onError: Color(0xFFF32424),
+      surface: Color(0xff0f0f0f),
+      onSecondaryContainer: Colors.black,
+      secondaryContainer: Colors.white,
+      inverseSurface: Color.fromARGB(255, 139, 139, 139),
+
+      // onSurface: Color(0xFF202020),
+      onSurface: Color(0xffdbdbdb),
+      onSurfaceVariant: Color(0xFF202020));
 }
 
 InputDecoration customInputDecoration = InputDecoration(

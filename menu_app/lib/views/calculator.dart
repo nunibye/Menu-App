@@ -75,24 +75,26 @@ class Calculator extends StatelessWidget {
               // Display page heading.
               drawer: const NavDrawer(),
               appBar: AppBar(
-                title: const Text(
+                title: Text(
                   "Calculator",
                   style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: constants.menuHeadingSize,
                       fontFamily: 'Monoton',
-                      color: Color(constants.yellowGold)),
+                      color: Theme.of(context).colorScheme.primary),
                 ),
                 toolbarHeight: 60,
                 centerTitle: false,
-                backgroundColor: const Color(constants.darkBlue),
-                shape: const Border(
-                    bottom: BorderSide(color: Colors.orange, width: 4)),
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                shape: Border(
+                    bottom: BorderSide(
+                        color: Theme.of(context).colorScheme.secondary,
+                        width: 4)),
               ),
 
               // Display calculator page body.
               body: Container(
-                color: const Color(constants.darkBlue),
+                color: Theme.of(context).colorScheme.surface,
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Center(
                   child: Form(
@@ -277,7 +279,7 @@ class Calculator extends StatelessWidget {
 // Function [_timeModalBottom] opens [FloatingActionButton] calculator description.
 void _timeModalBottom(context) {
   showModalBottomSheet(
-    showDragHandle: true,
+      showDragHandle: true,
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(

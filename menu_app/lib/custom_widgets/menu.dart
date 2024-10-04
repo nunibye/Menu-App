@@ -67,7 +67,7 @@ Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
                                     style: constants.containerTextStyle
                                         .copyWith(
                                             fontSize:
-                                                constants.bodyFontSize - 2,
+                                                constants.bodyFontSize - 3,
                                             height: constants.bodyFontheight,
                                             fontWeight: FontWeight.normal),
                                   ),

@@ -55,28 +55,10 @@ const listColor = 0xff363636;
 //animation
 const aniLength = 150;
 
+const Color defaultPrimary = Color(0xFFFFC82F);
+const Color defaultSecondary = Color(0xFFF29813);
 //Dark
-ColorScheme darkThemeColors(context) {
-  return const ColorScheme(
-      brightness: Brightness.dark,
-      //
-      primary: Color(0xFFFFC82F),
-      onPrimary: Color.fromARGB(255, 139, 139, 139),
-      //
-      secondary: Color(0xFFF29813),
-      onSecondary: Color(0xFFEAEAEA),
-      // tertiary: Colors.orange,
-      error: Color(0xFFF32424),
-      onError: Color(0xFFF32424),
-      surface: Color(0xff0f0f0f),
-      onSecondaryContainer: Colors.black,
-      secondaryContainer: Colors.white,
-      inverseSurface: Color.fromARGB(255, 139, 139, 139),
 
-      // onSurface: Color(0xFF202020),
-      onSurface: Color(0xffdbdbdb),
-      onSurfaceVariant: Color(0xFF202020));
-}
 
 ColorScheme greenThemeColors(context) {
   return const ColorScheme(

@@ -100,60 +100,36 @@ class HomePage extends StatelessWidget {
                             itemBuilder: (BuildContext context, int index) {
                               if (index == 0) {
                                 return Padding(
-                                  padding: const EdgeInsets.only(left: 7),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      context.push(
-                                          '/${controller.colleges[index].trim()}');
-                                    },
-                                    icon: Container(
-                                      width: iconSizeCollege,
-                                      height: iconSizeCollege,
-                                      decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topRight,
-                                            end: Alignment.bottomLeft,
-                                            colors: [
-                                              Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                              Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                            ],
-                                          ),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(20))),
-                                    ),
-                                    //  Image.asset(
-                                    //     'images/${controller.colleges[index].trim()}.png'),
-                                    iconSize: iconSizeCollege,
-                                  ),
-                                );
+                                    padding: const EdgeInsets.only(left: 7),
+                                    child: _HallIcon(
+                                        icon:
+                                            'images/${controller.colleges[index].trim()}.png',
+                                        onPressed: () {
+                                          context.push(
+                                              '/${controller.colleges[index].trim()}');
+                                        },
+                                        size: iconSizeCollege));
                               } else if (index ==
                                   controller.colleges.length - 1) {
                                 return Padding(
-                                  padding: const EdgeInsets.only(right: 7),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      context.push(
-                                          '/${controller.colleges[index].trim()}');
-                                    },
-                                    icon: Image.asset(
-                                        'images/${controller.colleges[index].trim()}.png'),
-                                    iconSize: iconSizeCollege,
-                                  ),
-                                );
+                                    padding: const EdgeInsets.only(right: 7),
+                                    child: _HallIcon(
+                                        icon:
+                                            'images/${controller.colleges[index].trim()}.png',
+                                        onPressed: () {
+                                          context.push(
+                                              '/${controller.colleges[index].trim()}');
+                                        },
+                                        size: iconSizeCollege));
                               }
-                              return IconButton(
-                                onPressed: () {
-                                  context.push(
-                                      '/${controller.colleges[index].trim()}');
-                                },
-                                icon: Image.asset(
-                                    'images/${controller.colleges[index].trim()}.png'),
-                                iconSize: iconSizeCollege,
-                              );
+                              return _HallIcon(
+                                  icon:
+                                      'images/${controller.colleges[index].trim()}.png',
+                                  onPressed: () {
+                                    context.push(
+                                        '/${controller.colleges[index].trim()}');
+                                  },
+                                  size: iconSizeCollege);
                             },
                           ),
                         ),
@@ -191,3 +167,39 @@ class HomePage extends StatelessWidget {
 //     return const Placeholder();
 //   }
 // }
+
+class _HallIcon extends StatelessWidget {
+  final void Function() onPressed;
+  final double size;
+  final String icon;
+  const _HallIcon(
+      {super.key,
+      required this.onPressed,
+      required this.size,
+      required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () => onPressed(),
+      icon: Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
+              ],
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+          ),
+          child: Image.asset(icon)),
+      //  Image.asset(
+      //     'images/${controller.colleges[index].trim()}.png'),
+      iconSize: size,
+    );
+  }
+}

@@ -1,6 +1,7 @@
 // MAIN program.
 
 import 'package:flutter/material.dart';
+import 'package:menu_app/controllers/theme_provider.dart';
 import 'package:menu_app/controllers/time_notifier.dart';
 import 'package:menu_app/custom_widgets/ad_bar.dart';
 import 'package:menu_app/models/ads.dart';
@@ -40,31 +41,42 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Column(
-        children: [
-          Expanded(
-            child: MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              // Ignores IOS set to bold text
-              builder: (context, child) => MediaQuery(
-                data: MediaQuery.of(context).copyWith(boldText: false),
-                child: child!,
-              ),
-              theme: ThemeData(
-                useMaterial3: true,
-                colorScheme: constants.darkThemeColors(context),
-                buttonTheme: const ButtonThemeData(
-                  colorScheme: ColorScheme.dark(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ],
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Column(
+            children: [
+              Expanded(
+                child: Consumer<ThemeProvider>(
+                  builder: (context, themeProvider, child) {
+                    return MaterialApp.router(
+                      debugShowCheckedModeBanner: false,
+                      // Ignores IOS set to bold text
+                      builder: (context, child) => MediaQuery(
+                        data: MediaQuery.of(context).copyWith(boldText: false),
+                        child: child!,
+                      ),
+                      theme: ThemeData(
+                        useMaterial3: true,
+                        colorScheme: themeProvider.colorScheme,
+                        buttonTheme: const ButtonThemeData(
+                          colorScheme: ColorScheme.dark(),
+                        ),
+                      ),
+                      routerConfig: goRouter,
+                    );
+                  },
                 ),
               ),
-              routerConfig: goRouter,
-            ),
+              const AdBar(),
+            ],
           ),
-          const AdBar(),
-        ],
-      ),
+        );
+      },
     );
   }
 }

@@ -1,15 +1,16 @@
 package main
 
 import (
+	"context"
 	"crypto/tls"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
+	firebase "firebase.google.com/go"
+	"firebase.google.com/go/db"
 	"github.com/gocolly/colly/v2"
 )
 
@@ -31,6 +32,7 @@ var excludeCategories = []string{
 	"*Breakfast Bar*",
 	"*ACI BRK BAR*",
 	"*Bread and Bagels*",
+	"*Bread & Bagels*",
 	"*ACI BREAD $ BAGELS*",
 	"*Beverages*",
 	"*ACI BEVERAGES*",
@@ -71,23 +73,23 @@ type PubSubMessage struct {
 }
 
 func main() {
-	// config := &firebase.Config{
-	// 	DatabaseURL: "https://ucsc-menu-app-default-rtdb.firebaseio.com/",
-	// }
-	// app, err := firebase.NewApp(context.Background(), config)
-	// if err != nil {
-	// 	fmt.Printf("error initializing app: %v", err)
-	// }
-	// db, err := app.Database(context.Background())
-	// if err != nil {
-	// 	fmt.Printf("error initializing database client: %v", err)
-	// }
+	config := &firebase.Config{
+		DatabaseURL: "https://ucsc-menu-app-default-rtdb.firebaseio.com/",
+	}
+	app, err := firebase.NewApp(context.Background(), config)
+	if err != nil {
+		fmt.Printf("error initializing app: %v", err)
+	}
+	db, err := app.Database(context.Background())
+	if err != nil {
+		fmt.Printf("error initializing database client: %v", err)
+	}
 
 	menu = make(map[string]interface{}) // clear menu map
 
 	start := time.Now()
 
-	err := scrape()
+	err = scrape()
 	if err != nil {
 		fmt.Printf("error in scrape function: %v\n", err)
 	}
@@ -100,83 +102,83 @@ func main() {
 		fmt.Printf("error in makeSummary function: %v", err)
 	}
 
-	// Create a file
-	file, err := os.Create("menu.json")
-	if err != nil {
-		fmt.Printf("error creating file: %v", err)
-	}
-	defer file.Close()
-
-	// Write the menu to the file in a readable format
-	menuJson, err := json.MarshalIndent(menu, "", "  ")
-	if err != nil {
-		fmt.Printf("error marshalling menu: %v", err)
-	}
-	_, err = file.Write(menuJson)
-	if err != nil {
-		fmt.Printf("error writing to file: %v", err)
-	}
-
-	// err = UpdateDatabase(db, menu)
+	// // Create a file
+	// file, err := os.Create("menu.json")
 	// if err != nil {
-	// 	fmt.Printf("error updating database: %v", err)
+	// 	fmt.Printf("error creating file: %v", err)
 	// }
+	// defer file.Close()
+
+	// // Write the menu to the file in a readable format
+	// menuJson, err := json.MarshalIndent(menu, "", "  ")
+	// if err != nil {
+	// 	fmt.Printf("error marshalling menu: %v", err)
+	// }
+	// _, err = file.Write(menuJson)
+	// if err != nil {
+	// 	fmt.Printf("error writing to file: %v", err)
+	// }
+
+	err = UpdateDatabase(db, menu)
+	if err != nil {
+		fmt.Printf("error updating database: %v", err)
+	}
 }
 
-// func ScraperRun(ctx context.Context, m PubSubMessage) error {
-// 	config := &firebase.Config{
-// 		DatabaseURL: "https://ucsc-menu-app-default-rtdb.firebaseio.com/",
-// 	}
-// 	app, err := firebase.NewApp(context.Background(), config)
-// 	if err != nil {
-// 		return fmt.Errorf("error initializing app: %v", err)
-// 	}
+func ScraperRun(ctx context.Context, m PubSubMessage) error {
+	config := &firebase.Config{
+		DatabaseURL: "https://ucsc-menu-app-default-rtdb.firebaseio.com/",
+	}
+	app, err := firebase.NewApp(context.Background(), config)
+	if err != nil {
+		return fmt.Errorf("error initializing app: %v", err)
+	}
 
-// 	db, err := app.Database(context.Background())
-// 	if err != nil {
-// 		return fmt.Errorf("error initializing database client: %v", err)
-// 	}
+	db, err := app.Database(context.Background())
+	if err != nil {
+		return fmt.Errorf("error initializing database client: %v", err)
+	}
 
-// 	menu = make(map[string]interface{}) // clear menu map
+	menu = make(map[string]interface{}) // clear menu map
 
-// 	maxRetries := 3
-// 	retryDelay := 5 * time.Second
+	maxRetries := 3
+	retryDelay := 5 * time.Second
 
-// 	for retry := 0; retry < maxRetries; retry++ {
-// 		err = scrape()
-// 		if err == nil {
-// 			break
-// 		}
-// 		time.Sleep(retryDelay)
-// 	}
-// 	if err != nil {
-// 		return fmt.Errorf("error in scrape function: %v", err)
-// 	}
+	for retry := 0; retry < maxRetries; retry++ {
+		err = scrape()
+		if err == nil {
+			break
+		}
+		time.Sleep(retryDelay)
+	}
+	if err != nil {
+		return fmt.Errorf("error in scrape function: %v", err)
+	}
 
-// 	for retry := 0; retry < maxRetries; retry++ {
-// 		err = makeSummary()
-// 		if err == nil {
-// 			break
-// 		}
-// 		time.Sleep(retryDelay)
-// 	}
-// 	if err != nil {
-// 		return fmt.Errorf("error in makeSummary function: %v", err)
-// 	}
+	for retry := 0; retry < maxRetries; retry++ {
+		err = makeSummary()
+		if err == nil {
+			break
+		}
+		time.Sleep(retryDelay)
+	}
+	if err != nil {
+		return fmt.Errorf("error in makeSummary function: %v", err)
+	}
 
-// 	for retry := 0; retry < maxRetries; retry++ {
-// 		err = UpdateDatabase(db, menu)
-// 		if err == nil {
-// 			break
-// 		}
-// 		time.Sleep(retryDelay)
-// 	}
-// 	if err != nil {
-// 		return fmt.Errorf("error updating database: %v", err)
-// 	}
+	for retry := 0; retry < maxRetries; retry++ {
+		err = UpdateDatabase(db, menu)
+		if err == nil {
+			break
+		}
+		time.Sleep(retryDelay)
+	}
+	if err != nil {
+		return fmt.Errorf("error updating database: %v", err)
+	}
 
-// 	return nil
-// }
+	return nil
+}
 
 func scrape() error {
 	a := colly.NewCollector()
@@ -444,28 +446,28 @@ func makeSummary() error {
 	return nil
 }
 
-// func DeleteReference(client *db.Client, ref_str string) error {
-// 	ref := client.NewRef(ref_str)
-// 	if err := ref.Delete(context.Background()); err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
+func DeleteReference(client *db.Client, ref_str string) error {
+	ref := client.NewRef(ref_str)
+	if err := ref.Delete(context.Background()); err != nil {
+		return err
+	}
+	return nil
+}
 
-// func UpdateDatabase(client *db.Client, hall_menus map[string]interface{}) error {
-// 	references := []string{"/Merrill/", "/Oakes/", "/Cowell/", "/Nine/", "/Porter/", "/Today/", "/Tomorrow/", "/Day after tomorrow/", "/Summary/"}
-// 	for _, ref := range references {
-// 		err := DeleteReference(client, ref)
-// 		if err != nil {
-// 			return err
-// 		}
-// 	}
+func UpdateDatabase(client *db.Client, hall_menus map[string]interface{}) error {
+	references := []string{"/menuv2/"}
+	for _, ref := range references {
+		err := DeleteReference(client, ref)
+		if err != nil {
+			return err
+		}
+	}
 
-// 	ref := client.NewRef("/")
-// 	err := ref.Update(context.Background(), hall_menus)
-// 	if err != nil {
-// 		return err
-// 	}
+	ref := client.NewRef("/menuv2/")
+	err := ref.Update(context.Background(), hall_menus)
+	if err != nil {
+		return err
+	}
 
-// 	return nil
-// }
+	return nil
+}

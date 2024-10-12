@@ -30,20 +30,22 @@ class AboutPage extends StatelessWidget {
             // Display page heading.
             drawer: const NavDrawer(),
             appBar: AppBar(
-              surfaceTintColor: Colors. transparent,
-              title: const Text(
+              surfaceTintColor: Colors.transparent,
+              title: Text(
                 "About  Us",
                 style: TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: constants.menuHeadingSize,
                     fontFamily: 'Monoton',
-                    color: Color(constants.yellowGold)),
+                    color: Theme.of(context).colorScheme.primary),
               ),
               toolbarHeight: 60,
               centerTitle: false,
-              backgroundColor: const Color(constants.darkBlue),
-              shape: const Border(
-                  bottom: BorderSide(color: Colors.orange, width: 4)),
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              shape: Border(
+                  bottom: BorderSide(
+                      color: Theme.of(context).colorScheme.secondary,
+                      width: 4)),
             ),
 
             // Display company image.
@@ -106,7 +108,7 @@ class AboutPage extends StatelessWidget {
                             .launchDonateLink(),
                     style: ButtonStyle(
                       backgroundColor: WidgetStateProperty.all<Color>(
-                          constants.darkThemeColors(context).onSurface),
+                          Theme.of(context).colorScheme.onSurface),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -114,8 +116,7 @@ class AboutPage extends StatelessWidget {
                         Text(
                           'Buy us a coffee! ',
                           style: TextStyle(
-                            color:
-                                constants.darkThemeColors(context).surface,
+                            color: Theme.of(context).colorScheme.surface,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -147,8 +148,8 @@ class AboutPage extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 50, right: 50, top: 10),
                   child: ElevatedButton(
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              constants.darkThemeColors(context).onSurface)),
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                              Theme.of(context).colorScheme.onSurface)),
                       onPressed: () =>
                           Provider.of<AboutController>(context, listen: false)
                               .openEmail(context),
@@ -158,8 +159,7 @@ class AboutPage extends StatelessWidget {
                             TextSpan(
                                 text: 'Email us! ',
                                 style: TextStyle(
-                                  color: constants
-                                      .darkThemeColors(context)
+                                  color: Theme.of(context).colorScheme
                                       .surface,
                                   fontWeight: FontWeight.bold,
                                 )),
@@ -170,8 +170,7 @@ class AboutPage extends StatelessWidget {
                                 fontSize: 15,
                                 shadows: [
                                   Shadow(
-                                    color: constants
-                                        .darkThemeColors(context)
+                                    color: Theme.of(context).colorScheme
                                         .onSurfaceVariant, // Set the color to match your background
                                     blurRadius: 10,
                                   ),

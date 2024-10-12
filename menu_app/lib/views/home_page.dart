@@ -38,9 +38,9 @@ class HomePage extends StatelessWidget {
             // ),
             toolbarHeight: 60,
             centerTitle: true,
-            backgroundColor: const Color(constants.darkBlue),
+            backgroundColor: Theme.of(context).colorScheme.surface,
             surfaceTintColor: const Color.fromARGB(255, 60, 60, 60),
-            title: const FittedBox(
+            title: FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
                 "UC Santa Cruz",
@@ -48,12 +48,13 @@ class HomePage extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: 30,
                   fontFamily: 'Monoton',
-                  color: Color(constants.yellowGold),
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
-            shape: const Border(
-                bottom: BorderSide(color: Colors.orange, width: 4)),
+            shape: Border(
+                bottom: BorderSide(
+                    color: Theme.of(context).colorScheme.secondary, width: 4)),
           ),
           body: RefreshIndicator(
             onRefresh:
@@ -80,13 +81,13 @@ class HomePage extends StatelessWidget {
                         Container(
                           alignment: Alignment.topLeft,
                           padding: const EdgeInsets.only(left: 12),
-                          child: const Text(
+                          child: Text(
                             "Dining Halls",
                             style: TextStyle(
                                 fontSize: 30,
                                 fontFamily: 'Montserat',
                                 fontWeight: FontWeight.w800,
-                                color: Color(constants.yellowOrange)),
+                                color: Theme.of(context).colorScheme.secondary),
                           ),
                         ),
                         // Display all hall icons.
@@ -99,41 +100,36 @@ class HomePage extends StatelessWidget {
                             itemBuilder: (BuildContext context, int index) {
                               if (index == 0) {
                                 return Padding(
-                                  padding: const EdgeInsets.only(left: 7),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      context.push(
-                                          '/${controller.colleges[index].trim()}');
-                                    },
-                                    icon: Image.asset(
-                                        'images/${controller.colleges[index].trim()}.png'),
-                                    iconSize: iconSizeCollege,
-                                  ),
-                                );
+                                    padding: const EdgeInsets.only(left: 7),
+                                    child: _HallIcon(
+                                        icon:
+                                            'images/${controller.colleges[index].trim()}.png',
+                                        onPressed: () {
+                                          context.push(
+                                              '/${controller.colleges[index].trim()}');
+                                        },
+                                        size: iconSizeCollege));
                               } else if (index ==
                                   controller.colleges.length - 1) {
                                 return Padding(
-                                  padding: const EdgeInsets.only(right: 7),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      context.push(
-                                          '/${controller.colleges[index].trim()}');
-                                    },
-                                    icon: Image.asset(
-                                        'images/${controller.colleges[index].trim()}.png'),
-                                    iconSize: iconSizeCollege,
-                                  ),
-                                );
+                                    padding: const EdgeInsets.only(right: 7),
+                                    child: _HallIcon(
+                                        icon:
+                                            'images/${controller.colleges[index].trim()}.png',
+                                        onPressed: () {
+                                          context.push(
+                                              '/${controller.colleges[index].trim()}');
+                                        },
+                                        size: iconSizeCollege));
                               }
-                              return IconButton(
-                                onPressed: () {
-                                  context.push(
-                                      '/${controller.colleges[index].trim()}');
-                                },
-                                icon: Image.asset(
-                                    'images/${controller.colleges[index].trim()}.png'),
-                                iconSize: iconSizeCollege,
-                              );
+                              return _HallIcon(
+                                  icon:
+                                      'images/${controller.colleges[index].trim()}.png',
+                                  onPressed: () {
+                                    context.push(
+                                        '/${controller.colleges[index].trim()}');
+                                  },
+                                  size: iconSizeCollege);
                             },
                           ),
                         ),
@@ -159,6 +155,51 @@ class HomePage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+// class _ extends StatelessWidget {
+//   const _({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Placeholder();
+//   }
+// }
+
+class _HallIcon extends StatelessWidget {
+  final void Function() onPressed;
+  final double size;
+  final String icon;
+  const _HallIcon(
+      {super.key,
+      required this.onPressed,
+      required this.size,
+      required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () => onPressed(),
+      icon: Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
+              ],
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+          ),
+          child: Image.asset(icon)),
+      //  Image.asset(
+      //     'images/${controller.colleges[index].trim()}.png'),
+      iconSize: size,
     );
   }
 }

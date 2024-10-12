@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:menu_app/custom_widgets/controllers/ad_bar_controller.dart';
 import 'package:menu_app/utilities/ad_helper.dart' as ad_helper;
 import 'package:provider/provider.dart';
-import 'package:menu_app/utilities/constants.dart' as constants;
 
 class AdBar extends StatelessWidget {
   const AdBar({super.key});
@@ -24,7 +23,7 @@ class _AdBar extends StatelessWidget {
     var viewModel = Provider.of<AdBarController>(context, listen: true);
     if (viewModel.showAd) {
       return Container(
-        color: constants.darkThemeColors(context).background,
+        color: Theme.of(context).colorScheme.surface,
         alignment: Alignment.topCenter,
         height: viewModel.adHeight,
         child: viewModel.showAd

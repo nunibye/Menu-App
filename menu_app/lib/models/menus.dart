@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_app/utilities/constants.dart' as c;
@@ -139,6 +141,19 @@ Future<List<Hours>> fetchHoursFromDatabase(String name) async {
   } else {
     return [];
   }
+}
+
+Future<Map<String, String>> fetchWaitzMap() async {
+  Map<String, String> locations = {};
+
+  final DatabaseReference ref = FirebaseDatabase.instance.ref();
+  final snapshot = await ref.child('waitzLocations').get();
+
+  for (DataSnapshot entry in snapshot.children) {
+    locations[entry.key.toString()] = entry.value.toString();
+  }
+
+  return locations;
 }
 
 class HoursEvent {

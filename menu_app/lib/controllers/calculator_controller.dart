@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import "package:firebase_analytics/firebase_analytics.dart";
 
 class CalculatorController extends ChangeNotifier {
   CalculatorController() {

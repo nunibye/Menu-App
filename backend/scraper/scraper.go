@@ -236,16 +236,6 @@ func scrape() error {
 										currentCategory = strings.Replace(s.Text(), "-- ", "*", -1)
 										currentCategory = strings.Replace(currentCategory, " --", "*", -1)
 
-										// Check if the current category is in the mealCats slice
-										// for _, cat := range mealCats {
-										// 	if currentCategory == cat {
-										// 		mutex.Lock()
-										// 		dayData[diningHall][mealTime][currentCategory] = []string{}
-										// 		mutex.Unlock()
-										// 		break
-										// 	}
-										// }
-
 										// Check if the current category is in the exclusion list
 										excluded := false
 										for _, cat := range excludeCategories {

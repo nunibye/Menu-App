@@ -25,21 +25,21 @@ var diningHallNames = map[string]string{
 }
 
 var excludeCategories = []string{
-	"*Cereal*",
-	"*All Day*",
-	"*Condiments*",
-	"*ACI CONDIMENTS*",
-	"*Breakfast Bar*",
-	"*ACI BRK BAR*",
-	"*Bread and Bagels*",
-	"*Bread & Bagels*",
-	"*ACI BREAD $ BAGELS*",
-	"*Beverages*",
-	"*ACI BEVERAGES*",
-	"*Salad Bar*",
-	"*ACI SALAD BAR*",
-	"*Deli Bar*",
-	"*ACI DELI BAR*",
+	"Cereal",
+	"All Day",
+	"Condiments",
+	"ACI CONDIMENTS",
+	"Breakfast Bar",
+	"ACI BRK BAR",
+	"Bread and Bagels",
+	"Bread & Bagels",
+	"ACI BREAD $ BAGELS",
+	"Beverages",
+	"ACI BEVERAGES",
+	"Salad Bar",
+	"ACI SALAD BAR",
+	"Deli Bar",
+	"ACI DELI BAR",
 }
 
 type NutritionalInfo struct {
@@ -56,11 +56,17 @@ type NutritionalInfo struct {
 	Protein      string
 	Ingredients  string
 	Allergens    string
+	Tags         []string
 }
 
 type FoodItem struct {
 	Name            string
 	NutritionalInfo NutritionalInfo
+}
+
+type Category struct {
+	Name      string
+	FoodItems []FoodItem
 }
 
 var menu = make(map[string]interface{})
@@ -86,9 +92,7 @@ func main() {
 	}
 
 	menu = make(map[string]interface{}) // clear menu map
-
 	start := time.Now()
-
 	err = scrape()
 	if err != nil {
 		fmt.Printf("error in scrape function: %v\n", err)
@@ -96,6 +100,11 @@ func main() {
 
 	duration := time.Since(start)
 	fmt.Printf("Scraping completed in %v\n", duration)
+
+	err = reorderCategories()
+	if err != nil {
+		fmt.Printf("error in reorderCategories function: %v", err)
+	}
 
 	err = makeSummary()
 	if err != nil {
@@ -156,11 +165,20 @@ func ScraperRun(ctx context.Context, m PubSubMessage) error {
 	}
 
 	for retry := 0; retry < maxRetries; retry++ {
+		err = reorderCategories()
+		if err == nil {
+			break
+		}
+	}
+	if err != nil {
+		return fmt.Errorf("error in reorderCategories function: %v", err)
+	}
+
+	for retry := 0; retry < maxRetries; retry++ {
 		err = makeSummary()
 		if err == nil {
 			break
 		}
-		time.Sleep(retryDelay)
 	}
 	if err != nil {
 		return fmt.Errorf("error in makeSummary function: %v", err)
@@ -242,16 +260,16 @@ func scrape() error {
 							}
 
 							// initialize map
-							dayData, ok := menu[day].(map[string]map[string]map[string][]FoodItem)
+							dayData, ok := menu[day].(map[string]map[string][]Category)
 							if !ok {
-								dayData = make(map[string]map[string]map[string][]FoodItem)
+								dayData = make(map[string]map[string][]Category)
 								menu[day] = dayData
 							}
 							if dayData[diningHall] == nil {
-								dayData[diningHall] = make(map[string]map[string][]FoodItem)
+								dayData[diningHall] = make(map[string][]Category)
 							}
 							if dayData[diningHall][mealTime] == nil {
-								dayData[diningHall][mealTime] = make(map[string][]FoodItem)
+								dayData[diningHall][mealTime] = []Category{}
 							}
 
 							// writes data from table to map
@@ -262,8 +280,8 @@ func scrape() error {
 									class := s.Attr("class")
 									if strings.Contains(class, "longmenucolmenucat") { //category
 
-										currentCategory = strings.Replace(s.Text, "-- ", "*", -1)
-										currentCategory = strings.Replace(currentCategory, " --", "*", -1)
+										currentCategory = strings.Replace(s.Text, "-- ", "", -1)
+										currentCategory = strings.Replace(currentCategory, " --", "", -1)
 
 										// Check if the current category is in the exclusion list
 										excluded := false
@@ -277,14 +295,16 @@ func scrape() error {
 										// If the category is not in the exclusion list, add it to the map
 										if !excluded {
 											// mutex.Lock()
-											if _, ok := dayData[diningHall][mealTime][currentCategory]; !ok {
-												dayData[diningHall][mealTime][currentCategory] = []FoodItem{}
+											newCategory := Category{
+												Name:      currentCategory,
+												FoodItems: []FoodItem{},
 											}
+											dayData[diningHall][mealTime] = append(dayData[diningHall][mealTime], newCategory)
 											// mutex.Unlock()
 										}
 									} else { //food item
 										// Check if the current category is in the map before appending the food item
-										if _, ok := dayData[diningHall][mealTime][currentCategory]; ok {
+										if len(dayData[diningHall][mealTime]) > 0 && dayData[diningHall][mealTime][len(dayData[diningHall][mealTime])-1].Name == currentCategory {
 											foodName := s.ChildText("a")
 											foodLink := url + s.ChildAttr("a", "href")
 
@@ -346,12 +366,14 @@ func scrape() error {
 												// Allergens
 												nutritionalInfo.Allergens = body.ChildText(".labelallergensvalue")
 
-												// Add the food item to the dayData map
+												// Tags
+												body.ForEach(".labelwebcodesvalue img", func(_ int, img *colly.HTMLElement) {
+													nutritionalInfo.Tags = append(nutritionalInfo.Tags, img.Attr("alt"))
+												})
+
+												// Add the food item to the last category
 												// mutex.Lock()
-												dayData[diningHall][mealTime][currentCategory] = append(
-													dayData[diningHall][mealTime][currentCategory],
-													FoodItem{Name: foodName, NutritionalInfo: nutritionalInfo},
-												)
+												dayData[diningHall][mealTime][len(dayData[diningHall][mealTime])-1].FoodItems = append(dayData[diningHall][mealTime][len(dayData[diningHall][mealTime])-1].FoodItems, FoodItem{Name: foodName, NutritionalInfo: nutritionalInfo})
 												// mutex.Unlock()
 											})
 											e.Visit(foodLink)
@@ -386,16 +408,81 @@ func scrape() error {
 	return nil
 }
 
+func reorderCategories() error {
+	// reorderCategories reorders the categories in the global menu map
+	for day, dayData := range menu {
+		// Ensure dayData is of the correct type
+		diningHalls, ok := dayData.(map[string]map[string][]Category)
+		if !ok {
+			return errors.New("dayData not of the correct type")
+		}
+
+		// Iterate over each dining hall
+		for diningHall, diningHallData := range diningHalls {
+			// Iterate over each mealtime
+			for mealTime, categories := range diningHallData {
+				// Apply reordering logic to the categories
+				reorderedCategories := reorder(categories, mealTime, diningHall)
+				// Update the global menu map with reordered categories
+				menu[day].(map[string]map[string][]Category)[diningHall][mealTime] = reorderedCategories
+			}
+		}
+	}
+	return nil
+}
+
+func reorder(categories []Category, mealTime, diningHall string) []Category {
+	priorityOrder := map[string][]string{
+		"Breakfast":   {"Breakfast"},
+		"Banana Joes": {"Banana Joes"},
+		"Default":     {"Open Bars", "Hot Bars", "Entrees", "Unit Specialties", "Grill"},
+	}
+
+	var orderedCategories []Category
+	priority := priorityOrder["Default"]
+
+	if mealTime == "Breakfast" {
+		priority = priorityOrder["Breakfast"]
+	} else if mealTime == "Late Night" && diningHall == "Merrill" {
+		priority = priorityOrder["Banana Joes"]
+	}
+
+	// Add categories based on priority
+	for _, p := range priority {
+		for _, c := range categories {
+			if c.Name == p {
+				orderedCategories = append(orderedCategories, c)
+			}
+		}
+	}
+
+	// Add remaining categories
+	for _, c := range categories {
+		found := false
+		for _, p := range priority {
+			if c.Name == p {
+				found = true
+				break
+			}
+		}
+		if !found {
+			orderedCategories = append(orderedCategories, c)
+		}
+	}
+
+	return orderedCategories
+}
+
 func makeSummary() error {
 	// Check if "Summary" key exists in data map, if not, create it
-	summaryData, ok := menu["Summary"].(map[string]map[string][]FoodItem)
+	summaryData, ok := menu["Summary"].(map[string]map[string]Category)
 	if !ok {
-		summaryData = make(map[string]map[string][]FoodItem)
+		summaryData = make(map[string]map[string]Category)
 		menu["Summary"] = summaryData
 	}
 
 	// Get the data for "Today"
-	dayData, ok := menu["Today"].(map[string]map[string]map[string][]FoodItem)
+	dayData, ok := menu["Today"].(map[string]map[string][]Category)
 	if !ok {
 		return errors.New("no data for 'Today' in menu")
 	}
@@ -403,42 +490,14 @@ func makeSummary() error {
 	// Iterate over each dining hall
 	for diningHall, diningHallData := range dayData {
 		if summaryData[diningHall] == nil {
-			summaryData[diningHall] = make(map[string][]FoodItem)
+			summaryData[diningHall] = make(map[string]Category)
 		}
 
 		// Iterate over each meal time
-		for mealTime, mealTimeData := range diningHallData {
-			// Copy data from "Breakfast" category for breakfast
-			if mealTime == "Breakfast" {
-				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Breakfast*"]...)
-				continue
-			}
-
-			// Handle late night at Merrill
-			if diningHall == "Merrill" && mealTime == "Late Night" {
-				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Banana Joes*"]...)
-				continue
-			}
-
-			// Try to get data from "*Open Bars*", then "*Hot Bars*", then "*Entrees*", then "*Unit Specialties*", then "*Grill*"
-			if len(mealTimeData["*Open Bars*"]) > 0 {
-				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Open Bars*"]...)
-			} else if len(mealTimeData["*Hot Bars*"]) > 0 {
-				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Hot Bars*"]...)
-			} else if len(mealTimeData["*Entrees*"]) > 0 {
-				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Entrees*"]...)
-			} else if len(mealTimeData["*Unit Specialties*"]) > 0 {
-				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Unit Specialties*"]...)
-			} else if len(mealTimeData["*Grill*"]) > 0 {
-				summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], mealTimeData["*Grill*"]...)
-			} else {
-				// If none of the above categories exist, add the first category that exists
-				for _, items := range mealTimeData {
-					if len(items) > 0 {
-						summaryData[diningHall][mealTime] = append(summaryData[diningHall][mealTime], items...)
-						break
-					}
-				}
+		for mealTime, categories := range diningHallData {
+			// Assuming you want to take the first category from the list for the summary
+			if len(categories) > 0 {
+				summaryData[diningHall][mealTime] = categories[0]
 			}
 		}
 	}

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/utilities/constants.dart' as constants;
+import 'package:menu_app/views/nutrition_page.dart';
 
 // FIXME to controller
 Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
@@ -33,13 +34,13 @@ Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
                 return Container(
                   margin: const EdgeInsets.only(bottom: 8),
                   padding: const EdgeInsets.only(
-                      left: 14, right: 14, top: 5, bottom: 5),
+                      left: 14, right: 10, top: 5, bottom: 5),
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 30, 30, 30),
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 7),
+                    padding: const EdgeInsets.only(left: 7),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -57,32 +58,64 @@ Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: category.foodItems.map((foodItem) {
-                            return Row(children: [
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    foodItem,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: constants.containerTextStyle
-                                        .copyWith(
-                                            fontSize:
-                                                constants.bodyFontSize - 3,
-                                            height: constants.bodyFontheight,
-                                            fontWeight: FontWeight.normal),
+                            return InkWell(
+                                onTap: () {
+                                  // context.pushNamed(
+                                  //   "Nutrition",
+                                  //   extra: foodItem,
+                                  // );
+                                  // FIXME gorouter no worky?
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute<void>(
+                                      builder: (BuildContext context) =>
+                                          NutritionPage(foodItem: foodItem),
+                                    ),
+                                  );
+                                },
+                                child: Row(children: [
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        foodItem.name,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: constants.containerTextStyle
+                                            .copyWith(
+                                                fontSize:
+                                                    constants.bodyFontSize - 2,
+                                                height:
+                                                    constants.bodyFontheight,
+                                                fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              // TODO nutrition images here
-                              // ClipOval(
-                              //   child: Image.asset(
-                              //     'icons/soy.gif',
-                              //     isAntiAlias: true,
-                              //     fit: BoxFit.contain,
-                              //     scale: 1.25,
-                              //   ),
-                              // ),
-                            ]);
+                                  for (String allergy
+                                      in foodItem.nutritionalInfo.tags)
+                                    if (allergy != "" &&
+                                        allergy != "Gluten Friendly" &&
+                                        allergy != "Tree Nut" &&
+                                        allergy != "Peanuts" &&
+                                        allergy != "Vegetarian" &&
+                                        allergy != "Egg")
+                                      ClipOval(
+                                        child: Image.asset(
+                                          'icons/${allergy.toLowerCase()}.gif',
+                                          isAntiAlias: true,
+                                          fit: BoxFit.contain,
+                                          scale: 1.25,
+                                        ),
+                                      ),
+                                  const SizedBox(
+                                    width: 2,
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 13,
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                  ),
+                                ]));
                           }).toList(),
                         )
                       ],

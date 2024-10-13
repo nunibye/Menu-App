@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:menu_app/controllers/hall_controller.dart';
-import 'package:menu_app/controllers/time_notifier.dart';
-import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/custom_widgets/menu.dart';
 import 'package:menu_app/views/time_modal_widget.dart';
 import 'package:provider/provider.dart';

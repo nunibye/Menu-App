@@ -143,8 +143,7 @@ class _TimeStateDisplayState extends State<TimeStateDisplay> {
   @override
   Widget build(BuildContext context) {
     return Consumer<TimeNotifier>(builder: (context, timeNotifier, child) {
-      return Column(crossAxisAlignment: CrossAxisAlignment.end,children: [
-        
+      return Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
         Text(
           _displayString,
           style: TextStyle(

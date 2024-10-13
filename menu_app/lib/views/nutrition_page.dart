@@ -56,12 +56,13 @@ class NutritionLabel extends StatelessWidget {
             children: [
               _buildHeader(context),
               _buildDivider(),
-
               _buildCalories(context),
               _buildServingInfo(context),
-              // _buildDivider(),
               _buildNutrients(context),
               _buildFooter(context),
+              _buildDivider(),
+              _buildAllergens(),
+              _buildIngredients(),
             ],
           ),
         ),
@@ -141,6 +142,8 @@ class NutritionLabel extends StatelessWidget {
           _buildNutrientRow(
               'Saturated Fat', foodItem.nutritionalInfo.saturatedFat,
               indent: true),
+          _buildNutrientRow('Trans Fat', foodItem.nutritionalInfo.transFat,
+              indent: true),
           _buildNutrientRow('Cholesterol', foodItem.nutritionalInfo.cholesterol,
               isMainNutrient: true),
           _buildNutrientRow('Sodium', foodItem.nutritionalInfo.sodium,
@@ -155,6 +158,58 @@ class NutritionLabel extends StatelessWidget {
               indent: true),
           _buildNutrientRow('Protein', foodItem.nutritionalInfo.protein,
               isMainNutrient: true),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAllergens() {
+    return foodItem.nutritionalInfo.allergens != ""
+        ? Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    _buildNutrientRow('Allergens', '', isMainNutrient: true),
+                    const Spacer(),
+                    for (String allergy in foodItem.nutritionalInfo.tags)
+                      // TODO FIXME when eric fixes scraper
+                      if (allergy != "" &&
+                          allergy != "Gluten Friendly" &&
+                          allergy != "Tree Nut" &&
+                          allergy != "Peanuts" &&
+                          allergy != "Vegetarian" &&
+                          allergy != "Egg")
+                        Padding(
+                          padding: EdgeInsets.only(left: 2),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'icons/${allergy.toLowerCase()}.gif',
+                              isAntiAlias: true,
+                              fit: BoxFit.contain,
+                              scale: 1.25,
+                            ),
+                          ),
+                        )
+                  ],
+                ),
+                Text(foodItem.nutritionalInfo.allergens)
+              ],
+            ),
+          )
+        : SizedBox();
+  }
+
+  Widget _buildIngredients() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildNutrientRow('Ingredients', '', isMainNutrient: true),
+          Text(foodItem.nutritionalInfo.ingredients)
         ],
       ),
     );
@@ -194,7 +249,7 @@ class NutritionLabel extends StatelessWidget {
 
   Widget _buildFooter(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16),
       child: Text(
         '* Percent Daily Values are based on a 2,000 calorie diet.',
         style: constants.containerTextStyle.copyWith(

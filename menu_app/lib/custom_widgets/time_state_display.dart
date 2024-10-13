@@ -149,7 +149,7 @@ class _TimeStateDisplayState extends State<TimeStateDisplay> {
           style: TextStyle(
               color: Theme.of(context).colorScheme.onPrimary, fontSize: 14),
         ),
-        if (_displayString != "Closed")
+        if (_displayString != "Closed" && widget.waitzNum != 0)
           WaitzIndicator(
             number: widget.waitzNum,
           )

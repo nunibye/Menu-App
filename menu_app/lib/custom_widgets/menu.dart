@@ -92,18 +92,22 @@ Widget buildMeal(Future<List<FoodCategory>> hallSummary) {
                                   ),
                                   for (String allergy
                                       in foodItem.nutritionalInfo.tags)
+                                    // TODO FIXME when eric fixes scraper
                                     if (allergy != "" &&
                                         allergy != "Gluten Friendly" &&
                                         allergy != "Tree Nut" &&
                                         allergy != "Peanuts" &&
                                         allergy != "Vegetarian" &&
                                         allergy != "Egg")
-                                      ClipOval(
-                                        child: Image.asset(
-                                          'icons/${allergy.toLowerCase()}.gif',
-                                          isAntiAlias: true,
-                                          fit: BoxFit.contain,
-                                          scale: 1.25,
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 2),
+                                        child: ClipOval(
+                                          child: Image.asset(
+                                            'icons/${allergy.toLowerCase()}.gif',
+                                            isAntiAlias: true,
+                                            fit: BoxFit.contain,
+                                            scale: 1.25,
+                                          ),
                                         ),
                                       ),
                                   const SizedBox(

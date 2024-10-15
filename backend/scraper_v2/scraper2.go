@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"path"
 	"strings"
 	"time"
 
@@ -368,7 +369,8 @@ func scrape() error {
 
 												// Tags
 												body.ForEach(".labelwebcodesvalue img", func(_ int, img *colly.HTMLElement) {
-													nutritionalInfo.Tags = append(nutritionalInfo.Tags, img.Attr("alt"))
+													fileName := path.Base(img.Attr("src"))
+													nutritionalInfo.Tags = append(nutritionalInfo.Tags, fileName)
 												})
 
 												// Add the food item to the last category

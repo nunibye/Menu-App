@@ -1,14 +1,99 @@
-import 'dart:convert';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_app/utilities/constants.dart' as c;
 
-class FoodCategory {
-  String category;
-  List<String> foodItems;
+class NutritionalInfo {
+  String servingSize;
+  String totalFat;
+  String saturatedFat;
+  String transFat;
+  String cholesterol;
+  String sodium;
+  String totalCarb;
+  String dietaryFiber;
+  String sugars;
+  String protein;
+  String ingredients;
+  String allergens;
+  String calories;
+  List<String> tags;
 
-  FoodCategory(this.category, this.foodItems);
+  NutritionalInfo({
+    required this.servingSize,
+    required this.totalFat,
+    required this.saturatedFat,
+    required this.transFat,
+    required this.cholesterol,
+    required this.sodium,
+    required this.totalCarb,
+    required this.dietaryFiber,
+    required this.sugars,
+    required this.protein,
+    required this.ingredients,
+    required this.allergens,
+    required this.calories,
+    required this.tags,
+  });
+
+  factory NutritionalInfo.fromJson(Map<dynamic, dynamic> json) {
+    return NutritionalInfo(
+      servingSize: json['ServingSize'] ?? "",
+      totalFat: json['TotalFat'] ?? "",
+      saturatedFat: json['SaturatedFat'] ?? "",
+      transFat: json['TransFat'] ?? "",
+      cholesterol: json['Cholesterol'] ?? "",
+      sodium: json['Sodium'] ?? "",
+      totalCarb: json['TotalCarb'] ?? "",
+      dietaryFiber: json['DietaryFiber'] ?? "",
+      sugars: json['Sugars'] ?? "",
+      protein: json['Protein'] ?? "",
+      ingredients: json['Ingredients'] ?? "",
+      calories: json['Calories'] ?? "",
+      allergens: json['Allergens'] ?? "",
+      tags: (json['Tags'] as List<dynamic>?)
+              ?.map((item) => item?.toString() ?? "")
+              .toList() ??
+          [""],
+    );
+  }
+}
+
+class FoodItem {
+  final String name;
+  final NutritionalInfo nutritionalInfo;
+
+  FoodItem({
+    required this.name,
+    required this.nutritionalInfo,
+  });
+
+  factory FoodItem.fromJson(Map<dynamic, dynamic> json) {
+    return FoodItem(
+      name: json['Name'] as String,
+      nutritionalInfo: NutritionalInfo.fromJson(json['NutritionalInfo']),
+    );
+  }
+}
+
+class FoodCategory {
+  final String category;
+  final List<FoodItem> foodItems;
+
+  FoodCategory({
+    required this.category,
+    required this.foodItems,
+  });
+
+  factory FoodCategory.fromJson(Map<String, dynamic> json) {
+    var foodItemsJson = json['FoodItems'] as List;
+    List<FoodItem> foodItemsList =
+        foodItemsJson.map((item) => FoodItem.fromJson(item)).toList();
+
+    return FoodCategory(
+      category: json['Category'] as String? ?? '',
+      foodItems: foodItemsList,
+    );
+  }
 }
 
 class WaitzData {
@@ -41,15 +126,27 @@ Future<String> fetchBanner() async {
 
 Future<List<FoodCategory>> fetchSummary(String college, String mealTime) async {
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
-  final path = 'Summary/$college/$mealTime';
+  final path = 'menuv2/Summary/$college/$mealTime';
   final snapshot = await ref.child(path).get();
 
   if (snapshot.exists) {
-    final data = snapshot.value as List<dynamic>;
-    List<String> foodItems = data.map((item) => item.toString()).toList();
-    return [FoodCategory("", foodItems)];
+    final data =
+        snapshot.value as Map<dynamic, dynamic>; // Data is a list of maps
+
+    List<FoodCategory> categories = [];
+    List<FoodItem> foodItems = [];
+
+    for (Map<dynamic, dynamic> foodItem in data["FoodItems"]) {
+      foodItems.add(FoodItem.fromJson(foodItem));
+    }
+    categories.add(FoodCategory(
+      category: data["Name"],
+      foodItems: foodItems,
+    ));
+
+    return categories;
   } else {
-    return [FoodCategory("Hall Closed", [])];
+    return [FoodCategory(category: "Hall Closed", foodItems: [])];
   }
 }
 
@@ -71,43 +168,46 @@ Future<List<FoodCategory>> fetchSummaryList(
 Future<List<FoodCategory>> fetchAlbum(String college, String mealTime,
     {String cat = "", String day = "Today"}) async {
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
-  final path = '$day/$college/$mealTime/$cat';
+  final path = 'menuv2/$day/$college/$mealTime/$cat';
   final snapshot = await ref.child(path).get();
+
   if (snapshot.exists) {
     if (cat.isEmpty) {
       // Fetch all items if cat is empty
-      final data = snapshot.value as Map<dynamic, dynamic>;
+      final data = snapshot.value as List<dynamic>;
       if (data.isEmpty) {
-        // Handle the case when data is empty
-        return [FoodCategory("No Food Items", [])];
+        return [FoodCategory(category: "No Food Items", foodItems: [])];
       }
 
       // Extract and structure the data
       List<FoodCategory> foodList = [];
-      data.forEach((key, value) {
-        if (!value.toString().contains('update')) {
-          // README: this code will ignore all instances where the values contain 'update'... please see ToDo in menu_scraper_runner_copy.py for more information
-          String cleanedKey = key.toString().replaceAll('*', '').trim();
 
-          if (value is List) {
-            List<String> foodItems =
-                value.map((item) => item.toString()).toList();
-            foodList.add(FoodCategory(cleanedKey, foodItems));
+      for (Map<dynamic, dynamic> cat in data) {
+        List<FoodItem> foodItems = [];
+        if (cat["FoodItems"] != null) {
+          for (Map<dynamic, dynamic> foodItem in cat["FoodItems"]) {
+            foodItems.add(FoodItem.fromJson(foodItem));
           }
+          foodList.add(FoodCategory(
+            category: cat["Name"],
+            foodItems: foodItems,
+          ));
         }
-      });
+      }
 
       return foodList;
     } else {
       // Fetch specific category items
       final data = snapshot.value as List<dynamic>;
       // Extract and structure the data for the specific category
-      List<String> foodItems = data.map((item) => item.toString()).toList();
-      return [FoodCategory(cat, foodItems)];
+      List<FoodItem> foodItems = data
+          .map((item) => FoodItem.fromJson(item as Map<String, dynamic>))
+          .toList();
+      return [FoodCategory(category: cat, foodItems: foodItems)];
     }
   } else {
     // Handle case when data is not found
-    return [FoodCategory("Hall Closed", [])];
+    return [FoodCategory(category: "Hall Closed", foodItems: [])];
   }
 }
 

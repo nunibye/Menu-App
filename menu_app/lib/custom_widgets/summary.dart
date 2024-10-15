@@ -70,7 +70,7 @@ Widget buildSummaryList(
                                   Container(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      foodItem,
+                                      foodItem.name,
                                       textAlign: TextAlign.left,
                                       style:
                                           constants.containerTextStyle.copyWith(

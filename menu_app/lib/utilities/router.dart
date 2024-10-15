@@ -1,8 +1,11 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:menu_app/models/menus.dart';
 import 'package:menu_app/views/about_page.dart';
 import 'package:menu_app/views/calculator.dart';
 import 'package:menu_app/views/home_page.dart';
+import 'package:menu_app/views/nutrition_page.dart';
 import 'package:menu_app/views/settings_page.dart';
 import 'package:menu_app/views/hall_page.dart';
 
@@ -49,6 +52,14 @@ final goRouter = GoRouter(
       builder: (context, state) => const MenuPage(
           name: "Oakes", hasLateNight: true), // FIXME change to Carson
     ),
+    // GoRoute(
+    //   name: 'Nutrition',
+    //   path: '/Nutrition',
+    //   builder: (BuildContext context, GoRouterState state) {
+    //     final foodItem = state.extra as FoodItem;
+    //     return NutritionPage(foodItem: foodItem);
+    //   },
+    // ),
     GoRoute(
       name: 'Calculator',
       path: '/Calculator',

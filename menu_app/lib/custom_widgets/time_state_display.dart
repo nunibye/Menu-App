@@ -143,14 +143,13 @@ class _TimeStateDisplayState extends State<TimeStateDisplay> {
   @override
   Widget build(BuildContext context) {
     return Consumer<TimeNotifier>(builder: (context, timeNotifier, child) {
-      return Column(crossAxisAlignment: CrossAxisAlignment.end,children: [
-        
+      return Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
         Text(
           _displayString,
           style: TextStyle(
               color: Theme.of(context).colorScheme.onPrimary, fontSize: 14),
         ),
-        if (_displayString != "Closed")
+        if (_displayString != "Closed" && widget.waitzNum != 0)
           WaitzIndicator(
             number: widget.waitzNum,
           )

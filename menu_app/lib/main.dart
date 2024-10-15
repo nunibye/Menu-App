@@ -1,5 +1,6 @@
 // MAIN program.
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_app/controllers/theme_provider.dart';
 import 'package:menu_app/controllers/time_notifier.dart';

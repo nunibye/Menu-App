@@ -1,13 +1,11 @@
-package main
+package scraper_v2
 
 import (
 	"context"
 	"crypto/tls"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
-	"os"
 	"path"
 	"strings"
 	"sync"
@@ -82,61 +80,61 @@ type PubSubMessage struct {
 var menu = make(map[string]interface{})
 
 // main function
-func main() {
-	config := &firebase.Config{
-		DatabaseURL: "https://ucsc-menu-app-default-rtdb.firebaseio.com/",
-	}
-	app, err := firebase.NewApp(context.Background(), config)
-	if err != nil {
-		fmt.Printf("error initializing app: %v", err)
-	}
-	db, err := app.Database(context.Background())
-	if err != nil {
-		fmt.Printf("error initializing database client: %v", err)
-	}
+// func main() {
+// 	config := &firebase.Config{
+// 		DatabaseURL: "https://ucsc-menu-app-default-rtdb.firebaseio.com/",
+// 	}
+// 	app, err := firebase.NewApp(context.Background(), config)
+// 	if err != nil {
+// 		fmt.Printf("error initializing app: %v", err)
+// 	}
+// 	db, err := app.Database(context.Background())
+// 	if err != nil {
+// 		fmt.Printf("error initializing database client: %v", err)
+// 	}
 
-	menu = make(map[string]interface{}) // clear menu map
+// 	menu = make(map[string]interface{}) // clear menu map
 
-	start := time.Now()
-	err = scrape()
-	if err != nil {
-		fmt.Printf("error in scrape function: %v\n", err)
-	}
-	duration := time.Since(start)
-	fmt.Printf("Scraping completed in %v\n", duration)
+// 	start := time.Now()
+// 	err = scrape()
+// 	if err != nil {
+// 		fmt.Printf("error in scrape function: %v\n", err)
+// 	}
+// 	duration := time.Since(start)
+// 	fmt.Printf("Scraping completed in %v\n", duration)
 
-	err = reorderCategories()
-	if err != nil {
-		fmt.Printf("error in reorderCategories function: %v", err)
-	}
+// 	err = reorderCategories()
+// 	if err != nil {
+// 		fmt.Printf("error in reorderCategories function: %v", err)
+// 	}
 
-	err = makeSummary()
-	if err != nil {
-		fmt.Printf("error in makeSummary function: %v", err)
-	}
+// 	err = makeSummary()
+// 	if err != nil {
+// 		fmt.Printf("error in makeSummary function: %v", err)
+// 	}
 
-	// Create a file
-	file, err := os.Create("menu.json")
-	if err != nil {
-		fmt.Printf("error creating file: %v", err)
-	}
-	defer file.Close()
+// 	// // Create a file
+// 	// file, err := os.Create("menu.json")
+// 	// if err != nil {
+// 	// 	fmt.Printf("error creating file: %v", err)
+// 	// }
+// 	// defer file.Close()
 
-	// Write the menu to the file in a readable format
-	menuJson, err := json.MarshalIndent(menu, "", "  ")
-	if err != nil {
-		fmt.Printf("error marshalling menu: %v", err)
-	}
-	_, err = file.Write(menuJson)
-	if err != nil {
-		fmt.Printf("error writing to file: %v", err)
-	}
+// 	// // Write the menu to the file in a readable format
+// 	// menuJson, err := json.MarshalIndent(menu, "", "  ")
+// 	// if err != nil {
+// 	// 	fmt.Printf("error marshalling menu: %v", err)
+// 	// }
+// 	// _, err = file.Write(menuJson)
+// 	// if err != nil {
+// 	// 	fmt.Printf("error writing to file: %v", err)
+// 	// }
 
-	err = UpdateDatabase(db, menu)
-	if err != nil {
-		fmt.Printf("error updating database: %v", err)
-	}
-}
+// 	err = UpdateDatabase(db, menu)
+// 	if err != nil {
+// 		fmt.Printf("error updating database: %v", err)
+// 	}
+// }
 
 // google cloud function
 func ScraperRun(ctx context.Context, m PubSubMessage) error {
@@ -155,8 +153,8 @@ func ScraperRun(ctx context.Context, m PubSubMessage) error {
 
 	menu = make(map[string]interface{}) // clear menu map
 
-	maxRetries := 3
-	retryDelay := 5 * time.Second
+	maxRetries := 2
+	retryDelay := 1 * time.Second
 
 	for retry := 0; retry < maxRetries; retry++ {
 		err = scrape()
@@ -169,22 +167,12 @@ func ScraperRun(ctx context.Context, m PubSubMessage) error {
 		return fmt.Errorf("error in scrape function: %v", err)
 	}
 
-	for retry := 0; retry < maxRetries; retry++ {
-		err = reorderCategories()
-		if err == nil {
-			break
-		}
-	}
+	err = reorderCategories()
 	if err != nil {
 		return fmt.Errorf("error in reorderCategories function: %v", err)
 	}
 
-	for retry := 0; retry < maxRetries; retry++ {
-		err = makeSummary()
-		if err == nil {
-			break
-		}
-	}
+	err = makeSummary()
 	if err != nil {
 		return fmt.Errorf("error in makeSummary function: %v", err)
 	}

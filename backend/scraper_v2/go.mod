@@ -1,4 +1,4 @@
-module github.com/ericbreh/scraper
+module github.com/ericbreh/scraper_v2
 
 go 1.21.0
 
